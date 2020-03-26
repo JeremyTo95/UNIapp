@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swim_items"
+    android:layout_width="match_parent"
+    android:layout_height="175dp"
+    android:layout_margin="5dp"
+    android:elevation="2dp"
+    android:background="@drawable/sh_swim_item_card"
+    android:padding="10dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/swim_items_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="N a g e  L i b r e"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:fontFamily="sans-serif"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/colorSecondary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/swim_items_p1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/swim_items_d1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="distance 1"
+                android:textSize="@dimen/swim_item_size_time"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorText"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/swim_items_d2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="distance 2"
+                android:textSize="@dimen/swim_item_size_time"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorText"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/swim_items_d3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="distance 3"
+                android:textSize="@dimen/swim_item_size_time"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorText"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/swim_items_p2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/swim_items_d4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="distance 4"
+                android:textSize="@dimen/swim_item_size_time"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorText"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/swim_items_d5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="distance 5"
+                android:textSize="@dimen/swim_item_size_time"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorText"
+                tools:ignore="RtlCompat" />
+
+            <TextView
+                android:id="@+id/swim_items_d6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="distance6 : "
+                android:textSize="@dimen/swim_item_size_time"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                android:layout_marginLeft="10dp"
+                android:textColor="@color/colorText"
+                tools:ignore="RtlCompat" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

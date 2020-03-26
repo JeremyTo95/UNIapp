@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.bottomnavigation.BottomNavigationView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:background="@color/transparent"
+    app:itemTextColor="@color/colorText"
+    app:itemIconTint="@color/colorText"
+    app:labelVisibilityMode="unlabeled"
+    app:itemIconSize="@dimen/navbar_icon_size"
+    app:menu="@menu/navbar" />

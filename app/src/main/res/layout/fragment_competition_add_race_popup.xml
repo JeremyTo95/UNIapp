@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sh_popup_menu">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="I N F O R M A T I O N S"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/colorSecondaryLight"
+        android:textAlignment="center"
+        android:textSize="@dimen/fragment_competition_button_textsize"
+        android:padding="20dp"
+        android:gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fragment_competition_add_race_popup_title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="A j o u t e r  N o u v e l l e   C o u r s e"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:textColor="@color/colorText"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/fragment_competition_add_race_popup_swim_description"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:text="Bassin 25m : 50m crawl"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:textColor="@color/colorText"
+                android:textAlignment="center"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Date : "
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:textSize="@dimen/custom_popup_textsize" />
+
+            <EditText
+                android:id="@+id/race_popup_edit_text_date"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="DD/MM/YYYY"
+                android:inputType="date"
+                android:digits="0123456789"
+                android:maxLength="10"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:background="@drawable/sh_gradient_background"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Ville : "
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:textSize="@dimen/custom_popup_textsize" />
+
+            <EditText
+                android:id="@+id/race_popup_edit_text_city"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="VILLE"
+                android:inputType="textCapCharacters"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:background="@drawable/sh_gradient_background"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Chrono : "
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:textSize="@dimen/custom_popup_textsize" />
+
+            <EditText
+                android:id="@+id/race_popup_edit_text_time"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="00:00:00"
+                android:digits="0123456789"
+                android:inputType="time"
+                android:maxLength="8"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:background="@drawable/sh_gradient_background"
+                android:textColor="@color/colorText" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Niveau : "
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:textSize="@dimen/custom_popup_textsize" />
+
+            <EditText
+                android:id="@+id/race_popup_edit_text_level"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="DEP"
+                android:inputType="textCapCharacters"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:background="@drawable/sh_gradient_background"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/fragment_competition_add_race_popup_denied"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="A N N U L E R"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:textColor="@color/redLight"
+                android:background="@color/transparent" />
+
+            <Button
+                android:id="@+id/fragment_competition_add_race_popup_confirmed"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="C O N F I R M E R"
+                android:textSize="@dimen/custom_popup_textsize"
+                android:textColor="@color/blueLight"
+                android:background="@color/transparent" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

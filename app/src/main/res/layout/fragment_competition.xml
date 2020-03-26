@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/blackDeep"
+        tools:context=".controllers.fragments.CompetitionsFragment">
+
+        <TextView
+            android:id="@+id/fragment_competition_competition_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:textColor="@color/colorSecondaryLight"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/fragment_bigtitle_textsize"
+            android:text="C O M P E T I T I O N S" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/fragment_competition_pool_25"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:text="B a s s i n  2 5 m"
+                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textColor="@color/colorText"
+                    android:fontFamily="sans-serif-light" />
+
+                <Button
+                    android:id="@+id/fragment_competition_pool_50"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:text="B a s s i n  5 0 m"
+                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textColor="@color/colorText"
+                    android:fontFamily="sans-serif-light" />
+            </LinearLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/fragment_competition_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="175dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif"
+                    android:text="D i s t a n c e"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:gravity="center" />
+
+                <Spinner
+                    android:id="@+id/fragment_competition_spinner"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="20dp"
+                    android:textColor="@color/colorText"
+                    android:textAlignment="textEnd"
+                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:backgroundTint="@color/colorText"
+                    android:fontFamily="sans-serif"
+                    android:gravity="end" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/fragment_competition_progression_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="C o u r b e   d e   p r o g r e s s i o n"
+                android:textColor="@color/colorSecondaryLight"
+                android:textAlignment="center"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/fragment_competition_title_textsize" />
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/fragment_competition_linechart"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="20dp"
+                android:layout_height="250dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginVertical="20dp"
+                android:layout_marginHorizontal="30dp"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="L e s   t e m p s"
+                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textColor="@color/colorText"
+                    android:layout_gravity="center"
+                    android:gravity="center" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/fragment_competition_add_race_time"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:text="+"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:background="@drawable/sh_round_btn" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="550dp"
+                android:orientation="vertical" >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/fragment_competition_recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="vertical" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>
