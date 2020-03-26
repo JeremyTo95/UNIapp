@@ -1,26 +1,23 @@
 package com.example.uniapp.controllers.fragments;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.SystemClock;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Chronometer;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RecyclerViewAdapter;
@@ -36,19 +33,14 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
 
 import static android.widget.AdapterView.*;
 
 /*
-TODO: Popup pour ajouter un nouveau temps
 TODO: Rendre le Recycler View cliquable pour aller sur une nouvelles pages et avoir tous les détails sur la course en question
+TODO:
 TODO: Obtenir les sources des temps sur un serveur avec un REST API
 TODO: Mettre en place des animations pour le graphique quand on change le viewPager
  */
@@ -137,13 +129,9 @@ public class CompetitionsFragment extends Fragment {
         mViewPager.setPageMargin(30);
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                /*System.out.println("__onPageScrolled__");
-                System.out.println("position             : " + position);
-                System.out.println("positionOffset       : " + positionOffset);
-                System.out.println("positionOffsetPixels : " + positionOffsetPixels);*/
-            }
-
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+            @Override
+            public void onPageScrollStateChanged(int state) { }
             @Override
             public void onPageSelected(int position) {
                 viewPagerIndex = position;
@@ -161,18 +149,14 @@ public class CompetitionsFragment extends Fragment {
                 updateItemsDropdown();
                 setupLineChart(mLineChart, true);
             }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                /*System.out.println("__onPageScrollStateChanged__");
-                System.out.println("state : " + state);*/
-            }
         });
 
         selectSwimDistance = layoutInflater.findViewById(R.id.fragment_competition_spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        selectSwimDistance.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_competition_distance_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
         selectSwimDistance.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
         selectSwimDistance.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -186,9 +170,7 @@ public class CompetitionsFragment extends Fragment {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
         setupLineChart(mLineChart, true);
 
@@ -202,39 +184,11 @@ public class CompetitionsFragment extends Fragment {
                 customPopup.setSwim(swim);
                 customPopup.setDistanceRace(distance);
                 customPopup.getSubtitleDescription().setText("Bassin " + sizePool + "m : " + distance + "m " + RaceTime.convertSwim(swim));
-                /*customPopup.updateDateEditText();
-                customPopup.updateCityEditText();
-                customPopup.updateTimeEditText();
-                customPopup.updateLevelEditText();*/
-                customPopup.getConfirmedButton().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        customPopup.setDate(customPopup.getDateEditText().getText().toString());
-                        customPopup.setCity(customPopup.getCityEditText().getText().toString());
-                        customPopup.setTime(customPopup.getTimeEditText().getText().toString());
-                        customPopup.setLevel(customPopup.getLevelEditText().getText().toString());
-                        customPopup.checkInputFormatTime();
-                        customPopup.isEnableConfirmed();
-                        System.out.println("time : " + customPopup.getTime());
-                        System.out.println("date : " + customPopup.getDate());
-                        customPopup.dismiss();
-                        Toast.makeText(layoutInflater.getContext(), "Confirmed", Toast.LENGTH_SHORT);
-                    }
-                });
-                customPopup.getDeniedButton().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        customPopup.dismiss();
-                        Toast.makeText(layoutInflater.getContext(), "Denied", Toast.LENGTH_SHORT);
-                    }
-                });
                 customPopup.build();
             }
         });
 
-        mRecyclerViewAdapter = new RecyclerViewAdapter(currentRaces);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        updateRaceList();
 
         return layoutInflater;
     }
@@ -305,13 +259,13 @@ public class CompetitionsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter;
 
         // NOUVELLE LISTE DE DROPDOWN ITEM EN FONCTION DE LA NAGE
-        if (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke")) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
-        else if (swim.equals("freestyle")) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_item);
-        else if (swim.equals("IM") && sizePool == 25) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_item);
-        else adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_item);
+        if (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke")) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_competition_distance_item);
+        else if (swim.equals("freestyle")) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_competition_distance_item);
+        else if (swim.equals("IM") && sizePool == 25) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_competition_distance_item);
+        else adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_competition_distance_item);
 
         // MISE A JOUR DU DROPDOWN
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
         selectSwimDistance.setAdapter(adapter);
 
         // FOCUS SUR LA BONNE DISTANCE EN FONCTION DES AUTRES SWIMITEMS
@@ -339,9 +293,25 @@ public class CompetitionsFragment extends Fragment {
         currentRaces = new ArrayList<>();
         currentRaces = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
 
-        mRecyclerViewAdapter.notifyDataSetChanged();
         mRecyclerViewAdapter = new RecyclerViewAdapter(currentRaces);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        mRecyclerViewAdapter.notifyDataSetChanged();
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
+                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder
+                            target) {
+                        return false;
+                    }
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                        currentRaces.remove(viewHolder.getAdapterPosition());
+                        mRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                        setupLineChart(mLineChart, true);
+                    }
+                };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 }

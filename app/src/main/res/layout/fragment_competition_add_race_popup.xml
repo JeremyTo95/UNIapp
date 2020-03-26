@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -59,31 +60,65 @@
             android:layout_marginVertical="20dp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Date : "
-                android:textColor="@color/colorText"
-                android:gravity="center"
-                android:textSize="@dimen/custom_popup_textsize" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Date : "
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:textSize="@dimen/custom_popup_textsize" />
 
-            <EditText
-                android:id="@+id/race_popup_edit_text_date"
+                <EditText
+                    android:id="@+id/race_popup_edit_text_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="DD/MM/YYYY"
+                    android:inputType="date"
+                    android:digits="0123456789"
+                    android:maxLength="10"
+                    android:textSize="@dimen/custom_popup_textsize"
+                    android:background="@color/blackLight"
+                    android:textColor="@color/colorText" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="DD/MM/YYYY"
-                android:inputType="date"
-                android:digits="0123456789"
-                android:maxLength="10"
-                android:textSize="@dimen/custom_popup_textsize"
-                android:background="@drawable/sh_gradient_background"
-                android:textColor="@color/colorText" />
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Ville : "
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:textSize="@dimen/custom_popup_textsize" />
+                <EditText
+                    android:id="@+id/race_popup_edit_text_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="VILLE"
+                    android:inputType="textCapCharacters"
+                    android:textSize="@dimen/custom_popup_textsize"
+                    android:background="@color/blackLight"
+                    android:textColor="@color/colorText" />
+
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -91,34 +126,14 @@
             android:layout_marginVertical="20dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Ville : "
-                android:textColor="@color/colorText"
-                android:gravity="center"
-                android:textSize="@dimen/custom_popup_textsize" />
 
-            <EditText
-                android:id="@+id/race_popup_edit_text_city"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:hint="VILLE"
-                android:inputType="textCapCharacters"
-                android:textSize="@dimen/custom_popup_textsize"
-                android:background="@drawable/sh_gradient_background"
-                android:textColor="@color/colorText" />
-        </LinearLayout>
+        </LinearLayout> -->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -141,7 +156,7 @@
                 android:inputType="time"
                 android:maxLength="8"
                 android:textSize="@dimen/custom_popup_textsize"
-                android:background="@drawable/sh_gradient_background"
+                android:background="@color/blackLight"
                 android:textColor="@color/colorText" />
 
         </LinearLayout>
@@ -154,26 +169,59 @@
             android:layout_marginVertical="20dp"
             android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Niveau : "
-                android:textColor="@color/colorText"
-                android:gravity="center"
-                android:textSize="@dimen/custom_popup_textsize" />
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Niveau : "
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:textSize="@dimen/custom_popup_textsize" />
 
-            <EditText
-                android:id="@+id/race_popup_edit_text_level"
+                <Spinner
+                    android:id="@+id/race_popup_spinner_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="DEP"
+                    android:inputType="textCapCharacters"
+                    android:textSize="@dimen/custom_popup_textsize"
+                    android:backgroundTint="@color/colorText"
+                    android:textColor="@color/colorText" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:hint="DEP"
-                android:inputType="textCapCharacters"
-                android:textSize="@dimen/custom_popup_textsize"
-                android:background="@drawable/sh_gradient_background"
-                android:textColor="@color/colorText" />
+                android:orientation="vertical" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:text="Pays : "
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:textSize="@dimen/custom_popup_textsize" />
+
+                <EditText
+                    android:id="@+id/race_popup_edit_text_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="FRANCE"
+                    android:inputType="textCapCharacters"
+                    android:textSize="@dimen/custom_popup_textsize"
+                    android:background="@color/blackLight"
+                    android:textColor="@color/colorText" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout

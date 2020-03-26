@@ -58,5 +58,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             time.setText(String.valueOf(raceTime.getTime()));
             time.setTextColor(itemView.getResources().getColor(RaceTime.getCurrentColor(raceTime.getSwim())));
         }
+
+        public void add(int position, RaceTime raceTime) {
+            mRaceTimes.add(position, raceTime);
+            notifyItemInserted(position);
+        }
+
+        public void remove(int position) {
+            mRaceTimes.remove(position);
+            notifyItemRemoved(position);
+        }
     }
 }

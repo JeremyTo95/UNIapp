@@ -275,4 +275,8 @@ public class MarketRaceTime {
         myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 100;
         return myTime;
     }
+
+    public static int convertTimeToPointFFN(String time) {
+        return 0;
+    }
 }

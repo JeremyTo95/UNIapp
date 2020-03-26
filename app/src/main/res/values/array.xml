@@ -25,4 +25,11 @@
         <item>2 0 0 m</item>
         <item>4 0 0 m</item>
     </string-array>
+
+    <string-array name="competition_level">
+        <item>DEP</item>
+        <item>REG</item>
+        <item>NAT</item>
+        <item>INTER</item>
+    </string-array>
 </resources>
