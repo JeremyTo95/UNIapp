@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.fragments.DetailRaceTimeFragment;
+import com.example.uniapp.models.RaceTime;
 
 public class DetailRaceTimeActivity extends AppCompatActivity {
     private DetailRaceTimeFragment mDetailRaceTimeFragment;
@@ -33,9 +34,7 @@ public class DetailRaceTimeActivity extends AppCompatActivity {
         }
     }
 
-    /*
-        Mise en place de l'application en pleine écran pour un meilleur rendu
-    */
+    /*  Mise en place de l'application en pleine écran pour un meilleur rendu  */
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);

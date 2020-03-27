@@ -17,7 +17,7 @@ public class DateComparator implements Comparator<RaceTime> {
     private int getMonthValue(String str) {
         String[] splitString = str.split("/");
         String month = splitString[1];
-        return Integer.parseInt(month) * 12;
+        return Integer.parseInt(month) * 31;
     }
     private int getDayValue(String str) {
         String[] splitString = str.split("/");
@@ -28,8 +28,6 @@ public class DateComparator implements Comparator<RaceTime> {
     public int compare(RaceTime o1, RaceTime o2) {
         int cptO1 = getDayValue(o1.getDate()) + getMonthValue(o1.getDate()) + getYearValue(o1.getDate());
         int cptO2 = getDayValue(o2.getDate()) + getMonthValue(o2.getDate()) + getYearValue(o2.getDate());
-
-        System.out.println("cptO1 : " + cptO1 + " | cptO2 : " + cptO2);
 
         if (cptO1 > cptO2) return -1;
         else if (cptO1 == cptO2) return 0;

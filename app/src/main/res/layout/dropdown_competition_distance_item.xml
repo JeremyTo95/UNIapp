@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:textColor="@color/colorText"
     android:textAlignment="center"
-    android:textSize="@dimen/fragment_competition_button_textsize"
+    android:textSize="@dimen/h4_textsize"
     android:fontFamily="sans-serif"
     android:gravity="center"
     android:paddingVertical="10dp"
-    android:background="@color/blackDeep"/>
+    android:background="@color/colorBackground"/>

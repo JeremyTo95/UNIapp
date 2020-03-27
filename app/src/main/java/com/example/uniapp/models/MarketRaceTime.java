@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.example.uniapp.views.DateComparator;
+import com.example.uniapp.views.TimeComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -278,18 +279,43 @@ public class MarketRaceTime {
 
     public static float fetchTimeToFloat(String time) {
         float myTime = 0.0f;
-        myTime += Float.parseFloat(String.valueOf(time.charAt(0) )) * 10 * 60;
-        myTime += Float.parseFloat(String.valueOf(time.charAt(1))) * 60;
-        myTime += Float.parseFloat(String.valueOf(time.charAt(3))) * 10;
-        myTime += Float.parseFloat(String.valueOf(time.charAt(4)));
-        myTime += Float.parseFloat(String.valueOf(time.charAt(6))) / 10;
-        myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 100;
+        if (time.length() == 8) {
+            myTime += Float.parseFloat(String.valueOf(time.charAt(0) )) * 10 * 60;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(1))) * 60;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(3))) * 10;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(4)));
+            myTime += Float.parseFloat(String.valueOf(time.charAt(6))) / 10;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 100;
+        }
         return myTime;
+    }
+
+    public static RaceTime getBestTime(List<RaceTime> allTimes, int position) {
+        for (int i = 0; i < allTimes.size(); i++) System.out.println(allTimes.get(i).getTime());
+        System.out.println("\n");
+
+        RaceTime bestTime;
+        if (allTimes != null && allTimes.size() != 0 && (position - 1) >= 0 && allTimes.size() > (position - 1)) {
+            Collections.sort(allTimes, new TimeComparator());
+            bestTime = allTimes.get(position - 1);
+            Collections.sort(allTimes, new DateComparator());
+        }
+        else if (allTimes != null && allTimes.size() != 0) {
+            Collections.sort(allTimes, new TimeComparator());
+            bestTime = allTimes.get(0);
+            Collections.sort(allTimes, new DateComparator());
+        } else {
+            bestTime = new RaceTime();
+            bestTime.setTime("");
+        }
+        return bestTime;
     }
 
     public static int convertTimeToPointFFN(String time) {
         return 0;
     }
+    public static int convertTimeToInt(String time) { return Integer.parseInt(time.replaceAll("[:.]", "").toString()); }
+    public static String convertIntToTime(int time) { return String.valueOf(time/10000%100) + ":" + String.valueOf(time/100%100) + "." + String.valueOf(time%100); }
 
     public static void addRaceTime(List<RaceTime> allTimes, RaceTime raceTime) {
         allTimes.add(raceTime);

@@ -14,7 +14,7 @@
         android:fontFamily="sans-serif-light"
         android:textColor="@color/colorSecondaryLight"
         android:textAlignment="center"
-        android:textSize="@dimen/fragment_competition_button_textsize"
+        android:textSize="@dimen/h2_textsize"
         android:padding="20dp"
         android:gravity="center_horizontal" />
 
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:text="A j o u t e r  N o u v e l l e   C o u r s e"
-                android:textSize="@dimen/custom_popup_textsize"
+                android:textSize="@dimen/h4_textsize"
                 android:textColor="@color/colorText"
                 android:textAlignment="center"
                 android:gravity="center_horizontal" />
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:text="Bassin 25m : 50m crawl"
-                android:textSize="@dimen/custom_popup_textsize"
+                android:textSize="@dimen/h4_textsize"
                 android:textColor="@color/colorText"
                 android:textAlignment="center"
                 android:gravity="center_horizontal" />
@@ -73,7 +73,7 @@
                     android:textColor="@color/colorText"
                     android:textAlignment="center"
                     android:gravity="center"
-                    android:textSize="@dimen/custom_popup_textsize" />
+                    android:textSize="@dimen/h4_textsize" />
 
                 <EditText
                     android:id="@+id/race_popup_edit_text_date"
@@ -85,8 +85,8 @@
                     android:inputType="date"
                     android:digits="0123456789"
                     android:maxLength="10"
-                    android:textSize="@dimen/custom_popup_textsize"
-                    android:background="@color/blackLight"
+                    android:textSize="@dimen/h4_textsize"
+                    android:background="@color/colorBackgroundLight"
                     android:textColor="@color/colorText" />
             </LinearLayout>
 
@@ -114,7 +114,7 @@
                     android:hint="VILLE"
                     android:inputType="textCapCharacters"
                     android:textSize="@dimen/custom_popup_textsize"
-                    android:background="@color/blackLight"
+                    android:background="@color/colorBackgroundLight"
                     android:textColor="@color/colorText" />
 
             </LinearLayout>
@@ -149,7 +149,7 @@
                 android:maxLength="8"
                 android:textSize="@dimen/custom_popup_textsize"
                 android:textAlignment="center"
-                android:background="@color/blackLight"
+                android:background="@color/colorBackgroundLight"
                 android:textColor="@color/colorText" />
 
         </LinearLayout>
@@ -216,7 +216,7 @@
                     android:inputType="textCapCharacters"
                     android:textAlignment="center"
                     android:textSize="@dimen/custom_popup_textsize"
-                    android:background="@color/blackLight"
+                    android:background="@color/colorBackgroundLight"
                     android:textColor="@color/colorText" />
             </LinearLayout>
         </LinearLayout>

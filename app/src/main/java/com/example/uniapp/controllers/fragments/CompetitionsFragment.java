@@ -56,6 +56,10 @@ public class CompetitionsFragment extends Fragment {
     private String         swim;
     private int            distance;
     private List<RaceTime> allRaces;
+
+    public List<RaceTime> getCurrentRaces() { return currentRaces; }
+    public void setCurrentRaces(List<RaceTime> currentRaces) { this.currentRaces = currentRaces; }
+
     private List<RaceTime> currentRaces;
 
     private TextView            competition_title;
@@ -136,14 +140,12 @@ public class CompetitionsFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 viewPagerIndex = position;
-                System.out.println("__onPageSelected__");
-                System.out.println("position : " + position);
                 swim = mSwimCardsList.get(position).getTitleSwim();
                 swim = swim.replace(" ", "");
                 if (swim.equals("Papillon"))   swim = "butterfly";
                 if (swim.equals("Dos"))        swim = "backstroke";
                 if (swim.equals("Brasse"))     swim = "breaststroke";
-                if (swim.equals("NageLibre")) swim = "freestyle";
+                if (swim.equals("NageLibre"))  swim = "freestyle";
                 if (swim.equals("4Nages"))     swim = "IM";
                 updateRaceList();
                 updateColors();
@@ -331,15 +333,14 @@ public class CompetitionsFragment extends Fragment {
         updateCurrentRaces();
 
         mRecyclerViewAdapter = new RecyclerViewAdapter(currentRaces);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.notifyDataSetChanged();
+
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                     @Override
-                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder
-                            target) {
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         return false;
                     }
                     @Override

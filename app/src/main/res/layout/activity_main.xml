@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="bottom"
-    android:background="@color/blackDeep"
+    android:background="@color/colorBackground"
     tools:context=".controllers.activities.MainActivity">
 
     <FrameLayout

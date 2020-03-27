@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/blackDeep"
+        android:background="@color/colorBackground"
         tools:context=".controllers.fragments.CompetitionsFragment">
 
         <TextView
@@ -20,7 +20,7 @@
             android:padding="20dp"
             android:textColor="@color/colorSecondaryLight"
             android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/fragment_bigtitle_textsize"
+            android:textSize="@dimen/h1_textsize"
             android:text="C O M P E T I T I O N S" />
 
         <LinearLayout
@@ -42,7 +42,7 @@
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:text="B a s s i n  2 5 m"
-                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textSize="@dimen/h3_textsize"
                     android:textColor="@color/colorText"
                     android:fontFamily="sans-serif-light" />
 
@@ -53,7 +53,7 @@
                     android:layout_weight="1"
                     android:background="@color/transparent"
                     android:text="B a s s i n  5 0 m"
-                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textSize="@dimen/h3_textsize"
                     android:textColor="@color/colorText"
                     android:fontFamily="sans-serif-light" />
             </LinearLayout>
@@ -76,7 +76,7 @@
                     android:fontFamily="sans-serif"
                     android:text="D i s t a n c e"
                     android:textColor="@color/colorText"
-                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textSize="@dimen/h3_textsize"
                     android:gravity="center" />
 
                 <Spinner
@@ -87,7 +87,7 @@
                     android:layout_marginHorizontal="20dp"
                     android:textColor="@color/colorText"
                     android:textAlignment="textEnd"
-                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textSize="@dimen/h3_textsize"
                     android:backgroundTint="@color/colorText"
                     android:fontFamily="sans-serif"
                     android:gravity="end" />
@@ -101,7 +101,7 @@
                 android:textColor="@color/colorSecondaryLight"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
-                android:textSize="@dimen/fragment_competition_title_textsize" />
+                android:textSize="@dimen/h2_textsize" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/fragment_competition_linechart"
@@ -122,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="L e s   t e m p s"
-                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:textSize="@dimen/h3_textsize"
                     android:textColor="@color/colorText"
                     android:layout_gravity="center"
                     android:gravity="center" />

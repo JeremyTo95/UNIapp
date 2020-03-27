@@ -48,9 +48,9 @@ public class SwimCards {
         List<RaceTime> times50   = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,50, "butterfly");
         List<RaceTime> times100  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,100, "butterfly");
         List<RaceTime> times200  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,200,"butterfly");
-        RaceTime best50  = getBestTime(times50);
-        RaceTime best100 = getBestTime(times100);
-        RaceTime best200 = getBestTime(times200);
+        RaceTime best50  = MarketRaceTime.getBestTime(times50, 1);
+        RaceTime best100 = MarketRaceTime.getBestTime(times100, 1);
+        RaceTime best200 = MarketRaceTime.getBestTime(times200, 1);
         titleSwim = "P a p i l l o n";
         time50  = best50.getTime();
         time100 = best100.getTime();
@@ -63,9 +63,9 @@ public class SwimCards {
         List<RaceTime> times50   = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,50, "backstroke");
         List<RaceTime> times100  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,100, "backstroke");
         List<RaceTime> times200  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,200,"backstroke");
-        RaceTime best50  = getBestTime(times50);
-        RaceTime best100 = getBestTime(times100);
-        RaceTime best200 = getBestTime(times200);
+        RaceTime best50  = MarketRaceTime.getBestTime(times50, 1);
+        RaceTime best100 = MarketRaceTime.getBestTime(times100, 1);
+        RaceTime best200 = MarketRaceTime.getBestTime(times200, 1);
         titleSwim = "D o s";
         time50  = best50.getTime();
         time100 = best100.getTime();
@@ -78,9 +78,9 @@ public class SwimCards {
         List<RaceTime> times50   = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,50, "breaststroke");
         List<RaceTime> times100  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,100, "breaststroke");
         List<RaceTime> times200  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,200,"breaststroke");
-        RaceTime best50  = getBestTime(times50);
-        RaceTime best100 = getBestTime(times100);
-        RaceTime best200 = getBestTime(times200);
+        RaceTime best50  = MarketRaceTime.getBestTime(times50, 1);
+        RaceTime best100 = MarketRaceTime.getBestTime(times100, 1);
+        RaceTime best200 = MarketRaceTime.getBestTime(times200, 1);
         titleSwim = "B r a s s e";
         time50   = best50.getTime();
         time100  = best100.getTime();
@@ -96,12 +96,12 @@ public class SwimCards {
         List<RaceTime> times400  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,400, "freestyle");
         List<RaceTime> times800  = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,800,"freestyle");
         List<RaceTime> times1500 = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize,1500,"freestyle");
-        RaceTime best50   = getBestTime(times50);
-        RaceTime best100  = getBestTime(times100);
-        RaceTime best200  = getBestTime(times200);
-        RaceTime best400  = getBestTime(times400);
-        RaceTime best800  = getBestTime(times800);
-        RaceTime best1500 = getBestTime(times1500);
+        RaceTime best50   = MarketRaceTime.getBestTime(times50, 1);
+        RaceTime best100  = MarketRaceTime.getBestTime(times100, 1);
+        RaceTime best200  = MarketRaceTime.getBestTime(times200, 1);
+        RaceTime best400  = MarketRaceTime.getBestTime(times400, 1);
+        RaceTime best800  = MarketRaceTime.getBestTime(times800, 1);
+        RaceTime best1500 = MarketRaceTime.getBestTime(times1500, 1);
         titleSwim = "N a g e  L i b r e";
         time50   = best50.getTime();
         time100  = best100.getTime();
@@ -121,36 +121,21 @@ public class SwimCards {
             List<RaceTime> times100 = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize, 100,"IM");
             List<RaceTime> times200 = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize, 200, "IM");
             List<RaceTime> times400 = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize, 400, "IM");
-            best100 = getBestTime(times100);
-            best200 = getBestTime(times200);
-            best400 = getBestTime(times400);
+            best100 = MarketRaceTime.getBestTime(times100, 1);
+            best200 = MarketRaceTime.getBestTime(times200, 1);
+            best400 = MarketRaceTime.getBestTime(times400, 1);
             time100 = best100.getTime();
         } else {
             List<RaceTime> times200 = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize, 200, "IM");
             List<RaceTime> times400 = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, poolSize, 400, "IM");
-            best200 = getBestTime(times200);
-            best400 = getBestTime(times400);
+            best200 = MarketRaceTime.getBestTime(times200, 1);
+            best400 = MarketRaceTime.getBestTime(times400, 1);
         }
         titleSwim = "4  N a g e s";
         time200 = best200.getTime();
         time400 = best400.getTime();
         gradientBackground = R.drawable.sh_gradient_blue;
         colorText = R.color.blueLight;
-    }
-
-    private RaceTime getBestTime(List<RaceTime> allTimes) {
-        RaceTime bestTime;
-        if (allTimes.size() != 0) {
-            bestTime = allTimes.get(0);
-            for (int i = 0; i < allTimes.size(); i++) {
-                if (MarketRaceTime.fetchTimeToFloat(bestTime.getTime()) > MarketRaceTime.fetchTimeToFloat(allTimes.get(i).getTime()))
-                    bestTime = allTimes.get(i);
-            }
-        } else {
-            bestTime = new RaceTime();
-            bestTime.setTime("");
-        }
-        return bestTime;
     }
 
     public void setTitleSwim(String titleSwim) { this.titleSwim = titleSwim; }

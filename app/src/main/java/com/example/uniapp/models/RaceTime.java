@@ -2,10 +2,11 @@ package com.example.uniapp.models;
 
 import com.example.uniapp.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RaceTime {
+public class RaceTime implements Serializable {
     private String date;
     private String city;
     private String country;
