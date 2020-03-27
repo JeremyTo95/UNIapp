@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/blackDeep"
+    tools:context=".controllers.fragments.DetailRaceTimeFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:text="D E T A I L S   C O U R S E"
+        android:textColor="@color/colorSecondaryLight"
+        android:gravity="center"
+        android:textSize="@dimen/fragment_bigtitle_textsize"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/h3_textsize"
+            android:text="Le 26/03/2020 à PALAISEAU"
+            android:gravity="center"
+            android:layout_marginVertical="20dp"
+            android:textColor="@color/colorText"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="N A G E U R : "
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorSecondaryLight" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="Jérémy TOURARI"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="@color/colorText" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="11/11/1999 (21 ans)"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="@color/colorText" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="AS HERBLAY NATATION"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="@color/colorText" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P E R F O R M A N C E :"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorSecondaryLight" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="Le 26/03/2020 à Palaiseau"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="@color/colorText" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="Niveau REG"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="@color/colorText" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="50NL"
+                        android:gravity="left"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/h4_textsize" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="en"
+                        android:gravity="center"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/h4_textsize" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="00:24.50"
+                        android:gravity="right"
+                        android:textColor="@color/colorText"
+                        android:textSize="@dimen/h4_textsize" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Amélioration de 0.43s"
+                    android:textColor="@color/colorText"
+                    android:gravity="center"
+                    android:textSize="@dimen/h4_textsize" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginVertical="10dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="V I D E O  :"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/h3_textsize"
+                    android:textColor="@color/colorSecondaryLight" />
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/sh_round_btn"
+                    android:text="+"
+                    android:textColor="@color/colorText" />
+            </LinearLayout>
+            <VideoView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="20dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

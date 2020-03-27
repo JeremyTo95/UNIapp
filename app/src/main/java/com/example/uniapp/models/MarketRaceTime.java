@@ -1,6 +1,16 @@
 package com.example.uniapp.models;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import com.example.uniapp.views.DateComparator;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class MarketRaceTime {
@@ -262,6 +272,7 @@ public class MarketRaceTime {
                 result.add(tmp);
         }
 
+        sortRacesByDate(allTimes);
         return result;
     }
 
@@ -278,5 +289,15 @@ public class MarketRaceTime {
 
     public static int convertTimeToPointFFN(String time) {
         return 0;
+    }
+
+    public static void addRaceTime(List<RaceTime> allTimes, RaceTime raceTime) {
+        allTimes.add(raceTime);
+        sortRacesByDate(allTimes);
+    }
+
+    public static void sortRacesByDate(List<RaceTime> allTimes) {
+        DateComparator dateComparator = new DateComparator();
+        Collections.sort(allTimes, dateComparator);
     }
 }

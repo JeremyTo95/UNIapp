@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RecyclerViewAdapter;
@@ -40,7 +43,8 @@ import static android.widget.AdapterView.*;
 
 /*
 TODO: Rendre le Recycler View cliquable pour aller sur une nouvelles pages et avoir tous les détails sur la course en question
-TODO:
+TODO: Mettre de la couleur pour la suppression des éléments du RecyclerView
+TODO: Ajouter une course avec le bouton popup (sur le server --> Command POST)
 TODO: Obtenir les sources des temps sur un serveur avec un REST API
 TODO: Mettre en place des animations pour le graphique quand on change le viewPager
  */
@@ -69,9 +73,6 @@ public class CompetitionsFragment extends Fragment {
     private RecyclerView        mRecyclerView;
     private RecyclerViewAdapter mRecyclerViewAdapter;
 
-    private char[] baseTimeFormat;
-    private String baseDateFormat = "DD/MM/YYYY";
-
     public CompetitionsFragment() { }
 
     @Override
@@ -83,7 +84,7 @@ public class CompetitionsFragment extends Fragment {
         distance = 50;
         swim     = "butterfly";
 
-        currentRaces = currentRaces = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
+        currentRaces = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
 
         competition_title = (TextView)     layoutInflater.findViewById(R.id.fragment_competition_competition_title);
         btn_25m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_25);
@@ -147,7 +148,7 @@ public class CompetitionsFragment extends Fragment {
                 updateRaceList();
                 updateColors();
                 updateItemsDropdown();
-                setupLineChart(mLineChart, true);
+                updateLineChart(mLineChart, true);
             }
         });
 
@@ -166,18 +167,20 @@ public class CompetitionsFragment extends Fragment {
                 distance = Integer.parseInt(newDistance);
                 System.out.println(distance);
                 updateRaceList();
-                setupLineChart(mLineChart, false);
+                updateLineChart(mLineChart, false);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
         });
-        setupLineChart(mLineChart, true);
+        updateLineChart(mLineChart, true);
+
+
 
         addRaceTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("addNewTime");
+                System.out.println(allRaces.size());
                 final CustomPopup customPopup = new CustomPopup(getActivity());
                 customPopup.setTitle("A j o u t e r   N o u v e l l e   C o u r s e");
                 customPopup.setSizePool(sizePool);
@@ -185,6 +188,36 @@ public class CompetitionsFragment extends Fragment {
                 customPopup.setDistanceRace(distance);
                 customPopup.getSubtitleDescription().setText("Bassin " + sizePool + "m : " + distance + "m " + RaceTime.convertSwim(swim));
                 customPopup.build();
+
+                customPopup.getConfirmedButton().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        customPopup.setDate(customPopup.getDateEditText().getText().toString());
+                        customPopup.setCity(customPopup.getCityEditText().getText().toString());
+                        customPopup.setCountry(customPopup.getCountryEditText().getText().toString());
+                        customPopup.setTime(customPopup.getTimeEditText().getText().toString());
+                        customPopup.checkInputFormatTime();
+                        if (customPopup.isEnableConfirmed() == true) {
+                            RaceTime newRaceTime = new RaceTime(
+                                    customPopup.getDate(), customPopup.getCity(), customPopup.getCountry(),
+                                    "AS HERBLAY NATATION", customPopup.getDistanceRace(), customPopup.getSizePool(),
+                                    customPopup.getSwim(), customPopup.getTime(),
+                                    MarketRaceTime.convertTimeToPointFFN(customPopup.getTime()), customPopup.getLevel(),
+                                    21, ""
+                            );
+                            MarketRaceTime.addRaceTime(allRaces, newRaceTime);
+                            customPopup.dismiss();
+                            updateCurrentRaces();
+                            updateRaceList();
+                            updateBestTime();
+                            setupTimesLineChart();
+                            updateLineChart(mLineChart, true);
+                        }
+
+                    }
+                });
+                updateLineChart(mLineChart, true);
+                System.out.println(allRaces.size());
             }
         });
 
@@ -193,7 +226,7 @@ public class CompetitionsFragment extends Fragment {
         return layoutInflater;
     }
 
-    private void setupLineChart(LineChart lineChart, boolean isAnimation) {
+    private void updateLineChart(LineChart lineChart, boolean isAnimation) {
         lineChart.clear();
         lineChart.setScaleEnabled(false);
         ArrayList<Entry> yValues = setupTimesLineChart();
@@ -288,12 +321,17 @@ public class CompetitionsFragment extends Fragment {
         btn_50m.setTextColor(getResources().getColor((sizePool == 50) ? RaceTime.getCurrentColor(swim) : R.color.colorText));
     }
 
-    private void updateRaceList() {
+    private void updateCurrentRaces() {
         currentRaces.clear();
         currentRaces = new ArrayList<>();
         currentRaces = MarketRaceTime.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
+    }
+
+    private void updateRaceList() {
+        updateCurrentRaces();
 
         mRecyclerViewAdapter = new RecyclerViewAdapter(currentRaces);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.notifyDataSetChanged();
@@ -308,8 +346,9 @@ public class CompetitionsFragment extends Fragment {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         currentRaces.remove(viewHolder.getAdapterPosition());
                         mRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                        setupLineChart(mLineChart, true);
+                        updateLineChart(mLineChart, true);
                     }
+
                 };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);

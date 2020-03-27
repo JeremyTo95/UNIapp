@@ -71,6 +71,7 @@
                     android:layout_weight="1"
                     android:text="Date : "
                     android:textColor="@color/colorText"
+                    android:textAlignment="center"
                     android:gravity="center"
                     android:textSize="@dimen/custom_popup_textsize" />
 
@@ -100,6 +101,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="Ville : "
+                    android:textAlignment="center"
                     android:textColor="@color/colorText"
                     android:gravity="center"
                     android:textSize="@dimen/custom_popup_textsize" />
@@ -118,17 +120,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginVertical="20dp"
-            android:orientation="horizontal">
-
-
-        </LinearLayout> -->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -142,6 +133,7 @@
                 android:layout_weight="1"
                 android:text="Chrono : "
                 android:textColor="@color/colorText"
+                android:textAlignment="center"
                 android:gravity="center"
                 android:textSize="@dimen/custom_popup_textsize" />
 
@@ -156,6 +148,7 @@
                 android:inputType="time"
                 android:maxLength="8"
                 android:textSize="@dimen/custom_popup_textsize"
+                android:textAlignment="center"
                 android:background="@color/blackLight"
                 android:textColor="@color/colorText" />
 
@@ -179,6 +172,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="Niveau : "
+                    android:textAlignment="center"
                     android:textColor="@color/colorText"
                     android:gravity="center"
                     android:textSize="@dimen/custom_popup_textsize" />
@@ -192,6 +186,7 @@
                     android:hint="DEP"
                     android:inputType="textCapCharacters"
                     android:textSize="@dimen/custom_popup_textsize"
+                    android:textAlignment="center"
                     android:backgroundTint="@color/colorText"
                     android:textColor="@color/colorText" />
             </LinearLayout>
@@ -206,6 +201,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="Pays : "
+                    android:textAlignment="center"
                     android:textColor="@color/colorText"
                     android:gravity="center"
                     android:textSize="@dimen/custom_popup_textsize" />
@@ -218,6 +214,7 @@
                     android:gravity="center"
                     android:text="FRANCE"
                     android:inputType="textCapCharacters"
+                    android:textAlignment="center"
                     android:textSize="@dimen/custom_popup_textsize"
                     android:background="@color/blackLight"
                     android:textColor="@color/colorText" />

@@ -24,6 +24,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class CustomPopup extends Dialog {
     private String title;
@@ -53,7 +54,6 @@ public class CustomPopup extends Dialog {
     public CustomPopup(final Activity activity) {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.fragment_competition_add_race_popup);
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date today            = Calendar.getInstance().getTime();
@@ -185,7 +185,7 @@ public class CustomPopup extends Dialog {
         } else return false;
     }
 
-    public void isEnableConfirmed() {
+    public boolean isEnableConfirmed() {
         boolean checkDate = checkInputFormatDate();
         boolean checkTime = checkInputFormatTime();
 
@@ -195,9 +195,8 @@ public class CustomPopup extends Dialog {
             System.out.println("time    : "+  time);
             System.out.println("level   : "+  level);
             System.out.println("country : "+  level);
-
-            newRaceTime = new RaceTime(date, city, country, "AS HERBLAY NATATION", distanceRace, sizePool, swim, time, MarketRaceTime.convertTimeToPointFFN(time), level, 21, "");
             dismiss();
+            return true;
         } else {
             if (checkDate == false)  {
                 getDateEditText().getText().clear();
@@ -215,6 +214,7 @@ public class CustomPopup extends Dialog {
                 getCityEditText().setHint("Champ vide");
                 getCityEditText().setHintTextColor(getLayoutInflater().getContext().getResources().getColor(R.color.redDeep));
             }
+            return false;
         }
     }
 

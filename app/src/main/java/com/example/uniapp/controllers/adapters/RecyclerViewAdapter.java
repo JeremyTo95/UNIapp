@@ -1,5 +1,6 @@
 package com.example.uniapp.controllers.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.DetailRaceTimeActivity;
+import com.example.uniapp.controllers.fragments.DetailRaceTimeFragment;
 import com.example.uniapp.models.RaceTime;
 
 import java.util.List;
@@ -30,9 +33,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
         holder.display(mRaceTimes.get(position));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailRaceTimeActivity.class);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -58,6 +70,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             time.setText(String.valueOf(raceTime.getTime()));
             time.setTextColor(itemView.getResources().getColor(RaceTime.getCurrentColor(raceTime.getSwim())));
         }
+
+
 
         public void add(int position, RaceTime raceTime) {
             mRaceTimes.add(position, raceTime);
