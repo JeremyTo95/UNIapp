@@ -9,6 +9,7 @@
     tools:context=".controllers.fragments.DetailRaceTimeFragment">
 
     <TextView
+        android:id="@+id/fragment_detail_race_time_bigtitle"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:text="D E T A I L S   C O U R S E"
@@ -40,6 +41,7 @@
             android:layout_marginVertical="10dp">
 
             <TextView
+                android:id="@+id/fragment_detail_race_time_swimmer_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="N A G E U R : "
@@ -87,6 +89,7 @@
             android:layout_marginVertical="10dp">
 
             <TextView
+                android:id="@+id/fragment_detail_race_time_performance_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="P E R F O R M A N C E :"
@@ -100,45 +103,29 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/fragment_detail_race_time_date_race"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:text="Le 26/03/2020 à Palaiseau"
-                    android:textSize="@dimen/h4_textsize"
-                    android:textColor="@color/colorText" />
-                <TextView
                     android:id="@+id/fragment_detail_race_time_level_race"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
+                    android:layout_marginVertical="10dp"
                     android:text="Niveau REG"
-                    android:textSize="@dimen/h4_textsize"
+                    android:textSize="@dimen/h3_textsize"
+                    android:gravity="left"
                     android:textColor="@color/colorText" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="10dp"
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/fragment_detail_race_time_distance_swim"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="50NL"
-                        android:gravity="left"
-                        android:textColor="@color/colorText"
-                        android:textSize="@dimen/h4_textsize" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="en"
+                        android:text="1500NL"
                         android:gravity="center"
                         android:textColor="@color/colorText"
-                        android:textSize="@dimen/h4_textsize" />
+                        android:textSize="@dimen/h3_textsize" />
 
                     <TextView
                         android:id="@+id/fragment_detail_race_time_time"
@@ -146,35 +133,53 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="00:24.50"
-                        android:gravity="right"
-                        android:textColor="@color/colorText"
-                        android:textSize="@dimen/h4_textsize" />
+                        android:gravity="center"
+                        android:textColor="@color/colorSecondaryLight"
+                        android:textSize="@dimen/h3_textsize" />
+
+                    <TextView
+                        android:id="@+id/fragment_detail_race_time_diff"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="(+00.00s)"
+                        android:textColor="@color/redDeep"
+                        android:textSize="@dimen/h3_textsize"
+                        android:gravity="center" />
                 </LinearLayout>
+
                 <TextView
-                    android:id="@+id/fragment_detail_race_time_diff"
+                    android:id="@+id/fragment_detail_race_time_points"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Amélioration de 0.43s"
-                    android:textColor="@color/colorText"
+                    android:layout_weight="1"
+                    android:hint="1 000 points"
+                    android:textSize="@dimen/h3_textsize"
+                    android:layout_marginVertical="10dp"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="20dp"
                     android:gravity="center"
-                    android:textSize="@dimen/h4_textsize" />
+                    android:background="@drawable/sh_fragment_competition_selecte_distance"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorText" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginVertical="10dp">
+                android:layout_marginHorizontal="30dp" >
 
                 <TextView
+                    android:id="@+id/fragment_detail_race_time_video_title"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -187,14 +192,19 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="@drawable/sh_round_btn"
-                    android:text="+"
+                    android:drawableLeft="@drawable/ic_add_white_24dp"
+                    android:paddingLeft="13dp"
                     android:textColor="@color/colorText" />
+
+                <Button
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:drawableLeft="@drawable/ic_ondemand_video_white_24dp"
+                    android:paddingLeft="13dp"
+                    android:textColor="@android:color/white"
+                    android:background="@drawable/sh_round_btn"/>
             </LinearLayout>
-            <VideoView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:layout_margin="20dp" />
         </LinearLayout>
 
     </LinearLayout>

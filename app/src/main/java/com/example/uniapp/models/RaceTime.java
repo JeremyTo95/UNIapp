@@ -53,6 +53,16 @@ public class RaceTime implements Serializable {
         return "SaisPas";
     }
 
+    public static String convertShortSwim(String swim) {
+        System.out.println(swim);
+        if (swim.equals("butterfly")) return "pap";
+        else if (swim.equals("backstroke")) return "dos";
+        else if (swim.equals("breaststroke")) return "br";
+        else if (swim.equals("freestyle")) return "NL";
+        else if (swim.equals("IM")) return "4N";
+        else return "JSP";
+    }
+
     public static int getCurrentColor(String swim) {
         switch (swim) {
             case "butterfly":
@@ -81,6 +91,7 @@ public class RaceTime implements Serializable {
     public void setCountry(String country) { this.country = country; }
     public void setAge(int age) { this.age = age; }
     public void setLevel(String level) { this.level = level; }
+    public void setPointFFN(int pointFFN) { this.pointFFN = pointFFN; }
 
     public String getDate() { return date; }
     public String getCity() { return city; }
@@ -93,4 +104,5 @@ public class RaceTime implements Serializable {
     public String getCountry() { return country; }
     public int getAge() { return age; }
     public String getLevel() { return level; }
+    public int getPointFFN() { return pointFFN; }
 }

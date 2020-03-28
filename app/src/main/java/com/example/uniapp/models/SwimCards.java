@@ -17,31 +17,11 @@ public class SwimCards {
 
     public SwimCards(List<RaceTime> allTimes, String titleSwim, int poolSize) {
         this.titleSwim = titleSwim;
-
-        switch (titleSwim) {
-            case "butterfly":
-                loadButterfly(allTimes, poolSize);
-                break;
-
-            case "backstroke":
-                loadBackstroke(allTimes, poolSize);
-                break;
-
-            case "breaststroke":
-                loadBreaststroke(allTimes, poolSize);
-                break;
-
-            case "freestyle":
-                loadFreestyle(allTimes, poolSize);
-                break;
-
-            case "IM":
-                load4N(allTimes, poolSize);
-                break;
-
-            default:
-                break;
-        }
+        if (titleSwim == "butterfly")   loadButterfly(allTimes, poolSize);
+        if (titleSwim == "backstroke")  loadBackstroke(allTimes, poolSize);
+        if (titleSwim == "breaststroke") loadBreaststroke(allTimes, poolSize);
+        if (titleSwim == "freestyle")   loadFreestyle(allTimes, poolSize);
+        if (titleSwim == "IM")          loadIM(allTimes, poolSize);
     }
 
     public void loadButterfly(List<RaceTime> allTimes, int poolSize) {
@@ -52,10 +32,9 @@ public class SwimCards {
         RaceTime best100 = MarketRaceTime.getBestTime(times100, 1);
         RaceTime best200 = MarketRaceTime.getBestTime(times200, 1);
         titleSwim = "P a p i l l o n";
-        time50  = best50.getTime();
-        time100 = best100.getTime();
-        time200 = best200.getTime();
-        gradientBackground = R.drawable.sh_gradient_blue;
+        time50    = best50.getTime();
+        time100   = best100.getTime();
+        time200   = best200.getTime();
         colorText = R.color.colorSecondary;
     }
 
@@ -67,10 +46,9 @@ public class SwimCards {
         RaceTime best100 = MarketRaceTime.getBestTime(times100, 1);
         RaceTime best200 = MarketRaceTime.getBestTime(times200, 1);
         titleSwim = "D o s";
-        time50  = best50.getTime();
-        time100 = best100.getTime();
-        time200 = best200.getTime();
-        gradientBackground = R.drawable.sh_gradient_green;
+        time50    = best50.getTime();
+        time100   = best100.getTime();
+        time200   = best200.getTime();
         colorText = R.color.greenLight;
     }
 
@@ -82,10 +60,9 @@ public class SwimCards {
         RaceTime best100 = MarketRaceTime.getBestTime(times100, 1);
         RaceTime best200 = MarketRaceTime.getBestTime(times200, 1);
         titleSwim = "B r a s s e";
-        time50   = best50.getTime();
-        time100  = best100.getTime();
-        time200  = best200.getTime();
-        gradientBackground = R.drawable.sh_gradient_orange;
+        time50    = best50.getTime();
+        time100   = best100.getTime();
+        time200   = best200.getTime();
         colorText = R.color.orangeLight;
     }
 
@@ -103,17 +80,16 @@ public class SwimCards {
         RaceTime best800  = MarketRaceTime.getBestTime(times800, 1);
         RaceTime best1500 = MarketRaceTime.getBestTime(times1500, 1);
         titleSwim = "N a g e  L i b r e";
-        time50   = best50.getTime();
-        time100  = best100.getTime();
-        time200  = best200.getTime();
-        time400  = best400.getTime();
-        time800  = best800.getTime();
-        time1500 = best1500.getTime();
-        gradientBackground = R.drawable.sh_gradient_red;
+        time50    = best50.getTime();
+        time100   = best100.getTime();
+        time200   = best200.getTime();
+        time400   = best400.getTime();
+        time800   = best800.getTime();
+        time1500  = best1500.getTime();
         colorText = R.color.redLight;
     }
 
-    public void load4N(List<RaceTime> allTimes, int poolSize) {
+    public void loadIM(List<RaceTime> allTimes, int poolSize) {
         RaceTime best100;
         RaceTime best200;
         RaceTime best400;
@@ -134,7 +110,6 @@ public class SwimCards {
         titleSwim = "4  N a g e s";
         time200 = best200.getTime();
         time400 = best400.getTime();
-        gradientBackground = R.drawable.sh_gradient_blue;
         colorText = R.color.blueLight;
     }
 

@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".controllers.fragments.CompetitionsFragment" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorBackground"
-        tools:context=".controllers.fragments.CompetitionsFragment">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/fragment_competition_competition_title"
@@ -61,6 +61,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/fragment_competition_viewpager"
                 android:layout_width="match_parent"
+                android:paddingHorizontal="20dp"
                 android:layout_height="175dp" />
 
             <LinearLayout
@@ -136,7 +137,8 @@
                     android:id="@+id/fragment_competition_add_race_time"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:text="+"
+                    android:drawableLeft="@drawable/ic_add_white_24dp"
+                    android:paddingLeft="13dp"
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/fragment_competition_button_textsize"
                     android:background="@drawable/sh_round_btn" />

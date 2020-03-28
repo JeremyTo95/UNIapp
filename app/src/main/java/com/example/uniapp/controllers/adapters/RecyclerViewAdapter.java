@@ -94,13 +94,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             time.setText(String.valueOf(raceTime.getTime()));
             time.setTextColor(itemView.getResources().getColor(RaceTime.getCurrentColor(raceTime.getSwim())));
 
-            if (MarketRaceTime.fetchTimeToFloat(raceTimeBis.getTime()) > MarketRaceTime.fetchTimeToFloat(raceTime.getTime())) {
-                diff.setTextColor(this.itemView.getResources().getColor(R.color.greenLight));
-                diff.setText(String.format("-%.2fs", (MarketRaceTime.fetchTimeToFloat(raceTimeBis.getTime()) - MarketRaceTime.fetchTimeToFloat(raceTime.getTime()))));
-            }
-            else {
+            if (MarketRaceTime.fetchTimeToFloat(raceTimeBis.getTime()) < MarketRaceTime.fetchTimeToFloat(raceTime.getTime())) {
                 diff.setTextColor(this.itemView.getResources().getColor(R.color.redDeep));
                 diff.setText(String.format("+%.2fs", (MarketRaceTime.fetchTimeToFloat(raceTime.getTime()) - MarketRaceTime.fetchTimeToFloat(raceTimeBis.getTime()))));
+            }
+            else {
+                diff.setTextColor(this.itemView.getResources().getColor(R.color.greenDeep));
+                diff.setText(String.format("-%.2fs", (MarketRaceTime.fetchTimeToFloat(raceTimeBis.getTime()) - MarketRaceTime.fetchTimeToFloat(raceTime.getTime()))));
             }
         }
 

@@ -58,6 +58,8 @@ public class SwimItemAdapter extends PagerAdapter {
         time5     = view.findViewById(R.id.swim_items_d5);
         time6     = view.findViewById(R.id.swim_items_d6);
 
+        for (int i = 0; i < mSwimCardsList.size(); i++) System.out.println(mSwimCardsList.get(i).getTitleSwim());
+
         // linearLayout.setBackgroundDrawable(view.getResources().getDrawable(mModelList.get(position).getGradientBackground()));
         titleSwim.setText(mSwimCardsList.get(position).getTitleSwim());
         titleSwim.setTextColor(view.getResources().getColor(mSwimCardsList.get(position).getColorText()));
