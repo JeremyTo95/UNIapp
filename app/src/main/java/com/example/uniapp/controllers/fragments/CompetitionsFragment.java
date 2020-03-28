@@ -37,6 +37,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static android.widget.AdapterView.*;
 
@@ -264,7 +265,7 @@ public class CompetitionsFragment extends Fragment {
                 customPopup.setTime(customPopup.getTimeEditText().getText().toString());
                 customPopup.checkInputFormatTime();
                 if (customPopup.isEnableConfirmed()) {
-                    RaceTime newRaceTime = new RaceTime(
+                    RaceTime newRaceTime = new RaceTime(UUID.randomUUID(),
                             customPopup.getDate(), customPopup.getCity(), customPopup.getCountry(),
                             "AS HERBLAY NATATION", customPopup.getDistanceRace(), customPopup.getSizePool(),
                             customPopup.getSwim(), customPopup.getTime(),
@@ -342,6 +343,7 @@ public class CompetitionsFragment extends Fragment {
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                        MarketRaceTime.removeRaceTime(allRaces, currentRaces.get(viewHolder.getAdapterPosition()));
                         currentRaces.remove(viewHolder.getAdapterPosition());
                         mRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                         configureAndShowLineChart(mLineChart, true);

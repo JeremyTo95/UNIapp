@@ -5,8 +5,10 @@ import com.example.uniapp.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class RaceTime implements Serializable {
+    private UUID id;
     private String date;
     private String city;
     private String country;
@@ -20,7 +22,8 @@ public class RaceTime implements Serializable {
     private int age;
     private String description;
 
-    public RaceTime(String date, String city, String country, String club, int distanceRace, int poolSize, String swim, String time, int pointFFN, String level, int age, String description) {
+    public RaceTime(UUID id, String date, String city, String country, String club, int distanceRace, int poolSize, String swim, String time, int pointFFN, String level, int age, String description) {
+        this.id = id;
         this.date = date;
         this.city = city;
         this.country = country;
@@ -80,6 +83,7 @@ public class RaceTime implements Serializable {
         }
     }
 
+    public void setId(UUID id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }
     public void setClub(String club) { this.club = club; }
@@ -93,16 +97,17 @@ public class RaceTime implements Serializable {
     public void setLevel(String level) { this.level = level; }
     public void setPointFFN(int pointFFN) { this.pointFFN = pointFFN; }
 
+    public UUID   getId() { return id; }
     public String getDate() { return date; }
     public String getCity() { return city; }
     public String getClub() { return club; }
-    public int getDistanceRace() { return distanceRace; }
-    public int getPoolSize() { return poolSize; }
+    public int    getDistanceRace() { return distanceRace; }
+    public int    getPoolSize() { return poolSize; }
     public String getSwim() { return swim; }
     public String getDescription() { return description; }
     public String getTime() { return time; }
     public String getCountry() { return country; }
-    public int getAge() { return age; }
+    public int    getAge() { return age; }
     public String getLevel() { return level; }
-    public int getPointFFN() { return pointFFN; }
+    public int    getPointFFN() { return pointFFN; }
 }
