@@ -1,18 +1,18 @@
 package com.example.uniapp.views;
 
-import com.example.uniapp.models.MarketRaceTime;
-import com.example.uniapp.models.RaceTime;
+import com.example.uniapp.models.MarketRaces;
+import com.example.uniapp.models.Race;
 
 import java.util.Comparator;
 
-public class TimeComparator implements Comparator<RaceTime> {
+public class TimeComparator implements Comparator<Race> {
     private float t1;
     private float t2;
 
     @Override
-    public int compare(RaceTime o1, RaceTime o2) {
-        t1 = MarketRaceTime.fetchTimeToFloat(o1.getTime());
-        t2 = MarketRaceTime.fetchTimeToFloat(o2.getTime());
+    public int compare(Race o1, Race o2) {
+        t1 = Race.fetchTimeToFloat(o1.getTime());
+        t2 = Race.fetchTimeToFloat(o2.getTime());
         if (t1 > t2) return 1;
         else if (t1 == t2) return 0;
         else return -1;

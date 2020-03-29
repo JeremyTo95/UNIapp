@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.SwimCards;
+import com.example.uniapp.views.SwimCards;
 
 import java.util.List;
 

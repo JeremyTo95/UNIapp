@@ -1,16 +1,14 @@
-package com.example.uniapp.models;
+package com.example.uniapp.views;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.SystemClock;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,12 +17,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.models.Race;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class CustomPopup extends Dialog {
     private String title;
@@ -49,7 +47,7 @@ public class CustomPopup extends Dialog {
     private Button   deniedButton;
     private Button   confirmedButton;
 
-    private RaceTime newRaceTime;
+    private Race mNewRace;
 
     public CustomPopup(final Activity activity) {
         super(activity, R.style.Theme_AppCompat_Dialog);

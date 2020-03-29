@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sh_gradient_background"
+    android:layout_margin="10dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="20dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/rv_training_items_date_sizePool_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Le 12/01/2020"
+            android:textSize="@dimen/h3_textsize"
+            android:textColor="@color/colorText" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_1"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_2"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_3"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_4"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_5"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="30dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+            <TextView
+                android:id="@+id/rv_training_items_serie_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="S E R I E  :"
+                android:layout_marginVertical="10dp"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorSecondaryLight" />
+            <TextView
+                android:id="@+id/rv_training_items_serie_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2x100NL\n4x50NL"
+                android:textSize="@dimen/h3_textsize"
+                android:gravity="center_vertical"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/rv_training_items_line_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/rv_training_items_difficulty_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="D I F F I C U L T E  : "
+            android:gravity="left"
+            android:textSize="@dimen/h3_textsize"
+            android:textColor="@color/colorSecondaryLight" />
+
+         <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal">
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_1"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_2"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_3"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_4"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/rv_training_items_difficulty_star_5"
+                android:layout_width="@dimen/rv_training_star_size"
+                android:layout_height="@dimen/rv_training_star_size"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:background="@color/transparent"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </LinearLayout> -->
+
+</LinearLayout>

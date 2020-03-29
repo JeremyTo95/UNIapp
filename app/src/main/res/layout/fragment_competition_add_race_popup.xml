@@ -224,7 +224,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_margin="10dp"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginVertical="15dp"
             android:orientation="horizontal" >
 
             <Button
@@ -233,6 +234,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="A N N U L E R"
+                android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/custom_popup_textsize"
                 android:textColor="@color/redLight"
                 android:background="@color/transparent" />
@@ -243,6 +245,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="C O N F I R M E R"
+                android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/custom_popup_textsize"
                 android:textColor="@color/blueLight"
                 android:background="@color/transparent" />

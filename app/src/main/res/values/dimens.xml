@@ -17,5 +17,7 @@
     <dimen name="h4_textsize">15sp</dimen>
     <dimen name="h5_textsize">10sp</dimen>
 
+    <dimen name="rv_training_star_size">30dp</dimen>
+
 
 </resources>

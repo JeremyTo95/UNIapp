@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.fragments.DetailRaceTimeFragment;
-import com.example.uniapp.models.RaceTime;
 
 public class DetailRaceTimeActivity extends AppCompatActivity {
     private DetailRaceTimeFragment mDetailRaceTimeFragment;

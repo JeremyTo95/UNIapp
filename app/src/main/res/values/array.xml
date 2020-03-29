@@ -32,4 +32,17 @@
         <item>NAT</item>
         <item>INTER</item>
     </string-array>
+
+    <string-array name="swims">
+        <item>PAPILLON</item>
+        <item>DOS</item>
+        <item>BRASSE</item>
+        <item>NAGE LIBRE</item>
+        <item>4 NAGES</item>
+    </string-array>
+
+    <string-array name="sizePool">
+        <item>B A S S I N  2 5 M</item>
+        <item>B A S S I N  5 0 M</item>
+    </string-array>
 </resources>

@@ -1,10 +1,11 @@
 package com.example.uniapp.views;
 
-import com.example.uniapp.models.RaceTime;
+import com.example.uniapp.models.Race;
+import com.example.uniapp.models.Training;
 
 import java.util.Comparator;
 
-public class DateComparator implements Comparator<RaceTime> {
+public class TrainingDateComparator implements Comparator<Training> {
     private int year;
     private int month;
     private int day;
@@ -25,7 +26,7 @@ public class DateComparator implements Comparator<RaceTime> {
         return Integer.parseInt(day);
     }
     @Override
-    public int compare(RaceTime o1, RaceTime o2) {
+    public int compare(Training o1, Training o2) {
         int cptO1 = getDayValue(o1.getDate()) + getMonthValue(o1.getDate()) + getYearValue(o1.getDate());
         int cptO2 = getDayValue(o2.getDate()) + getMonthValue(o2.getDate()) + getYearValue(o2.getDate());
 

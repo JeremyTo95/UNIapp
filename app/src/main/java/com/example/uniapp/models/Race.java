@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class RaceTime implements Serializable {
+public class Race implements Serializable {
     private UUID id;
     private String date;
     private String city;
@@ -22,7 +22,7 @@ public class RaceTime implements Serializable {
     private int age;
     private String description;
 
-    public RaceTime(UUID id, String date, String city, String country, String club, int distanceRace, int poolSize, String swim, String time, int pointFFN, String level, int age, String description) {
+    public Race(UUID id, String date, String city, String country, String club, int distanceRace, int poolSize, String swim, String time, int pointFFN, String level, int age, String description) {
         this.id = id;
         this.date = date;
         this.city = city;
@@ -38,10 +38,10 @@ public class RaceTime implements Serializable {
         this.description = description;
     }
 
-    public RaceTime() { }
+    public Race() { }
 
-    public static String convertSwim(String swim) {
-        switch (swim) {
+    public static String convertSwimFromEnglishToFrench(String swim) {
+        switch (swim.toLowerCase()) {
             case "butterfly":
                 return "Papillon";
             case "backstroke":
@@ -66,6 +66,16 @@ public class RaceTime implements Serializable {
         else return "JSP";
     }
 
+    public static String convertSwimFromFrenchToEnglish(String swim) {
+        swim = swim.toLowerCase();
+        if (swim.equals("papillon")) return "butterfly";
+        else if (swim.equals("dos")) return "backstroke";
+        else if (swim.equals("brasse")) return "breaststroke";
+        else if (swim.equals("nage libre")) return "freestyle";
+        else if (swim.equals("4 nages")) return "IM";
+        else return "JSP";
+    }
+
     public static int getCurrentColor(String swim) {
         switch (swim) {
             case "butterfly":
@@ -81,6 +91,19 @@ public class RaceTime implements Serializable {
             default:
                 return -1;
         }
+    }
+
+    public static float fetchTimeToFloat(String time) {
+        float myTime = 0.0f;
+        if (time.length() == 8) {
+            myTime += Float.parseFloat(String.valueOf(time.charAt(0) )) * 10 * 60;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(1))) * 60;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(3))) * 10;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(4)));
+            myTime += Float.parseFloat(String.valueOf(time.charAt(6))) / 10;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 100;
+        }
+        return myTime;
     }
 
     public void setId(UUID id) { this.id = id; }
