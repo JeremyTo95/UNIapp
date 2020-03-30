@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class DetailRaceTimeFragment extends Fragment {
+public class DetailRaceFragment extends Fragment {
     private Race mRace;
     private Race mRaceUp;
     private Race mRaceDown;
@@ -40,7 +40,7 @@ public class DetailRaceTimeFragment extends Fragment {
     private TextView points;
     private TextView diff;
 
-    public DetailRaceTimeFragment() { }
+    public DetailRaceFragment() { }
 
 
     @SuppressLint("SetTextI18n")

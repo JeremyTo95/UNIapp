@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.Training;
 import com.example.uniapp.views.TrainingDateComparator;
+import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +35,10 @@ import java.util.List;
 
 public class TrainingsFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
+    private AppBarLayout appBarLayout;
+    private RelativeLayout relativeLayout;
     private List<Training> allTrainings;
+    private int screenHeight;
     private List<Training> currentTrainings;
 
     private int sizePool;
@@ -57,6 +63,8 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_training, container, false);
+        appBarLayout   = layoutInflater.findViewById(R.id.fragment_training_appbar);
+        screenHeight   = getResources().getDisplayMetrics().heightPixels;
 
         training_title       = (TextView) layoutInflater.findViewById(R.id.fragment_training_title);
         int[] idButtons = {

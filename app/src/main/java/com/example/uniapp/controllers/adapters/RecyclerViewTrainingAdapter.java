@@ -75,7 +75,7 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
 
             date_sizePool_title.setText(training.getDate());
             for (int i = 0; i < training.getSets().size(); i++)
-                text += training.getSets().get(i) + "x" + training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + "\n";
+                text += training.getSets().get(i) + " x " + training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + "\n";
             text = text.substring(0, text.length() - 1);
             serie_content.setText(text);
 

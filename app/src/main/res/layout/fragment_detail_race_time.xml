@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackground"
-    tools:context=".controllers.fragments.DetailRaceTimeFragment">
+    tools:context=".controllers.fragments.DetailRaceFragment">
 
     <TextView
         android:id="@+id/fragment_detail_race_time_bigtitle"
@@ -15,6 +15,7 @@
         android:text="D E T A I L S   C O U R S E"
         android:textColor="@color/colorSecondaryLight"
         android:gravity="center"
+        android:fontFamily="sans-serif-light"
         android:textSize="@dimen/fragment_bigtitle_textsize"/>
 
     <LinearLayout

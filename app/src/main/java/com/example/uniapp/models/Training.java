@@ -13,8 +13,9 @@ public class Training {
     private int sizePool;
     private String date;
     private String city;
+    private List<Integer> zone;
 
-    public Training(UUID id, String date, String city, int sizePool, List<String> swims, List<Integer> sets, List<Integer> distance, List<String> times, int difficulty) {
+    public Training(UUID id, String date, String city, int sizePool, List<String> swims, List<Integer> sets, List<Integer> distance, List<String> times, int difficulty, List<Integer> zone) {
         this.id = id;
         this.date = date;
         this.city = city;
@@ -24,6 +25,7 @@ public class Training {
         this.distance = distance;
         this.times = times;
         this.difficulty = difficulty;
+        this.zone = zone;
     }
 
     public int getTotalSets() {
@@ -51,6 +53,7 @@ public class Training {
     public List<Integer> getDistance() { return distance; }
     public List<String> getTimes() { return times; }
     public int getDifficulty() { return difficulty; }
+    public List<Integer> getZone() { return zone; }
 
     public void setId(UUID id) { this.id = id; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
@@ -61,4 +64,5 @@ public class Training {
     public void setDistance(List<Integer> distance) { this.distance = distance; }
     public void setTimes(List<String> times) { this.times = times; }
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
+    public void setZone(List<Integer> zone) { this.zone = zone; }
 }

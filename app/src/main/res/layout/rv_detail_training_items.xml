@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sh_gradient_background"
+    android:layout_margin="10dp"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/rv_detail_training_items_serie_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="S E R I E : "
+                android:gravity="center"
+                android:fontFamily="sans-serif-light"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorSecondaryLight" />
+            <TextView
+                android:id="@+id/rv_detail_training_items_serie_subtitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1 x 100NL"
+                android:gravity="center"
+                android:fontFamily="sans-serif-light"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorText" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:orientation="vertical" >
+            <TextView
+                android:id="@+id/rv_detail_training_items_TIME_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="T E M P S : "
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-light"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorSecondaryLight" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_detail_training_items_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/rv_training_items_line_chart"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
