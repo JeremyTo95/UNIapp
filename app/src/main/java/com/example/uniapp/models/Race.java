@@ -120,6 +120,13 @@ public class Race implements Serializable {
         return (min + ":" + sec + ":" + ms);
     }
 
+    public static String compareTwoTimes(String raceDown, String race, String raceUp) {
+        String result = "";
+        if (Race.fetchTimeToFloat(race) > Race.fetchTimeToFloat(raceUp)) result = String.format("(+%.2fs)", (Race.fetchTimeToFloat(race)) - Race.fetchTimeToFloat(raceUp));
+        else result = String.format("(-%.2fs)", (Race.fetchTimeToFloat(raceDown) - Race.fetchTimeToFloat(race)));
+        return result;
+    }
+
     public void setId(UUID id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }

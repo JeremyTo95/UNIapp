@@ -16,14 +16,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RecyclerViewTrainingAdapter;
-import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.Training;
 import com.example.uniapp.views.TrainingDateComparator;
@@ -96,7 +94,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         swim       = "all";
         difficulty = 0;
 
-        allTrainings     = MarketTrainings.initTrainings();
+        allTrainings     = MarketTrainings.initAllTrainings();
         currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(allTrainings, sizePool, swim, difficulty);
 
         updateColors();

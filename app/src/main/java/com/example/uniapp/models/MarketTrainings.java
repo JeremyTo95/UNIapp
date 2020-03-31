@@ -14,7 +14,7 @@ public class MarketTrainings {
 
     public MarketTrainings() { }
 
-    public static ArrayList<Training> initTrainings() {
+    public static ArrayList<Training> initAllTrainings() {
         ArrayList<Training> allTrainings = new ArrayList<Training>();
 
         allTrainings.add(new Training(UUID.randomUUID(), "20/02/2020", "HERBLAY", 25, Arrays.asList(new String[] {"freestyle", "butterfly"}), Arrays.asList(new Integer[] {1, 2}), Arrays.asList(new Integer[] {100, 50}), Arrays.asList(new String[] {"01:00:20", "00:30.20", "00:32.40"}), 3, Arrays.asList(new Integer[] {7, 7})));

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RecyclerViewRaceAdapter;
 import com.example.uniapp.controllers.adapters.SwimItemAdapter;
+import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.views.CustomPopup;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;
@@ -50,24 +51,18 @@ TODO: Mettre en place des animations pour le graphique quand on change le viewPa
  */
 
 public class CompetitionsFragment extends Fragment {
-    private View layoutInflater;
-
-    private int            sizePool;
-    private String         swim;
-    private int            distance;
+    private int        sizePool;
+    private String     swim;
+    private int        distance;
     private List<Race> allRaces;
-
-    public List<Race> getCurrentRaces() { return currentRaces; }
-    public void setCurrentRaces(List<Race> currentRaces) { this.currentRaces = currentRaces; }
-
     private List<Race> currentRaces;
 
+    private View layoutInflater;
     private TextView            competition_title;
     private TextView            progression_title;
     private Button              btn_25m;
     private Button              btn_50m;
     private ViewPager           mViewPager;
-    private SwimItemAdapter     mSwimItemAdapter;
     private int                 viewPagerIndex;
     private List<SwimCards>     mSwimCardsList;
     private Spinner             selectSwimDistance;
@@ -77,13 +72,12 @@ public class CompetitionsFragment extends Fragment {
     private RecyclerView        mRecyclerView;
     private RecyclerViewRaceAdapter mRecyclerViewRaceAdapter;
 
-    public CompetitionsFragment() { }
+    public CompetitionsFragment(List<Race> allRaces) { this.allRaces = allRaces; }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_competition, container, false);
 
-        allRaces       = MarketRaces.initAllTimes();
         sizePool       = 25;
         distance       = 50;
         viewPagerIndex = 0;

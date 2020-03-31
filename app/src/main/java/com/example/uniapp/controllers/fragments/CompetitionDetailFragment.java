@@ -20,10 +20,10 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class RaceDetailFragment extends Fragment {
-    private Race mRace;
-    private Race mRaceUp;
-    private Race mRaceDown;
+public class CompetitionDetailFragment extends Fragment {
+    private Race race;
+    private Race raceUp;
+    private Race raceDown;
     private List<Race> subListRaces;
 
     private TextView bigTitle;
@@ -40,7 +40,7 @@ public class RaceDetailFragment extends Fragment {
     private TextView points;
     private TextView diff;
 
-    public RaceDetailFragment() { }
+    public CompetitionDetailFragment() { }
 
 
     @SuppressLint("SetTextI18n")
@@ -48,11 +48,11 @@ public class RaceDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view     = inflater.inflate(R.layout.fragment_race_detail, container, false);
         subListRaces  = (ArrayList<Race>) getActivity().getIntent().getSerializableExtra("EXTRA_SUBLIST_RACES");
-        mRace = (Race)       getActivity().getIntent().getSerializableExtra("EXTRA_RACE_SELECTED");
+        race          = (Race)            getActivity().getIntent().getSerializableExtra("EXTRA_RACE_SELECTED");
 
         Collections.sort(subListRaces, new TimeComparator());
-        mRaceUp = MarketRaces.getBestTime(subListRaces, 1);
-        mRaceDown = MarketRaces.getBestTime(subListRaces, 2);
+        raceUp = MarketRaces.getBestTime(subListRaces, 1);
+        raceDown = MarketRaces.getBestTime(subListRaces, 2);
 
         bigTitle         = (TextView) view.findViewById(R.id.fragment_detail_race_time_bigtitle);
         swimmerTitle     = (TextView) view.findViewById(R.id.fragment_detail_race_time_swimmer_title);
@@ -68,25 +68,19 @@ public class RaceDetailFragment extends Fragment {
         diff             = (TextView) view.findViewById(R.id.fragment_detail_race_time_diff);
         points           = (TextView) view.findViewById(R.id.fragment_detail_race_time_points);
 
-        if (Race.fetchTimeToFloat(mRace.getTime()) > Race.fetchTimeToFloat(mRaceUp.getTime())) {
-            diff.setText(String.format("+%.2fs", (Race.fetchTimeToFloat(mRace.getTime())) - Race.fetchTimeToFloat(mRaceUp.getTime())));
-            diff.setTextColor(getContext().getResources().getColor(R.color.redDeep));
-        } else {
-            diff.setText(String.format("-%.2fs", (Race.fetchTimeToFloat(mRaceDown.getTime()) - Race.fetchTimeToFloat(mRace.getTime()))));
-            diff.setTextColor(getContext().getResources().getColor(R.color.greenDeep));
-        }
-
         fullname.setText("Jérémy" + " " + "TOURARI");
         birthday.setText("11/11/1999 (21 ans)");
         club.setText("AS HERBLAY NATATION");
+        diff.setText(Race.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
+        diff.setTextColor(getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
 
-        date_city.setText("Le " + mRace.getDate() + " à " + mRace.getCity());
-        level.setText("Niveau " + mRace.getLevel());
-        System.out.println(mRace.getSwim());
-        distance_swim.setText(mRace.getDistanceRace() + " " + Race.convertShortSwim(mRace.getSwim()));
-        time.setText(mRace.getTime());
-        System.out.println(mRace.getPointFFN());
-        points.setText(String.valueOf(mRace.getPointFFN()) + " points");
+        date_city.setText("Le " + race.getDate() + " à " + race.getCity());
+        level.setText("Niveau " + race.getLevel());
+        System.out.println(race.getSwim());
+        distance_swim.setText(race.getDistanceRace() + " " + Race.convertShortSwim(race.getSwim()));
+        time.setText(race.getTime());
+        System.out.println(race.getPointFFN());
+        points.setText(race.getPointFFN() + " points");
 
         updateColors();
 
@@ -94,15 +88,15 @@ public class RaceDetailFragment extends Fragment {
     }
 
     private void updateColors() {
-        bigTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(mRace.getSwim())));
-        swimmerTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(mRace.getSwim())));
-        performanceTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(mRace.getSwim())));
-        videoTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(mRace.getSwim())));
-        time.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(mRace.getSwim())));
+        bigTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        swimmerTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        performanceTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        videoTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        time.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
     }
 
 
-    public Race getRace() { return mRace; }
+    public Race getRace() { return race; }
     public TextView getFullname() { return fullname; }
     public TextView getBirthday() { return birthday; }
     public TextView getClub() { return club; }
@@ -121,7 +115,7 @@ public class RaceDetailFragment extends Fragment {
     public void setSwimmerTitle(TextView swimmerTitle) { this.swimmerTitle = swimmerTitle; }
     public void setPerformanceTitle(TextView performanceTitle) { this.performanceTitle = performanceTitle; }
     public void setVideoTitle(TextView videoTitle) { this.videoTitle = videoTitle; }
-    public void setRace(Race race) { this.mRace = race; }
+    public void setRace(Race race) { this.race = race; }
     public void setFullname(TextView fullname) { this.fullname = fullname; }
     public void setBirthday(TextView birthday) { this.birthday = birthday; }
     public void setClub(TextView club) { this.club = club; }
