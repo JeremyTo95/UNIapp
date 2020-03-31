@@ -106,6 +106,20 @@ public class Race implements Serializable {
         return myTime;
     }
 
+    public static String fetchFloatToTime(float time) {
+        int myTime = 0;
+        myTime = (int) (time * 100);
+        String ms  = String.valueOf(myTime % 100);
+        String sec = String.valueOf((myTime/100) % 60);
+        String min = String.valueOf((myTime/6000) % 60);
+
+        if (min.length() < 2) min = "0" + min;
+        if (sec.length() < 2) sec = "0" + sec;
+        if (ms.length() < 2)  ms = "0" + ms;
+
+        return (min + ":" + sec + ":" + ms);
+    }
+
     public void setId(UUID id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }

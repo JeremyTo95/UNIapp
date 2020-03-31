@@ -1,5 +1,6 @@
 package com.example.uniapp.controllers.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.DetailRaceTimeActivity;
+import com.example.uniapp.controllers.activities.DetailTrainingActivity;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
 import com.github.mikephil.charting.animation.Easing;
@@ -19,6 +22,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +44,14 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Training training = allTrainings.get(position);
         holder.display(training);
+        holder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
+                intent.putExtra("EXTRA_TRAINING_SELECTED", (Serializable) training);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -83,7 +95,6 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
                 stars.get(i).setCompoundDrawablesWithIntrinsicBounds(this.itemView.getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
             }
             configureAndShowLineChart(lineChart, true);
-
         }
 
         private void configureAndShowLineChart(LineChart lineChart, boolean isAnimation) {
@@ -95,13 +106,7 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
             int[] colors = {R.color.greenLight, R.color.redLight, R.color.blueDeep, R.color.orangeLight, R.color.orangeLight};
 
             for (int i = 0; i < allTrainings.get(getAdapterPosition()).getSets().size(); i++) {
-                int startIndex = 0;
-                int endIndex = 0;
-                for (int j = 0; j < i; j++) {
-                    startIndex += allTrainings.get(getAdapterPosition()).getSets().get(j);
-                }
-                endIndex = startIndex + allTrainings.get(getAdapterPosition()).getSets().get(i);
-                ArrayList<Entry> yValues = setupTimesLineChart(i, startIndex, endIndex);
+                ArrayList<Entry> yValues = setupTimesLineChart(allTrainings.get(getAdapterPosition()), i);
                 lineDataSet = new LineDataSet(yValues, allTrainings.get(getAdapterPosition()).getDistance().get(i) + "" + Race.convertShortSwim(allTrainings.get(getAdapterPosition()).getSwims().get(i)));
                 lineDataSet.setLineWidth(1.5f);
                 lineDataSet.setCircleRadius(3f);
@@ -132,12 +137,14 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
             lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.colorText));
         }
 
-        private ArrayList<Entry> setupTimesLineChart(int setIndex, int startIndex, int endIndex) {
+        private ArrayList<Entry> setupTimesLineChart(Training training, int setIndex) {
             ArrayList<Entry> result = new ArrayList<>();
             int cpt = 0;
-
+            int startIndex = Training.getStartIndexFromSetIndex(training.getSets(), setIndex);
+            int endIndex = Training.getEndIndexFromSetIndex(training.getSets(), setIndex);
+            System.out.println("index : "+ setIndex + " swims : "+  training.getSwims().toString() + " sets : "+ training.getSets() + " times : " + training.getTimes() + " startIndex : "+  startIndex + " endIndex : " + endIndex);
             for (int i = startIndex; i < endIndex; i++) {
-                result.add(new Entry(cpt, Race.fetchTimeToFloat(allTrainings.get(this.getAdapterPosition()).getTimes().get(i))));
+                result.add(new Entry(cpt, Race.fetchTimeToFloat(training.getTimes().get(i))));
                 cpt++;
             }
             return result;

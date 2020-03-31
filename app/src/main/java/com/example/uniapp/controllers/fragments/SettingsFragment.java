@@ -15,6 +15,7 @@ public class SettingsFragment extends Fragment {
 
     public SettingsFragment() { }
 
+    //TOTO: AJOUTER LES RECORDS DU CLUB
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -348,7 +348,6 @@ public class CompetitionsFragment extends Fragment {
                         mRecyclerViewRaceAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                         configureAndShowLineChart(mLineChart, true);
                     }
-
                 };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(mRecyclerView);

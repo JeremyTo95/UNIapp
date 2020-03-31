@@ -6,16 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.fragments.DetailRaceFragment;
+import com.example.uniapp.controllers.fragments.RaceDetailFragment;
 
 public class DetailRaceTimeActivity extends AppCompatActivity {
-    private DetailRaceFragment mDetailRaceFragment;
+    private RaceDetailFragment mRaceDetailFragment;
     public static final String EXTRA_BUTTON_TAG = "com.example.openclassroom3.controllers.activities.DetailActivities.EXTRA_BUTTON_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_race);
+        setContentView(R.layout.activity_race_detail);
         configureAndShowFragment();
     }
 
@@ -25,11 +25,11 @@ public class DetailRaceTimeActivity extends AppCompatActivity {
     }
 
     public void configureAndShowFragment() {
-        mDetailRaceFragment = (DetailRaceFragment) getSupportFragmentManager().findFragmentById(R.id.activity_detail_race);
+        mRaceDetailFragment = (RaceDetailFragment) getSupportFragmentManager().findFragmentById(R.id.activity_detail_race);
 
-        if (mDetailRaceFragment == null) {
-            mDetailRaceFragment = new DetailRaceFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.activity_detail_race, mDetailRaceFragment).commit();
+        if (mRaceDetailFragment == null) {
+            mRaceDetailFragment = new RaceDetailFragment();
+            getSupportFragmentManager().beginTransaction().add(R.id.activity_detail_race, mRaceDetailFragment).commit();
         }
     }
 
@@ -59,5 +59,4 @@ public class DetailRaceTimeActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
-
 }

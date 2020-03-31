@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/sh_gradient_background"
     android:layout_margin="10dp"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -63,18 +63,22 @@
                 android:textSize="@dimen/h3_textsize"
                 android:textColor="@color/colorSecondaryLight" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_detail_training_items_recyclerview"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_detail_training_items_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
 
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/rv_training_items_line_chart"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1"/>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/rv_detail_training_items_line_chart"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_weight="1"/>
     </LinearLayout>
 </LinearLayout>

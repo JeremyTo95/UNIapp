@@ -20,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class DetailRaceFragment extends Fragment {
+public class RaceDetailFragment extends Fragment {
     private Race mRace;
     private Race mRaceUp;
     private Race mRaceDown;
@@ -40,13 +40,13 @@ public class DetailRaceFragment extends Fragment {
     private TextView points;
     private TextView diff;
 
-    public DetailRaceFragment() { }
+    public RaceDetailFragment() { }
 
 
     @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view     = inflater.inflate(R.layout.fragment_detail_race_time, container, false);
+        View view     = inflater.inflate(R.layout.fragment_race_detail, container, false);
         subListRaces  = (ArrayList<Race>) getActivity().getIntent().getSerializableExtra("EXTRA_SUBLIST_RACES");
         mRace = (Race)       getActivity().getIntent().getSerializableExtra("EXTRA_RACE_SELECTED");
 

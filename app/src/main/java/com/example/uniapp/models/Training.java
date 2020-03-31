@@ -1,9 +1,10 @@
 package com.example.uniapp.models;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
-public class Training {
+public class Training implements Serializable {
     private UUID id;
     private List<String> swims;
     private List<Integer> sets;
@@ -44,6 +45,33 @@ public class Training {
         return tot;
     }
 
+    public static int getStartIndexFromSetIndex(List<Integer> allSets, int setIndex) {
+        int startIndex = 0;
+        for (int i = 0; i < setIndex; i++) startIndex += allSets.get(i);
+        System.out.println("startIndex : " + startIndex);
+        return startIndex;
+    }
+
+    public static int getEndIndexFromSetIndex(List<Integer> allSets, int setIndex) {
+        return getStartIndexFromSetIndex(allSets, setIndex) + allSets.get(setIndex);
+    }
+
+    public static String convertCompetitionTimeToZoneTime(String time, int zone) {
+        float timeFloat = Race.fetchTimeToFloat(time);
+        return Race.fetchFloatToTime(timeFloat/convertZoneToPercent(zone));
+    }
+
+    public static float convertZoneToPercent(int zone) {
+        if (zone == 1) return 0.60f;
+        else if (zone == 2) return 0.65f;
+        else if (zone == 3) return 0.75f;
+        else if (zone == 4) return 0.80f;
+        else if (zone == 5) return 0.85f;
+        else if (zone == 6) return 0.90f;
+        else if (zone == 7) return 0.95f;
+        else return 0;
+    }
+
     public UUID getId() { return id; }
     public int getSizePool() { return sizePool; }
     public String getDate() { return date; }
@@ -53,7 +81,7 @@ public class Training {
     public List<Integer> getDistance() { return distance; }
     public List<String> getTimes() { return times; }
     public int getDifficulty() { return difficulty; }
-    public List<Integer> getZone() { return zone; }
+    public List<Integer> getZones() { return zone; }
 
     public void setId(UUID id) { this.id = id; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
