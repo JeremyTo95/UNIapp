@@ -91,9 +91,9 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
             text = text.substring(0, text.length() - 1);
             serie_content.setText(text);
 
-            for (int i = 0; i < training.getDifficulty(); i++) {
-                stars.get(i).setCompoundDrawablesWithIntrinsicBounds(this.itemView.getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
-            }
+            for (int i = 0; i < stars.size(); i++) stars.get(i).setClickable(false);
+            for (int i = 0; i < training.getDifficulty(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(this.itemView.getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+
             configureAndShowLineChart(lineChart, true);
         }
 
@@ -134,6 +134,7 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
             lineChart.getAxisLeft().setSpaceBottom(40);
             lineChart.getAxisRight().setEnabled(false);
             lineChart.getXAxis().setEnabled(false);
+            lineChart.setTouchEnabled(false);
             lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.colorText));
         }
 
@@ -142,7 +143,6 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
             int cpt = 0;
             int startIndex = Training.getStartIndexFromSetIndex(training.getSets(), setIndex);
             int endIndex = Training.getEndIndexFromSetIndex(training.getSets(), setIndex);
-            System.out.println("index : "+ setIndex + " swims : "+  training.getSwims().toString() + " sets : "+ training.getSets() + " times : " + training.getTimes() + " startIndex : "+  startIndex + " endIndex : " + endIndex);
             for (int i = startIndex; i < endIndex; i++) {
                 result.add(new Entry(cpt, Race.fetchTimeToFloat(training.getTimes().get(i))));
                 cpt++;

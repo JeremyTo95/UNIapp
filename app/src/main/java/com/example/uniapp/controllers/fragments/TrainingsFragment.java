@@ -96,11 +96,8 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         swim       = "all";
         difficulty = 0;
 
-        allTrainings = MarketTrainings.initTrainings();
+        allTrainings     = MarketTrainings.initTrainings();
         currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(allTrainings, sizePool, swim, difficulty);
-
-        System.out.println(allTrainings.size() + " | " + currentTrainings.size());
-
 
         updateColors();
         configureAndShowSizePoolDropdown();
@@ -191,15 +188,14 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         adapter.notifyDataSetChanged();
         dropdownPool.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+            @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String newSizePool = parent.getItemAtPosition(position).toString();
                 newSizePool = newSizePool.replaceAll("[a-zA-Z ]", "");
                 sizePool = Integer.parseInt(newSizePool);
                 updateRecyclerViewTrainingList();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 }

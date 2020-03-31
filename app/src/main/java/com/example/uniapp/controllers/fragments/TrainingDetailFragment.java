@@ -58,18 +58,22 @@ public class TrainingDetailFragment extends Fragment {
                 R.id.fragment_training_detail_difficulty_star_5
         };
         for (int i = 0; i < 5; i++) difficultyStars.add((Button) layoutInflater.findViewById(idStars[i]));
+        for (int i = 0; i < difficultyStars.size(); i++) difficultyStars.get(i).setEnabled(false);
+
         serieRecyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_training_detail_graphs);
 
         updateTextView();
+        fillDifficulty();
         updateRecyclerViewTrainingList();
 
         return layoutInflater;
     }
 
     private void updateRecyclerViewTrainingList() {
-        serieRecyclerViewAdapter = new RecyclerViewTrainingDetailAdapter(training);
+        serieRecyclerViewAdapter = new RecyclerViewTrainingDetailAdapter(getContext(), training);
         serieRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         serieRecyclerView.setAdapter(serieRecyclerViewAdapter);
+        serieRecyclerView.setNestedScrollingEnabled(false);
         serieRecyclerViewAdapter.notifyDataSetChanged();
     }
 
@@ -88,6 +92,13 @@ public class TrainingDetailFragment extends Fragment {
         trainingZoneTimeStr = trainingZoneTimeStr.substring(0, trainingZoneTimeStr.length() - 1);
         competitionTime.setText(competitionTimeStr);
         zoneTime.setText(trainingZoneTimeStr);
+    }
+
+    private void fillDifficulty() {
+        for (int i = 0; i < training.getDifficulty(); i++) {
+            difficultyStars.get(i).setEnabled(false);
+            difficultyStars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+        }
     }
 
     private List<String> getCompetitionRaceTime() {

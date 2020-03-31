@@ -20,6 +20,7 @@ import com.example.uniapp.controllers.activities.MainActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainFragment extends Fragment {
+    // TODO: Proposer les outils tels que : Convertisseur de temps en zone
     public MainFragment() { }
 
     @Override
