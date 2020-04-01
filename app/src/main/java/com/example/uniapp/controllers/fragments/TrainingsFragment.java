@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RecyclerViewTrainingAdapter;
 import com.example.uniapp.models.MarketTrainings;
+import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
 import com.example.uniapp.views.TrainingDateComparator;
 import com.google.android.material.appbar.AppBarLayout;
@@ -34,10 +35,9 @@ import java.util.List;
 public class TrainingsFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
     private AppBarLayout appBarLayout;
-    private RelativeLayout relativeLayout;
-    private List<Training> allTrainings;
-    private int screenHeight;
     private List<Training> currentTrainings;
+    private List<Training> allTrainings;
+    private List<Race> allRaces;
 
     private int sizePool;
     private String swim;
@@ -56,47 +56,18 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private RecyclerView trainingRecyclerView;
     private RecyclerViewTrainingAdapter trainingRecyclerViewAdapter;
 
-    public TrainingsFragment() { }
+    public TrainingsFragment(List<Training> allTrainings, List<Race> allRaces) { this.allTrainings = allTrainings; this.allRaces = allRaces; }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_training, container, false);
         appBarLayout   = layoutInflater.findViewById(R.id.fragment_training_appbar);
-        screenHeight   = getResources().getDisplayMetrics().heightPixels;
-
-        training_title       = (TextView) layoutInflater.findViewById(R.id.fragment_training_title);
-        int[] idButtons = {
-                R.id.fragment_training_difficulty_star_1,
-                R.id.fragment_training_difficulty_star_2,
-                R.id.fragment_training_difficulty_star_3,
-                R.id.fragment_training_difficulty_star_4,
-                R.id.fragment_training_difficulty_star_5
-        };
-        btn_difficulty_stars = new ArrayList<Button>();
-        for (int i = 0; i < 5; i++) btn_difficulty_stars.add((Button) layoutInflater.findViewById(idButtons[i]));
-        for (int i = 0; i < 5; i++) btn_difficulty_stars.get(i).setOnClickListener(this);
-        btn_all              = (Button) layoutInflater.findViewById(R.id.fragment_training_all);
-        btn_butterfly        = (Button) layoutInflater.findViewById(R.id.fragment_training_butterfly);
-        btn_backstroke       = (Button) layoutInflater.findViewById(R.id.fragment_training_backstroke);
-        btn_breaststroke     = (Button) layoutInflater.findViewById(R.id.fragment_training_breaststroke);
-        btn_freestyle        = (Button) layoutInflater.findViewById(R.id.fragment_training_freestyle);
-        btn_IM               = (Button) layoutInflater.findViewById(R.id.fragment_training_IM);
-        trainingRecyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_training_recycler_view);
-
-        btn_all.setOnClickListener(this);
-        btn_butterfly.setOnClickListener(this);
-        btn_backstroke.setOnClickListener(this);
-        btn_breaststroke.setOnClickListener(this);
-        btn_freestyle.setOnClickListener(this);
-        btn_IM.setOnClickListener(this);
 
         sizePool   = 25;
         swim       = "all";
         difficulty = 0;
 
-        allTrainings     = MarketTrainings.initAllTrainings();
-        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(allTrainings, sizePool, swim, difficulty);
-
+        configureHeader();
         updateColors();
         configureAndShowSizePoolDropdown();
         updateRecyclerViewTrainingList();
@@ -130,6 +101,35 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         updateRecyclerViewTrainingList();
     }
 
+    private void configureHeader() {
+        int[] idButtons = {
+                R.id.fragment_training_difficulty_star_1,
+                R.id.fragment_training_difficulty_star_2,
+                R.id.fragment_training_difficulty_star_3,
+                R.id.fragment_training_difficulty_star_4,
+                R.id.fragment_training_difficulty_star_5
+        };
+        btn_difficulty_stars = new ArrayList<Button>();
+        for (int i = 0; i < 5; i++) btn_difficulty_stars.add((Button) layoutInflater.findViewById(idButtons[i]));
+        for (int i = 0; i < 5; i++) btn_difficulty_stars.get(i).setOnClickListener(this);
+
+        training_title       = (TextView) layoutInflater.findViewById(R.id.fragment_training_title);
+        btn_all              = (Button) layoutInflater.findViewById(R.id.fragment_training_all);
+        btn_butterfly        = (Button) layoutInflater.findViewById(R.id.fragment_training_butterfly);
+        btn_backstroke       = (Button) layoutInflater.findViewById(R.id.fragment_training_backstroke);
+        btn_breaststroke     = (Button) layoutInflater.findViewById(R.id.fragment_training_breaststroke);
+        btn_freestyle        = (Button) layoutInflater.findViewById(R.id.fragment_training_freestyle);
+        btn_IM               = (Button) layoutInflater.findViewById(R.id.fragment_training_IM);
+        trainingRecyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_training_recycler_view);
+
+        btn_all.setOnClickListener(this);
+        btn_butterfly.setOnClickListener(this);
+        btn_backstroke.setOnClickListener(this);
+        btn_breaststroke.setOnClickListener(this);
+        btn_freestyle.setOnClickListener(this);
+        btn_IM.setOnClickListener(this);
+    }
+
     private void updateColors() {
         training_title.setTextColor(getResources().getColor(R.color.colorSecondaryLight));
         btn_all.setTextColor(getResources().getColor((swim.equals("all")) ? R.color.colorSecondaryLight : R.color.colorText));
@@ -146,8 +146,6 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     private void updateCurrentTrainings() {
-        currentTrainings.clear();
-        currentTrainings = new ArrayList<Training>();
         currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(allTrainings, sizePool, swim, difficulty);
         Collections.sort(currentTrainings, new TrainingDateComparator());
     }
@@ -155,7 +153,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private void updateRecyclerViewTrainingList() {
         updateCurrentTrainings();
 
-        trainingRecyclerViewAdapter = new RecyclerViewTrainingAdapter(currentTrainings);
+        trainingRecyclerViewAdapter = new RecyclerViewTrainingAdapter(currentTrainings, allRaces);
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
         trainingRecyclerViewAdapter.notifyDataSetChanged();

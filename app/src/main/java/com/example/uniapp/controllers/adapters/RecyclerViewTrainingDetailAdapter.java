@@ -66,17 +66,15 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
     public int getItemCount() { return allSets.size(); }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView serie;
+        private TextView serieSubtitle;
         private LineChart lineChart;
-        private LineDataSet lineDataSet;
         private RecyclerView recyclerViewTimes;
-        private RecyclerViewTrainingDetailTimeAdapter recyclerViewTrainingDetailTimeAdapter;
 
         private int[] colors = {R.color.greenLight, R.color.blueDeep, R.color.redLight, R.color.orangeLight, R.color.orangeLight};
 
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
-            serie             = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_subtitle);
+            serieSubtitle     = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_subtitle);
             lineChart         = (LineChart)    itemView.findViewById(R.id.rv_detail_training_items_line_chart);
             recyclerViewTimes = (RecyclerView) itemView.findViewById(R.id.rv_detail_training_items_recyclerview);
         }
@@ -86,13 +84,13 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
             int startIndex = Training.getStartIndexFromSetIndex(allSets, indexSerie);
             int endIndex   = Training.getEndIndexFromSetIndex(allSets, indexSerie);
 
-            serie.setText(allSets.get(indexSerie) + " x " + allDistances.get(indexSerie) + Race.convertShortSwim(allSwims.get(indexSerie)));
+            serieSubtitle.setText(allSets.get(indexSerie) + " x " + allDistances.get(indexSerie) + Race.convertShortSwim(allSwims.get(indexSerie)));
             configureAndShowLineChart(lineChart, indexSerie, startIndex, endIndex, true);
             showRecyclerViewTrainingDetailTime(allTimes.subList(startIndex, endIndex));
         }
 
         private void showRecyclerViewTrainingDetailTime(List<String> allTimes) {
-            recyclerViewTrainingDetailTimeAdapter = new RecyclerViewTrainingDetailTimeAdapter(itemView.getContext(), allTimes);
+            RecyclerViewTrainingDetailTimeAdapter recyclerViewTrainingDetailTimeAdapter = new RecyclerViewTrainingDetailTimeAdapter(itemView.getContext(), allTimes);
             recyclerViewTimes.setHasFixedSize(true);
             recyclerViewTimes.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             recyclerViewTimes.setAdapter(recyclerViewTrainingDetailTimeAdapter);
@@ -101,30 +99,17 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
         }
 
         private void configureAndShowLineChart(final LineChart lineChart, int indexSerie, int startIndex, int endIndex, boolean isAnimation) {
-            //TODO: Ajouter la ligne du temps visée sur la série
             lineChart.clear();
             lineChart.setScaleEnabled(false);
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.clear();
 
-            LineDataSet refLineData = setupRefLineTime(indexSerie);
+            LineDataSet refLineData  = setupRefLineTime(indexSerie);
+            LineDataSet realLineData = setupRealLineTime(indexSerie, startIndex, endIndex);
             dataSets.add(refLineData);
-            ArrayList<Entry> yValues = setupTimesLineChart(allTimes, startIndex, endIndex);
-            lineDataSet = new LineDataSet(yValues, allDistances.get(indexSerie) + "" + Race.convertShortSwim(allSwims.get(indexSerie)));
-            lineDataSet.setLineWidth(1.5f);
-            lineDataSet.setCircleRadius(3f);
-            lineDataSet.setCircleHoleRadius(1.5f);
-            lineDataSet.setColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
-            lineDataSet.setCircleColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
-            lineDataSet.setHighLightColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
-            lineDataSet.setDrawValues(false);
-            lineDataSet.setDrawFilled(true);
-            lineDataSet.setFillColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
-            lineDataSet.setFillAlpha(100);
-            dataSets.add(lineDataSet);
+            dataSets.add(realLineData);
 
             LineData data = new LineData(dataSets);
-
 
             data.setHighlightEnabled(true);
             if (isAnimation) lineChart.animateXY(400, 800, Easing.EaseInOutQuad);
@@ -179,6 +164,22 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
             refLineTime.setFillColor(this.itemView.getResources().getColor(colors[(indexSerie+2)%colors.length]));
             refLineTime.setFillAlpha(100);
             return refLineTime;
+        }
+
+        private LineDataSet setupRealLineTime(int indexSerie, int startIndex, int endIndex) {
+            ArrayList<Entry> yValues = setupTimesLineChart(allTimes, startIndex, endIndex);
+            LineDataSet realLineData = new LineDataSet(yValues, allDistances.get(indexSerie) + "" + Race.convertShortSwim(allSwims.get(indexSerie)));
+            realLineData.setLineWidth(1.5f);
+            realLineData.setCircleRadius(3f);
+            realLineData.setCircleHoleRadius(1.5f);
+            realLineData.setColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
+            realLineData.setCircleColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
+            realLineData.setHighLightColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
+            realLineData.setDrawValues(false);
+            realLineData.setDrawFilled(true);
+            realLineData.setFillColor(this.itemView.getResources().getColor(colors[indexSerie%colors.length]));
+            realLineData.setFillAlpha(100);
+            return realLineData;
         }
     }
 }

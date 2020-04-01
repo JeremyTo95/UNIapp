@@ -25,42 +25,15 @@ import java.util.List;
 public class TrainingDetailFragment extends Fragment {
     private View layoutInflater;
     private Training training;
-
-    private List<String> competitionRaceTime;
-
-    private TextView date_city_sizePool;
-    private TextView competitionTitle;
-    private TextView zoneTitle;
-    private TextView competitionTime;
-    private TextView zoneTime;
-    private List<Button> difficultyStars;
-    private RecyclerView serieRecyclerView;
-    private RecyclerViewTrainingDetailAdapter serieRecyclerViewAdapter;
+    private List<Race> allRaces;
 
     public TrainingDetailFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_training_detail, container, false);
-        training = (Training) getActivity().getIntent().getSerializableExtra("EXTRA_TRAINING_SELECTED");
-
-        date_city_sizePool = (TextView) layoutInflater.findViewById(R.id.fragment_detail_race_time_date_and_city);
-        competitionTitle   = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_competition_title);
-        zoneTitle          = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_zone_title) ;
-        competitionTime    = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_swims_competition_times);
-        zoneTime           = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_swims_zone_times);
-        difficultyStars = new ArrayList<Button>();
-        int[] idStars = {
-                R.id.fragment_training_detail_difficulty_star_1,
-                R.id.fragment_training_detail_difficulty_star_2,
-                R.id.fragment_training_detail_difficulty_star_3,
-                R.id.fragment_training_detail_difficulty_star_4,
-                R.id.fragment_training_detail_difficulty_star_5
-        };
-        for (int i = 0; i < 5; i++) difficultyStars.add((Button) layoutInflater.findViewById(idStars[i]));
-        for (int i = 0; i < difficultyStars.size(); i++) difficultyStars.get(i).setEnabled(false);
-
-        serieRecyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_training_detail_graphs);
+        training       = (Training) getActivity().getIntent().getSerializableExtra("EXTRA_TRAINING_SELECTED");
+        allRaces       = (List<Race>) getActivity().getIntent().getSerializableExtra("EXTRA_ALL_RACES");
 
         updateTextView();
         fillDifficulty();
@@ -70,7 +43,8 @@ public class TrainingDetailFragment extends Fragment {
     }
 
     private void updateRecyclerViewTrainingList() {
-        serieRecyclerViewAdapter = new RecyclerViewTrainingDetailAdapter(getContext(), training);
+        RecyclerView serieRecyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_training_detail_graphs);
+        RecyclerViewTrainingDetailAdapter serieRecyclerViewAdapter = new RecyclerViewTrainingDetailAdapter(getContext(), training);
         serieRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         serieRecyclerView.setAdapter(serieRecyclerViewAdapter);
         serieRecyclerView.setNestedScrollingEnabled(false);
@@ -78,6 +52,12 @@ public class TrainingDetailFragment extends Fragment {
     }
 
     private void updateTextView() {
+        TextView date_city_sizePool = (TextView) layoutInflater.findViewById(R.id.fragment_detail_race_time_date_and_city);
+        TextView competitionTitle = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_competition_title);
+        TextView zoneTitle = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_zone_title);
+        TextView competitionTime = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_swims_competition_times);
+        TextView zoneTime = (TextView) layoutInflater.findViewById(R.id.fragment_detail_training_swims_zone_times);
+
         date_city_sizePool.setText("Le " + training.getDate() + " à " + training.getCity() + " ("+training.getSizePool() + ")");
         competitionTitle.setText("C O M P E T I T I O N");
         zoneTitle.setText("Z O N E");
@@ -85,8 +65,8 @@ public class TrainingDetailFragment extends Fragment {
         String trainingZoneTimeStr = "";
         List<String> bestTimes = getCompetitionRaceTime();
         for (int i = 0; i < training.getSwims().size(); i++) {
-            competitionTimeStr+=  training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + " : " + bestTimes.get(i) + "\n";
-            trainingZoneTimeStr+= "Z" + training.getZones().get(i) + " " + training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + " : " + Training.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getZones().get(i)) + "\n";
+            competitionTimeStr  += training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + " : " + bestTimes.get(i) + "\n";
+            trainingZoneTimeStr += "Z" + training.getZones().get(i) + " " + training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + " : " + Training.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getZones().get(i)) + "\n";
         }
         competitionTimeStr = competitionTimeStr.substring(0, competitionTimeStr.length() - 1);
         trainingZoneTimeStr = trainingZoneTimeStr.substring(0, trainingZoneTimeStr.length() - 1);
@@ -95,6 +75,16 @@ public class TrainingDetailFragment extends Fragment {
     }
 
     private void fillDifficulty() {
+        List<Button> difficultyStars = new ArrayList<Button>();
+        int[] idStars = {
+                R.id.fragment_training_detail_difficulty_star_1,
+                R.id.fragment_training_detail_difficulty_star_2,
+                R.id.fragment_training_detail_difficulty_star_3,
+                R.id.fragment_training_detail_difficulty_star_4,
+                R.id.fragment_training_detail_difficulty_star_5
+        };
+        for (int i = 0; i < 5; i++) difficultyStars.add((Button) layoutInflater.findViewById(idStars[i]));
+        for (int i = 0; i < difficultyStars.size(); i++) difficultyStars.get(i).setEnabled(false);
         for (int i = 0; i < training.getDifficulty(); i++) {
             difficultyStars.get(i).setEnabled(false);
             difficultyStars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
@@ -103,16 +93,8 @@ public class TrainingDetailFragment extends Fragment {
 
     private List<String> getCompetitionRaceTime() {
         List<String> result = new ArrayList<String>();
-        //TODO: Mettre en place une variable globale allRaces
-        List<Race> allRaces = MarketRaces.initAllTimes();
         for (int i = 0; i < training.getSwims().size(); i++)
             result.add(MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, training.getSizePool(), training.getDistance().get(i), training.getSwims().get(i)), 1).getTime());
         return result;
     }
-
-    public void setDate_city_sizePool(TextView date_city_sizePool) { this.date_city_sizePool = date_city_sizePool; }
-    public void setCompetitionTitle(TextView competitionTitle) { this.competitionTitle = competitionTitle; }
-
-    public TextView getDate_city_sizePool() { return date_city_sizePool; }
-    public TextView getCompetitionTitle() { return competitionTitle; }
 }

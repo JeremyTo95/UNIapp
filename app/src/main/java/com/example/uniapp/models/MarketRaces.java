@@ -190,74 +190,6 @@ public class MarketRaces {
         return allTimes;
     }
 
-    public static List<Race> getButterflyRaces(List<Race> allTimes) {
-        List<Race> butterflyTimes = new ArrayList<Race>();
-        for (int i = 0; i < allTimes.size(); i++)
-            if (allTimes.get(i).getSwim().equals("butterfly")) butterflyTimes.add(allTimes.get(i));
-
-        return butterflyTimes;
-    }
-
-    public static List<Race> getBackstrokeRaces(List<Race> allTimes) {
-        List<Race> backstrokeTimes = new ArrayList<Race>();
-        for (int i = 0; i < allTimes.size(); i++)
-            if (allTimes.get(i).getSwim().equals("backstroke")) backstrokeTimes.add(allTimes.get(i));
-
-        return backstrokeTimes;
-    }
-
-    public static List<Race> getBreaststrokeRaces(List<Race> allTimes) {
-        List<Race> breaststrokeTimes = new ArrayList<Race>();
-        for (int i = 0; i < allTimes.size(); i++)
-            if (allTimes.get(i).getSwim().equals("breaststroke")) breaststrokeTimes.add(allTimes.get(i));
-
-        return breaststrokeTimes;
-    }
-
-    public static List<Race> getFreestyleRaces(List<Race> allTimes) {
-        List<Race> freestyleTimes = new ArrayList<Race>();
-        for (int i = 0; i < allTimes.size(); i++)
-            if (allTimes.get(i).getSwim().equals("freestyle")) freestyleTimes.add(allTimes.get(i));
-
-        return freestyleTimes;
-    }
-
-    public static List<Race> getIMRaces(List<Race> allTimes) {
-        List<Race> imTimes = new ArrayList<Race>();
-        for (int i = 0; i < allTimes.size(); i++)
-            if (allTimes.get(i).getSwim().equals("IM")) imTimes.add(allTimes.get(i));
-
-        return imTimes;
-    }
-
-    public static List<Race> get25poolSizeRaces(List<Race> allTimes) {
-        List<Race> races25 = new ArrayList<Race>();
-        for (int i = 0; i < allTimes.size(); i++)
-            if (allTimes.get(i).getPoolSize() == 25) races25.add(allTimes.get(i));
-
-        return races25;
-    }
-
-    public static List<Race> get50poolSizeRaces(List<Race> allTimes) {
-        List<Race> races50 = new ArrayList<Race>();
-        for (int i = 0; i < allTimes.size(); i++)
-            if (allTimes.get(i).getPoolSize() == 50) races50.add(allTimes.get(i));
-
-        return races50;
-    }
-
-    public static List<Race> getRaceTimeByPoolSizeAndSwim(List<Race> allTimes, int poolSize, String swim) {
-        List<Race> result = new ArrayList<>();
-        Race tmp;
-        for (int i = 0; i < allTimes.size(); i++) {
-            tmp = allTimes.get(i);
-            if (tmp.getPoolSize() == poolSize && tmp.getSwim().equals(swim))
-                result.add(tmp);
-        }
-
-        return result;
-    }
-
     public static List<Race> getRacesByPoolSizeDistanceRaceSwimRace(List<Race> allTimes, int poolSize, int distance, String swim) {
         List<Race> result = new ArrayList<>();
         Race tmp;
@@ -290,7 +222,35 @@ public class MarketRaces {
         return bestTime;
     }
 
-    public static int convertTimeToPointFFN(String time) {
+    public static int convertTimeToPointFFN(String swim, int distance, String time) {
+        int   pointFFN          = 2;
+        float offsetPoint50NL   = 0.5f;
+        float offsetPoint100NL  = 0.71f;
+        float offsetPoint200NL  = 1.42f;
+        float offsetPoint400NL  = 2.97f;
+        float offsetPoint800NL  = 5.84f;
+        float offsetPoint1000NL = 7.48f;
+        float offsetPoint1500NL = 11.46f;
+
+        float first50NL   = Race.fetchTimeToFloat("00:55.83");
+        float first100NL  = Race.fetchTimeToFloat("01:58.55");
+        float first200NL  = Race.fetchTimeToFloat("04:07.10");
+        float first400NL  = Race.fetchTimeToFloat("08:30.12");
+        float first800NL  = Race.fetchTimeToFloat("17:31.93");
+        float first1000NL = Race.fetchTimeToFloat("22:16.00");
+        float first1500NL = Race.fetchTimeToFloat("33:55.60");
+        float first50dos  = Race.fetchTimeToFloat("01:04.61");
+        float first100dos = Race.fetchTimeToFloat("02:16.10");
+        float first200dos = Race.fetchTimeToFloat("04:42.16");
+        float first50br   = Race.fetchTimeToFloat("01:11.45");
+        float first100br  = Race.fetchTimeToFloat("02:29.87");
+        float first200br  = Race.fetchTimeToFloat("05:09.71");
+        float first50pap  = Race.fetchTimeToFloat("00:58.89");
+        float first100pap = Race.fetchTimeToFloat("02:14.15");
+        float first200pap = Race.fetchTimeToFloat("04:38.35");
+        float first100_4N = Race.fetchTimeToFloat("02:13.25");
+        float first200_4N = Race.fetchTimeToFloat("04:36.48");
+        float first400_4N = Race.fetchTimeToFloat("09:28.92");
         return 0;
     }
     public static int convertTimeToInt(String time) { return Integer.parseInt(time.replaceAll("[:.]", "").toString()); }

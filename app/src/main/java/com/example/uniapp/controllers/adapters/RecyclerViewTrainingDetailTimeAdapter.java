@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class RecyclerViewTrainingDetailTimeAdapter extends RecyclerView.Adapter<RecyclerViewTrainingDetailTimeAdapter.MyViewHolder> {
@@ -27,13 +25,11 @@ public class RecyclerViewTrainingDetailTimeAdapter extends RecyclerView.Adapter<
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.rv_training_detail_time_items, parent, false);
 
-        System.out.println(Arrays.toString(allTimes.toArray()));
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewTrainingDetailTimeAdapter.MyViewHolder holder, int position) {
-        System.out.println(position);
         holder.display(position);
     }
 

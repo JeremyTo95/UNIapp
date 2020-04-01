@@ -42,7 +42,6 @@ public class CustomPopup extends Dialog {
     private EditText cityEditText;
     private EditText timeEditText;
     private Spinner  selectLevelCompetition;
-    private ArrayAdapter<CharSequence> adapter;
     private EditText countryEditText;
     private Button   deniedButton;
     private Button   confirmedButton;
@@ -69,13 +68,14 @@ public class CustomPopup extends Dialog {
 
         dateEditText.setText(date);
 
-        adapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_competition_level_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
-        selectLevelCompetition.setAdapter(adapter);
+        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_competition_level_item);
+        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
+        selectLevelCompetition.setAdapter(levelDropdownAdapter);
 
         updateInputDateFormatEditText();
         updateInputCityFormatEditText();
         updateInputTimeFormatEditText();
+        updateInputCountryFormatEditText();
         updateInputLevelFormatEditText();
 
         onClickConfirmedButton();
@@ -83,7 +83,7 @@ public class CustomPopup extends Dialog {
 
     }
 
-    public void  updateInputDateFormatEditText() {
+    private void  updateInputDateFormatEditText() {
         dateEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -102,11 +102,11 @@ public class CustomPopup extends Dialog {
         });
     }
 
-    public void updateInputCityFormatEditText() {
+    private void updateInputCityFormatEditText() {
         cityEditText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
     }
 
-    public void updateInputTimeFormatEditText() {
+    private void updateInputTimeFormatEditText() {
         timeEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -140,7 +140,7 @@ public class CustomPopup extends Dialog {
         });
     }
 
-    public void updateInputLevelFormatEditText() {
+    private void updateInputLevelFormatEditText() {
         selectLevelCompetition.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
@@ -149,20 +149,17 @@ public class CustomPopup extends Dialog {
         });
     }
 
-    public void updateInputCountryFormatEditText() {
+    private void updateInputCountryFormatEditText() {
         countryEditText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
     }
 
-    public boolean checkInputFormatDate() {
+    private boolean checkInputFormatDate() {
         String text = getDateEditText().getText().toString();
         int textSize = text.length();
         if (textSize == 10) {
-            if (
-                    (0 < Integer.parseInt(text.substring(0, 2)) && Integer.parseInt(text.substring(0, 2)) <= 31)
-                            && (0 < Integer.parseInt(text.substring(3, 5)) &&  Integer.parseInt(text.substring(3, 5)) <= 12)
-                            && (1970 < Integer.parseInt(text.substring(6, 10)) && Integer.parseInt(text.substring(6, 10)) <= Calendar.getInstance().get(Calendar.YEAR))
-            ) return true;
-            else return false;
+            return (0 < Integer.parseInt(text.substring(0, 2)) && Integer.parseInt(text.substring(0, 2)) <= 31)
+                    && (0 < Integer.parseInt(text.substring(3, 5)) && Integer.parseInt(text.substring(3, 5)) <= 12)
+                    && (1970 < Integer.parseInt(text.substring(6, 10)) && Integer.parseInt(text.substring(6, 10)) <= Calendar.getInstance().get(Calendar.YEAR));
         } else return false;
     }
 
@@ -171,7 +168,7 @@ public class CustomPopup extends Dialog {
         int textSize = text.length();
         if (textSize != 0) {
             if (Integer.parseInt(text.replaceAll("[:.]", "").toString()) == 0) return false;
-            else if (textSize != 8 && textSize != 0) {
+            else if (textSize != 8) {
                 for (int i = textSize; i < 8; i++) {
                     if      (8 - i == 3) text = new StringBuilder(text).insert(0, ":").toString();
                     else if (8 - i == 6) text = new StringBuilder(text).insert(0, ".").toString();
@@ -187,7 +184,7 @@ public class CustomPopup extends Dialog {
         boolean checkDate = checkInputFormatDate();
         boolean checkTime = checkInputFormatTime();
 
-        if (checkDate == true && checkTime == true && city.length() > 0 && country.length() > 0) {
+        if (checkDate && checkTime && city.length() > 0 && country.length() > 0) {
             System.out.println("date    : "+  date);
             System.out.println("city    : "+  city);
             System.out.println("time    : "+  time);
@@ -196,12 +193,12 @@ public class CustomPopup extends Dialog {
             dismiss();
             return true;
         } else {
-            if (checkDate == false)  {
+            if (!checkDate)  {
                 getDateEditText().getText().clear();
                 getDateEditText().setHint("Erreur de Format");
                 getDateEditText().setHintTextColor(getLayoutInflater().getContext().getResources().getColor(R.color.redDeep));
             }
-            if (checkTime == false) {
+            if (!checkTime) {
                 getTimeEditText().getText().toString().replaceAll("[.:0-9]", "");
                 getTimeEditText().setHint("Champ vide");
                 getTimeEditText().setTextColor(getLayoutInflater().getContext().getResources().getColor(R.color.redDeep));
@@ -216,7 +213,7 @@ public class CustomPopup extends Dialog {
         }
     }
 
-    public void onClickConfirmedButton() {
+    private void onClickConfirmedButton() {
         confirmedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -230,13 +227,20 @@ public class CustomPopup extends Dialog {
         });
     }
 
-    public void onClickDeniedButton() {
+    private void onClickDeniedButton() {
         getDeniedButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
+    }
+
+    public void build() {
+        show();
+        Window window = getWindow();
+        if (window != null) window.setLayout(900, 1500);
+        titleTextView.setText(title);
     }
 
     public Button getDeniedButton() { return deniedButton; }
@@ -278,11 +282,4 @@ public class CustomPopup extends Dialog {
     public void setSelectLevelCompetition(Spinner selectLevelCompetition) { this.selectLevelCompetition = selectLevelCompetition; }
     public void setCountry(String country) { this.country = country; }
     public void setCountryEditText(EditText countryEditText) { this.countryEditText = countryEditText; }
-
-    public void build() {
-        show();
-        Window window = getWindow();
-        window.setLayout(900, 1500);
-        titleTextView.setText(title);
-    }
 }

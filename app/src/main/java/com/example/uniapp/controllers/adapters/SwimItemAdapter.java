@@ -17,17 +17,24 @@ import com.example.uniapp.views.SwimCards;
 import java.util.List;
 
 public class SwimItemAdapter extends PagerAdapter {
-    private List<SwimCards> mSwimCardsList;
-    private Context mContext;
+    private List<SwimCards> swimCardsList;
+    private Context context;
+    private int sizePool;
 
-    public SwimItemAdapter(List<SwimCards> swimTimes, Context context) {
-        mSwimCardsList = swimTimes;
-        mContext       = context;
+    private LinearLayout rightSide;
+    private TextView titleSwim;
+    private TextView time1, time2, time3;
+    private TextView time4, time5, time6;
+
+    public SwimItemAdapter(List<SwimCards> swimTimes, Context context, int sizePool) {
+        swimCardsList = swimTimes;
+        this.context  = context;
+        this.sizePool = sizePool;
     }
 
     @Override
     public int getCount() {
-        return mSwimCardsList.size();
+        return swimCardsList.size();
     }
 
     @Override
@@ -39,15 +46,22 @@ public class SwimItemAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.swim_items, container, false);
 
-        LinearLayout leftSide, rightSide;
-        TextView titleSwim;
-        TextView time1, time2, time3;
-        TextView time4, time5, time6;
+        configureAndShowUIElements(view, position);
+        configureAndSetSwimItemElement(position);
 
-        leftSide  = view.findViewById(R.id.swim_items_p1);
+        container.addView(view, 0);
+        return view;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        container.removeView((View)object);
+    }
+
+    private void configureAndShowUIElements(View view, int position) {
         rightSide = view.findViewById(R.id.swim_items_p2);
         LinearLayout.LayoutParams rightSideParams = (LinearLayout.LayoutParams) rightSide.getLayoutParams();
         titleSwim = view.findViewById(R.id.swim_items_name);
@@ -58,43 +72,42 @@ public class SwimItemAdapter extends PagerAdapter {
         time5     = view.findViewById(R.id.swim_items_d5);
         time6     = view.findViewById(R.id.swim_items_d6);
 
-        for (int i = 0; i < mSwimCardsList.size(); i++) System.out.println(mSwimCardsList.get(i).getTitleSwim());
+        titleSwim.setText(swimCardsList.get(position).getTitleSwim());
+        titleSwim.setTextColor(view.getResources().getColor(swimCardsList.get(position).getColorText()));
+    }
 
-        // linearLayout.setBackgroundDrawable(view.getResources().getDrawable(mModelList.get(position).getGradientBackground()));
-        titleSwim.setText(mSwimCardsList.get(position).getTitleSwim());
-        titleSwim.setTextColor(view.getResources().getColor(mSwimCardsList.get(position).getColorText()));
-        switch (mSwimCardsList.get(position).getTitleSwim()) {
+    private void configureAndSetSwimItemElement(int position) {
+        switch (swimCardsList.get(position).getTitleSwim()) {
             case "P a p i l l o n":
             case "D o s":
             case "B r a s s e":
                 rightSide.setVisibility(LinearLayout.GONE);
-                time1.setText("50m   : " + mSwimCardsList.get(position).getTime50());
-                time2.setText("100m  : " + mSwimCardsList.get(position).getTime100());
-                time3.setText("200m  : " + mSwimCardsList.get(position).getTime200());
+                time1.setText("50m   : " + swimCardsList.get(position).getTime50());
+                time2.setText("100m  : " + swimCardsList.get(position).getTime100());
+                time3.setText("200m  : " + swimCardsList.get(position).getTime200());
                 break;
 
             case "N a g e  L i b r e":
-                time1.setText("50m   : " + mSwimCardsList.get(position).getTime50());
-                time2.setText("100m  : " + mSwimCardsList.get(position).getTime100());
-                time3.setText("200m  : " + mSwimCardsList.get(position).getTime200());
-                time4.setText("400m  : " + mSwimCardsList.get(position).getTime400());
-                time5.setText("800m  : " + mSwimCardsList.get(position).getTime800());
-                time6.setText("1500m : " + mSwimCardsList.get(position).getTime1500());
+                time1.setText("50m   : " + swimCardsList.get(position).getTime50());
+                time2.setText("100m  : " + swimCardsList.get(position).getTime100());
+                time3.setText("200m  : " + swimCardsList.get(position).getTime200());
+                time4.setText("400m  : " + swimCardsList.get(position).getTime400());
+                time5.setText("800m  : " + swimCardsList.get(position).getTime800());
+                time6.setText("1500m : " + swimCardsList.get(position).getTime1500());
                 break;
 
             case "4  N a g e s":
                 rightSide.setVisibility(LinearLayout.GONE);
-                time1.setText("100m  : " + mSwimCardsList.get(position).getTime100());
-                time2.setText("200m  : " + mSwimCardsList.get(position).getTime200());
-                time3.setText("400m  : " + mSwimCardsList.get(position).getTime400());
+                if (sizePool == 25) {
+                    time1.setText("100m  : " + swimCardsList.get(position).getTime100());
+                    time2.setText("200m  : " + swimCardsList.get(position).getTime200());
+                    time3.setText("400m  : " + swimCardsList.get(position).getTime400());
+                } else {
+                    time1.setText("200m  : " + swimCardsList.get(position).getTime200());
+                    time2.setText("400m  : " + swimCardsList.get(position).getTime400());
+                    time3.setText("");
+                }
                 break;
         }
-        container.addView(view, 0);
-        return view;
-    }
-
-    @Override
-    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-        container.removeView((View)object);
     }
 }

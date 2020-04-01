@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     configureAndShowFragment(new CompetitionsFragment(allRaces));
                     return true;
                 case R.id.navbar_custom_training_btn:
-                    configureAndShowFragment(new TrainingsFragment());
+                    configureAndShowFragment(new TrainingsFragment(allTrainings, allRaces));
                     return true;
                 case R.id.navbar_custom_home_btn:
                     configureAndShowFragment(new MainFragment());
@@ -55,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TODO: METTRE EN PLACE LES POINTS FFN AVEC LE FICHIER JSON STOCKE SUR SERVEUR
+        //TODO: METTRE EN PLACE LA RECUPERATION DE TOUS LES TEMPS DU NAGEUR SUR FFN_EXTRANAT
+        //TODO: SAUVEGARDER LES COURSES DEJA EN PLACE SUR L'APPLICATION SYSTEME D'IMPORTATION DE DONNEE SUR SERVEUR ET
+        //      SAUVEGARDE DES DONNEES SUR TELEPHONE, PLUS GESTION POUR NE PAS ECRASER LES DONNEE DEJA SAUVEGADER
+        //TODO: METTRE EN PLACE LA MODIFICATION DES TEMPS DEJA ENREGISTRER
+        //TODO: MISE A JOUR DES TEMPS REALISER A L'ENRAINEMENT
+        //TODO: AJOUT DE NOUVEAUX ENTRAINEMENTS
+        //TODO: RECYCLERVIEW TRAINING --> PLUS SMOOTH
+        //TODO: ADD RACE --> UPDATE RACE
 
         allRaces     = MarketRaces.initAllTimes();
         allTrainings = MarketTrainings.initAllTrainings();

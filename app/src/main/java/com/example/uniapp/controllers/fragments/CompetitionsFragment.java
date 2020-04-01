@@ -43,11 +43,9 @@ import java.util.UUID;
 import static android.widget.AdapterView.*;
 
 /*
-TODO: Rendre le Recycler View cliquable pour aller sur une nouvelles pages et avoir tous les détails sur la course en question
 TODO: Mettre de la couleur pour la suppression des éléments du RecyclerView
-TODO: Ajouter une course avec le bouton popup (sur le server --> Command POST)
+TODO: Ajouter une course avec le bouton popup (en interne)
 TODO: Obtenir les sources des temps sur un serveur avec un REST API
-TODO: Mettre en place des animations pour le graphique quand on change le viewPager
  */
 
 public class CompetitionsFragment extends Fragment {
@@ -82,8 +80,18 @@ public class CompetitionsFragment extends Fragment {
         distance       = 50;
         viewPagerIndex = 0;
         swim           = "butterfly";
-        currentRaces   = MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
 
+        configureUIElements();
+        configureAndShowPageViewer();
+        configureAndShowDistanceSelectionDropdown();
+        configureAndShowLineChart(mLineChart, true);
+        updateRecyclerViewRaceList();
+        updateColors();
+
+        return layoutInflater;
+    }
+
+    private void configureUIElements() {
         competition_title = (TextView)     layoutInflater.findViewById(R.id.fragment_competition_competition_title);
         btn_25m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_25);
         btn_50m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_50);
@@ -91,14 +99,6 @@ public class CompetitionsFragment extends Fragment {
         mLineChart        = (LineChart)    layoutInflater.findViewById(R.id.fragment_competition_linechart);
         addRaceTimeBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_add_race_time);
         mRecyclerView     = (RecyclerView) layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
-
-        configureAndShowPageViewer();
-        configureAndShowDistanceSelectionDropdown();
-        configureAndShowLineChart(mLineChart, true);
-        updateRecyclerViewRaceList();
-        updateColors();
-
-        // btn_25m.setTextColor(getResources().getColor(RaceTime.getCurrentColor(swim)));
         btn_25m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +128,6 @@ public class CompetitionsFragment extends Fragment {
                 configureAndShowAddRacePopup();
             }
         });
-
-
-        return layoutInflater;
     }
 
     private void updateTimesForSwimCards() {
@@ -142,7 +139,7 @@ public class CompetitionsFragment extends Fragment {
         mSwimCardsList.add(new SwimCards(allRaces,"IM", sizePool));
 
         if (mViewPager == null) mViewPager = layoutInflater.findViewById(R.id.fragment_competition_viewpager);
-        mViewPager.setAdapter(new SwimItemAdapter(mSwimCardsList, layoutInflater.getContext()));
+        mViewPager.setAdapter(new SwimItemAdapter(mSwimCardsList, layoutInflater.getContext(), sizePool));
         mViewPager.getAdapter().notifyDataSetChanged();
         mViewPager.setCurrentItem(viewPagerIndex);
     }
@@ -183,6 +180,8 @@ public class CompetitionsFragment extends Fragment {
         adapter.notifyDataSetChanged();
         selectSwimDistance.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+            @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String newDistance =  parent.getItemAtPosition(position).toString(); // récupération de la nouvelle distance de course
                 newDistance = newDistance.replace(" ", "");
@@ -191,9 +190,6 @@ public class CompetitionsFragment extends Fragment {
                 updateRecyclerViewRaceList();
                 configureAndShowLineChart(mLineChart, false);
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
         });
     }
 
@@ -234,10 +230,10 @@ public class CompetitionsFragment extends Fragment {
     }
 
     private ArrayList<Entry> setupTimesLineChart() {
+        currentRaces = MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
         ArrayList<Entry> result = new ArrayList<>();
-        for (int i = 0; i < currentRaces.size(); i++) {
-            result.add(new Entry(i, Race.fetchTimeToFloat(currentRaces.get(currentRaces.size() - i - 1).getTime())));
-        }
+        for (int i = 0; i < currentRaces.size(); i++) result.add(new Entry(i, Race.fetchTimeToFloat(currentRaces.get(currentRaces.size() - i - 1).getTime())));
+
         return result;
     }
 
@@ -263,7 +259,7 @@ public class CompetitionsFragment extends Fragment {
                             customPopup.getDate(), customPopup.getCity(), customPopup.getCountry(),
                             "AS HERBLAY NATATION", customPopup.getDistanceRace(), customPopup.getSizePool(),
                             customPopup.getSwim(), customPopup.getTime(),
-                            MarketRaces.convertTimeToPointFFN(customPopup.getTime()), customPopup.getLevel(),
+                            /*MarketRaces.convertTimeToPointFFN(customPopup.getTime())*/0, customPopup.getLevel(),
                             21, ""
                     );
                     MarketRaces.addRaceTime(allRaces, newRace);
@@ -281,31 +277,20 @@ public class CompetitionsFragment extends Fragment {
     }
 
     private void updateItemsDropdown() {
-        int i;
-        String currentDistanceSelected;
         ArrayAdapter<CharSequence> adapter;
 
-        // NOUVELLE LISTE DE DROPDOWN ITEM EN FONCTION DE LA NAGE
-        if (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke")) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_competition_distance_item);
-        else if (swim.equals("freestyle")) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_competition_distance_item);
-        else if (swim.equals("IM") && sizePool == 25) adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_competition_distance_item);
-        else adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_competition_distance_item);
+        if      (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke"))
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_competition_distance_item);
+        else if (swim.equals("freestyle"))
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_competition_distance_item);
+        else if (swim.equals("IM") && sizePool == 25)
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_competition_distance_item);
+        else
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_competition_distance_item);
 
-        // MISE A JOUR DU DROPDOWN
         adapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
         selectSwimDistance.setAdapter(adapter);
-
-        // FOCUS SUR LA BONNE DISTANCE EN FONCTION DES AUTRES SWIMITEMS
-        for (i = 0; i < adapter.getCount(); i++) {
-            currentDistanceSelected = adapter.getItem(i).toString();
-            currentDistanceSelected = currentDistanceSelected.replace(" ", "");
-            currentDistanceSelected = currentDistanceSelected.replace("m", "");
-            if (currentDistanceSelected.equals(String.valueOf(distance))) {
-                selectSwimDistance.setSelection(i);
-                i = adapter.getCount() + 2;
-            }
-        }
-        if (i == adapter.getCount() + 2) selectSwimDistance.setSelection(0);
+        adapter.notifyDataSetChanged();
     }
 
     private void updateColors() {
