@@ -1,5 +1,7 @@
 package com.example.uniapp.models;
 
+import android.util.Log;
+
 import com.example.uniapp.views.RaceDateComparator;
 import com.example.uniapp.views.TimeComparator;
 
@@ -266,6 +268,7 @@ public class MarketRaces {
             if (allTimes.get(i).getId().equals(race.getId())) {
                 allTimes.remove(i);
                 i = allTimes.size();
+                Log.i("INFO", "La course a bien été suppimé --> " + race.getTime());
             }
         }
     }

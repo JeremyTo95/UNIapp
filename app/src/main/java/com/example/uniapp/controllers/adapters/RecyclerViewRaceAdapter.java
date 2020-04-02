@@ -62,6 +62,11 @@ public class RecyclerViewRaceAdapter extends RecyclerView.Adapter<RecyclerViewRa
         return races.size();
     }
 
+    public void removeItem(int position) {
+        races.remove(position);
+        notifyItemRemoved(position);
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView city;
         private TextView date;

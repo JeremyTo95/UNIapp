@@ -58,6 +58,11 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public int getItemCount() { return allTrainings.size(); }
 
+    public void removeItem(int position) {
+        allTrainings.remove(position);
+        notifyItemRemoved(position);
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView date_sizePool_title;
         private TextView serie_content;

@@ -121,7 +121,8 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
             lineChart.getAxisLeft().setSpaceBottom(40);
             lineChart.getAxisRight().setEnabled(false);
             lineChart.getXAxis().setEnabled(false);
-            lineChart.setTouchEnabled(true);
+            lineChart.getDescription().setEnabled(false);
+            lineChart.setTouchEnabled(false);
             lineChart.setHighlightPerDragEnabled(true);
             lineChart.setHighlightPerTapEnabled(true);
             lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
@@ -168,7 +169,7 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
 
         private LineDataSet setupRealLineTime(int indexSerie, int startIndex, int endIndex) {
             ArrayList<Entry> yValues = setupTimesLineChart(allTimes, startIndex, endIndex);
-            LineDataSet realLineData = new LineDataSet(yValues, allDistances.get(indexSerie) + "" + Race.convertShortSwim(allSwims.get(indexSerie)));
+            LineDataSet realLineData = new LineDataSet(yValues, "Temps réalisé");
             realLineData.setLineWidth(1.5f);
             realLineData.setCircleRadius(3f);
             realLineData.setCircleHoleRadius(1.5f);

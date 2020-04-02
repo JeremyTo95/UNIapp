@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         //TODO: METTRE EN PLACE LA MODIFICATION DES TEMPS DEJA ENREGISTRER
         //TODO: MISE A JOUR DES TEMPS REALISER A L'ENRAINEMENT
         //TODO: AJOUT DE NOUVEAUX ENTRAINEMENTS
-        //TODO: RECYCLERVIEW TRAINING --> PLUS SMOOTH
         //TODO: ADD RACE --> UPDATE RACE
 
         allRaces     = MarketRaces.initAllTimes();

@@ -144,10 +144,9 @@
                     android:background="@drawable/sh_round_btn" />
             </LinearLayout>
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="550dp"
-                android:orientation="vertical" >
+                android:layout_height="550dp" >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fragment_competition_recycler_view"
@@ -156,7 +155,7 @@
                     android:layout_weight="1"
                     android:scrollbars="vertical" />
 
-            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
     </LinearLayout>
 

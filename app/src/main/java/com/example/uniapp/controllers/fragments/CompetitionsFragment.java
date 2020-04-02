@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RecyclerViewRaceAdapter;
 import com.example.uniapp.controllers.adapters.SwimItemAdapter;
-import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.views.CustomPopup;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;
@@ -64,11 +63,11 @@ public class CompetitionsFragment extends Fragment {
     private int                 viewPagerIndex;
     private List<SwimCards>     mSwimCardsList;
     private Spinner             selectSwimDistance;
-    private LineChart           mLineChart;
+    private LineChart lineChart;
     private LineDataSet         lineDataSet;
     private Button              addRaceTimeBtn;
-    private RecyclerView        mRecyclerView;
-    private RecyclerViewRaceAdapter mRecyclerViewRaceAdapter;
+    private RecyclerView recyclerView;
+    private RecyclerViewRaceAdapter recyclerViewRaceAdapter;
 
     public CompetitionsFragment(List<Race> allRaces) { this.allRaces = allRaces; }
 
@@ -84,7 +83,7 @@ public class CompetitionsFragment extends Fragment {
         configureUIElements();
         configureAndShowPageViewer();
         configureAndShowDistanceSelectionDropdown();
-        configureAndShowLineChart(mLineChart, true);
+        configureAndShowLineChart(lineChart, true);
         updateRecyclerViewRaceList();
         updateColors();
 
@@ -96,9 +95,9 @@ public class CompetitionsFragment extends Fragment {
         btn_25m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_25);
         btn_50m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_50);
         progression_title = (TextView)     layoutInflater.findViewById(R.id.fragment_competition_progression_title);
-        mLineChart        = (LineChart)    layoutInflater.findViewById(R.id.fragment_competition_linechart);
+        lineChart = (LineChart)    layoutInflater.findViewById(R.id.fragment_competition_linechart);
         addRaceTimeBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_add_race_time);
-        mRecyclerView     = (RecyclerView) layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
+        recyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
         btn_25m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +165,7 @@ public class CompetitionsFragment extends Fragment {
                 updateRecyclerViewRaceList();
                 updateColors();
                 updateItemsDropdown();
-                configureAndShowLineChart(mLineChart, true);
+                configureAndShowLineChart(lineChart, true);
             }
         });
     }
@@ -188,7 +187,7 @@ public class CompetitionsFragment extends Fragment {
                 newDistance = newDistance.replace("m", "");
                 distance = Integer.parseInt(newDistance);
                 updateRecyclerViewRaceList();
-                configureAndShowLineChart(mLineChart, false);
+                configureAndShowLineChart(lineChart, false);
             }
         });
     }
@@ -268,12 +267,12 @@ public class CompetitionsFragment extends Fragment {
                     updateRecyclerViewRaceList();
                     updateTimesForSwimCards();
                     setupTimesLineChart();
-                    configureAndShowLineChart(mLineChart, true);
+                    configureAndShowLineChart(lineChart, true);
                 }
 
             }
         });
-        configureAndShowLineChart(mLineChart, true);
+        configureAndShowLineChart(lineChart, true);
     }
 
     private void updateItemsDropdown() {
@@ -308,12 +307,11 @@ public class CompetitionsFragment extends Fragment {
 
     private void updateRecyclerViewRaceList() {
         updateCurrentRaces();
-
-        mRecyclerViewRaceAdapter = new RecyclerViewRaceAdapter(currentRaces);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
-        mRecyclerView.setAdapter(mRecyclerViewRaceAdapter);
-        mRecyclerViewRaceAdapter.notifyDataSetChanged();
-
+        recyclerViewRaceAdapter = new RecyclerViewRaceAdapter(currentRaces);
+        recyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
+        recyclerView.setAdapter(recyclerViewRaceAdapter);
+        recyclerView.setNestedScrollingEnabled(false);
+        recyclerViewRaceAdapter.notifyDataSetChanged();
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                     @Override
@@ -324,11 +322,12 @@ public class CompetitionsFragment extends Fragment {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         MarketRaces.removeRaceTime(allRaces, currentRaces.get(viewHolder.getAdapterPosition()));
                         currentRaces.remove(viewHolder.getAdapterPosition());
-                        mRecyclerViewRaceAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                        configureAndShowLineChart(mLineChart, true);
+                        recyclerViewRaceAdapter.removeItem(viewHolder.getAdapterPosition());
+                        configureAndShowLineChart(lineChart, true);
+                        updateTimesForSwimCards();
                     }
                 };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 }

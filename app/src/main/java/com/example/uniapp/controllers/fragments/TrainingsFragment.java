@@ -156,6 +156,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         trainingRecyclerViewAdapter = new RecyclerViewTrainingAdapter(currentTrainings, allRaces);
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
+        trainingRecyclerView.setNestedScrollingEnabled(false);
         trainingRecyclerViewAdapter.notifyDataSetChanged();
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
