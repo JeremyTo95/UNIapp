@@ -6,43 +6,19 @@ import java.util.UUID;
 
 public class Training implements Serializable {
     private UUID id;
-    private List<String> swims;
-    private List<Integer> sets;
-    private List<Integer> distance;
-    private List<String> times;
     private int difficulty;
     private int sizePool;
     private String date;
     private String city;
-    private List<Integer> zone;
+    private List<TrainingBlock> trainingBlockList;
 
-    public Training(UUID id, String date, String city, int sizePool, List<String> swims, List<Integer> sets, List<Integer> distance, List<String> times, int difficulty, List<Integer> zone) {
+    public Training(UUID id, int difficulty, int sizePool, String date, String city, List<TrainingBlock> trainingBlockList) {
         this.id = id;
+        this.difficulty = difficulty;
+        this.sizePool = sizePool;
         this.date = date;
         this.city = city;
-        this.sizePool = sizePool;
-        this.swims = swims;
-        this.sets = sets;
-        this.distance = distance;
-        this.times = times;
-        this.difficulty = difficulty;
-        this.zone = zone;
-    }
-
-    public int getTotalSets() {
-        int tot = 0;
-        for (int i = 0; i < sets.size(); i++) {
-            tot+= sets.get(i);
-        }
-        return tot;
-    }
-
-    public int getTotalDistance() {
-        int tot = 0;
-        for (int i = 0; i < sets.size(); i++) {
-            tot += distance.get(i) * sets.get(i);
-        }
-        return tot;
+        this.trainingBlockList = trainingBlockList;
     }
 
     public static int getStartIndexFromSetIndex(List<Integer> allSets, int setIndex) {
@@ -76,21 +52,13 @@ public class Training implements Serializable {
     public int getSizePool() { return sizePool; }
     public String getDate() { return date; }
     public String getCity() { return city; }
-    public List<String> getSwims() { return swims; }
-    public List<Integer> getSets() { return sets; }
-    public List<Integer> getDistance() { return distance; }
-    public List<String> getTimes() { return times; }
     public int getDifficulty() { return difficulty; }
-    public List<Integer> getZones() { return zone; }
+    public List<TrainingBlock> getTrainingBlockList() { return trainingBlockList; }
 
     public void setId(UUID id) { this.id = id; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }
-    public void setSwims(List<String> swims) { this.swims = swims; }
-    public void setSets(List<Integer> sets) { this.sets = sets; }
-    public void setDistance(List<Integer> distance) { this.distance = distance; }
-    public void setTimes(List<String> times) { this.times = times; }
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
-    public void setZone(List<Integer> zone) { this.zone = zone; }
+    public void setTrainingBlockList(List<TrainingBlock> trainingBlockList) { this.trainingBlockList = trainingBlockList; }
 }

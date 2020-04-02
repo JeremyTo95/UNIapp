@@ -16,7 +16,7 @@ import com.example.uniapp.views.SwimCards;
 
 import java.util.List;
 
-public class SwimItemAdapter extends PagerAdapter {
+public class PvSwimItemAdapter extends PagerAdapter {
     private List<SwimCards> swimCardsList;
     private Context context;
     private int sizePool;
@@ -26,7 +26,7 @@ public class SwimItemAdapter extends PagerAdapter {
     private TextView time1, time2, time3;
     private TextView time4, time5, time6;
 
-    public SwimItemAdapter(List<SwimCards> swimTimes, Context context, int sizePool) {
+    public PvSwimItemAdapter(List<SwimCards> swimTimes, Context context, int sizePool) {
         swimCardsList = swimTimes;
         this.context  = context;
         this.sizePool = sizePool;
@@ -47,7 +47,7 @@ public class SwimItemAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.swim_items, container, false);
+        View view = layoutInflater.inflate(R.layout.pv_swim_items, container, false);
 
         configureAndShowUIElements(view, position);
         configureAndSetSwimItemElement(position);

@@ -15,6 +15,7 @@ import com.example.uniapp.R;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
+import com.example.uniapp.models.TrainingBlock;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -27,25 +28,17 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<RecyclerViewTrainingDetailAdapter.MyViewHolder> {
-    private List<String>  allSwims;
-    private List<Integer> allSets;
-    private List<Integer> allDistances;
-    private List<String>  allTimes;
-    private List<Integer> allZones;
+public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDetailAdapter.MyViewHolder> {
+    private Context context;
+    private List<Race> allRaces;
+    private Training training;
     private int sizePool;
 
-    private Context context;
-
-
-    public RecyclerViewTrainingDetailAdapter(Context context, Training training) {
-        this.context = context;
-        allSwims     = training.getSwims();
-        allSets      = training.getSets();
-        allDistances = training.getDistance();
-        allTimes     = training.getTimes();
-        allZones     = training.getZones();
-        sizePool     = training.getSizePool();
+    public RvTrainingDetailAdapter(Context context, List<Race> allRaces, Training training) {
+        this.context  = context;
+        this.allRaces = allRaces;
+        this.training = training;
+        sizePool      = training.getSizePool();
     }
 
     @NonNull
@@ -63,10 +56,11 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
     }
 
     @Override
-    public int getItemCount() { return allSets.size(); }
+    public int getItemCount() { return training.getTrainingBlockList().size(); }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView serieSubtitle;
+        private TextView serieZone;
         private LineChart lineChart;
         private RecyclerView recyclerViewTimes;
 
@@ -75,37 +69,39 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
         public MyViewHolder(@NonNull final View itemView) {
             super(itemView);
             serieSubtitle     = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_subtitle);
+            serieZone         = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_zones);
             lineChart         = (LineChart)    itemView.findViewById(R.id.rv_detail_training_items_line_chart);
             recyclerViewTimes = (RecyclerView) itemView.findViewById(R.id.rv_detail_training_items_recyclerview);
         }
 
         @SuppressLint("SetTextI18n")
         public void display(int indexSerie) {
-            int startIndex = Training.getStartIndexFromSetIndex(allSets, indexSerie);
-            int endIndex   = Training.getEndIndexFromSetIndex(allSets, indexSerie);
-
-            serieSubtitle.setText(allSets.get(indexSerie) + " x " + allDistances.get(indexSerie) + Race.convertShortSwim(allSwims.get(indexSerie)));
-            configureAndShowLineChart(lineChart, indexSerie, startIndex, endIndex, true);
-            showRecyclerViewTrainingDetailTime(allTimes.subList(startIndex, endIndex));
+            TrainingBlock trainingBlock = training.getTrainingBlockList().get(indexSerie);
+            serieSubtitle.setText(trainingBlock.getNbSet() + " x " + trainingBlock.getDistance() + Race.convertShortSwim(trainingBlock.getSwim()));
+            serieZone.setText("Z O N E  " + trainingBlock.getZone());
+            configureAndShowLineChart(lineChart, indexSerie, trainingBlock, true);
+            showRecyclerViewTrainingDetailTime(trainingBlock.getTimes());
         }
 
         private void showRecyclerViewTrainingDetailTime(List<String> allTimes) {
-            RecyclerViewTrainingDetailTimeAdapter recyclerViewTrainingDetailTimeAdapter = new RecyclerViewTrainingDetailTimeAdapter(itemView.getContext(), allTimes);
+            RvTrainingDetailTimeAdapter rvTrainingDetailTimeAdapter = new RvTrainingDetailTimeAdapter(itemView.getContext(), allTimes);
             recyclerViewTimes.setHasFixedSize(true);
             recyclerViewTimes.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
-            recyclerViewTimes.setAdapter(recyclerViewTrainingDetailTimeAdapter);
+            recyclerViewTimes.setAdapter(rvTrainingDetailTimeAdapter);
             recyclerViewTimes.setNestedScrollingEnabled(false);
-            recyclerViewTrainingDetailTimeAdapter.notifyDataSetChanged();
+            rvTrainingDetailTimeAdapter.notifyDataSetChanged();
+
+
         }
 
-        private void configureAndShowLineChart(final LineChart lineChart, int indexSerie, int startIndex, int endIndex, boolean isAnimation) {
+        private void configureAndShowLineChart(final LineChart lineChart, int indexSerie, TrainingBlock trainingBlock, boolean isAnimation) {
             lineChart.clear();
             lineChart.setScaleEnabled(false);
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             dataSets.clear();
 
-            LineDataSet refLineData  = setupRefLineTime(indexSerie);
-            LineDataSet realLineData = setupRealLineTime(indexSerie, startIndex, endIndex);
+            LineDataSet refLineData  = setupRefLineTime(trainingBlock, indexSerie);
+            LineDataSet realLineData = setupRealLineTime(trainingBlock, indexSerie);
             dataSets.add(refLineData);
             dataSets.add(realLineData);
 
@@ -136,22 +132,21 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
             lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.colorText));
         }
 
-        private ArrayList<Entry> setupTimesLineChart(List<String> allTimes, int startIndex, int endIndex) {
+        private ArrayList<Entry> setupTimesLineChart(TrainingBlock trainingBlock) {
             int cpt = 0;
             ArrayList<Entry> result = new ArrayList<>();
-            for (int i = startIndex; i < endIndex; i++) {
-                result.add(new Entry(cpt, Race.fetchTimeToFloat(allTimes.get(i))));
+            for (int i = 0; i < trainingBlock.getTimes().size(); i++) {
+                result.add(new Entry(cpt, Race.fetchTimeToFloat(trainingBlock.getTimes().get(i))));
                 cpt++;
             }
             return result;
         }
 
-        private LineDataSet setupRefLineTime(int indexSerie) {
+        private LineDataSet setupRefLineTime(TrainingBlock trainingBlock, int indexSerie) {
             ArrayList<Entry> refTimes = new ArrayList<>();
-            List<Race> allTimes = MarketRaces.initAllTimes();
-            Race bestTime = MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allTimes, sizePool, allDistances.get(indexSerie), allSwims.get(indexSerie)), 1);
-            for (int i = 0; i < allSets.get(indexSerie); i++) {
-                refTimes.add(new Entry(i, Race.fetchTimeToFloat(Training.convertCompetitionTimeToZoneTime(bestTime.getTime(), allZones.get(indexSerie)))));
+            Race bestTime = MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
+            for (int i = 0; i < trainingBlock.getNbSet(); i++) {
+                refTimes.add(new Entry(i, Race.fetchTimeToFloat(Training.convertCompetitionTimeToZoneTime(bestTime.getTime(), trainingBlock.getZone()))));
             }
             LineDataSet refLineTime = new LineDataSet(refTimes, "Temps visé");
             refLineTime.setLineWidth(1.5f);
@@ -167,8 +162,8 @@ public class RecyclerViewTrainingDetailAdapter extends RecyclerView.Adapter<Recy
             return refLineTime;
         }
 
-        private LineDataSet setupRealLineTime(int indexSerie, int startIndex, int endIndex) {
-            ArrayList<Entry> yValues = setupTimesLineChart(allTimes, startIndex, endIndex);
+        private LineDataSet setupRealLineTime(TrainingBlock trainingBlock, int indexSerie) {
+            ArrayList<Entry> yValues = setupTimesLineChart(trainingBlock);
             LineDataSet realLineData = new LineDataSet(yValues, "Temps réalisé");
             realLineData.setLineWidth(1.5f);
             realLineData.setCircleRadius(3f);

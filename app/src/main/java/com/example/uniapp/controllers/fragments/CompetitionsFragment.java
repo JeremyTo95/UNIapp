@@ -22,9 +22,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.adapters.RecyclerViewRaceAdapter;
-import com.example.uniapp.controllers.adapters.SwimItemAdapter;
-import com.example.uniapp.views.CustomPopup;
+import com.example.uniapp.controllers.adapters.RvRaceAdapter;
+import com.example.uniapp.controllers.adapters.PvSwimItemAdapter;
+import com.example.uniapp.views.popup.AddRacePopup;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.views.SwimCards;
@@ -67,7 +67,7 @@ public class CompetitionsFragment extends Fragment {
     private LineDataSet         lineDataSet;
     private Button              addRaceTimeBtn;
     private RecyclerView recyclerView;
-    private RecyclerViewRaceAdapter recyclerViewRaceAdapter;
+    private RvRaceAdapter rvRaceAdapter;
 
     public CompetitionsFragment(List<Race> allRaces) { this.allRaces = allRaces; }
 
@@ -138,7 +138,7 @@ public class CompetitionsFragment extends Fragment {
         mSwimCardsList.add(new SwimCards(allRaces,"IM", sizePool));
 
         if (mViewPager == null) mViewPager = layoutInflater.findViewById(R.id.fragment_competition_viewpager);
-        mViewPager.setAdapter(new SwimItemAdapter(mSwimCardsList, layoutInflater.getContext(), sizePool));
+        mViewPager.setAdapter(new PvSwimItemAdapter(mSwimCardsList, layoutInflater.getContext(), sizePool));
         mViewPager.getAdapter().notifyDataSetChanged();
         mViewPager.setCurrentItem(viewPagerIndex);
     }
@@ -237,32 +237,32 @@ public class CompetitionsFragment extends Fragment {
     }
 
     private void configureAndShowAddRacePopup() {
-        final CustomPopup customPopup = new CustomPopup(getActivity());
-        customPopup.setTitle("A j o u t e r   N o u v e l l e   C o u r s e");
-        customPopup.setSizePool(sizePool);
-        customPopup.setSwim(swim);
-        customPopup.setDistanceRace(distance);
-        customPopup.getSubtitleDescription().setText("Bassin " + sizePool + "m : " + distance + "m " + Race.convertSwimFromEnglishToFrench(swim));
-        customPopup.build();
+        final AddRacePopup addRacePopup = new AddRacePopup(getActivity());
+        addRacePopup.setTitle("A j o u t e r   N o u v e l l e   C o u r s e");
+        addRacePopup.setSizePool(sizePool);
+        addRacePopup.setSwim(swim);
+        addRacePopup.setDistanceRace(distance);
+        addRacePopup.getSubtitleDescription().setText("Bassin " + sizePool + "m : " + distance + "m " + Race.convertSwimFromEnglishToFrench(swim));
+        addRacePopup.build();
 
-        customPopup.getConfirmedButton().setOnClickListener(new View.OnClickListener() {
+        addRacePopup.getConfirmedButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                customPopup.setDate(customPopup.getDateEditText().getText().toString());
-                customPopup.setCity(customPopup.getCityEditText().getText().toString());
-                customPopup.setCountry(customPopup.getCountryEditText().getText().toString());
-                customPopup.setTime(customPopup.getTimeEditText().getText().toString());
-                customPopup.checkInputFormatTime();
-                if (customPopup.isEnableConfirmed()) {
+                addRacePopup.setDate(addRacePopup.getDateEditText().getText().toString());
+                addRacePopup.setCity(addRacePopup.getCityEditText().getText().toString());
+                addRacePopup.setCountry(addRacePopup.getCountryEditText().getText().toString());
+                addRacePopup.setTime(addRacePopup.getTimeEditText().getText().toString());
+                addRacePopup.checkInputFormatTime();
+                if (addRacePopup.isEnableConfirmed()) {
                     Race newRace = new Race(UUID.randomUUID(),
-                            customPopup.getDate(), customPopup.getCity(), customPopup.getCountry(),
-                            "AS HERBLAY NATATION", customPopup.getDistanceRace(), customPopup.getSizePool(),
-                            customPopup.getSwim(), customPopup.getTime(),
-                            /*MarketRaces.convertTimeToPointFFN(customPopup.getTime())*/0, customPopup.getLevel(),
+                            addRacePopup.getDate(), addRacePopup.getCity(), addRacePopup.getCountry(),
+                            "AS HERBLAY NATATION", addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
+                            addRacePopup.getSwim(), addRacePopup.getTime(),
+                            /*MarketRaces.convertTimeToPointFFN(customPopup.getTime())*/0, addRacePopup.getLevel(),
                             21, ""
                     );
                     MarketRaces.addRaceTime(allRaces, newRace);
-                    customPopup.dismiss();
+                    addRacePopup.dismiss();
                     updateCurrentRaces();
                     updateRecyclerViewRaceList();
                     updateTimesForSwimCards();
@@ -307,11 +307,11 @@ public class CompetitionsFragment extends Fragment {
 
     private void updateRecyclerViewRaceList() {
         updateCurrentRaces();
-        recyclerViewRaceAdapter = new RecyclerViewRaceAdapter(currentRaces);
+        rvRaceAdapter = new RvRaceAdapter(currentRaces);
         recyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
-        recyclerView.setAdapter(recyclerViewRaceAdapter);
+        recyclerView.setAdapter(rvRaceAdapter);
         recyclerView.setNestedScrollingEnabled(false);
-        recyclerViewRaceAdapter.notifyDataSetChanged();
+        rvRaceAdapter.notifyDataSetChanged();
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
                     @Override
@@ -322,7 +322,7 @@ public class CompetitionsFragment extends Fragment {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         MarketRaces.removeRaceTime(allRaces, currentRaces.get(viewHolder.getAdapterPosition()));
                         currentRaces.remove(viewHolder.getAdapterPosition());
-                        recyclerViewRaceAdapter.removeItem(viewHolder.getAdapterPosition());
+                        rvRaceAdapter.removeItem(viewHolder.getAdapterPosition());
                         configureAndShowLineChart(lineChart, true);
                         updateTimesForSwimCards();
                     }

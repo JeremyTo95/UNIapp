@@ -19,10 +19,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="S E R I E : "
+            android:text="S E R I E "
             android:gravity="center"
             android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/h3_textsize"
+            android:textSize="@dimen/h4_textsize"
             android:textColor="@color/colorSecondaryLight" />
         <TextView
             android:id="@+id/rv_detail_training_items_serie_subtitle"
@@ -34,6 +34,16 @@
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/h3_textsize"
             android:textColor="@color/colorText" />
+        <TextView
+            android:id="@+id/rv_detail_training_items_serie_zones"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Z O N E  5"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/h4_textsize"
+            android:textColor="@color/colorSecondaryLight" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,17 +65,30 @@
         android:layout_marginVertical="10dp"
         android:layout_marginBottom="20dp"
         android:orientation="vertical" >
-        <TextView
-            android:id="@+id/rv_detail_training_items_TIME_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="T E M P S : "
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical"
-            android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/h3_textsize"
-            android:textColor="@color/colorSecondaryLight" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/rv_detail_training_items_TIME_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="T E M P S : "
+                android:layout_marginBottom="10dp"
+                android:gravity="center_vertical"
+                android:fontFamily="sans-serif-light"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorSecondaryLight" />
+
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/transparent"
+                android:drawableLeft="@drawable/ic_create_white_24dp"
+                android:paddingLeft="12dp" />
+
+        </LinearLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

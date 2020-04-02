@@ -18,10 +18,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewRaceAdapter extends RecyclerView.Adapter<RecyclerViewRaceAdapter.MyViewHolder> {
+public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHolder> {
     private List<Race> races;
 
-    public RecyclerViewRaceAdapter(List<Race> races) {
+    public RvRaceAdapter(List<Race> races) {
         this.races = races;
     }
 

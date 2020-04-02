@@ -13,9 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.adapters.RecyclerViewTrainingDetailAdapter;
+import com.example.uniapp.controllers.adapters.RvTrainingDetailAdapter;
 import com.example.uniapp.models.MarketRaces;
-import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
 
@@ -44,7 +43,7 @@ public class TrainingDetailFragment extends Fragment {
 
     private void updateRecyclerViewTrainingList() {
         RecyclerView serieRecyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_training_detail_graphs);
-        RecyclerViewTrainingDetailAdapter serieRecyclerViewAdapter = new RecyclerViewTrainingDetailAdapter(getContext(), training);
+        RvTrainingDetailAdapter serieRecyclerViewAdapter = new RvTrainingDetailAdapter(getContext(), allRaces, training);
         serieRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         serieRecyclerView.setAdapter(serieRecyclerViewAdapter);
         serieRecyclerView.setNestedScrollingEnabled(false);
@@ -64,9 +63,9 @@ public class TrainingDetailFragment extends Fragment {
         String competitionTimeStr  = "";
         String trainingZoneTimeStr = "";
         List<String> bestTimes = getCompetitionRaceTime();
-        for (int i = 0; i < training.getSwims().size(); i++) {
-            competitionTimeStr  += training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + " : " + bestTimes.get(i) + "\n";
-            trainingZoneTimeStr += "Z" + training.getZones().get(i) + " " + training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + " : " + Training.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getZones().get(i)) + "\n";
+        for (int i = 0; i < training.getTrainingBlockList().size(); i++) {
+            competitionTimeStr  += training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + bestTimes.get(i) + "\n";
+            trainingZoneTimeStr += "Z" + training.getTrainingBlockList().get(i).getZone() + " " + training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + Training.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getTrainingBlockList().get(i).getZone()) + "\n";
         }
         competitionTimeStr = competitionTimeStr.substring(0, competitionTimeStr.length() - 1);
         trainingZoneTimeStr = trainingZoneTimeStr.substring(0, trainingZoneTimeStr.length() - 1);
@@ -93,8 +92,8 @@ public class TrainingDetailFragment extends Fragment {
 
     private List<String> getCompetitionRaceTime() {
         List<String> result = new ArrayList<String>();
-        for (int i = 0; i < training.getSwims().size(); i++)
-            result.add(MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, training.getSizePool(), training.getDistance().get(i), training.getSwims().get(i)), 1).getTime());
+        for (int i = 0; i < training.getTrainingBlockList().size(); i++)
+            result.add(MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
         return result;
     }
 }

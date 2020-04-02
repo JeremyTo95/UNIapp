@@ -2,8 +2,8 @@ package com.example.uniapp.models;
 
 import android.util.Log;
 
-import com.example.uniapp.views.RaceDateComparator;
-import com.example.uniapp.views.TimeComparator;
+import com.example.uniapp.views.comparators.RaceDateComparator;
+import com.example.uniapp.views.comparators.TimeComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

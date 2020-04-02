@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:textColor="@color/colorText"
     android:textAlignment="center"
-    android:textSize="@dimen/h3_textsize"
+    android:textSize="@dimen/h4_textsize"
     android:fontFamily="sans-serif-light"
     android:gravity="center"
     android:paddingVertical="20dp"

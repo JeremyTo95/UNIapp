@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;
-import com.example.uniapp.views.TimeComparator;
+import com.example.uniapp.views.comparators.TimeComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

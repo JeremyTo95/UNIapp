@@ -1,4 +1,4 @@
-package com.example.uniapp.views;
+package com.example.uniapp.views.popup;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class CustomPopup extends Dialog {
+public class AddRacePopup extends Dialog {
     private String title;
     private String city;
     private String date;
@@ -48,9 +48,9 @@ public class CustomPopup extends Dialog {
 
     private Race mNewRace;
 
-    public CustomPopup(final Activity activity) {
+    public AddRacePopup(final Activity activity) {
         super(activity, R.style.Theme_AppCompat_Dialog);
-        setContentView(R.layout.fragment_competition_add_race_popup);
+        setContentView(R.layout.popup_add_race);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date today            = Calendar.getInstance().getTime();

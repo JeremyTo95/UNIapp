@@ -45,4 +45,14 @@
         <item>B A S S I N  2 5 M</item>
         <item>B A S S I N  5 0 M</item>
     </string-array>
+
+    <string-array name="zones">
+        <item>Z1</item>
+        <item>Z2</item>
+        <item>Z3</item>
+        <item>Z4</item>
+        <item>Z5</item>
+        <item>Z6</item>
+        <item>Z7</item>
+    </string-array>
 </resources>

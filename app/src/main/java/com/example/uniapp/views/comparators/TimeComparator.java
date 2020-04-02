@@ -1,4 +1,4 @@
-package com.example.uniapp.views;
+package com.example.uniapp.views.comparators;
 
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;

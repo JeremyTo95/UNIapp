@@ -16,17 +16,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.adapters.RecyclerViewTrainingAdapter;
+import com.example.uniapp.controllers.adapters.RvTrainingAdapter;
 import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
-import com.example.uniapp.views.TrainingDateComparator;
+import com.example.uniapp.views.popup.AddTrainingPopup;
+import com.example.uniapp.views.comparators.TrainingDateComparator;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,18 +44,19 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private String swim;
     private int difficulty;
 
-    private TextView training_title;
-    private Spinner dropdownPool;
-    private List<Button> btn_difficulty_stars;
-    private Button btn_all;
-    private Button btn_butterfly;
-    private Button btn_backstroke;
-    private Button btn_breaststroke;
-    private Button btn_freestyle;
-    private Button btn_IM;
+    private TextView             training_title;
+    private Spinner              dropdownPool;
+    private List<Button>         btn_difficulty_stars;
+    private Button               btn_all;
+    private Button               btn_butterfly;
+    private Button               btn_backstroke;
+    private Button               btn_breaststroke;
+    private Button               btn_freestyle;
+    private Button               btn_IM;
+    private FloatingActionButton floatingActionButton;
 
     private RecyclerView trainingRecyclerView;
-    private RecyclerViewTrainingAdapter trainingRecyclerViewAdapter;
+    private RvTrainingAdapter trainingRecyclerViewAdapter;
 
     public TrainingsFragment(List<Training> allTrainings, List<Race> allRaces) { this.allTrainings = allTrainings; this.allRaces = allRaces; }
 
@@ -77,7 +79,6 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        System.out.println(v.getTag());
         if (v.getTag().equals("btn_25")) sizePool = 25;
         else if (v.getTag().equals("btn_50")) sizePool = 50;
         else if (v.getTag().equals("all")) swim = v.getTag().toString();
@@ -96,6 +97,8 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         else if (v.getTag().equals("difficulty_3")) difficulty = 3;
         else if (v.getTag().equals("difficulty_4")) difficulty = 4;
         else if (v.getTag().equals("difficulty_5")) difficulty = 5;
+        else if (v.getTag().equals("addTraining")) configureAndShowAddRacePopup();
+
         updateColors();
         updateDifficulty();
         updateRecyclerViewTrainingList();
@@ -113,14 +116,15 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         for (int i = 0; i < 5; i++) btn_difficulty_stars.add((Button) layoutInflater.findViewById(idButtons[i]));
         for (int i = 0; i < 5; i++) btn_difficulty_stars.get(i).setOnClickListener(this);
 
-        training_title       = (TextView) layoutInflater.findViewById(R.id.fragment_training_title);
-        btn_all              = (Button) layoutInflater.findViewById(R.id.fragment_training_all);
-        btn_butterfly        = (Button) layoutInflater.findViewById(R.id.fragment_training_butterfly);
-        btn_backstroke       = (Button) layoutInflater.findViewById(R.id.fragment_training_backstroke);
-        btn_breaststroke     = (Button) layoutInflater.findViewById(R.id.fragment_training_breaststroke);
-        btn_freestyle        = (Button) layoutInflater.findViewById(R.id.fragment_training_freestyle);
-        btn_IM               = (Button) layoutInflater.findViewById(R.id.fragment_training_IM);
-        trainingRecyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_training_recycler_view);
+        training_title       = (TextView)             layoutInflater.findViewById(R.id.fragment_training_title);
+        btn_all              = (Button)               layoutInflater.findViewById(R.id.fragment_training_all);
+        btn_butterfly        = (Button)               layoutInflater.findViewById(R.id.fragment_training_butterfly);
+        btn_backstroke       = (Button)               layoutInflater.findViewById(R.id.fragment_training_backstroke);
+        btn_breaststroke     = (Button)               layoutInflater.findViewById(R.id.fragment_training_breaststroke);
+        btn_freestyle        = (Button)               layoutInflater.findViewById(R.id.fragment_training_freestyle);
+        btn_IM               = (Button)               layoutInflater.findViewById(R.id.fragment_training_IM);
+        floatingActionButton = (FloatingActionButton) layoutInflater.findViewById(R.id.fragment_training_floating_action_button);
+        trainingRecyclerView = (RecyclerView)         layoutInflater.findViewById(R.id.fragment_training_recycler_view);
 
         btn_all.setOnClickListener(this);
         btn_butterfly.setOnClickListener(this);
@@ -128,6 +132,12 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         btn_breaststroke.setOnClickListener(this);
         btn_freestyle.setOnClickListener(this);
         btn_IM.setOnClickListener(this);
+        floatingActionButton.setOnClickListener(this);
+    }
+
+    private void configureAndShowAddRacePopup() {
+        AddTrainingPopup addTrainingPopup = new AddTrainingPopup(getActivity(), allTrainings);
+        addTrainingPopup.build();
     }
 
     private void updateColors() {
@@ -152,8 +162,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
 
     private void updateRecyclerViewTrainingList() {
         updateCurrentTrainings();
-
-        trainingRecyclerViewAdapter = new RecyclerViewTrainingAdapter(currentTrainings, allRaces);
+        trainingRecyclerViewAdapter = new RvTrainingAdapter(currentTrainings, allRaces);
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
         trainingRecyclerView.setNestedScrollingEnabled(false);
@@ -179,8 +188,8 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private void configureAndShowSizePoolDropdown() {
         dropdownPool = layoutInflater.findViewById(R.id.fragment_training_spinner_sizePool);
         dropdownPool.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.fragment_training_size_pool_dropdown);
-        adapter.setDropDownViewResource(R.layout.fragment_training_size_pool_dropdown);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.dropdown_training_size_pool);
+        adapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
         dropdownPool.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         dropdownPool.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

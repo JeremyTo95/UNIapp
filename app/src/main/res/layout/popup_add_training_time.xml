@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/popup_add_training_item"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:orientation="horizontal"
+    android:background="@drawable/sh_gradient_background"
+    android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/rv_popup_add_training_sets_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Sets"
+            android:textColor="@color/colorSecondaryLight"
+            android:textSize="@dimen/h4_textsize"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light" />
+        <TextView
+            android:id="@+id/rv_popup_add_training_sets_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="2"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText"
+            android:background="@color/transparent"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/h4_textsize" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/rv_popup_add_training_distance_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Distance"
+            android:textColor="@color/colorSecondaryLight"
+            android:textSize="@dimen/h4_textsize"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light" />
+        <TextView
+            android:id="@+id/rv_popup_add_training_distance_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:hint="100m"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@color/colorText"
+            android:textColorHint="@color/colorText"
+            android:background="@color/transparent"
+            android:fontFamily="sans-serif-light"
+            android:textSize="@dimen/h4_textsize" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/rv_popup_add_training_swim_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Nage"
+            android:textColor="@color/colorSecondaryLight"
+            android:textSize="@dimen/h4_textsize"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light" />
+        <TextView
+            android:id="@+id/rv_popup_add_training_swim_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:backgroundTint="@color/colorText"
+            android:gravity="center"
+            android:text="Nage Libre"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/h4_textsize"
+            android:fontFamily="sans-serif-light"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:orientation="vertical" >
+        <TextView
+            android:id="@+id/rv_popup_add_training_zone_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Zone"
+            android:textColor="@color/colorSecondaryLight"
+            android:textSize="@dimen/h4_textsize"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light" />
+        <TextView
+            android:id="@+id/rv_popup_add_training_zone_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:backgroundTint="@color/colorText"
+            android:gravity="center"
+            android:text="6"
+            android:fontFamily="sans-serif-light"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/h4_textsize"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

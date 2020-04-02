@@ -25,11 +25,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerViewTrainingAdapter.MyViewHolder> {
+public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.MyViewHolder> {
     private List<Training> allTrainings;
     private List<Race> allRaces;
 
-    public RecyclerViewTrainingAdapter(List<Training> allTrainings, List<Race> allRaces) { this.allTrainings = allTrainings; this.allRaces = allRaces; }
+    public RvTrainingAdapter(List<Training> allTrainings, List<Race> allRaces) { this.allTrainings = allTrainings; this.allRaces = allRaces; }
 
     @NonNull
     @Override
@@ -89,8 +89,8 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
             String text = "";
 
             date_sizePool_title.setText(training.getDate());
-            for (int i = 0; i < training.getSets().size(); i++)
-                text += training.getSets().get(i) + " x " + training.getDistance().get(i) + Race.convertShortSwim(training.getSwims().get(i)) + "\n";
+            for (int i = 0; i < training.getTrainingBlockList().size(); i++)
+                text += training.getTrainingBlockList().get(i).getNbSet() + " x " + training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " Z" + training.getTrainingBlockList().get(i).getZone() + "\n";
             text = text.substring(0, text.length() - 1);
             serie_content.setText(text);
 
@@ -112,9 +112,9 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
             int[] colors = {R.color.greenLight, R.color.redLight, R.color.blueDeep, R.color.orangeLight, R.color.orangeLight};
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
-            for (int i = 0; i < allTrainings.get(getAdapterPosition()).getSets().size(); i++) {
+            for (int i = 0; i < allTrainings.get(getAdapterPosition()).getTrainingBlockList().size(); i++) {
                 ArrayList<Entry> yValues = setupTimesLineChart(allTrainings.get(getAdapterPosition()), i);
-                LineDataSet lineDataSet = new LineDataSet(yValues, allTrainings.get(getAdapterPosition()).getDistance().get(i) + "" + Race.convertShortSwim(allTrainings.get(getAdapterPosition()).getSwims().get(i)));
+                LineDataSet lineDataSet = new LineDataSet(yValues, allTrainings.get(getAdapterPosition()).getTrainingBlockList().get(i).getDistance() + "" + Race.convertShortSwim(allTrainings.get(getAdapterPosition()).getTrainingBlockList().get(i).getSwim()));
                 lineDataSet.setLineWidth(1.5f);
                 lineDataSet.setCircleRadius(3f);
                 lineDataSet.setCircleHoleRadius(1.5f);
@@ -135,10 +135,8 @@ public class RecyclerViewTrainingAdapter extends RecyclerView.Adapter<RecyclerVi
         private ArrayList<Entry> setupTimesLineChart(Training training, int setIndex) {
             ArrayList<Entry> result = new ArrayList<>();
             int cpt = 0;
-            int startIndex = Training.getStartIndexFromSetIndex(training.getSets(), setIndex);
-            int endIndex   = Training.getEndIndexFromSetIndex(training.getSets(), setIndex);
-            for (int i = startIndex; i < endIndex; i++) {
-                result.add(new Entry(cpt, Race.fetchTimeToFloat(training.getTimes().get(i))));
+            for (int i = 0; i < training.getTrainingBlockList().get(setIndex).getTimes().size(); i++) {
+                result.add(new Entry(cpt, Race.fetchTimeToFloat(training.getTrainingBlockList().get(setIndex).getTimes().get(i))));
                 cpt++;
             }
             return result;

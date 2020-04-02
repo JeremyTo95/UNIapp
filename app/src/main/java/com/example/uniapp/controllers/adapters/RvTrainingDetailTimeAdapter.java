@@ -13,15 +13,15 @@ import com.example.uniapp.R;
 
 import java.util.List;
 
-public class RecyclerViewTrainingDetailTimeAdapter extends RecyclerView.Adapter<RecyclerViewTrainingDetailTimeAdapter.MyViewHolder> {
+public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTrainingDetailTimeAdapter.MyViewHolder> {
     private List<String> allTimes;
     private Context      context;
 
-    public RecyclerViewTrainingDetailTimeAdapter(Context context, List<String> allTimes) { this.context = context; this.allTimes = allTimes; }
+    public RvTrainingDetailTimeAdapter(Context context, List<String> allTimes) { this.context = context; this.allTimes = allTimes; }
 
     @NonNull
     @Override
-    public RecyclerViewTrainingDetailTimeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RvTrainingDetailTimeAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.rv_training_detail_time_items, parent, false);
 
@@ -29,7 +29,7 @@ public class RecyclerViewTrainingDetailTimeAdapter extends RecyclerView.Adapter<
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewTrainingDetailTimeAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RvTrainingDetailTimeAdapter.MyViewHolder holder, int position) {
         holder.display(position);
     }
 
