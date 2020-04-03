@@ -1,6 +1,6 @@
 package com.example.uniapp.controllers.adapters;
 
-import android.content.Intent;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +10,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.activities.DetailRaceTimeActivity;
+import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.views.popup.CompetitionDetailPopup;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHolder> {
     private List<Race> races;
+    private Context context;
 
-    public RvRaceAdapter(List<Race> races) {
-        this.races = races;
-    }
+    public RvRaceAdapter(Context context, List<Race> races) { this.context = context; this.races = races; }
 
     @NonNull
     @Override
@@ -49,10 +47,8 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), DetailRaceTimeActivity.class);
-                intent.putExtra("EXTRA_RACE_SELECTED", (Serializable) race);
-                intent.putExtra("EXTRA_SUBLIST_RACES", new ArrayList<Race>(races.subList(position, races.size())));
-                v.getContext().startActivity(intent);
+                CompetitionDetailPopup competitionDetailPopup = new CompetitionDetailPopup(context, races.subList(position, races.size()), race);
+                competitionDetailPopup.build();
             }
         });
     }
@@ -88,7 +84,7 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
             time.setText(String.valueOf(race.getTime()));
             time.setTextColor(itemView.getResources().getColor(Race.getCurrentColor(race.getSwim())));
 
-            diff.setText(Race.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
+            diff.setText(MarketTimes.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
             diff.setTextColor(itemView.getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
         }
     }

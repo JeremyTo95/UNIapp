@@ -1,6 +1,6 @@
 package com.example.uniapp.controllers.adapters;
 
-import android.content.Intent;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.activities.DetailTrainingActivity;
+//import com.example.uniapp.controllers.activities.DetailTrainingActivity;
+import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.views.popup.TrainingDetailPopup;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
 import com.github.mikephil.charting.animation.Easing;
@@ -21,15 +23,15 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.MyViewHolder> {
+    private Context context;
     private List<Training> allTrainings;
     private List<Race> allRaces;
 
-    public RvTrainingAdapter(List<Training> allTrainings, List<Race> allRaces) { this.allTrainings = allTrainings; this.allRaces = allRaces; }
+    public RvTrainingAdapter(Context context, List<Training> allTrainings, List<Race> allRaces) { this.context = context; this.allTrainings = allTrainings; this.allRaces = allRaces; }
 
     @NonNull
     @Override
@@ -47,10 +49,12 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
+                TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(context, allRaces, training);
+                trainingDetailPopup.build();
+                /*Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
                 intent.putExtra("EXTRA_TRAINING_SELECTED", (Serializable) training);
                 intent.putExtra("EXTRA_ALL_RACES", (Serializable) allRaces);
-                v.getContext().startActivity(intent);
+                v.getContext().startActivity(intent);*/
             }
         });
     }
@@ -135,9 +139,11 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         private ArrayList<Entry> setupTimesLineChart(Training training, int setIndex) {
             ArrayList<Entry> result = new ArrayList<>();
             int cpt = 0;
-            for (int i = 0; i < training.getTrainingBlockList().get(setIndex).getTimes().size(); i++) {
-                result.add(new Entry(cpt, Race.fetchTimeToFloat(training.getTrainingBlockList().get(setIndex).getTimes().get(i))));
-                cpt++;
+            if (training.getTrainingBlockList().get(setIndex).getTimes() != null) {
+                for (int i = 0; i < training.getTrainingBlockList().get(setIndex).getTimes().size(); i++) {
+                    result.add(new Entry(cpt, MarketTimes.fetchTimeToFloat(training.getTrainingBlockList().get(setIndex).getTimes().get(i))));
+                    cpt++;
+                }
             }
             return result;
         }
@@ -151,6 +157,7 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
             lineChart.getAxisLeft().setEnabled(false);
             lineChart.getAxisLeft().setSpaceTop(40);
             lineChart.getAxisLeft().setSpaceBottom(40);
+            lineChart.getAxisLeft().setAxisMinimum(0.0f);
             lineChart.getAxisRight().setEnabled(false);
             lineChart.getXAxis().setEnabled(false);
             lineChart.setTouchEnabled(false);

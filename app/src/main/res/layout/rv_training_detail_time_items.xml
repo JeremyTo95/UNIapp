@@ -17,24 +17,27 @@
         android:textColor="@color/colorText"
         android:textSize="@dimen/h4_textsize"/>
 
-    <TextView
+    <EditText
         android:id="@+id/rv_training_detail_time_edit_text"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:text="00:26.71"
-        android:gravity="center"
+        android:hint="00:00.00"
+        android:textColorHint="@color/colorText"
         android:textColor="@color/colorText"
+        android:inputType="number"
+        android:maxLength="8"
         android:textSize="@dimen/h4_textsize"
         android:background="@color/transparent"
+        android:layout_marginHorizontal="10dp"
         android:fontFamily="sans-serif-light" />
 
     <TextView
+        android:id="@+id/rv_training_detail_time_diff_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="(+00.00)"
-        android:gravity="center_vertical"
         android:textColor="@color/colorText"
         android:textSize="@dimen/h4_textsize"
+        android:gravity="center"
         android:fontFamily="sans-serif-light" />
 </LinearLayout>

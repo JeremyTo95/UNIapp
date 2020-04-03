@@ -1,6 +1,8 @@
 package com.example.uniapp.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TrainingBlock implements Serializable {
@@ -18,10 +20,19 @@ public class TrainingBlock implements Serializable {
         this.zone = zone;
     }
 
+    public void addTime(int index, String time) {
+        times.add(index, time);
+    }
+
     public void setNbSet(int nbSet) { this.nbSet = nbSet; }
     public void setSwim(String swim) { this.swim = swim; }
     public void setDistance(int distance) { this.distance = distance; }
-    public void setTimes(List<String> times) { this.times = times; }
+    public void setTimes(String t, int index) {
+        ArrayList<String> allTimes = new ArrayList<>();
+        for (int i = 0; i < times.size(); i++) allTimes.add(times.get(i));
+        allTimes.set(index, t);
+        times = allTimes;
+    }
     public void setZone(int zone) { this.zone = zone; }
 
     public int getNbSet() { return nbSet; }

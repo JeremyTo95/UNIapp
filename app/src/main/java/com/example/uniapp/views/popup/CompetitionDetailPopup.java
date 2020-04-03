@@ -1,26 +1,26 @@
-package com.example.uniapp.controllers.fragments;
+package com.example.uniapp.views.popup;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
+import androidx.annotation.NonNull;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketRaces;
+import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.views.comparators.TimeComparator;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class CompetitionDetailFragment extends Fragment {
+public class CompetitionDetailPopup extends Dialog {
     private Race race;
     private Race raceUp;
     private Race raceDown;
@@ -40,59 +40,60 @@ public class CompetitionDetailFragment extends Fragment {
     private TextView points;
     private TextView diff;
 
-    public CompetitionDetailFragment() { }
+    public CompetitionDetailPopup(@NonNull Context context, List<Race> subListRaces, Race race) {
+        super(context);
+        this.subListRaces = subListRaces;
+        this.race         = race;
+        setContentView(R.layout.popup_race_detail);
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        setupUIElements();
+        updateColors();
+    }
 
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view     = inflater.inflate(R.layout.fragment_race_detail, container, false);
-        subListRaces  = (ArrayList<Race>) getActivity().getIntent().getSerializableExtra("EXTRA_SUBLIST_RACES");
-        race          = (Race)            getActivity().getIntent().getSerializableExtra("EXTRA_RACE_SELECTED");
-
+    private void setupUIElements() {
         Collections.sort(subListRaces, new TimeComparator());
-        raceUp = MarketRaces.getBestTime(subListRaces, 1);
+        raceUp   = MarketRaces.getBestTime(subListRaces, 1);
         raceDown = MarketRaces.getBestTime(subListRaces, 2);
 
-        bigTitle         = (TextView) view.findViewById(R.id.fragment_detail_race_time_bigtitle);
-        swimmerTitle     = (TextView) view.findViewById(R.id.fragment_detail_race_time_swimmer_title);
-        performanceTitle = (TextView) view.findViewById(R.id.fragment_detail_race_time_performance_title);
-        videoTitle       = (TextView) view.findViewById(R.id.fragment_detail_race_time_video_title);
-        fullname         = (TextView) view.findViewById(R.id.fragment_detail_race_time_name);
-        birthday         = (TextView) view.findViewById(R.id.fragment_detail_race_time_birthday);
-        club             = (TextView) view.findViewById(R.id.fragment_detail_race_time_club);
-        date_city        = (TextView) view.findViewById(R.id.fragment_detail_race_time_date_and_city);
-        level            = (TextView) view.findViewById(R.id.fragment_detail_race_time_level_race);
-        distance_swim    = (TextView) view.findViewById(R.id.fragment_detail_race_time_distance_swim);
-        time             = (TextView) view.findViewById(R.id.fragment_detail_race_time_time);
-        diff             = (TextView) view.findViewById(R.id.fragment_detail_race_time_diff);
-        points           = (TextView) view.findViewById(R.id.fragment_detail_race_time_points);
+        bigTitle         = (TextView) findViewById(R.id.fragment_detail_race_time_bigtitle);
+        swimmerTitle     = (TextView) findViewById(R.id.fragment_detail_race_time_swimmer_title);
+        performanceTitle = (TextView) findViewById(R.id.fragment_detail_race_time_performance_title);
+        videoTitle       = (TextView) findViewById(R.id.fragment_detail_race_time_video_title);
+        fullname         = (TextView) findViewById(R.id.fragment_detail_race_time_name);
+        birthday         = (TextView) findViewById(R.id.fragment_detail_race_time_birthday);
+        club             = (TextView) findViewById(R.id.fragment_detail_race_time_club);
+        date_city        = (TextView) findViewById(R.id.fragment_detail_race_time_date_and_city);
+        level            = (TextView) findViewById(R.id.fragment_detail_race_time_level_race);
+        distance_swim    = (TextView) findViewById(R.id.fragment_detail_race_time_distance_swim);
+        time             = (TextView) findViewById(R.id.fragment_detail_race_time_time);
+        diff             = (TextView) findViewById(R.id.fragment_detail_race_time_diff);
+        points           = (TextView) findViewById(R.id.fragment_detail_race_time_points);
 
         fullname.setText("Jérémy" + " " + "TOURARI");
         birthday.setText("11/11/1999 (21 ans)");
         club.setText("AS HERBLAY NATATION");
-        diff.setText(Race.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
-        diff.setTextColor(getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
-
+        diff.setText(MarketTimes.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
+        diff.setTextColor(getContext().getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
         date_city.setText("Le " + race.getDate() + " à " + race.getCity());
         level.setText("Niveau " + race.getLevel());
-        System.out.println(race.getSwim());
         distance_swim.setText(race.getDistanceRace() + " " + Race.convertShortSwim(race.getSwim()));
         time.setText(race.getTime());
-        System.out.println(race.getPointFFN());
         points.setText(race.getPointFFN() + " points");
-
-        updateColors();
-
-        return view;
     }
 
     private void updateColors() {
-        bigTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        swimmerTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        performanceTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        videoTitle.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        time.setTextColor(getActivity().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        bigTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        swimmerTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        performanceTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        videoTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        time.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+    }
+
+    public void build() {
+        show();
+        Window window = getWindow();
+        if (window != null) window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     }
 
 

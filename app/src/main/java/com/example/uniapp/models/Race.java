@@ -93,40 +93,6 @@ public class Race implements Serializable {
         }
     }
 
-    public static float fetchTimeToFloat(String time) {
-        float myTime = 0.0f;
-        if (time.length() == 8) {
-            myTime += Float.parseFloat(String.valueOf(time.charAt(0) )) * 10 * 60;
-            myTime += Float.parseFloat(String.valueOf(time.charAt(1))) * 60;
-            myTime += Float.parseFloat(String.valueOf(time.charAt(3))) * 10;
-            myTime += Float.parseFloat(String.valueOf(time.charAt(4)));
-            myTime += Float.parseFloat(String.valueOf(time.charAt(6))) / 10;
-            myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 100;
-        }
-        return myTime;
-    }
-
-    public static String fetchFloatToTime(float time) {
-        int myTime = 0;
-        myTime = (int) (time * 100);
-        String ms  = String.valueOf(myTime % 100);
-        String sec = String.valueOf((myTime/100) % 60);
-        String min = String.valueOf((myTime/6000) % 60);
-
-        if (min.length() < 2) min = "0" + min;
-        if (sec.length() < 2) sec = "0" + sec;
-        if (ms.length() < 2)  ms = "0" + ms;
-
-        return (min + ":" + sec + ":" + ms);
-    }
-
-    public static String compareTwoTimes(String raceDown, String race, String raceUp) {
-        String result = "";
-        if (Race.fetchTimeToFloat(race) > Race.fetchTimeToFloat(raceUp)) result = String.format("(+%.2fs)", (Race.fetchTimeToFloat(race)) - Race.fetchTimeToFloat(raceUp));
-        else result = String.format("(-%.2fs)", (Race.fetchTimeToFloat(raceDown) - Race.fetchTimeToFloat(race)));
-        return result;
-    }
-
     public void setId(UUID id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }

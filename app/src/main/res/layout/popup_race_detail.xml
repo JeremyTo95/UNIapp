@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackground"
-    tools:context=".controllers.fragments.CompetitionDetailFragment">
+    tools:context=".views.popup.CompetitionDetailPopup">
 
     <TextView
         android:id="@+id/fragment_detail_race_time_bigtitle"

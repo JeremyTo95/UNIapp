@@ -102,7 +102,7 @@
                 android:textColor="@color/colorSecondaryLight"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
-                android:textSize="@dimen/h2_textsize" />
+                android:textSize="@dimen/h3_textsize" />
 
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/fragment_competition_linechart"
@@ -146,7 +146,8 @@
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="550dp" >
+                android:layout_height="550dp"
+                android:orientation="vertical" >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fragment_competition_recycler_view"
@@ -154,7 +155,6 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:scrollbars="vertical" />
-
             </androidx.core.widget.NestedScrollView>
         </LinearLayout>
     </LinearLayout>

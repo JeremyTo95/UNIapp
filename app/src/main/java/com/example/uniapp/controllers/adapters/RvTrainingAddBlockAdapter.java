@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 
-public class RvAddTrainingBlockAdapter extends RecyclerView.Adapter<RvAddTrainingBlockAdapter.MyViewHolder> {
+public class RvTrainingAddBlockAdapter extends RecyclerView.Adapter<RvTrainingAddBlockAdapter.MyViewHolder> {
     private int nbBlock;
 
-    public RvAddTrainingBlockAdapter(int nbBlock) { this.nbBlock = nbBlock; }
+    public RvTrainingAddBlockAdapter(int nbBlock) { this.nbBlock = nbBlock; }
 
     @NonNull
     @Override

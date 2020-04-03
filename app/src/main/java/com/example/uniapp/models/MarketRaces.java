@@ -234,29 +234,27 @@ public class MarketRaces {
         float offsetPoint1000NL = 7.48f;
         float offsetPoint1500NL = 11.46f;
 
-        float first50NL   = Race.fetchTimeToFloat("00:55.83");
-        float first100NL  = Race.fetchTimeToFloat("01:58.55");
-        float first200NL  = Race.fetchTimeToFloat("04:07.10");
-        float first400NL  = Race.fetchTimeToFloat("08:30.12");
-        float first800NL  = Race.fetchTimeToFloat("17:31.93");
-        float first1000NL = Race.fetchTimeToFloat("22:16.00");
-        float first1500NL = Race.fetchTimeToFloat("33:55.60");
-        float first50dos  = Race.fetchTimeToFloat("01:04.61");
-        float first100dos = Race.fetchTimeToFloat("02:16.10");
-        float first200dos = Race.fetchTimeToFloat("04:42.16");
-        float first50br   = Race.fetchTimeToFloat("01:11.45");
-        float first100br  = Race.fetchTimeToFloat("02:29.87");
-        float first200br  = Race.fetchTimeToFloat("05:09.71");
-        float first50pap  = Race.fetchTimeToFloat("00:58.89");
-        float first100pap = Race.fetchTimeToFloat("02:14.15");
-        float first200pap = Race.fetchTimeToFloat("04:38.35");
-        float first100_4N = Race.fetchTimeToFloat("02:13.25");
-        float first200_4N = Race.fetchTimeToFloat("04:36.48");
-        float first400_4N = Race.fetchTimeToFloat("09:28.92");
+        float first50NL   = MarketTimes.fetchTimeToFloat("00:55.83");
+        float first100NL  = MarketTimes.fetchTimeToFloat("01:58.55");
+        float first200NL  = MarketTimes.fetchTimeToFloat("04:07.10");
+        float first400NL  = MarketTimes.fetchTimeToFloat("08:30.12");
+        float first800NL  = MarketTimes.fetchTimeToFloat("17:31.93");
+        float first1000NL = MarketTimes.fetchTimeToFloat("22:16.00");
+        float first1500NL = MarketTimes.fetchTimeToFloat("33:55.60");
+        float first50dos  = MarketTimes.fetchTimeToFloat("01:04.61");
+        float first100dos = MarketTimes.fetchTimeToFloat("02:16.10");
+        float first200dos = MarketTimes.fetchTimeToFloat("04:42.16");
+        float first50br   = MarketTimes.fetchTimeToFloat("01:11.45");
+        float first100br  = MarketTimes.fetchTimeToFloat("02:29.87");
+        float first200br  = MarketTimes.fetchTimeToFloat("05:09.71");
+        float first50pap  = MarketTimes.fetchTimeToFloat("00:58.89");
+        float first100pap = MarketTimes.fetchTimeToFloat("02:14.15");
+        float first200pap = MarketTimes.fetchTimeToFloat("04:38.35");
+        float first100_4N = MarketTimes.fetchTimeToFloat("02:13.25");
+        float first200_4N = MarketTimes.fetchTimeToFloat("04:36.48");
+        float first400_4N = MarketTimes.fetchTimeToFloat("09:28.92");
         return 0;
     }
-    public static int convertTimeToInt(String time) { return Integer.parseInt(time.replaceAll("[:.]", "").toString()); }
-    public static String convertIntToTime(int time) { return String.valueOf(time/10000%100) + ":" + String.valueOf(time/100%100) + "." + String.valueOf(time%100); }
 
     public static void addRaceTime(List<Race> allTimes, Race race) {
         allTimes.add(race);

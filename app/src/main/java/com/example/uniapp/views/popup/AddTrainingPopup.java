@@ -4,16 +4,17 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,8 @@ import com.example.uniapp.R;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
 import com.example.uniapp.models.TrainingBlock;
+import com.example.uniapp.views.AboutScreen;
+import com.example.uniapp.views.SwimCards;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,6 +37,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private EditText            dateEditText;
@@ -59,20 +63,23 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private String  newDate;
     private String  newCity;
 
-    private List<Training> allTrainings;
+    private Activity            activity;
+    private List<Training>      allTrainings;
     private List<TrainingBlock> trainingBlockList;
-    private int nbBlock;
+    private int                 nbBlock;
 
     public AddTrainingPopup(Activity activity, List<Training> allTrainings) {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.popup_add_training);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        this.activity     = activity;
         this.allTrainings = allTrainings;
 
         setupUIElements();
         updateInputDateFormatEditText();
         updateInputCityFormatEditText();
+        updateInputSetFormatEditText();
+        updateInputDistanceFormatEditText();
         updateDifficulty();
         configureAndShowSizePoolDropdown();
         configureAndShowSwimDropdown();
@@ -105,20 +112,22 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         btn_difficulty_stars.get(0).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
         for (int i = 0; i < 5; i++) btn_difficulty_stars.get(i).setOnClickListener(this);
         addBlock.setOnClickListener(this);
+        addBlock.setEnabled(false);
         btn_denied.setOnClickListener(this);
         btn_confirmed.setOnClickListener(this);
 
-        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_training_size_pool);
-        ArrayAdapter<CharSequence> swimDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_training_size_pool);
-        ArrayAdapter<CharSequence> zoneDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_training_size_pool);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
+        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> swimDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> zoneDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
+        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
         sizePoolDropdown.setAdapter(levelDropdownAdapter);
         swimDropdown.setAdapter(swimDropdownAdapter);
         zoneDropdown.setAdapter(zoneDropdownAdapter);
 
 
+        trainingBlockList = new ArrayList<TrainingBlock>();
         newDifficulty = 1;
         newSizePool   = 25;
         newDate       = dateFormat.format(today);
@@ -134,7 +143,6 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         else if (v.getTag().equals("difficulty_5"))  newDifficulty = 5;
         else if (v.getTag().equals("addBlock"))      addBlockElement();
         else if (v.getTag().equals("btn_denied"))    dismiss();
-        else if (v.getTag().equals("btn_confirmed")) addTraining();
         updateDifficulty();
     }
 
@@ -172,62 +180,86 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         } else return false;
     }
 
+    private boolean isEnabled() {
+        if (checkInputFormatDate() && cityEditText.getText().toString().length() != 0 && trainingBlockList.size() > 0)
+            return true;
+        else {
+            if (!checkInputFormatDate()) dateEditText.setTextColor(getContext().getResources().getColor(R.color.redDeep));
+            if (cityEditText.getText().toString().length() == 0) {
+                cityEditText.setTextColor(getContext().getResources().getColor(R.color.redDeep));
+                cityEditText.setHintTextColor(getContext().getResources().getColor(R.color.redDeep));
+            }
+            if (trainingBlockList.size() == 0) {
+                addBlock.setBackground(getContext().getResources().getDrawable(R.drawable.sh_gradient_red));
+                setsEditText.setHintTextColor(getContext().getResources().getColor(R.color.redDeep));
+                distanceEditText.setHintTextColor(getContext().getResources().getColor(R.color.redDeep));;
+            }
+            return false;
+        }
+    }
+
     private void updateInputCityFormatEditText() {
         cityEditText.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
     }
 
     private void configureAndShowSizePoolDropdown() {
         sizePoolDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_training_size_pool);
-        adapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_item);
         sizePoolDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        /*sizePoolDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    }
+
+    private void updateInputSetFormatEditText() {
+        setsEditText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String sizePool = parent.getItemAtPosition(position).toString();
-                sizePool = sizePool.replaceAll("[a-zA-Z ]", "");
-                newSizePool = Integer.parseInt(sizePool);
+            public void onClick(View v) {
+                setsEditText.setText("");
+                if (distanceEditText.getText().toString().length() > 0) addBlock.setEnabled(true);
             }
-        });*/
+        });
+    }
+
+    private void updateInputDistanceFormatEditText() {
+        distanceEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { distanceEditText.setText(""); }
+        });
+        distanceEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                distanceEditText.removeTextChangedListener(this);
+                if (distanceEditText.getText().length() >= 1 && !distanceEditText.getText().toString().equals("m")) {
+                    String text = distanceEditText.getText().toString().replaceAll("[a-zA-Z ]", "") + "m";
+                    distanceEditText.setText(text);
+                    distanceEditText.setSelection(text.length() - 1);
+                    if (setsEditText.getText().toString().length() > 0) addBlock.setEnabled(true);
+                } else if (distanceEditText.getText().toString().equals("m")) {
+                    distanceEditText.setText("");
+                }
+                distanceEditText.addTextChangedListener(this);
+            }
+        });
     }
 
     private void configureAndShowSwimDropdown() {
         swimDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_training_size_pool);
-        adapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_item);
         swimDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        /*swimDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String swim = parent.getItemAtPosition(position).toString();
-                swim = Race.convertSwimFromFrenchToEnglish(swim);
-                newSwim = swim;
-            }
-        });*/
     }
 
     private void configureAndShowZoneDropdown() {
         zoneDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_training_size_pool);
-        adapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_item);
         zoneDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-        /*zoneDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String zone = parent.getItemAtPosition(position).toString();
-                zone = zone.replace("Z", "");
-                newZone = Integer.parseInt(zone);
-            }
-        });*/
     }
 
     public void addTraining() {
@@ -239,9 +271,15 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         System.out.println("city       : " + newCity);
         System.out.println("difficulty : " + newDifficulty);
         System.out.println("sizePool   : " + newSizePool);
+        if (isEnabled()) {
+            Training training = new Training(UUID.randomUUID(), newDifficulty, newSizePool, newDate, newCity, trainingBlockList);
+            allTrainings.add(training);
+            dismiss();
+        }
     }
 
     private void addBlockElement() {
+        // http://android-er.blogspot.com/2014/01/get-text-from-dynamically-added-view.html
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         newBlock = getLayoutInflater().inflate(R.layout.popup_add_training_time, (ViewGroup) getWindow().getDecorView(), false);
 
@@ -261,7 +299,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         newSwim     = swimDropdown.getSelectedItem().toString();
         newCity     = getCityEditText().getText().toString();
 
-        addTraining();
+        trainingBlockList.add(new TrainingBlock(newSet, Race.convertSwimFromFrenchToEnglish(newSwim), newDistance, initEmptyTime(), newZone));
         gridLayout.addView(newBlock, nbBlock);
         nbBlock++;
     }
@@ -269,12 +307,22 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     public void build() {
         show();
         Window window = getWindow();
-        if (window != null) window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, 2225);
+        if (window != null) window.setLayout(AboutScreen.getWidth(activity), AboutScreen.getHeight(activity) - 100);
+    }
+
+    public List<String> initEmptyTime() {
+        List<String> allTimes = new ArrayList<String>();
+        for (int i = 0; i < newSet; i++) {
+            allTimes.add("00:00:00");
+        }
+        return allTimes;
     }
 
     public EditText getDateEditText() { return dateEditText; }
     public EditText getCityEditText() { return cityEditText; }
+    public Button getBtn_confirmed() { return btn_confirmed; }
     public void setDateEditText(EditText dateEditText) { this.dateEditText = dateEditText; }
     public void setCityEditText(EditText cityEditText) { this.cityEditText = cityEditText; }
+    public void setBtn_confirmed(Button btn_confirmed) { this.btn_confirmed = btn_confirmed; }
 
 }

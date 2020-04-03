@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.Race;
 
 import java.text.DateFormat;
@@ -68,8 +69,8 @@ public class AddRacePopup extends Dialog {
 
         dateEditText.setText(date);
 
-        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_competition_level_item);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
+        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_item);
+        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
         selectLevelCompetition.setAdapter(levelDropdownAdapter);
 
         updateInputDateFormatEditText();
@@ -168,7 +169,7 @@ public class AddRacePopup extends Dialog {
         int textSize = text.length();
         if (textSize != 0) {
             if (Integer.parseInt(text.replaceAll("[:.]", "").toString()) == 0) return false;
-            else if (textSize != 8) {
+            else if (textSize != 8 && textSize != 0) {
                 for (int i = textSize; i < 8; i++) {
                     if      (8 - i == 3) text = new StringBuilder(text).insert(0, ":").toString();
                     else if (8 - i == 6) text = new StringBuilder(text).insert(0, ".").toString();

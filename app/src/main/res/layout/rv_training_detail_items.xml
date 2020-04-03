@@ -82,10 +82,11 @@
                 android:textColor="@color/colorSecondaryLight" />
 
             <Button
+                android:id="@+id/rv_training_detail_item_update_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@color/transparent"
-                android:drawableLeft="@drawable/ic_create_white_24dp"
+                android:drawableLeft="@drawable/ic_refresh_white_24dp"
                 android:paddingLeft="12dp" />
 
         </LinearLayout>

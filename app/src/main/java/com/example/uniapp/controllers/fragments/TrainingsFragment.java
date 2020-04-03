@@ -78,6 +78,12 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        updateRecyclerViewTrainingList();
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getTag().equals("btn_25")) sizePool = 25;
         else if (v.getTag().equals("btn_50")) sizePool = 50;
@@ -136,8 +142,15 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     private void configureAndShowAddRacePopup() {
-        AddTrainingPopup addTrainingPopup = new AddTrainingPopup(getActivity(), allTrainings);
+        final AddTrainingPopup addTrainingPopup = new AddTrainingPopup(getActivity(), allTrainings);
         addTrainingPopup.build();
+        addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTrainingPopup.addTraining();
+                updateRecyclerViewTrainingList();
+            }
+        });
     }
 
     private void updateColors() {
@@ -162,10 +175,12 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
 
     private void updateRecyclerViewTrainingList() {
         updateCurrentTrainings();
-        trainingRecyclerViewAdapter = new RvTrainingAdapter(currentTrainings, allRaces);
+        trainingRecyclerViewAdapter = new RvTrainingAdapter(getContext(), currentTrainings, allRaces);
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
         trainingRecyclerView.setNestedScrollingEnabled(false);
+        trainingRecyclerView.setHasFixedSize(true);
+        trainingRecyclerView.setItemViewCacheSize(20);
         trainingRecyclerViewAdapter.notifyDataSetChanged();
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -188,8 +203,8 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private void configureAndShowSizePoolDropdown() {
         dropdownPool = layoutInflater.findViewById(R.id.fragment_training_spinner_sizePool);
         dropdownPool.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.dropdown_training_size_pool);
-        adapter.setDropDownViewResource(R.layout.dropdown_training_size_pool);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_item);
         dropdownPool.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         dropdownPool.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

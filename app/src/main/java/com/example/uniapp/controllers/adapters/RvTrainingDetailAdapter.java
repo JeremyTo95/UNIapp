@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketRaces;
+import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.Race;
 import com.example.uniapp.models.Training;
 import com.example.uniapp.models.TrainingBlock;
@@ -59,10 +61,12 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
     public int getItemCount() { return training.getTrainingBlockList().size(); }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private TextView serieSubtitle;
-        private TextView serieZone;
-        private LineChart lineChart;
-        private RecyclerView recyclerViewTimes;
+        private TrainingBlock trainingBlock;
+        private TextView      serieSubtitle;
+        private TextView      serieZone;
+        private LineChart     lineChart;
+        private Button        updateBtn;
+        private RecyclerView  recyclerViewTimes;
 
         private int[] colors = {R.color.greenLight, R.color.blueDeep, R.color.redLight, R.color.orangeLight, R.color.orangeLight};
 
@@ -71,27 +75,39 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
             serieSubtitle     = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_subtitle);
             serieZone         = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_zones);
             lineChart         = (LineChart)    itemView.findViewById(R.id.rv_detail_training_items_line_chart);
+            updateBtn         = (Button)       itemView.findViewById(R.id.rv_training_detail_item_update_btn);
             recyclerViewTimes = (RecyclerView) itemView.findViewById(R.id.rv_detail_training_items_recyclerview);
         }
 
         @SuppressLint("SetTextI18n")
-        public void display(int indexSerie) {
-            TrainingBlock trainingBlock = training.getTrainingBlockList().get(indexSerie);
+        public void display(final int indexSerie) {
+            trainingBlock = training.getTrainingBlockList().get(indexSerie);
             serieSubtitle.setText(trainingBlock.getNbSet() + " x " + trainingBlock.getDistance() + Race.convertShortSwim(trainingBlock.getSwim()));
             serieZone.setText("Z O N E  " + trainingBlock.getZone());
+            updateGraphicsElements(indexSerie);
+            updateBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    updateGraphicsElements(indexSerie);
+                }
+            });
+        }
+
+        private void updateGraphicsElements(int indexSerie) {
             configureAndShowLineChart(lineChart, indexSerie, trainingBlock, true);
             showRecyclerViewTrainingDetailTime(trainingBlock.getTimes());
         }
 
         private void showRecyclerViewTrainingDetailTime(List<String> allTimes) {
-            RvTrainingDetailTimeAdapter rvTrainingDetailTimeAdapter = new RvTrainingDetailTimeAdapter(itemView.getContext(), allTimes);
+            List<Race> subRacesList = MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim());
+            String timeRef = MarketRaces.getBestTime(subRacesList, 1).getTime();
+            timeRef = MarketTimes.convertCompetitionTimeToZoneTime(timeRef, trainingBlock.getZone());
+            RvTrainingDetailTimeAdapter rvTrainingDetailTimeAdapter = new RvTrainingDetailTimeAdapter(itemView.getContext(), trainingBlock, timeRef);
             recyclerViewTimes.setHasFixedSize(true);
             recyclerViewTimes.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             recyclerViewTimes.setAdapter(rvTrainingDetailTimeAdapter);
             recyclerViewTimes.setNestedScrollingEnabled(false);
             rvTrainingDetailTimeAdapter.notifyDataSetChanged();
-
-
         }
 
         private void configureAndShowLineChart(final LineChart lineChart, int indexSerie, TrainingBlock trainingBlock, boolean isAnimation) {
@@ -115,29 +131,25 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
             lineChart.getAxisLeft().setEnabled(false);
             lineChart.getAxisLeft().setSpaceTop(40);
             lineChart.getAxisLeft().setSpaceBottom(40);
+            lineChart.getAxisLeft().setAxisMinimum(0.0f);
             lineChart.getAxisRight().setEnabled(false);
             lineChart.getXAxis().setEnabled(false);
             lineChart.getDescription().setEnabled(false);
             lineChart.setTouchEnabled(false);
             lineChart.setHighlightPerDragEnabled(true);
-            lineChart.setHighlightPerTapEnabled(true);
-            lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-                @Override
-                public void onNothingSelected() { }
-                @Override
-                public void onValueSelected(Entry e, Highlight h) {
-                    lineChart.highlightValue(h);
-                }
-            });
+            lineChart.setTouchEnabled(false);
             lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.colorText));
+            lineChart.notifyDataSetChanged();
         }
 
         private ArrayList<Entry> setupTimesLineChart(TrainingBlock trainingBlock) {
             int cpt = 0;
             ArrayList<Entry> result = new ArrayList<>();
-            for (int i = 0; i < trainingBlock.getTimes().size(); i++) {
-                result.add(new Entry(cpt, Race.fetchTimeToFloat(trainingBlock.getTimes().get(i))));
-                cpt++;
+            if (trainingBlock.getTimes() != null) {
+                for (int i = 0; i < trainingBlock.getTimes().size(); i++) {
+                    result.add(new Entry(cpt, MarketTimes.fetchTimeToFloat(trainingBlock.getTimes().get(i))));
+                    cpt++;
+                }
             }
             return result;
         }
@@ -146,7 +158,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
             ArrayList<Entry> refTimes = new ArrayList<>();
             Race bestTime = MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
             for (int i = 0; i < trainingBlock.getNbSet(); i++) {
-                refTimes.add(new Entry(i, Race.fetchTimeToFloat(Training.convertCompetitionTimeToZoneTime(bestTime.getTime(), trainingBlock.getZone()))));
+                refTimes.add(new Entry(i, MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime(bestTime.getTime(), trainingBlock.getZone()))));
             }
             LineDataSet refLineTime = new LineDataSet(refTimes, "Temps visé");
             refLineTime.setLineWidth(1.5f);

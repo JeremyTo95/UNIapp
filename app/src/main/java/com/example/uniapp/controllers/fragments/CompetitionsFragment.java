@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RvRaceAdapter;
 import com.example.uniapp.controllers.adapters.PvSwimItemAdapter;
+import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.views.popup.AddRacePopup;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.Race;
@@ -90,14 +91,22 @@ public class CompetitionsFragment extends Fragment {
         return layoutInflater;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateCurrentRaces();
+        updateRecyclerViewRaceList();
+        configureAndShowLineChart(lineChart, true);
+    }
+
     private void configureUIElements() {
         competition_title = (TextView)     layoutInflater.findViewById(R.id.fragment_competition_competition_title);
         btn_25m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_25);
         btn_50m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_50);
         progression_title = (TextView)     layoutInflater.findViewById(R.id.fragment_competition_progression_title);
-        lineChart = (LineChart)    layoutInflater.findViewById(R.id.fragment_competition_linechart);
+        lineChart         = (LineChart)    layoutInflater.findViewById(R.id.fragment_competition_linechart);
         addRaceTimeBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_add_race_time);
-        recyclerView = (RecyclerView) layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
+        recyclerView      = (RecyclerView) layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
         btn_25m.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,8 +182,8 @@ public class CompetitionsFragment extends Fragment {
     private void configureAndShowDistanceSelectionDropdown() {
         selectSwimDistance = layoutInflater.findViewById(R.id.fragment_competition_spinner);
         selectSwimDistance.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_competition_distance_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_item);
         selectSwimDistance.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         selectSwimDistance.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -223,6 +232,7 @@ public class CompetitionsFragment extends Fragment {
         lineChart.getAxisLeft().setEnabled(false);
         lineChart.getAxisLeft().setSpaceTop(40);
         lineChart.getAxisLeft().setSpaceBottom(40);
+        lineChart.getAxisLeft().setAxisMinimum(0.0f);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getXAxis().setEnabled(false);
         lineChart.getLegend().setEnabled(false);
@@ -231,7 +241,7 @@ public class CompetitionsFragment extends Fragment {
     private ArrayList<Entry> setupTimesLineChart() {
         currentRaces = MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
         ArrayList<Entry> result = new ArrayList<>();
-        for (int i = 0; i < currentRaces.size(); i++) result.add(new Entry(i, Race.fetchTimeToFloat(currentRaces.get(currentRaces.size() - i - 1).getTime())));
+        for (int i = 0; i < currentRaces.size(); i++) result.add(new Entry(i, MarketTimes.fetchTimeToFloat(currentRaces.get(currentRaces.size() - i - 1).getTime())));
 
         return result;
     }
@@ -279,15 +289,15 @@ public class CompetitionsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter;
 
         if      (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke"))
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_competition_distance_item);
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
         else if (swim.equals("freestyle"))
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_competition_distance_item);
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_item);
         else if (swim.equals("IM") && sizePool == 25)
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_competition_distance_item);
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_item);
         else
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_competition_distance_item);
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_item);
 
-        adapter.setDropDownViewResource(R.layout.dropdown_competition_distance_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_item);
         selectSwimDistance.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -307,7 +317,7 @@ public class CompetitionsFragment extends Fragment {
 
     private void updateRecyclerViewRaceList() {
         updateCurrentRaces();
-        rvRaceAdapter = new RvRaceAdapter(currentRaces);
+        rvRaceAdapter = new RvRaceAdapter(getContext(), currentRaces);
         recyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         recyclerView.setAdapter(rvRaceAdapter);
         recyclerView.setNestedScrollingEnabled(false);

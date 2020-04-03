@@ -11,11 +11,11 @@
     <dimen name="fragment_bigtitle_textsize">30sp</dimen>
     <dimen name="custom_popup_textsize">14sp</dimen>
 
-    <dimen name="h1_textsize">30sp</dimen>
-    <dimen name="h2_textsize">25sp</dimen>
-    <dimen name="h3_textsize">20sp</dimen>
-    <dimen name="h4_textsize">15sp</dimen>
-    <dimen name="h5_textsize">10sp</dimen>
+    <dimen name="h1_textsize">27sp</dimen>
+    <dimen name="h2_textsize">29sp</dimen>
+    <dimen name="h3_textsize">18sp</dimen>
+    <dimen name="h4_textsize">12sp</dimen>
+    <dimen name="h5_textsize">8sp</dimen>
 
     <dimen name="rv_training_star_size">30dp</dimen>
 

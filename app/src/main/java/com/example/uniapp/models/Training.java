@@ -32,22 +32,6 @@ public class Training implements Serializable {
         return getStartIndexFromSetIndex(allSets, setIndex) + allSets.get(setIndex);
     }
 
-    public static String convertCompetitionTimeToZoneTime(String time, int zone) {
-        float timeFloat = Race.fetchTimeToFloat(time);
-        return Race.fetchFloatToTime(timeFloat/convertZoneToPercent(zone));
-    }
-
-    public static float convertZoneToPercent(int zone) {
-        if (zone == 1) return 0.60f;
-        else if (zone == 2) return 0.65f;
-        else if (zone == 3) return 0.75f;
-        else if (zone == 4) return 0.80f;
-        else if (zone == 5) return 0.85f;
-        else if (zone == 6) return 0.90f;
-        else if (zone == 7) return 0.95f;
-        else return 0;
-    }
-
     public UUID getId() { return id; }
     public int getSizePool() { return sizePool; }
     public String getDate() { return date; }
