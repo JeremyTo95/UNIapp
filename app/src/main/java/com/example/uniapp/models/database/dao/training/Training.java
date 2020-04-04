@@ -1,18 +1,40 @@
-package com.example.uniapp.models;
+package com.example.uniapp.models.database.dao.training;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
+import com.example.uniapp.models.TrainingBlock;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity(tableName = "training")
 public class Training implements Serializable {
-    private UUID id;
+    @NonNull
+    @PrimaryKey
+    private String id;
+
+    @ColumnInfo(name = "difficulty")
     private int difficulty;
+
+    @ColumnInfo(name = "size_pool")
     private int sizePool;
+
+    @ColumnInfo(name = "date")
     private String date;
+
+    @ColumnInfo(name = "city")
     private String city;
+
+    @ColumnInfo(name = "trainingBlock")
     private List<TrainingBlock> trainingBlockList;
 
-    public Training(UUID id, int difficulty, int sizePool, String date, String city, List<TrainingBlock> trainingBlockList) {
+    public Training(String id, int difficulty, int sizePool, String date, String city, List<TrainingBlock> trainingBlockList) {
         this.id = id;
         this.difficulty = difficulty;
         this.sizePool = sizePool;
@@ -32,14 +54,14 @@ public class Training implements Serializable {
         return getStartIndexFromSetIndex(allSets, setIndex) + allSets.get(setIndex);
     }
 
-    public UUID getId() { return id; }
+    public String getId() { return id; }
     public int getSizePool() { return sizePool; }
     public String getDate() { return date; }
     public String getCity() { return city; }
     public int getDifficulty() { return difficulty; }
     public List<TrainingBlock> getTrainingBlockList() { return trainingBlockList; }
 
-    public void setId(UUID id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }

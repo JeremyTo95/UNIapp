@@ -1,8 +1,7 @@
 package com.example.uniapp.views.comparators;
 
-import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.models.Race;
+import com.example.uniapp.models.database.dao.race.Race;
 
 import java.util.Comparator;
 

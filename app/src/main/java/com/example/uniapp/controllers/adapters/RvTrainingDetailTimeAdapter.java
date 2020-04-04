@@ -3,7 +3,6 @@ package com.example.uniapp.controllers.adapters;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.models.Race;
 import com.example.uniapp.models.TrainingBlock;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTrainingDetailTimeAdapter.MyViewHolder> {
     private Context      context;

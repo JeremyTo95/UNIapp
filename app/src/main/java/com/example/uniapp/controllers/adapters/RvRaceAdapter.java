@@ -13,7 +13,7 @@ import com.example.uniapp.R;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.views.popup.CompetitionDetailPopup;
 import com.example.uniapp.models.MarketRaces;
-import com.example.uniapp.models.Race;
+import com.example.uniapp.models.database.dao.race.Race;
 
 import java.util.List;
 

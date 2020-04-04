@@ -1,4 +1,9 @@
-package com.example.uniapp.models;
+package com.example.uniapp.models.database.dao.race;
+
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.example.uniapp.R;
 
@@ -7,22 +12,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity(tableName = "race")
 public class Race implements Serializable {
-    private UUID id;
-    private String date;
-    private String city;
-    private String country;
-    private String club;
-    private int distanceRace;
-    private int poolSize;
-    private String time;
-    private String swim;
-    private int pointFFN;
-    private String level;
-    private int age;
-    private String description;
+    @NonNull
+    @PrimaryKey
+    private String id;
 
-    public Race(UUID id, String date, String city, String country, String club, int distanceRace, int poolSize, String swim, String time, int pointFFN, String level, int age, String description) {
+    @ColumnInfo(name = "date")
+    private String date;
+
+    @ColumnInfo(name = "city")
+    private String city;
+
+    @ColumnInfo(name = "country")
+    private String country;
+
+    @ColumnInfo(name = "club")
+    private String club;
+
+    @ColumnInfo(name = "distance_race")
+    private int distanceRace;
+
+    @ColumnInfo(name = "sizePool")
+    private int poolSize;
+
+    @ColumnInfo(name = "time")
+    private String time;
+
+    @ColumnInfo(name = "swim")
+    private String swim;
+
+    @ColumnInfo(name = "pointFFN")
+    private int pointFFN;
+
+    @ColumnInfo(name = "level")
+    private String level;
+
+
+    public Race(String id, String date, String city, String country, String club, int distanceRace, int poolSize, String swim, String time, int pointFFN, String level) {
         this.id = id;
         this.date = date;
         this.city = city;
@@ -34,8 +61,6 @@ public class Race implements Serializable {
         this.time = time;
         this.pointFFN = pointFFN;
         this.level = level;
-        this.age = age;
-        this.description = description;
     }
 
     public Race() { }
@@ -93,31 +118,27 @@ public class Race implements Serializable {
         }
     }
 
-    public void setId(UUID id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }
     public void setClub(String club) { this.club = club; }
     public void setDistanceRace(int distanceRace) { this.distanceRace = distanceRace; }
     public void setPoolSize(int poolSize) { this.poolSize = poolSize; }
     public void setSwim(String swim) { this.swim = swim; }
-    public void setDescription(String description) { this.description = description; }
     public void setTime(String time) { this.time = time; }
     public void setCountry(String country) { this.country = country; }
-    public void setAge(int age) { this.age = age; }
     public void setLevel(String level) { this.level = level; }
     public void setPointFFN(int pointFFN) { this.pointFFN = pointFFN; }
 
-    public UUID   getId() { return id; }
+    public String getId() { return id; }
     public String getDate() { return date; }
     public String getCity() { return city; }
     public String getClub() { return club; }
     public int    getDistanceRace() { return distanceRace; }
     public int    getPoolSize() { return poolSize; }
     public String getSwim() { return swim; }
-    public String getDescription() { return description; }
     public String getTime() { return time; }
     public String getCountry() { return country; }
-    public int    getAge() { return age; }
     public String getLevel() { return level; }
     public int    getPointFFN() { return pointFFN; }
 }

@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.room.Room;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.uniapp.R;
@@ -16,16 +18,30 @@ import com.example.uniapp.controllers.fragments.StatisticsFragment;
 import com.example.uniapp.controllers.fragments.TrainingsFragment;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTrainings;
-import com.example.uniapp.models.Race;
-import com.example.uniapp.models.Training;
+import com.example.uniapp.models.database.dao.race.Race;
+import com.example.uniapp.models.database.dao.training.Training;
+import com.example.uniapp.models.database.AppDataBase;
+import com.example.uniapp.models.database.dao.user.User;
 import com.example.uniapp.views.AboutScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
+//TODO: METTRE EN PLACE LES POINTS FFN AVEC LE FICHIER JSON STOCKE SUR SERVEUR
+//TODO: METTRE EN PLACE LA RECUPERATION DE TOUS LES TEMPS DU NAGEUR SUR FFN_EXTRANAT
+//TODO: SAUVEGARDER LES COURSES DEJA EN PLACE SUR L'APPLICATION SYSTEME D'IMPORTATION DE DONNEE SUR SERVEUR ET
+//      SAUVEGARDE DES DONNEES SUR TELEPHONE, PLUS GESTION POUR NE PAS ECRASER LES DONNEE DEJA SAUVEGADER
+//TODO: METTRE EN PLACE LA MODIFICATION DES TEMPS DEJA ENREGISTRER
+//TODO: MISE A JOUR DES TEMPS REALISER A L'ENRAINEMENT
+//TODO: AJOUT DE NOUVEAUX ENTRAINEMENTS
+//TODO: ADD RACE --> UPDATE RACE
+
 public class MainActivity extends AppCompatActivity {
     private List<Race> allRaces;
     private List<Training> allTrainings;
+    public static User user;
+    public static AppDataBase appDataBase;
+
     private BottomNavigationView mBottomNavigationView;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -56,17 +72,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO: METTRE EN PLACE LES POINTS FFN AVEC LE FICHIER JSON STOCKE SUR SERVEUR
-        //TODO: METTRE EN PLACE LA RECUPERATION DE TOUS LES TEMPS DU NAGEUR SUR FFN_EXTRANAT
-        //TODO: SAUVEGARDER LES COURSES DEJA EN PLACE SUR L'APPLICATION SYSTEME D'IMPORTATION DE DONNEE SUR SERVEUR ET
-        //      SAUVEGARDE DES DONNEES SUR TELEPHONE, PLUS GESTION POUR NE PAS ECRASER LES DONNEE DEJA SAUVEGADER
-        //TODO: METTRE EN PLACE LA MODIFICATION DES TEMPS DEJA ENREGISTRER
-        //TODO: MISE A JOUR DES TEMPS REALISER A L'ENRAINEMENT
-        //TODO: AJOUT DE NOUVEAUX ENTRAINEMENTS
-        //TODO: ADD RACE --> UPDATE RACE
-
         allRaces     = MarketRaces.initAllTimes();
         allTrainings = MarketTrainings.initAllTrainings();
+        appDataBase  = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "userdb").allowMainThreadQueries().build();
+        loadUser();
 
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -83,5 +92,14 @@ public class MainActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) AboutScreen.hideSystemUI(this);
+    }
+
+    private void loadUser() {
+        if (appDataBase.userDAO().getAll().size() == 1) {
+            user = appDataBase.userDAO().getAll().get(0);
+            Log.e("DATABASE", "User is defined...");
+        } else {
+            Log.e("DATABASE", "User isn't defined...");
+        }
     }
 }

@@ -17,8 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.models.Race;
+import com.example.uniapp.models.database.dao.race.Race;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,9 +52,9 @@ public class AddRacePopup extends Dialog {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.popup_add_race);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date today            = Calendar.getInstance().getTime();
-        date = dateFormat.format(today);
+        DateFormat dateFormat  = new SimpleDateFormat("dd/MM/yyyy");
+        Date today             = Calendar.getInstance().getTime();
+        date                   = dateFormat.format(today);
         titleTextView          = (TextView) findViewById(R.id.fragment_competition_add_race_popup_title);
         subtitleDescription    = (TextView) findViewById(R.id.fragment_competition_add_race_popup_swim_description);
         dateEditText           = (EditText) findViewById(R.id.race_popup_edit_text_date);

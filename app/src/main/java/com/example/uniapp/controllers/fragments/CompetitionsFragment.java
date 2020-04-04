@@ -27,7 +27,7 @@ import com.example.uniapp.controllers.adapters.PvSwimItemAdapter;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.views.popup.AddRacePopup;
 import com.example.uniapp.models.MarketRaces;
-import com.example.uniapp.models.Race;
+import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.views.SwimCards;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
@@ -264,12 +264,11 @@ public class CompetitionsFragment extends Fragment {
                 addRacePopup.setTime(addRacePopup.getTimeEditText().getText().toString());
                 addRacePopup.checkInputFormatTime();
                 if (addRacePopup.isEnableConfirmed()) {
-                    Race newRace = new Race(UUID.randomUUID(),
+                    Race newRace = new Race(UUID.randomUUID().toString(),
                             addRacePopup.getDate(), addRacePopup.getCity(), addRacePopup.getCountry(),
                             "AS HERBLAY NATATION", addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
                             addRacePopup.getSwim(), addRacePopup.getTime(),
-                            /*MarketRaces.convertTimeToPointFFN(customPopup.getTime())*/0, addRacePopup.getLevel(),
-                            21, ""
+                            /*MarketRaces.convertTimeToPointFFN(customPopup.getTime())*/0, addRacePopup.getLevel()
                     );
                     MarketRaces.addRaceTime(allRaces, newRace);
                     addRacePopup.dismiss();

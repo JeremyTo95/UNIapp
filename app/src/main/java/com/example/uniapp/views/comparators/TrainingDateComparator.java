@@ -1,7 +1,6 @@
 package com.example.uniapp.views.comparators;
 
-import com.example.uniapp.models.Race;
-import com.example.uniapp.models.Training;
+import com.example.uniapp.models.database.dao.training.Training;
 
 import java.util.Comparator;
 

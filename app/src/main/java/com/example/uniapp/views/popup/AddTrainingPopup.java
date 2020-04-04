@@ -4,36 +4,31 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.Race;
-import com.example.uniapp.models.Training;
+import com.example.uniapp.controllers.activities.MainActivity;
+import com.example.uniapp.models.database.dao.race.Race;
+import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.TrainingBlock;
 import com.example.uniapp.views.AboutScreen;
-import com.example.uniapp.views.SwimCards;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -128,6 +123,8 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
 
 
         trainingBlockList = new ArrayList<TrainingBlock>();
+        if (MainActivity.user != null)
+            cityEditText.setText(MainActivity.user.getCityTraining());
         newDifficulty = 1;
         newSizePool   = 25;
         newDate       = dateFormat.format(today);
@@ -272,7 +269,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         System.out.println("difficulty : " + newDifficulty);
         System.out.println("sizePool   : " + newSizePool);
         if (isEnabled()) {
-            Training training = new Training(UUID.randomUUID(), newDifficulty, newSizePool, newDate, newCity, trainingBlockList);
+            Training training = new Training(UUID.randomUUID().toString(), newDifficulty, newSizePool, newDate, newCity, trainingBlockList);
             allTrainings.add(training);
             dismiss();
         }

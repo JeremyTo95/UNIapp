@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,8 +19,8 @@ import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RvTrainingDetailAdapter;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.models.Race;
-import com.example.uniapp.models.Training;
+import com.example.uniapp.models.database.dao.race.Race;
+import com.example.uniapp.models.database.dao.training.Training;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +62,7 @@ public class TrainingDetailPopup extends Dialog {
         date_city_sizePool.setText("Le " + training.getDate() + " à " + training.getCity() + " ("+training.getSizePool() + ")");
         competitionTitle.setText("C O M P E T I T I O N");
         zoneTitle.setText("Z O N E");
+
         String competitionTimeStr  = "";
         String trainingZoneTimeStr = "";
         List<String> bestTimes = getCompetitionRaceTime();
@@ -70,7 +70,7 @@ public class TrainingDetailPopup extends Dialog {
             competitionTimeStr  += training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + bestTimes.get(i) + "\n";
             trainingZoneTimeStr += "Z" + training.getTrainingBlockList().get(i).getZone() + " " + training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + MarketTimes.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getTrainingBlockList().get(i).getZone()) + "\n";
         }
-        competitionTimeStr = competitionTimeStr.substring(0, competitionTimeStr.length() - 1);
+        competitionTimeStr  = competitionTimeStr.substring(0, competitionTimeStr.length() - 1);
         trainingZoneTimeStr = trainingZoneTimeStr.substring(0, trainingZoneTimeStr.length() - 1);
         competitionTime.setText(competitionTimeStr);
         zoneTime.setText(trainingZoneTimeStr);
