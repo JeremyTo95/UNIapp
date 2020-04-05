@@ -307,10 +307,10 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         if (window != null) window.setLayout(AboutScreen.getWidth(activity), AboutScreen.getHeight(activity) - 100);
     }
 
-    public List<String> initEmptyTime() {
-        List<String> allTimes = new ArrayList<String>();
+    public List<Float> initEmptyTime() {
+        List<Float> allTimes = new ArrayList<Float>();
         for (int i = 0; i < newSet; i++) {
-            allTimes.add("00:00:00");
+            allTimes.add(0.0f);
         }
         return allTimes;
     }

@@ -16,7 +16,7 @@ public interface PointFFNDAO {
     List<PointFFN> getAllPoints();
 
     @Query("SELECT * FROM pointFFN WHERE swim = :swim AND distance = :distance AND gender = :gender AND time >= :time LIMIT 1" )
-    List<PointFFN> getPointsFFNByGenderDistanceSwimTime(String gender, int distance, String swim, float time);
+    PointFFN getPointsFFNByGenderDistanceSwimTime(String gender, int distance, String swim, float time);
 
 
 

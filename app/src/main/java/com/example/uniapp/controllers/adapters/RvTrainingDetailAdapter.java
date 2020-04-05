@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
@@ -93,14 +94,14 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
 
         private void updateGraphicsElements(int indexSerie) {
             configureAndShowLineChart(lineChart, indexSerie, trainingBlock, true);
-            showRecyclerViewTrainingDetailTime(trainingBlock.getTimes());
+            showRecyclerViewTrainingDetailTime();
         }
 
-        private void showRecyclerViewTrainingDetailTime(List<String> allTimes) {
-            List<Race> subRacesList = MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim());
-            String timeRef = MarketRaces.getBestTime(subRacesList, 1).getTime();
-            timeRef = MarketTimes.convertCompetitionTimeToZoneTime(timeRef, trainingBlock.getZone());
-            RvTrainingDetailTimeAdapter rvTrainingDetailTimeAdapter = new RvTrainingDetailTimeAdapter(itemView.getContext(), trainingBlock, timeRef);
+        private void showRecyclerViewTrainingDetailTime() {
+            List<Race> subRacesList = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim());
+            float timeRef = MarketRaces.getBestTime(subRacesList, 1).getTime();
+            float timeRefStr = MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime(timeRef, trainingBlock.getZone()));
+            RvTrainingDetailTimeAdapter rvTrainingDetailTimeAdapter = new RvTrainingDetailTimeAdapter(itemView.getContext(), trainingBlock, timeRefStr);
             recyclerViewTimes.setHasFixedSize(true);
             recyclerViewTimes.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             recyclerViewTimes.setAdapter(rvTrainingDetailTimeAdapter);
@@ -145,7 +146,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
             ArrayList<Entry> result = new ArrayList<>();
             if (trainingBlock.getTimes() != null) {
                 for (int i = 0; i < trainingBlock.getTimes().size(); i++) {
-                    result.add(new Entry(cpt, MarketTimes.fetchTimeToFloat(trainingBlock.getTimes().get(i))));
+                    result.add(new Entry(cpt, trainingBlock.getTimes().get(i)));
                     cpt++;
                 }
             }
@@ -154,9 +155,9 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
 
         private LineDataSet setupRefLineTime(TrainingBlock trainingBlock, int indexSerie) {
             ArrayList<Entry> refTimes = new ArrayList<>();
-            Race bestTime = MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
+            Race bestTime = MarketRaces.getBestTime(MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(sizePool, trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
             for (int i = 0; i < trainingBlock.getNbSet(); i++) {
-                refTimes.add(new Entry(i, MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime(bestTime.getTime(), trainingBlock.getZone()))));
+                refTimes.add(new Entry(i, MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime((bestTime.getTime()), trainingBlock.getZone()))));
             }
             LineDataSet refLineTime = new LineDataSet(refTimes, "Temps visé");
             refLineTime.setLineWidth(1.5f);

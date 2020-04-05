@@ -21,9 +21,9 @@ import java.util.Arrays;
 public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTrainingDetailTimeAdapter.MyViewHolder> {
     private Context      context;
     private TrainingBlock trainingBlock;
-    private String       timeRef;
+    private float         timeRef;
 
-    public RvTrainingDetailTimeAdapter(Context context, TrainingBlock trainingBlock, String timeRef) { this.context = context; this.trainingBlock = trainingBlock; this.timeRef = timeRef; }
+    public RvTrainingDetailTimeAdapter(Context context, TrainingBlock trainingBlock, float timeRef) { this.context = context; this.trainingBlock = trainingBlock; this.timeRef = timeRef; }
 
     @NonNull
     @Override
@@ -57,8 +57,8 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
         public void display(int index) {
             desc.setText("t" + (index + 1) + " : ");
             if (trainingBlock.getTimes() != null) {
-                if (MarketTimes.convertTimeToInt(trainingBlock.getTimes().get(index)) != 0) {
-                    time.setText(trainingBlock.getTimes().get(index));
+                if (trainingBlock.getTimes().get(index) != 0.0f) {
+                    time.setText(MarketTimes.fetchFloatToTime(trainingBlock.getTimes().get(index)));
                     updateDiff(diff, timeRef, index);
                 }
             }
@@ -72,7 +72,7 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
                 @Override
-                public void afterTextChanged(Editable s) { trainingBlock.setTimes(MarketTimes.convertTimeToFormat(time.getText().toString()), getAdapterPosition()); }
+                public void afterTextChanged(Editable s) { trainingBlock.setTimes(MarketTimes.fetchTimeToFloat(MarketTimes.convertTimeToFormat(time.getText().toString())), getAdapterPosition()); }
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     time.removeTextChangedListener(this);
@@ -105,7 +105,7 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
             });
         }
 
-        private void updateDiff(TextView diff, String timeRef, int index) {
+        private void updateDiff(TextView diff, float timeRef, int index) {
             String diffStr = MarketTimes.compareTwoTimes(timeRef, trainingBlock.getTimes().get(index), timeRef);
             diff.setText(diffStr);
             diff.setTextColor(itemView.getResources().getColor((diffStr.charAt(1) == '+') ? R.color.redLight : R.color.greenDeep));

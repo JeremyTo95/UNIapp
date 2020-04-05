@@ -81,7 +81,7 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
         public void display(Race raceDown, Race race, Race raceUp) {
             city.setText(String.valueOf(race.getCity()) + "\nNiveau : " + race.getLevel());
             date.setText("Le " + String.valueOf(race.getDate()));
-            time.setText(String.valueOf(race.getTime()));
+            time.setText(String.valueOf(MarketTimes.fetchFloatToTime(race.getTime())));
             time.setTextColor(itemView.getResources().getColor(Race.getCurrentColor(race.getSwim())));
 
             diff.setText(MarketTimes.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));

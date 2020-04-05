@@ -9,10 +9,10 @@ public class TrainingBlock implements Serializable {
     private int nbSet;
     private String swim;
     private int distance;
-    private List<String> times;
+    private List<Float> times;
     private int zone;
 
-    public TrainingBlock(int nbSet, String swim, int distance, List<String> times, int zone) {
+    public TrainingBlock(int nbSet, String swim, int distance, List<Float> times, int zone) {
         this.nbSet = nbSet;
         this.swim = swim;
         this.distance = distance;
@@ -20,15 +20,15 @@ public class TrainingBlock implements Serializable {
         this.zone = zone;
     }
 
-    public void addTime(int index, String time) {
+    public void addTime(int index, Float time) {
         times.add(index, time);
     }
 
     public void setNbSet(int nbSet) { this.nbSet = nbSet; }
     public void setSwim(String swim) { this.swim = swim; }
     public void setDistance(int distance) { this.distance = distance; }
-    public void setTimes(String t, int index) {
-        ArrayList<String> allTimes = new ArrayList<>();
+    public void setTimes(Float t, int index) {
+        ArrayList<Float> allTimes = new ArrayList<>();
         for (int i = 0; i < times.size(); i++) allTimes.add(times.get(i));
         allTimes.set(index, t);
         times = allTimes;
@@ -39,5 +39,5 @@ public class TrainingBlock implements Serializable {
     public int getDistance() { return distance; }
     public int getZone() { return zone; }
     public String getSwim() { return swim; }
-    public List<String> getTimes() { return times; }
+    public List<Float> getTimes() { return times; }
 }

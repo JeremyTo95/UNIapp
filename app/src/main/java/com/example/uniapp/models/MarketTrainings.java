@@ -18,28 +18,28 @@ public class MarketTrainings {
         ArrayList<Training> allTrainings      = new ArrayList<Training>();
 
         List<TrainingBlock> trainingBlockList = new ArrayList<TrainingBlock>();
-        trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new String[] {"01:00:20"}), 7));
-        trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new String[] {"00:30.20", "00:32.40"}), 7));
+        trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new Float[] {1.0f}), 7));
+        trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new Float[] {0.325f, 0.333f}), 7));
         allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 25, "20/02/2020", "HERBLAY", trainingBlockList));
 
         trainingBlockList = new ArrayList<TrainingBlock>();
-        trainingBlockList.add(new TrainingBlock(10, "freestyle", 100, Arrays.asList(new String[] {"01:15:00", "01:15:00", "01:15:00", "01:15:00", "01:16:00", "01:16:00", "01:15:00", "01:15:00", "01:16:00", "01:16:00"}), 3));
+        trainingBlockList.add(new TrainingBlock(10, "freestyle", 100, Arrays.asList(new Float[] {1.15f, 1.15f, 1.15f, 1.15f, 1.16f, 1.16f, 1.16f, 1.17f, 1.17f, 1.17f}), 3));
         allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 25, "20/02/2020", "HERBLAY", trainingBlockList));
 
         trainingBlockList = new ArrayList<TrainingBlock>();
-        trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new String[] {"01:00:20"}), 7));
-        trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new String[] {"00:30.20", "00:32.40"}), 7));
+        trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new Float[] {1.0020f}), 7));
+        trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new Float[] {0.315f, 0.320f}), 7));
         allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 25, "20/02/2020", "HERBLAY", trainingBlockList));
 
         trainingBlockList = new ArrayList<TrainingBlock>();
-        trainingBlockList.add(new TrainingBlock(20, "butterfly", 50,  Arrays.asList(new String[] {"00:35.90", "00:35.90", "00:36.90", "00:37.90", "00:36.90", "00:37.90", "00:36.90", "00:37.90", "00:36.90", "00:37.90", "00:37.90", "00:37.90", "00:37.90", "00:38.90", "00:38.90", "00:39.90", "00:39.90", "00:38.90", "00:38.90", "00:36.90"}), 3));
+        trainingBlockList.add(new TrainingBlock(20, "butterfly", 50,  Arrays.asList(new Float[] {0.3410f, 0.3430f, 0.3460f, 0.3470f, 0.3480f, 0.3500f, 0.3510f, 0.3410f, 0.3530f, 0.3550f, 0.3560f, 0.3570f, 0.3580f, 0.3580f, 0.3590f, 0.3660f, 0.3660f, 0.3670f, 0.3690f, 0.3710f}), 3));
         allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 50, "20/02/2020", "HERBLAY", trainingBlockList));
 
         trainingBlockList = new ArrayList<TrainingBlock>();
 
-        trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new String[] {"01:00:20"}), 6));
-        trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new String[] {"00:30.20", "00:32.40"}), 6));
-        trainingBlockList.add(new TrainingBlock(2, "freestyle", 50,  Arrays.asList(new String[] {"00:28.90", "00:29.50"}), 6));
+        trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new Float[] {1.05f}), 6));
+        trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new Float[] {0.321f, 0.336f}), 6));
+        trainingBlockList.add(new TrainingBlock(2, "freestyle", 50,  Arrays.asList(new Float[] {0.280f, 0.282f}), 6));
         allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 25, "20/02/2020", "HERBLAY", trainingBlockList));
 
         return allTrainings;

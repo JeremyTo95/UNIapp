@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.RvTrainingDetailAdapter;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
@@ -65,7 +66,7 @@ public class TrainingDetailPopup extends Dialog {
 
         String competitionTimeStr  = "";
         String trainingZoneTimeStr = "";
-        List<String> bestTimes = getCompetitionRaceTime();
+        List<Float> bestTimes = getCompetitionRaceTime();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++) {
             competitionTimeStr  += training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + bestTimes.get(i) + "\n";
             trainingZoneTimeStr += "Z" + training.getTrainingBlockList().get(i).getZone() + " " + training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + MarketTimes.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getTrainingBlockList().get(i).getZone()) + "\n";
@@ -93,10 +94,10 @@ public class TrainingDetailPopup extends Dialog {
         }
     }
 
-    private List<String> getCompetitionRaceTime() {
-        List<String> result = new ArrayList<String>();
+    private List<Float> getCompetitionRaceTime() {
+        List<Float> result = new ArrayList<Float>();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++)
-            result.add(MarketRaces.getBestTime(MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
+            result.add(MarketRaces.getBestTime(MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
         return result;
     }
 

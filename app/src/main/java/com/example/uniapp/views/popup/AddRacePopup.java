@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
 
 import java.text.DateFormat;
@@ -30,7 +31,7 @@ public class AddRacePopup extends Dialog {
     private String date;
     private int distanceRace;
     private int sizePool;
-    private String time;
+    private float time;
     private String swim;
     private int pointFFN;
     private String level;
@@ -174,7 +175,7 @@ public class AddRacePopup extends Dialog {
                     else if (8 - i == 6) text = new StringBuilder(text).insert(0, ".").toString();
                     else                 text = new StringBuilder(text).insert(0, "0").toString();
                 }
-                time = text;
+                time = MarketTimes.fetchTimeToFloat(text);
                 return true;
             } else return false;
         } else return false;
@@ -220,7 +221,7 @@ public class AddRacePopup extends Dialog {
                 setDate(getDateEditText().getText().toString());
                 setCity(getCityEditText().getText().toString());
                 setCountry(getCountryEditText().getText().toString());
-                setTime(getTimeEditText().getText().toString());
+                setTime(MarketTimes.fetchTimeToFloat(getTimeEditText().getText().toString()));
                 checkInputFormatTime();
                 isEnableConfirmed();
             }
@@ -250,7 +251,7 @@ public class AddRacePopup extends Dialog {
     public String getDate() { return date; }
     public int getDistanceRace() { return distanceRace; }
     public int getSizePool() { return sizePool; }
-    public String getTime() { return time; }
+    public float getTime() { return time; }
     public String getSwim() { return swim; }
     public int getPointFFN() { return pointFFN; }
     public String getLevel() { return level; }
@@ -273,7 +274,7 @@ public class AddRacePopup extends Dialog {
     public void setDate(String date) { this.date = date; }
     public void setDistanceRace(int distanceRace) { this.distanceRace = distanceRace; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
-    public void setTime(String time) { this.time = time; }
+    public void setTime(float time) { this.time = time; }
     public void setSwim(String swim) { this.swim = swim; }
     public void setPointFFN(int pointFFN) { this.pointFFN = pointFFN; }
     public void setLevel(String level) { this.level = level; }

@@ -11,8 +11,8 @@ public class TimeComparator implements Comparator<Race> {
 
     @Override
     public int compare(Race o1, Race o2) {
-        t1 = MarketTimes.fetchTimeToFloat(o1.getTime());
-        t2 = MarketTimes.fetchTimeToFloat(o2.getTime());
+        t1 = o1.getTime();
+        t2 = o2.getTime();
         if (t1 > t2) return 1;
         else if (t1 == t2) return 0;
         else return -1;

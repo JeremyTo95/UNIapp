@@ -12,6 +12,12 @@ public interface RaceDAO {
     @Query("SELECT * FROM race")
     List<Race> getAllRaces();
 
+    @Query("SELECT count(*) FROM race")
+    int getNbRaces();
+
+    @Query("SELECT * FROM race WHERE sizePool = :poolSize AND distance = :distance AND swim = :swim")
+    List<Race> getRacesByPoolSizeDistanceRaceSwimRace(int poolSize, int distance, String swim);
+
     @Insert
     void insertRace(Race race);
 

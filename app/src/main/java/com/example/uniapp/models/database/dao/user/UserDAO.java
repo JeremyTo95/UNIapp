@@ -12,6 +12,9 @@ public interface UserDAO {
     @Query("SELECT * FROM user")
     List<User> getAll();
 
+    @Query("SELECT count(*) FROM user")
+    int getNbUser();
+
     @Query("SELECT * FROM user WHERE first_name LIKE :first AND last_name LIKE :last")
     User findByName(String first, String last);
 

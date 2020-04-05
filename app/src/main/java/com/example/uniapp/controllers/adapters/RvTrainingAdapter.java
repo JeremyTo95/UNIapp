@@ -141,7 +141,7 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
             int cpt = 0;
             if (training.getTrainingBlockList().get(setIndex).getTimes() != null) {
                 for (int i = 0; i < training.getTrainingBlockList().get(setIndex).getTimes().size(); i++) {
-                    result.add(new Entry(cpt, MarketTimes.fetchTimeToFloat(training.getTrainingBlockList().get(setIndex).getTimes().get(i))));
+                    result.add(new Entry(cpt, training.getTrainingBlockList().get(setIndex).getTimes().get(i)));
                     cpt++;
                 }
             }

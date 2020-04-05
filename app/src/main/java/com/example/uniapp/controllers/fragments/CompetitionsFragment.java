@@ -23,9 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.RvRaceAdapter;
 import com.example.uniapp.controllers.adapters.PvSwimItemAdapter;
 import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.views.comparators.RaceDateComparator;
 import com.example.uniapp.views.popup.AddRacePopup;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.database.dao.race.Race;
@@ -38,6 +40,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -240,9 +244,15 @@ public class CompetitionsFragment extends Fragment {
     }
 
     private ArrayList<Entry> setupTimesLineChart() {
-        currentRaces = MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
+        currentRaces = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(sizePool, distance, swim);
+        Collections.sort(currentRaces, new RaceDateComparator());
         ArrayList<Entry> result = new ArrayList<>();
-        for (int i = 0; i < currentRaces.size(); i++) result.add(new Entry(i, MarketTimes.fetchTimeToFloat(currentRaces.get(currentRaces.size() - i - 1).getTime())));
+        float time;
+        for (int i = 0; i < currentRaces.size(); i++) {
+            time = currentRaces.get(currentRaces.size() - i - 1).getTime() / 1 * 60 + currentRaces.get(currentRaces.size() - i - 1).getTime()%1;
+            System.out.println(time);
+            result.add(new Entry(i, time));
+        }
 
         return result;
     }
@@ -262,16 +272,16 @@ public class CompetitionsFragment extends Fragment {
                 addRacePopup.setDate(addRacePopup.getDateEditText().getText().toString());
                 addRacePopup.setCity(addRacePopup.getCityEditText().getText().toString());
                 addRacePopup.setCountry(addRacePopup.getCountryEditText().getText().toString());
-                addRacePopup.setTime(addRacePopup.getTimeEditText().getText().toString());
+                addRacePopup.setTime(MarketTimes.fetchTimeToFloat(addRacePopup.getTimeEditText().getText().toString()));
                 addRacePopup.checkInputFormatTime();
                 if (addRacePopup.isEnableConfirmed()) {
                     Race newRace = new Race(UUID.randomUUID().toString(),
                             addRacePopup.getDate(), addRacePopup.getCity(), addRacePopup.getCountry(),
-                            "AS HERBLAY NATATION", addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
+                            MainActivity.user.getClub(), addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
                             addRacePopup.getSwim(), addRacePopup.getTime(),
-                            /*MarketRaces.convertTimeToPointFFN(customPopup.getTime())*/0, addRacePopup.getLevel()
+                            addRacePopup.getLevel()
                     );
-                    MarketRaces.addRaceTime(allRaces, newRace);
+                    MainActivity.appDataBase.raceDAO().insertRace(newRace);
                     addRacePopup.dismiss();
                     updateCurrentRaces();
                     updateRecyclerViewRaceList();
@@ -287,7 +297,9 @@ public class CompetitionsFragment extends Fragment {
     }
 
     private void updateItemsDropdown() {
+        int i;
         ArrayAdapter<CharSequence> adapter;
+        String currentDistanceSelected;
 
         if      (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke"))
             adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
@@ -301,6 +313,17 @@ public class CompetitionsFragment extends Fragment {
         adapter.setDropDownViewResource(R.layout.dropdown_item);
         selectSwimDistance.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        for (i = 0; i < adapter.getCount(); i++) {
+            currentDistanceSelected = adapter.getItem(i).toString();
+            currentDistanceSelected = currentDistanceSelected.replace(" ", "");
+            currentDistanceSelected = currentDistanceSelected.replace("m", "");
+            if (currentDistanceSelected.equals(String.valueOf(distance))) {
+                selectSwimDistance.setSelection(i);
+                i = adapter.getCount() + 2;
+            }
+        }
+        if (i == adapter.getCount() + 2) selectSwimDistance.setSelection(0);
     }
 
     private void updateColors() {
@@ -313,7 +336,9 @@ public class CompetitionsFragment extends Fragment {
     private void updateCurrentRaces() {
         currentRaces.clear();
         currentRaces = new ArrayList<>();
-        currentRaces = MarketRaces.getRacesByPoolSizeDistanceRaceSwimRace(allRaces, sizePool, distance, swim);
+        currentRaces = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(sizePool, distance, swim);
+        System.out.println(Arrays.toString(currentRaces.toArray()));
+        Collections.sort(currentRaces, new RaceDateComparator());
     }
 
     private void updateRecyclerViewRaceList() {
@@ -331,7 +356,8 @@ public class CompetitionsFragment extends Fragment {
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        MarketRaces.removeRaceTime(allRaces, currentRaces.get(viewHolder.getAdapterPosition()));
+                        //MarketRaces.removeRaceTime(allRaces, currentRaces.get(viewHolder.getAdapterPosition()));
+                        MainActivity.appDataBase.raceDAO().delete(currentRaces.get(viewHolder.getAdapterPosition()));
                         currentRaces.remove(viewHolder.getAdapterPosition());
                         rvRaceAdapter.removeItem(viewHolder.getAdapterPosition());
                         configureAndShowLineChart(lineChart, true);

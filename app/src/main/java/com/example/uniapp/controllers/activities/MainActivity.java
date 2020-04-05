@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.loader.app.LoaderManager;
 import androidx.room.Room;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
@@ -21,25 +21,15 @@ import com.example.uniapp.controllers.fragments.TrainingsFragment;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFNAPI;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFNDAO;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.user.User;
 import com.example.uniapp.views.AboutScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 //TODO: METTRE EN PLACE LES POINTS FFN AVEC LE FICHIER JSON STOCKE SUR SERVEUR
 //TODO: METTRE EN PLACE LA RECUPERATION DE TOUS LES TEMPS DU NAGEUR SUR FFN_EXTRANAT
@@ -87,16 +77,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        allRaces     = MarketRaces.initAllTimes();
-        allTrainings = MarketTrainings.initAllTrainings();
+        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
+        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
+        //allRaces     = MarketRaces.initAllTimes();
+        //allTrainings = MarketTrainings.initAllTrainings();
         appDataBase  = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "uni_app_db").allowMainThreadQueries().build();
-        PointFFN.makePointFFNApiCall(getApplicationContext());
 
         loadUser();
         loadPointsFFN();
+        loadRaces();
+        loadTrainings();
 
-        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         configureAndShowFragment(new MainFragment());
     }
@@ -113,10 +106,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadUser() {
-        if (appDataBase.userDAO().getAll().size() == 1) {
+        if (appDataBase.userDAO().getNbUser() == 1) {
             user = appDataBase.userDAO().getAll().get(0);
             Toast.makeText(getApplicationContext(), "Bienvenue " + user.getFirstname() + " " + user.getLastname(), Toast.LENGTH_SHORT).show();
         } else {
+            appDataBase.userDAO().deleteAll();
             Toast.makeText(getApplicationContext(), "T ki ? Va t'enregistrer dans les paramètres ;-)", Toast.LENGTH_SHORT).show();
         }
     }
@@ -128,5 +122,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             PointFFN.makePointFFNApiCall(getApplicationContext());
         }
+    }
+
+    private void loadRaces() {
+        allRaces = appDataBase.raceDAO().getAllRaces();
+    }
+
+    private void loadTrainings() {
+        allTrainings = appDataBase.trainingDAO().getAllTrainings();
     }
 }

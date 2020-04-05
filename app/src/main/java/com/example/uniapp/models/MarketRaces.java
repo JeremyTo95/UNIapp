@@ -16,7 +16,7 @@ public class MarketRaces {
 
     public MarketRaces() { }
 
-    public static ArrayList<Race> initAllTimes() {
+    /*public static ArrayList<Race> initAllTimes() {
         ArrayList<Race> allTimes = new ArrayList<Race>();
         allTimes.add(new Race(UUID.randomUUID().toString(), "08/12/2019", "SARCELLES", "FRANCE", "AS HERBLAY NATATION", 50, 25, "freestyle", "00:25.58", 1063, "REG"));
         allTimes.add(new Race(UUID.randomUUID().toString(), "09/11/2019", "PONTOISE", "FRANCE", "AS HERBLAY NATATION", 50, 25, "freestyle", "00:25.22", 1088, "REG"));
@@ -191,9 +191,9 @@ public class MarketRaces {
         allTimes.add(new Race(UUID.randomUUID().toString(), "08/04/2012", "VERSAILLES", "FRANCE", "ETOILE SAINT-LEU NATATION", 200, 50, "IM", "03:27.36", 290, "REG"));
 
         return allTimes;
-    }
+    }*/
 
-    public static List<Race> getRacesByPoolSizeDistanceRaceSwimRace(List<Race> allTimes, int poolSize, int distance, String swim) {
+    /*public static List<Race> getRacesByPoolSizeDistanceRaceSwimRace(List<Race> allTimes, int poolSize, int distance, String swim) {
         List<Race> result = new ArrayList<>();
         Race tmp;
         for (int i = 0; i < allTimes.size(); i++) {
@@ -204,7 +204,7 @@ public class MarketRaces {
 
         sortRacesByDate(allTimes);
         return result;
-    }
+    }*/
 
     public static Race getBestTime(List<Race> allTimes, int position) {
         Race bestTime;
@@ -220,56 +220,9 @@ public class MarketRaces {
             Collections.sort(allTimes, new RaceDateComparator());
         } else {
             bestTime = new Race();
-            bestTime.setTime("");
+            bestTime.setTime(0.0f);
         }
         return bestTime;
-    }
-
-    public static int convertTimeToPointFFN(String swim, int distance, String time) {
-        int   pointFFN          = 2;
-        float offsetPoint50NL   = 0.5f;
-        float offsetPoint100NL  = 0.71f;
-        float offsetPoint200NL  = 1.42f;
-        float offsetPoint400NL  = 2.97f;
-        float offsetPoint800NL  = 5.84f;
-        float offsetPoint1000NL = 7.48f;
-        float offsetPoint1500NL = 11.46f;
-
-        float first50NL   = MarketTimes.fetchTimeToFloat("00:55.83");
-        float first100NL  = MarketTimes.fetchTimeToFloat("01:58.55");
-        float first200NL  = MarketTimes.fetchTimeToFloat("04:07.10");
-        float first400NL  = MarketTimes.fetchTimeToFloat("08:30.12");
-        float first800NL  = MarketTimes.fetchTimeToFloat("17:31.93");
-        float first1000NL = MarketTimes.fetchTimeToFloat("22:16.00");
-        float first1500NL = MarketTimes.fetchTimeToFloat("33:55.60");
-        float first50dos  = MarketTimes.fetchTimeToFloat("01:04.61");
-        float first100dos = MarketTimes.fetchTimeToFloat("02:16.10");
-        float first200dos = MarketTimes.fetchTimeToFloat("04:42.16");
-        float first50br   = MarketTimes.fetchTimeToFloat("01:11.45");
-        float first100br  = MarketTimes.fetchTimeToFloat("02:29.87");
-        float first200br  = MarketTimes.fetchTimeToFloat("05:09.71");
-        float first50pap  = MarketTimes.fetchTimeToFloat("00:58.89");
-        float first100pap = MarketTimes.fetchTimeToFloat("02:14.15");
-        float first200pap = MarketTimes.fetchTimeToFloat("04:38.35");
-        float first100_4N = MarketTimes.fetchTimeToFloat("02:13.25");
-        float first200_4N = MarketTimes.fetchTimeToFloat("04:36.48");
-        float first400_4N = MarketTimes.fetchTimeToFloat("09:28.92");
-        return 0;
-    }
-
-    public static void addRaceTime(List<Race> allTimes, Race race) {
-        allTimes.add(race);
-        sortRacesByDate(allTimes);
-    }
-
-    public static void removeRaceTime(List<Race> allTimes, Race race) {
-        for (int i = 0; i < allTimes.size(); i++) {
-            if (allTimes.get(i).getId().equals(race.getId())) {
-                allTimes.remove(i);
-                i = allTimes.size();
-                Log.i("INFO", "La course a bien été suppimé --> " + race.getTime());
-            }
-        }
     }
 
     public static void sortRacesByDate(List<Race> allTimes) {

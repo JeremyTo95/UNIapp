@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
+import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
 
 import java.util.List;
@@ -174,17 +175,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private void importDataRaces() {
         //TODO: Requête vers JSON sur serveur
         //      Stockage des données sur base de donnée locale
-
-        // Pour le moment ça va montrer la base tmtc
-        List<User> allUsers = MainActivity.appDataBase.userDAO().getAll();
-        List<PointFFN> allPoints = MainActivity.appDataBase.pointFFNDAO().getAllPoints();
-        for (int i = 0; i < allUsers.size(); i++) System.out.println(allUsers.get(i).toString());
-        for (int i = 0; i < allUsers.size(); i++) System.out.println(allPoints.get(i).toString());
-        System.out.println(MainActivity.appDataBase.pointFFNDAO().getNbPoint());
+        Race.makeRaceApiCall(getContext());
     }
 
     private void importPointFFN() {
-        PointFFN.makePointFFNApiCall(getContext());
+        if (MainActivity.appDataBase.pointFFNDAO().getNbPoint() == 0) PointFFN.makePointFFNApiCall(getContext());
+
+        // Pour le moment ça va montrer la base tmtc
+        MainActivity.appDataBase.raceDAO().deleteAll();
+        List<User> allUsers = MainActivity.appDataBase.userDAO().getAll();
+        List<Race> allRaces = MainActivity.appDataBase.raceDAO().getAllRaces();
+        System.out.println(MainActivity.appDataBase.raceDAO().getNbRaces());
+        //        for (int i = 0; i < allUsers.size(); i++) System.out.println(allUsers.get(i).toString());
+//        for (int i = 0; i < allUsers.size(); i++) System.out.println(allRaces.get(i).toString());
+        System.out.println(MainActivity.appDataBase.pointFFNDAO().getNbPoint());
     }
 
     private void updateBirth() {

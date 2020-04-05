@@ -8,6 +8,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
 import com.example.uniapp.controllers.activities.MainActivity;
+import com.example.uniapp.models.database.AppDataBase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,8 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Entity(tableName = "pointFFN", primaryKeys = {"point", "distance", "swim", "time", "gender"})
 public class PointFFN {
-
-    public static String URL_POINT_FFN = "https://raw.githubusercontent.com/JeremyTo95/myData/";
 
     @NonNull
     @ColumnInfo(name = "point")
@@ -66,13 +65,12 @@ public class PointFFN {
     public void setGender(String gender) { this.gender = gender; }
 
     public static void makePointFFNApiCall(final Context context) {
-        List<PointFFN> pointFFNList = new ArrayList<PointFFN>();
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(PointFFN.URL_POINT_FFN)
+                .baseUrl(AppDataBase.URL_DATA)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
