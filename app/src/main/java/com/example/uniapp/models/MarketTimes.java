@@ -27,20 +27,28 @@ public class MarketTimes {
 
     public static String compareTwoTimes(String raceDown, String race, String raceUp) {
         String result = "";
-        if (fetchTimeToFloat(race) > fetchTimeToFloat(raceUp)) result = String.format("(+%.2fs)", (fetchTimeToFloat(race)) - fetchTimeToFloat(raceUp));
-        else result = String.format("(-%.2fs)", (fetchTimeToFloat(raceDown) - fetchTimeToFloat(race)));
+        if (fetchTimeToFloat(race) > fetchTimeToFloat(raceUp)) result = String.format("(+%.2fs)", (fetchTimeToFloat(race) - fetchTimeToFloat(raceUp)) * 100);
+        else result = String.format("(-%.2fs)", (fetchTimeToFloat(raceDown) - fetchTimeToFloat(race)) * 100);
         return result;
     }
 
     public static float fetchTimeToFloat(String time) {
         float myTime = 0.0f;
         if (time.length() == 8) {
+            myTime += Float.parseFloat(String.valueOf(time.charAt(0))) * 10;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(1))) * 1;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(3))) / 10;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(4))) / 100;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(6))) / 1000;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 10000;
+
+        /*
             myTime += Float.parseFloat(String.valueOf(time.charAt(0) )) * 10 * 60;
             myTime += Float.parseFloat(String.valueOf(time.charAt(1))) * 60;
             myTime += Float.parseFloat(String.valueOf(time.charAt(3))) * 10;
             myTime += Float.parseFloat(String.valueOf(time.charAt(4)));
             myTime += Float.parseFloat(String.valueOf(time.charAt(6))) / 10;
-            myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 100;
+            myTime += Float.parseFloat(String.valueOf(time.charAt(7))) / 100;*/
         }
         return myTime;
     }

@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RvRaceAdapter;
@@ -277,6 +278,7 @@ public class CompetitionsFragment extends Fragment {
                     updateTimesForSwimCards();
                     setupTimesLineChart();
                     configureAndShowLineChart(lineChart, true);
+                    Toast.makeText(getContext(), "Nouvelle course ajoutée", Toast.LENGTH_SHORT).show();
                 }
 
             }

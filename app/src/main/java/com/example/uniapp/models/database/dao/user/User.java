@@ -6,7 +6,6 @@ import androidx.room.Entity;
 
 @Entity (tableName = "user", primaryKeys = {"first_name", "last_name"})
 public class User {
-
     @NonNull
     @ColumnInfo(name = "first_name")
     private String firstname;
@@ -33,7 +32,11 @@ public class User {
     @ColumnInfo(name = "city_training")
     private String cityTraining;
 
-    public User(String firstname, String lastname, String birthday, int height, int weight, String club, String spe, String cityTraining) {
+    @ColumnInfo(name = "gender")
+    private String gender;
+
+    public User(String gender, String firstname, String lastname, String birthday, int height, int weight, String club, String spe, String cityTraining) {
+        this.gender = gender;
         this.firstname = firstname;
         this.lastname = lastname;
         this.birthday = birthday;
@@ -47,7 +50,7 @@ public class User {
     @NonNull
     @Override
     public String toString() {
-        return "firstname : " + firstname + "\nlastname : " + lastname + "\n"
+        return "gender : " + gender + " firstname : " + firstname + "\nlastname : " + lastname + "\n"
                 + "birthday : " + birthday + "\nheight : " + height + "\nweight : " + weight + "\n"
                 + "club : " + club + "\nspe : " + spe + "\ncity : " + cityTraining;
     }
@@ -60,6 +63,7 @@ public class User {
     public String getClub() { return club; }
     public String getSpe() { return spe; }
     public String getCityTraining() { return cityTraining; }
+    public String getGender() { return (gender.equals("Homme") ? "girl" : "boy"); }
     public void setFirstname(String firstname) { this.firstname = firstname; }
     public void setLastname(String lastname) { this.lastname = lastname; }
     public void setBirthday(String birthday) { this.birthday = birthday; }
@@ -68,4 +72,5 @@ public class User {
     public void setClub(String club) { this.club = club; }
     public void setSpe(String spe) { this.spe = spe; }
     public void setCityTraining(String cityTraining) { this.cityTraining = cityTraining; }
+    public void setGender(String gender) { this.gender = gender; }
 }

@@ -55,4 +55,9 @@
         <item>Z6</item>
         <item>Z7</item>
     </string-array>
+
+    <string-array name="genders">
+        <item>Homme</item>
+        <item>Femme</item>
+    </string-array>
 </resources>

@@ -11,8 +11,10 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.views.comparators.TimeComparator;
 
@@ -80,6 +82,11 @@ public class CompetitionDetailPopup extends Dialog {
         distance_swim.setText(race.getDistanceRace() + " " + Race.convertShortSwim(race.getSwim()));
         time.setText(race.getTime());
         points.setText(race.getPointFFN() + " points");
+
+        List<PointFFN> pointFFNList = MainActivity.appDataBase.pointFFNDAO().getPointsFFNByGenderDistanceSwimTime(MainActivity.user.getGender(), race.getDistanceRace(), race.getSwim(), MarketTimes.fetchTimeToFloat(race.getTime()));
+        for (int i = 0; i < pointFFNList.size(); i++) {
+            System.out.println(pointFFNList.get(i).getTime() + " " + pointFFNList.get(i).getPoint() + " points FFN");
+        }
     }
 
     private void updateColors() {

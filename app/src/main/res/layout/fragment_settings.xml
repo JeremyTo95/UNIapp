@@ -20,7 +20,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
         android:orientation="vertical">
@@ -57,11 +58,31 @@
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="G E N R E"
+                        android:gravity="center"
+                        android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/colorText" />
+                    <Spinner
+                        android:id="@+id/fragment_settings_gender"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:backgroundTint="@color/colorText"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="N O M"
                         android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
                         android:textColor="@color/colorText" />
                     <EditText
                         android:id="@+id/fragment_settings_lastname"
@@ -70,10 +91,12 @@
                         android:layout_weight="1"
                         android:hint="Nom"
                         android:textSize="@dimen/h4_textsize"
+                        android:textAlignment="textEnd"
                         android:textColorHint="@color/colorText"
                         android:textColor="@color/colorText"
                         android:background="@color/transparent"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -81,11 +104,11 @@
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:text="P R E N O M"
                         android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
                         android:textColor="@color/colorText" />
                     <EditText
                         android:id="@+id/fragment_settings_firstname"
@@ -94,10 +117,12 @@
                         android:layout_weight="1"
                         android:hint="Prenom"
                         android:textSize="@dimen/h4_textsize"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/colorText"
                         android:textColorHint="@color/colorText"
                         android:background="@color/transparent"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -105,25 +130,27 @@
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:text="P O I D"
                         android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
                         android:textColor="@color/colorText" />
                     <EditText
                         android:id="@+id/fragment_settings_weight"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:hint="Kg"
+                        android:hint="kg"
                         android:digits="0123456789"
                         android:inputType="number"
                         android:textSize="@dimen/h4_textsize"
+                        android:textAlignment="textEnd"
                         android:textColorHint="@color/colorText"
                         android:textColor="@color/colorText"
                         android:background="@color/transparent"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -131,25 +158,27 @@
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:text="T A I L L E"
                         android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
                         android:textColor="@color/colorText" />
                     <EditText
                         android:id="@+id/fragment_settings_height"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:hint="180cm"
+                        android:hint="cm"
                         android:digits="0123456789"
                         android:textColorHint="@color/colorText"
                         android:inputType="number"
                         android:textSize="@dimen/h4_textsize"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/colorText"
                         android:background="@color/transparent"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,11 +186,11 @@
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:text="N E  L E"
                         android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
                         android:textColor="@color/colorText" />
                     <EditText
                         android:id="@+id/fragment_settings_birth"
@@ -170,38 +199,15 @@
                         android:layout_weight="1"
                         android:hint="DD/MM/YYYY"
                         android:maxLength="10"
+                        android:textAlignment="textEnd"
                         android:textColorHint="@color/colorText"
                         android:digits="0123456789"
                         android:inputType="number"
                         android:textSize="@dimen/h4_textsize"
                         android:textColor="@color/colorText"
                         android:background="@color/transparent"
-                        android:gravity="center" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="C L U B"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textColor="@color/colorText" />
-                    <EditText
-                        android:id="@+id/fragment_settings_club"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="AS HERBLAY NATATION"
-                        android:inputType="textCapCharacters"
-                        android:textColorHint="@color/colorText"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -224,12 +230,39 @@
                     android:layout_margin="10dp"
                     android:orientation="horizontal">
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="C L U B"
+                        android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/colorText" />
+                    <EditText
+                        android:id="@+id/fragment_settings_club"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:hint="CLUB"
+                        android:inputType="textCapCharacters"
+                        android:textColorHint="@color/colorText"
+                        android:textSize="@dimen/h4_textsize"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/colorText"
+                        android:background="@color/transparent"
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:text="V I L L E"
                         android:inputType="textCapCharacters"
                         android:textSize="@dimen/h4_textsize"
+                        android:layout_marginRight="10dp"
                         android:textColor="@color/colorText" />
                     <EditText
                         android:id="@+id/fragment_settings_city"
@@ -239,10 +272,12 @@
                         android:hint="Ville"
                         android:textSize="@dimen/h4_textsize"
                         android:inputType="textCapCharacters"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/colorText"
                         android:textColorHint="@color/colorText"
                         android:background="@color/transparent"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -265,45 +300,50 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <Button
-            android:id="@+id/fragment_settings_update"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mettre à jour"
-            android:tag="updateBtn"
-            android:textColor="@color/colorText"
-            android:paddingHorizontal="20dp"
-            android:gravity="center"
-            android:layout_marginVertical="10dp"
-            android:background="@drawable/sh_gradient_blue" />
+            android:gravity="center">
+            <Button
+                android:id="@+id/fragment_settings_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mettre à jour"
+                android:tag="updateBtn"
+                android:textColor="@color/colorText"
+                android:paddingHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:gravity="center"
+                android:background="@color/transparent"/>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:layout_weight="0.3"
+        android:gravity="center_horizontal"
         android:orientation="vertical" >
         <Button
             android:id="@+id/fragment_settings_import_data_race"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/sh_gradient_blue"
             android:tag="importDataRaceBtn"
-            android:text="I M P O R T E R  T E M P S  C O M P E T I T I O N"
+            android:background="@drawable/sh_button"
+            android:text="IMPORTER TEMPS COMPETITION"
             android:textSize="@dimen/h4_textsize"
             android:textColor="@color/colorText"
-            android:layout_marginVertical="20dp"
+            android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp" />
         <Button
             android:id="@+id/fragment_settings_save_data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/sh_gradient_blue"
-            android:tag="saveDataBtn"
-            android:text="S A U V E G A R D E R  L E S  D O N N E E S"
+            android:background="@drawable/sh_button"
+            android:tag="importPointsFFN"
+            android:text="IMPORTER POINTS FFN"
             android:textSize="@dimen/h4_textsize"
             android:textColor="@color/colorText"
-            android:layout_marginVertical="20dp"
+            android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp" />
     </LinearLayout>
 </LinearLayout>

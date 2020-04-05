@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.RvTrainingAdapter;
@@ -149,6 +150,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
             public void onClick(View v) {
                 addTrainingPopup.addTraining();
                 updateRecyclerViewTrainingList();
+                Toast.makeText(getContext(), "Nouvelle course ajoutée", Toast.LENGTH_SHORT).show();
             }
         });
     }

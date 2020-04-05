@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
+import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.user.User;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
 public class SettingsFragment extends Fragment implements View.OnClickListener {
     private View     layoutInflater;
 
+    private Spinner  genderSpinner;
     private EditText firstnameEditText;
     private EditText lastnameEditText;
     private EditText weightEditText;
@@ -34,11 +36,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText birthEditText;
     private EditText clubEditText;
     private EditText cityEditText;
-    private Spinner speSpinner;
-    private Button updateUserBtn;
+    private Spinner  speSpinner;
+    private Button   updateUserBtn;
     private Button   importDataRacesBtn;
     private Button   saveDataBtn;
 
+    private String gender;
     private String firstname;
     private String lastname;
     private int    weight;
@@ -63,6 +66,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setupUIElements() {
+        genderSpinner      = (Spinner)  layoutInflater.findViewById(R.id.fragment_settings_gender);
         firstnameEditText  = (EditText) layoutInflater.findViewById(R.id.fragment_settings_firstname);
         lastnameEditText   = (EditText) layoutInflater.findViewById(R.id.fragment_settings_lastname);
         weightEditText     = (EditText) layoutInflater.findViewById(R.id.fragment_settings_weight);
@@ -75,6 +79,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         importDataRacesBtn = (Button)   layoutInflater.findViewById(R.id.fragment_settings_import_data_race);
         saveDataBtn        = (Button)   layoutInflater.findViewById(R.id.fragment_settings_save_data);
 
+        gender    = "M";
         firstname = firstnameEditText.getText().toString();
         lastname  = lastnameEditText.getText().toString();
         weight    = 0;
@@ -83,6 +88,36 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         club      = clubEditText.getText().toString();
         city      = cityEditText.getText().toString();
         spe       = "butterfly";
+
+        if (MainActivity.user != null) {
+            genderSpinner.setSelection((gender == "M") ? 0 : 1);
+            firstnameEditText.setText(MainActivity.user.getFirstname());
+            lastnameEditText.setText(MainActivity.user.getLastname());
+            weightEditText.setText(String.valueOf(MainActivity.user.getWeight()) + "kg");
+            heightEditText.setText(String.valueOf(MainActivity.user.getHeight()) + "cm");
+            birthEditText.setText(MainActivity.user.getBirthday());
+            clubEditText.setText(MainActivity.user.getClub());
+            cityEditText.setText(MainActivity.user.getCityTraining());
+            if (MainActivity.user.getSpe().equals("butterfly")) speSpinner.setSelection(0);
+            if (MainActivity.user.getSpe().equals("backstroke")) speSpinner.setSelection(1);
+            if (MainActivity.user.getSpe().equals("breaststroke")) speSpinner.setSelection(2);
+            if (MainActivity.user.getSpe().equals("freestyle")) speSpinner.setSelection(3);
+            if (MainActivity.user.getSpe().equals("IM")) speSpinner.setSelection(4);
+
+            gender    = MainActivity.user.getGender();
+            firstname = MainActivity.user.getFirstname();
+            lastname  = MainActivity.user.getLastname();
+            weight    = MainActivity.user.getWeight();
+            height    = MainActivity.user.getHeight();
+            birth     = MainActivity.user.getBirthday();
+            club      = MainActivity.user.getClub();
+            city      = MainActivity.user.getCityTraining();
+            spe       = MainActivity.user.getSpe();
+        }
+
+        ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item);
+        genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        genderSpinner.setAdapter(genderDropdownAdapter);
 
         ArrayAdapter<CharSequence> speDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
         speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
@@ -94,6 +129,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateUIElements() {
+        updateGender();
         updateFirstname();
         updateLastname();
         updateWeight();
@@ -108,11 +144,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
              if (v.getTag().equals("updateBtn"))         setupUpdateUser();
         else if (v.getTag().equals("importDataRaceBtn")) importDataRaces();
-        else if (v.getTag().equals("saveDataBtn"))       saveData();
+        else if (v.getTag().equals("importPointsFFN"))   importPointFFN();
     }
 
     private void setupUpdateUser() {
         Log.e("Ep", "It works but...");
+        System.out.println("gender : " + gender);
         System.out.println("first  : " + firstname);
         System.out.println("last   : " + lastname);
         System.out.println("weight : " + weight);
@@ -122,29 +159,41 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         System.out.println("city   : " + city);
         System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
-            User user = new User(firstname, lastname, birth, height, weight, club, spe, city);
+            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
             MainActivity.appDataBase.userDAO().deleteAll();
             MainActivity.appDataBase.userDAO().insert(user);
             MainActivity.user = MainActivity.appDataBase.userDAO().getAll().get(0);
-            Toast.makeText(getActivity(), "New user has been saved", Toast.LENGTH_SHORT);
+            Toast.makeText(getContext(), "New user has been saved", Toast.LENGTH_SHORT).show();
+            updateUserBtn.setBackground(getResources().getDrawable(R.color.transparent));
             Log.e("E", "It works ! (" + MainActivity.appDataBase.userDAO().getAll().size() + ")");
+        } else {
+            Toast.makeText(getContext(), "New user hasn't been saved", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void importDataRaces() {
         //TODO: Requête vers JSON sur serveur
         //      Stockage des données sur base de donnée locale
+
+        // Pour le moment ça va montrer la base tmtc
+        List<User> allUsers = MainActivity.appDataBase.userDAO().getAll();
+        List<PointFFN> allPoints = MainActivity.appDataBase.pointFFNDAO().getAllPoints();
+        for (int i = 0; i < allUsers.size(); i++) System.out.println(allUsers.get(i).toString());
+        for (int i = 0; i < allUsers.size(); i++) System.out.println(allPoints.get(i).toString());
+        System.out.println(MainActivity.appDataBase.pointFFNDAO().getNbPoint());
     }
 
-    private void saveData() {
-        // Pour le momment ça va montrer la base tmtc
-        List<User> allUsers = MainActivity.appDataBase.userDAO().getAll();
-        for (int i = 0; i < allUsers.size(); i++) {
-            System.out.println(allUsers.get(i).toString());
-        }
+    private void importPointFFN() {
+        PointFFN.makePointFFNApiCall(getContext());
     }
 
     private void updateBirth() {
+        birthEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                birthEditText.setText("");
+            }
+        });
         birthEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -159,73 +208,144 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     birthEditText.setText(new StringBuilder(text).insert(textSize - 1, "/").toString());
                     birthEditText.setSelection(birthEditText.getText().length());
                 }
+                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
             }
         });
     }
 
     private void updateFirstname() {
+        firstnameEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { firstnameEditText.setText("");
+            }
+        });
         firstnameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
-            public void afterTextChanged(Editable s) { firstname = firstnameEditText.getText().toString(); }
+            public void afterTextChanged(Editable s) {
+                firstname = firstnameEditText.getText().toString();
+                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
+            }
         });
     }
 
     private void updateLastname() {
+        lastnameEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { lastnameEditText.setText("");
+            }
+        });
         lastnameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
-            public void afterTextChanged(Editable s) { lastname = lastnameEditText.getText().toString(); }
+            public void afterTextChanged(Editable s) {
+                lastname = lastnameEditText.getText().toString();
+                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
+            }
         });
     }
 
     private void updateWeight() {
+        weightEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                weightEditText.setText("");
+            }
+        });
         weightEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
-            public void afterTextChanged(Editable s) { weight = Integer.parseInt(weightEditText.getText().toString()); }
+            public void afterTextChanged(Editable s) {
+                weightEditText.removeTextChangedListener(this);
+                if (weightEditText.getText().length() >= 1 && !weightEditText.getText().toString().equals("kg")) {
+                    String text = weightEditText.getText().toString().replaceAll("[a-zA-Z ]", "") + "kg";
+                    weightEditText.setText(text);
+                    weightEditText.setSelection(text.length() - 2);
+                    weight = Integer.parseInt(weightEditText.getText().toString().replaceAll("[a-zA-Z ]", ""));
+                } else if (weightEditText.getText().toString().equals("kg")) {
+                    weightEditText.setText("");
+                }
+                weightEditText.addTextChangedListener(this);
+                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
+            }
         });
     }
 
     private void updateHeight() {
+        heightEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                heightEditText.setText("");
+            }
+        });
         heightEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) { }
             @Override
-            public void afterTextChanged(Editable s) { height = Integer.parseInt(heightEditText.getText().toString()); }
+            public void afterTextChanged(Editable s) {
+                heightEditText.removeTextChangedListener(this);
+                if (heightEditText.getText().length() >= 1 && !heightEditText.getText().toString().equals("cm")) {
+                    String text = heightEditText.getText().toString().replaceAll("[a-zA-Z ]", "") + "cm";
+                    heightEditText.setText(text);
+                    heightEditText.setSelection(text.length() - 2);
+                    height = Integer.parseInt(heightEditText.getText().toString().replaceAll("[a-zA-Z ]", ""));
+                } else if (heightEditText.getText().toString().equals("cm")) {
+                    heightEditText.setText("");
+                }
+                heightEditText.addTextChangedListener(this);
+                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
+            }
         });
     }
 
     private void updateClub() {
+        clubEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clubEditText.setText("");
+            }
+        });
         clubEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void afterTextChanged(Editable s) { }
             @Override
-            public void afterTextChanged(Editable s) { club = clubEditText.getText().toString(); }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                club = clubEditText.getText().toString();
+                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
+            }
         });
     }
 
     private void updateCity() {
+        cityEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cityEditText.setText("");
+            }
+        });
         cityEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void afterTextChanged(Editable s) { }
             @Override
-            public void afterTextChanged(Editable s) { city = cityEditText.getText().toString(); }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                city = cityEditText.getText().toString();
+                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
+            }
         });
     }
 
@@ -236,6 +356,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spe = parent.getSelectedItem().toString();
+            }
+        });
+    }
+
+    private void updateGender() {
+        genderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                gender = parent.getSelectedItem().toString();
             }
         });
     }
