@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="75dp"
     android:orientation="horizontal"
-    android:background="@drawable/sh_gradient_background"
     android:layout_margin="10dp"
+    android:background="@drawable/sh_gradient_background"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
         android:orientation="vertical">
         <TextView
             android:id="@+id/rv_popup_add_training_sets_text_view"
@@ -38,9 +37,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="75dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
         android:orientation="vertical">
         <TextView
             android:id="@+id/rv_popup_add_training_distance_text_view"
@@ -96,9 +94,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.5"
         android:orientation="vertical" >
         <TextView
             android:id="@+id/rv_popup_add_training_zone_text_view"
@@ -122,4 +119,12 @@
             android:textSize="@dimen/h4_textsize"
             android:layout_weight="1" />
     </LinearLayout>
+    
+    <Button
+        android:id="@+id/rv_popup_training_delete_btn"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="16dp"
+        android:background="@color/transparent"
+        android:drawableLeft="@drawable/ic_clear_white_24dp" />
 </LinearLayout>

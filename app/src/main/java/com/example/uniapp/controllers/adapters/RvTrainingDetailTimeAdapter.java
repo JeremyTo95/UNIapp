@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.models.TrainingBlock;
+import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 
 import java.util.Arrays;
 
@@ -40,7 +40,7 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
     }
 
     @Override
-    public int getItemCount() { return trainingBlock.getNbSet(); }
+    public int getItemCount() { return trainingBlock.getTimes().size(); }
 
     class MyViewHolder extends  RecyclerView.ViewHolder {
         private TextView desc;

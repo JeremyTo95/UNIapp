@@ -40,6 +40,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:tag="pool25"
                     android:background="@color/transparent"
                     android:text="B a s s i n  2 5 m"
                     android:textSize="@dimen/h3_textsize"
@@ -51,6 +52,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:tag="pool50"
                     android:background="@color/transparent"
                     android:text="B a s s i n  5 0 m"
                     android:textSize="@dimen/h3_textsize"
@@ -134,9 +136,22 @@
                     android:layout_weight="1" />
 
                 <Button
+                    android:id="@+id/fragment_competition_refresh_race_time"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:tag="refreshBtn"
+                    android:drawableLeft="@drawable/ic_refresh_white_24dp"
+                    android:paddingLeft="13dp"
+                    android:textColor="@color/colorText"
+                    android:layout_marginRight="10dp"
+                    android:textSize="@dimen/fragment_competition_button_textsize"
+                    android:background="@drawable/sh_gradient_background" />
+
+                <Button
                     android:id="@+id/fragment_competition_add_race_time"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:tag="addBtn"
                     android:drawableLeft="@drawable/ic_add_white_24dp"
                     android:paddingLeft="13dp"
                     android:textColor="@color/colorText"

@@ -18,8 +18,6 @@ public interface PointFFNDAO {
     @Query("SELECT * FROM pointFFN WHERE swim = :swim AND distance = :distance AND gender = :gender AND time >= :time LIMIT 1" )
     PointFFN getPointsFFNByGenderDistanceSwimTime(String gender, int distance, String swim, float time);
 
-
-
     @Query("SELECT count(*) FROM pointFFN")
     int getNbPoint();
 

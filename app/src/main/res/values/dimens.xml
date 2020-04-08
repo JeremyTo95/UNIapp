@@ -3,6 +3,9 @@
     <dimen name="navbar_icon_size">30dp</dimen>
     <dimen name="navbar_icon_margin">15dp</dimen>
     <dimen name="navbar_height_size">60dp</dimen>
+    <dimen name="logo_size_width">250dp</dimen>
+    <dimen name="logo_size_height">@dimen/logo_size_width</dimen>
+
 
     <dimen name="swim_item_size_time">18dp</dimen>
     <dimen name="fragment_competition_button_textsize">18sp</dimen>
@@ -11,8 +14,8 @@
     <dimen name="fragment_bigtitle_textsize">30sp</dimen>
     <dimen name="custom_popup_textsize">14sp</dimen>
 
-    <dimen name="h1_textsize">27sp</dimen>
-    <dimen name="h2_textsize">29sp</dimen>
+    <dimen name="h1_textsize">29sp</dimen>
+    <dimen name="h2_textsize">24sp</dimen>
     <dimen name="h3_textsize">18sp</dimen>
     <dimen name="h4_textsize">12sp</dimen>
     <dimen name="h5_textsize">8sp</dimen>

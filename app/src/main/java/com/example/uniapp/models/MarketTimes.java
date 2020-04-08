@@ -10,7 +10,7 @@ public class MarketTimes {
     public static String convertIntToTime(int time) { return String.valueOf(time/10000%100) + ":" + String.valueOf(time/100%100) + "." + String.valueOf(time%100); }
 
     public static String convertCompetitionTimeToZoneTime(float time, int zone) {
-        float timeFloat = time * 100;
+        float timeFloat = time;
         return fetchFloatToTime(timeFloat/convertZoneToPercent(zone));
     }
 

@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,16 @@ import android.widget.GridLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
+
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
-import com.example.uniapp.models.TrainingBlock;
+import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 import com.example.uniapp.views.AboutScreen;
+
+import org.json.JSONException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -270,7 +275,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         System.out.println("sizePool   : " + newSizePool);
         if (isEnabled()) {
             Training training = new Training(UUID.randomUUID().toString(), newDifficulty, newSizePool, newDate, newCity, trainingBlockList);
-            allTrainings.add(training);
+            MainActivity.appDataBase.trainingDAO().insertTraining(training);
             dismiss();
         }
     }
@@ -280,14 +285,26 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         newBlock = getLayoutInflater().inflate(R.layout.popup_add_training_time, (ViewGroup) getWindow().getDecorView(), false);
 
-        TextView nbSets   = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_sets_edit_text);
-        TextView distance = (TextView) newBlock.findViewById((R.id.rv_popup_add_training_distance_edit_text));
-        TextView swim     = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_swim_spinner);
-        TextView zone     = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_zone_spinner);
+        TextView nbSets    = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_sets_edit_text);
+        TextView distance  = (TextView) newBlock.findViewById((R.id.rv_popup_add_training_distance_edit_text));
+        TextView swim      = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_swim_spinner);
+        TextView zone      = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_zone_spinner);
+        final Button   deleteBtn = (Button)   newBlock.findViewById(R.id.rv_popup_training_delete_btn);
         nbSets.setText(setsEditText.getText());
         distance.setText(distanceEditText.getText());
         swim.setText(swimDropdown.getSelectedItem().toString());
         zone.setText(zoneDropdown.getSelectedItem().toString());
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int indexBlock = gridLayout.indexOfChild((View) deleteBtn.getParent());
+                System.out.println("index : " + indexBlock + "view : " +  gridLayout);
+                trainingBlockList.remove(indexBlock);
+                gridLayout.removeViewAt(indexBlock);
+                nbBlock--;
+            }
+        });
 
         newSizePool = Integer.parseInt(sizePoolDropdown.getSelectedItem().toString().replaceAll("[a-zA-Z ]", ""));
         newSet      = Integer.parseInt(setsEditText.getText().toString().replaceAll("[a-zA-Z ]", ""));

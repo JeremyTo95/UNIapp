@@ -72,16 +72,17 @@ public class CompetitionDetailPopup extends Dialog {
         diff             = (TextView) findViewById(R.id.fragment_detail_race_time_diff);
         points           = (TextView) findViewById(R.id.fragment_detail_race_time_points);
 
-        fullname.setText("Jérémy" + " " + "TOURARI");
-        birthday.setText("11/11/1999 (21 ans)");
-        club.setText("AS HERBLAY NATATION");
+        fullname.setText(MainActivity.user.getFirstname() + " " + MainActivity.user.getLastname());
+        birthday.setText(MainActivity.user.getBirthday());
+        club.setText(race.getClub());
         diff.setText(MarketTimes.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
         diff.setTextColor(getContext().getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
         date_city.setText("Le " + race.getDate() + " à " + race.getCity());
         level.setText("Niveau " + race.getLevel());
         distance_swim.setText(race.getDistance() + " " + Race.convertShortSwim(race.getSwim()));
         time.setText(MarketTimes.fetchFloatToTime(race.getTime()));
-        points.setText(MainActivity.appDataBase.pointFFNDAO().getPointsFFNByGenderDistanceSwimTime(MainActivity.user.getGender(), race.getDistance(), race.getSwim(), race.getTime()).getPoint() + " points FFN");
+        if (MainActivity.appDataBase.pointFFNDAO().getNbPoint() != 0)
+            points.setText(MainActivity.appDataBase.pointFFNDAO().getPointsFFNByGenderDistanceSwimTime(MainActivity.user.getGender(), race.getDistance(), race.getSwim(), race.getTime()).getPoint() + " points FFN");
     }
 
     private void updateColors() {

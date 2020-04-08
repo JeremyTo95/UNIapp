@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/colorBackground">
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="M E N U  C O N F I G U R A T I O N"
+        android:textSize="@dimen/h2_textsize"
+        android:padding="20dp"
+        android:textColor="@color/colorSecondaryLight"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="M O N  P R O F I L"
+        android:textColor="@color/colorText"
+        android:textSize="@dimen/h3_textsize"
+        android:gravity="center"
+        android:layout_marginVertical="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="P E R S O N N E L"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="@dimen/h3_textsize"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginVertical="10dp"
+                android:gravity="center" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="G E N R E"
+                    android:gravity="center"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="N O M"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+                <EditText
+                    android:id="@+id/popup_sign_in_lastname"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Nom"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textAlignment="textEnd"
+                    android:textColorHint="@color/colorText"
+                    android:textColor="@color/colorText"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="P R E N O M"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+                <EditText
+                    android:id="@+id/popup_sign_in_firstname"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Prenom"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorText"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="P O I D"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+                <EditText
+                    android:id="@+id/popup_sign_in_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="kg"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textAlignment="textEnd"
+                    android:textColorHint="@color/colorText"
+                    android:textColor="@color/colorText"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="T A I L L E"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+                <EditText
+                    android:id="@+id/popup_sign_in_height"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="cm"
+                    android:digits="0123456789"
+                    android:textColorHint="@color/colorText"
+                    android:inputType="number"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorText"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="N E  L E"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+                <EditText
+                    android:id="@+id/popup_sign_in_birth"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="DD/MM/YYYY"
+                    android:maxLength="10"
+                    android:textAlignment="textEnd"
+                    android:textColorHint="@color/colorText"
+                    android:digits="0123456789"
+                    android:inputType="number"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="@color/colorText"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="N A T A T I O N"
+                android:textColor="@color/colorSecondaryLight"
+                android:textSize="@dimen/h3_textsize"
+                android:fontFamily="sans-serif-light"
+                android:layout_marginVertical="10dp"
+                android:gravity="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_margin="10dp" >
+                <Spinner
+                    android:id="@+id/popup_sign_in_gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorText"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="C L U B"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+                <EditText
+                    android:id="@+id/popup_sign_in_club"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="CLUB"
+                    android:inputType="textCapCharacters"
+                    android:textColorHint="@color/colorText"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorText"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="V I L L E"
+                    android:inputType="textCapCharacters"
+                    android:textSize="@dimen/h4_textsize"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/colorText" />
+                <EditText
+                    android:id="@+id/popup_sign_in_city"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Ville"
+                    android:textSize="@dimen/h4_textsize"
+                    android:inputType="textCapCharacters"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/colorText"
+                    android:textColorHint="@color/colorText"
+                    android:background="@color/transparent"
+                    android:gravity="center"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="S P E C I A L I T E :"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="@color/colorText" />
+                <Spinner
+                    android:id="@+id/popup_sign_in_spe"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:backgroundTint="@color/colorText"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <Button
+            android:id="@+id/popup_sign_in_confirmed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmer le profil"
+            android:tag="updateBtn"
+            android:textColor="@color/colorText"
+            android:paddingHorizontal="20dp"
+            android:layout_marginVertical="10dp"
+            android:gravity="center"
+            android:background="@color/transparent"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ProgressBar
+            android:id="@+id/popup_sign_in_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/popup_sign_in_loading_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="CHARGEMENT DE L'APPLICATION"
+            android:textSize="@dimen/h3_textsize"
+            android:textColor="@color/colorText" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="distance_spe">
+        <item>2 5 m</item>
         <item>5 0 m</item>
         <item>1 0 0 m</item>
         <item>2 0 0 m</item>
     </string-array>
 
     <string-array name="distance_freestyle">
+        <item>2 5 m</item>
         <item>5 0 m</item>
         <item>1 0 0 m</item>
         <item>2 0 0 m</item>

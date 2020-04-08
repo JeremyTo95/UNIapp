@@ -4,13 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.loader.app.LoaderManager;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.fragments.CompetitionsFragment;
@@ -18,26 +19,25 @@ import com.example.uniapp.controllers.fragments.MainFragment;
 import com.example.uniapp.controllers.fragments.SettingsFragment;
 import com.example.uniapp.controllers.fragments.StatisticsFragment;
 import com.example.uniapp.controllers.fragments.TrainingsFragment;
-import com.example.uniapp.models.MarketRaces;
-import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.user.User;
+import com.example.uniapp.utils.ImportPointsFFNTask;
+import com.example.uniapp.utils.MyHandlerThread;
 import com.example.uniapp.views.AboutScreen;
+import com.example.uniapp.views.popup.SignInPopup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 import java.util.List;
 
 
-//TODO: METTRE EN PLACE LES POINTS FFN AVEC LE FICHIER JSON STOCKE SUR SERVEUR
 //TODO: METTRE EN PLACE LA RECUPERATION DE TOUS LES TEMPS DU NAGEUR SUR FFN_EXTRANAT
 //TODO: SAUVEGARDER LES COURSES DEJA EN PLACE SUR L'APPLICATION SYSTEME D'IMPORTATION DE DONNEE SUR SERVEUR ET
 //      SAUVEGARDE DES DONNEES SUR TELEPHONE, PLUS GESTION POUR NE PAS ECRASER LES DONNEE DEJA SAUVEGADER
 //TODO: METTRE EN PLACE LA MODIFICATION DES TEMPS DEJA ENREGISTRER
-//TODO: MISE A JOUR DES TEMPS REALISER A L'ENRAINEMENT
-//TODO: AJOUT DE NOUVEAUX ENTRAINEMENTS
 //TODO: ADD RACE --> UPDATE RACE
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     public static List<Race>     allRaces;
     public static List<Training> allTrainings;
     public static User           user;
+
+    private ProgressBar progressBar;
 
     private BottomNavigationView mBottomNavigationView;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -77,21 +79,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        progressBar = findViewById(R.id.glb_progress_bar);
+        progressBar.setVisibility(View.GONE);
+
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-
-        //allRaces     = MarketRaces.initAllTimes();
-        //allTrainings = MarketTrainings.initAllTrainings();
         appDataBase  = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "uni_app_db").allowMainThreadQueries().build();
 
-        loadUser();
-        loadPointsFFN();
-        loadRaces();
-        loadTrainings();
+        if (getIntent().getSerializableExtra("EXTRA_NEW_USER") != null) {
+            Log.e("HERE", "HERE");
+            user = (User) getIntent().getSerializableExtra("EXTRA_NEW_USER");
+            appDataBase.userDAO().deleteAll();
+            appDataBase.userDAO().insert(user);
+            // PointFFN.makePointFFNApiCall();
+            startAsyncTask(getCurrentFocus());
+        }
 
-
-        configureAndShowFragment(new MainFragment());
+        if (appDataBase.userDAO().getNbUser() == 0) {
+            goSignInUser();
+        } else {
+            user = appDataBase.userDAO().getAll().get(0);
+            configureAndShowFragment(new MainFragment());
+        }
     }
 
     public void configureAndShowFragment(Fragment fragment) {
@@ -105,30 +114,15 @@ public class MainActivity extends AppCompatActivity {
         if (hasFocus) AboutScreen.hideSystemUI(this);
     }
 
-    private void loadUser() {
-        if (appDataBase.userDAO().getNbUser() == 1) {
-            user = appDataBase.userDAO().getAll().get(0);
-            Toast.makeText(getApplicationContext(), "Bienvenue " + user.getFirstname() + " " + user.getLastname(), Toast.LENGTH_SHORT).show();
-        } else {
-            appDataBase.userDAO().deleteAll();
-            Toast.makeText(getApplicationContext(), "T ki ? Va t'enregistrer dans les paramètres ;-)", Toast.LENGTH_SHORT).show();
-        }
+    private void goSignInUser() {
+        Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+        startActivity(intent);
+        finish();
     }
 
-    private void loadPointsFFN() {
-        if (appDataBase.pointFFNDAO().getNbPoint() != 0) {
-            pointFFNList = appDataBase.pointFFNDAO().getAllPoints();
-            Toast.makeText(getApplicationContext(), "Points FFN chargés", Toast.LENGTH_SHORT).show();
-        } else {
-            PointFFN.makePointFFNApiCall(getApplicationContext());
-        }
-    }
-
-    private void loadRaces() {
-        allRaces = appDataBase.raceDAO().getAllRaces();
-    }
-
-    private void loadTrainings() {
-        allTrainings = appDataBase.trainingDAO().getAllTrainings();
+    public void startAsyncTask(View v) {
+        Log.e("Function", "IN");
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(progressBar);
+        importPointsFFNTask.execute();
     }
 }

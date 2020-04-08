@@ -29,7 +29,6 @@ import com.example.uniapp.controllers.adapters.PvSwimItemAdapter;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.views.comparators.RaceDateComparator;
 import com.example.uniapp.views.popup.AddRacePopup;
-import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.views.SwimCards;
 import com.github.mikephil.charting.animation.Easing;
@@ -49,11 +48,9 @@ import static android.widget.AdapterView.*;
 
 /*
 TODO: Mettre de la couleur pour la suppression des éléments du RecyclerView
-TODO: Ajouter une course avec le bouton popup (en interne)
-TODO: Obtenir les sources des temps sur un serveur avec un REST API
  */
 
-public class CompetitionsFragment extends Fragment {
+public class CompetitionsFragment extends Fragment implements View.OnClickListener {
     private int        sizePool;
     private String     swim;
     private int        distance;
@@ -71,6 +68,7 @@ public class CompetitionsFragment extends Fragment {
     private Spinner             selectSwimDistance;
     private LineChart lineChart;
     private LineDataSet         lineDataSet;
+    private Button              refreshRaceBtn;
     private Button              addRaceTimeBtn;
     private RecyclerView recyclerView;
     private RvRaceAdapter rvRaceAdapter;
@@ -110,37 +108,44 @@ public class CompetitionsFragment extends Fragment {
         btn_50m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_50);
         progression_title = (TextView)     layoutInflater.findViewById(R.id.fragment_competition_progression_title);
         lineChart         = (LineChart)    layoutInflater.findViewById(R.id.fragment_competition_linechart);
+        refreshRaceBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_refresh_race_time);
         addRaceTimeBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_add_race_time);
         recyclerView      = (RecyclerView) layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
-        btn_25m.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sizePool = 25;
-                updateRecyclerViewRaceList();
-                updateItemsDropdown();
-                updateTimesForSwimCards();
-                updateColors();
-            }
-        });
+        btn_25m.setOnClickListener(this);
+        btn_50m.setOnClickListener(this);
+        addRaceTimeBtn.setOnClickListener(this);
+    }
 
-        btn_50m.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sizePool = 50;
-                updateRecyclerViewRaceList();
-                updateItemsDropdown();
-                updateTimesForSwimCards();
-                updateColors();
-            }
-        });
+    private void updateToPool25() {
+        sizePool = 25;
+        updateRecyclerViewRaceList();
+        updateItemsDropdown();
+        updateTimesForSwimCards();
+        updateColors();
+    }
 
-        addRaceTimeBtn.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onClick(View v) {
-                configureAndShowAddRacePopup();
-            }
-        });
+    private void updateToPool50() {
+        sizePool = 50;
+        updateRecyclerViewRaceList();
+        updateItemsDropdown();
+        updateTimesForSwimCards();
+        updateColors();
+    }
+
+    private void refreshRaces() {
+        if (MainActivity.user != null) {
+            Toast.makeText(getContext(), "Actualisation des temps...", Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(getContext(), "Profil incomplet, aller dans les paramètres pour vous identifier", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getTag().equals("pool25")) updateToPool25();
+        else if (v.getTag().equals("pool50")) updateToPool50();
+        else if (v.getTag().equals("addBtn")) configureAndShowAddRacePopup();
+        else if (v.getTag().equals("refreshBtn")) refreshRaces();
     }
 
     private void updateTimesForSwimCards() {
@@ -190,6 +195,7 @@ public class CompetitionsFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
         adapter.setDropDownViewResource(R.layout.dropdown_item);
         selectSwimDistance.setAdapter(adapter);
+        selectSwimDistance.setSelection(1);
         adapter.notifyDataSetChanged();
         selectSwimDistance.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
@@ -240,6 +246,7 @@ public class CompetitionsFragment extends Fragment {
         lineChart.getAxisLeft().setAxisMinimum(0.0f);
         lineChart.getAxisRight().setEnabled(false);
         lineChart.getXAxis().setEnabled(false);
+        lineChart.setTouchEnabled(false);
         lineChart.getLegend().setEnabled(false);
     }
 

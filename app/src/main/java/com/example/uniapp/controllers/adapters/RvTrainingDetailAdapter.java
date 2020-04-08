@@ -18,7 +18,7 @@ import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
-import com.example.uniapp.models.TrainingBlock;
+import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -88,6 +88,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
                 @Override
                 public void onClick(View v) {
                     updateGraphicsElements(indexSerie);
+                    MainActivity.appDataBase.trainingDAO().updateTraining(training);
                 }
             });
         }

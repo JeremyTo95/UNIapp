@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.RvTrainingAdapter;
 import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.database.dao.race.Race;
@@ -29,6 +31,8 @@ import com.example.uniapp.views.popup.AddTrainingPopup;
 import com.example.uniapp.views.comparators.TrainingDateComparator;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -104,7 +108,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         else if (v.getTag().equals("difficulty_3")) difficulty = 3;
         else if (v.getTag().equals("difficulty_4")) difficulty = 4;
         else if (v.getTag().equals("difficulty_5")) difficulty = 5;
-        else if (v.getTag().equals("addTraining")) configureAndShowAddRacePopup();
+        else if (v.getTag().equals("addTraining")) configureAndShowAddTrainingPopup();
 
         updateColors();
         updateDifficulty();
@@ -142,7 +146,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         floatingActionButton.setOnClickListener(this);
     }
 
-    private void configureAndShowAddRacePopup() {
+    private void configureAndShowAddTrainingPopup() {
         final AddTrainingPopup addTrainingPopup = new AddTrainingPopup(getActivity(), allTrainings);
         addTrainingPopup.build();
         addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
@@ -150,7 +154,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
             public void onClick(View v) {
                 addTrainingPopup.addTraining();
                 updateRecyclerViewTrainingList();
-                Toast.makeText(getContext(), "Nouvelle course ajoutée", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -171,7 +175,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     private void updateCurrentTrainings() {
-        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(allTrainings, sizePool, swim, difficulty);
+        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(MainActivity.appDataBase.trainingDAO().getAllTrainings(), sizePool, swim, difficulty);
         Collections.sort(currentTrainings, new TrainingDateComparator());
     }
 
@@ -192,7 +196,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        MarketTrainings.removeTrainings(allTrainings, currentTrainings.get(viewHolder.getAdapterPosition()));
+                        MainActivity.appDataBase.trainingDAO().deleteTraining(currentTrainings.get(viewHolder.getAdapterPosition()));
                         currentTrainings.remove(viewHolder.getAdapterPosition());
                         trainingRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }

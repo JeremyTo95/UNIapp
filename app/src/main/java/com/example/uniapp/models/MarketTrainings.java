@@ -1,6 +1,7 @@
 package com.example.uniapp.models;
 
 import com.example.uniapp.models.database.dao.training.Training;
+import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 import com.example.uniapp.views.comparators.TrainingDateComparator;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class MarketTrainings {
     public static ArrayList<Training> initAllTrainings() {
         ArrayList<Training> allTrainings      = new ArrayList<Training>();
 
-        List<TrainingBlock> trainingBlockList = new ArrayList<TrainingBlock>();
+        /*List<TrainingBlock> trainingBlockList = new ArrayList<TrainingBlock>();
         trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new Float[] {1.0f}), 7));
         trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new Float[] {0.325f, 0.333f}), 7));
         allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 25, "20/02/2020", "HERBLAY", trainingBlockList));
@@ -40,7 +41,7 @@ public class MarketTrainings {
         trainingBlockList.add(new TrainingBlock(1, "freestyle", 100, Arrays.asList(new Float[] {1.05f}), 6));
         trainingBlockList.add(new TrainingBlock(2, "butterfly", 50,  Arrays.asList(new Float[] {0.321f, 0.336f}), 6));
         trainingBlockList.add(new TrainingBlock(2, "freestyle", 50,  Arrays.asList(new Float[] {0.280f, 0.282f}), 6));
-        allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 25, "20/02/2020", "HERBLAY", trainingBlockList));
+        allTrainings.add(new Training(UUID.randomUUID().toString(), 3, 25, "20/02/2020", "HERBLAY", trainingBlockList));*/
 
         return allTrainings;
     }

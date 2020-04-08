@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
+import com.example.uniapp.views.popup.SignInPopup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainFragment extends Fragment {

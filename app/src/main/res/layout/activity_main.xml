@@ -10,6 +10,15 @@
     android:background="@color/colorBackground"
     tools:context=".controllers.activities.MainActivity">
 
+    <ProgressBar
+        android:id="@+id/glb_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
     <FrameLayout
         android:id="@+id/activty_main_fragment_layout"
         android:layout_width="match_parent"

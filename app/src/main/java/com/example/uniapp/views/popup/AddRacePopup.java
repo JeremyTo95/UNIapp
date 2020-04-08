@@ -47,8 +47,6 @@ public class AddRacePopup extends Dialog {
     private Button   deniedButton;
     private Button   confirmedButton;
 
-    private Race mNewRace;
-
     public AddRacePopup(final Activity activity) {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.popup_add_race);

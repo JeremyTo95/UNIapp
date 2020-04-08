@@ -4,14 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import androidx.room.TypeConverter;
 
-import com.example.uniapp.models.TrainingBlock;
+import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 @Entity(tableName = "training")
 public class Training implements Serializable {
@@ -33,6 +31,12 @@ public class Training implements Serializable {
 
     @ColumnInfo(name = "trainingBlock")
     private List<TrainingBlock> trainingBlockList;
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("id : %s | difficulty : %d | sizePool : %d | date : %s | city : %s | trainingBlock : %s", id, difficulty, sizePool, date, city, Arrays.toString(trainingBlockList.toArray()));
+    }
 
     public Training(String id, int difficulty, int sizePool, String date, String city, List<TrainingBlock> trainingBlockList) {
         this.id = id;

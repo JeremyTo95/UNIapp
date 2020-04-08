@@ -13,7 +13,6 @@ import androidx.room.PrimaryKey;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.AppDataBase;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

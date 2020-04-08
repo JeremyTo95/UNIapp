@@ -1,8 +1,5 @@
 package com.example.uniapp.models.database.dao.pointFFN;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -12,6 +9,7 @@ import com.example.uniapp.models.database.AppDataBase;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Entity(tableName = "pointFFN", primaryKeys = {"point", "distance", "swim", "time", "gender"})
-public class PointFFN {
+public class PointFFN implements Serializable {
 
     @NonNull
     @ColumnInfo(name = "point")
@@ -64,7 +62,7 @@ public class PointFFN {
     public void setTime(float time) { this.time = time; }
     public void setGender(String gender) { this.gender = gender; }
 
-    public static void makePointFFNApiCall(final Context context) {
+    public static void makePointFFNApiCall() {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -79,23 +77,20 @@ public class PointFFN {
         Call<List<PointFFN>> call = pointFFNAPI.getResponsePointsFFN();
         call.enqueue(new Callback<List<PointFFN>>() {
             @Override
-            public void onFailure(Call<List<PointFFN>> call, Throwable t) { Toast.makeText(context, "API call failed : failure", Toast.LENGTH_SHORT).show(); }
+            public void onFailure(Call<List<PointFFN>> call, Throwable t) { }
             @Override
             public void onResponse(Call<List<PointFFN>> call, Response<List<PointFFN>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<PointFFN> pointFFNList = response.body();
+                    System.out.println("size : " + pointFFNList.size());
                     if (MainActivity.appDataBase.pointFFNDAO().getAllPoints().size() == 0) {
-                        Toast.makeText(context, "FFN's points are loading...", Toast.LENGTH_LONG).show();
                         for (int i = 0; i < pointFFNList.size(); i++) {
-                            //System.out.println("point : " + pointFFNList.get(i).getPoint() + " distance : " + pointFFNList.get(i).getDistance() + " swim : " + pointFFNList.get(i).getSwim() + " time : " + pointFFNList.get(i).getTime());
+                            //System.out.println("insert");
+                            //points.add(pointFFNList.get(i));
                             MainActivity.appDataBase.pointFFNDAO().insertPointFFN(pointFFNList.get(i));
                         }
-                    } else {
-                        Toast.makeText(context,  pointFFNList.size() + " are already loaded", Toast.LENGTH_SHORT).show();
+                        //System.out.println("size points : " + points.size());
                     }
-                    Toast.makeText(context,  pointFFNList.size() + " points loaded", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "API call failed : " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
