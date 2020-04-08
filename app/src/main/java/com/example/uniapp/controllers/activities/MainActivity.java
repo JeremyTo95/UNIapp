@@ -80,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         progressBar = findViewById(R.id.glb_progress_bar);
-        progressBar.setVisibility(View.GONE);
 
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -92,15 +91,15 @@ public class MainActivity extends AppCompatActivity {
             appDataBase.userDAO().deleteAll();
             appDataBase.userDAO().insert(user);
             // PointFFN.makePointFFNApiCall();
+        }
             startAsyncTask(getCurrentFocus());
-        }
 
-        if (appDataBase.userDAO().getNbUser() == 0) {
+        /*if (appDataBase.userDAO().getNbUser() == 0) {
             goSignInUser();
-        } else {
-            user = appDataBase.userDAO().getAll().get(0);
+        } else { */
+            //user = appDataBase.userDAO().getAll().get(0);
             configureAndShowFragment(new MainFragment());
-        }
+        //}
     }
 
     public void configureAndShowFragment(Fragment fragment) {
@@ -122,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startAsyncTask(View v) {
         Log.e("Function", "IN");
-        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(progressBar);
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(getApplicationContext(), progressBar);
         importPointsFFNTask.execute();
     }
 }

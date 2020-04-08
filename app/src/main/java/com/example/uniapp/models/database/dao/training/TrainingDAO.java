@@ -30,5 +30,5 @@ public interface TrainingDAO {
     void deleteTraining(Training training);
 
     @Query("DELETE FROM training")
-    void deleteAll() throws JSONException;
+    void deleteAll();
 }

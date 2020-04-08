@@ -181,21 +181,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void importPointFFN() {
-        if (MainActivity.appDataBase.pointFFNDAO().getNbPoint() == 0) PointFFN.makePointFFNApiCall();
+        //if (MainActivity.appDataBase.pointFFNDAO().getNbPoint() == 0) PointFFN.makePointFFNApiCall();
 
         // Pour le moment ça va montrer la base tmtc
-        MainActivity.appDataBase.raceDAO().deleteAll();
-        try {
-            MainActivity.appDataBase.trainingDAO().deleteAll();
-        } catch (JSONException ex) {
-            Log.e("ERROR JSON", ex.getMessage());
-        }
+        /*MainActivity.appDataBase.raceDAO().deleteAll();
+        MainActivity.appDataBase.trainingDAO().deleteAll();
         List<User> allUsers = MainActivity.appDataBase.userDAO().getAll();
-        List<Race> allRaces = MainActivity.appDataBase.raceDAO().getAllRaces();
-        System.out.println(MainActivity.appDataBase.raceDAO().getNbRaces());
-        //        for (int i = 0; i < allUsers.size(); i++) System.out.println(allUsers.get(i).toString());
-//        for (int i = 0; i < allUsers.size(); i++) System.out.println(allRaces.get(i).toString());
-        System.out.println(MainActivity.appDataBase.pointFFNDAO().getNbPoint());
+        List<Race> allRaces = MainActivity.appDataBase.raceDAO().getAllRaces();*/
+        System.out.println("nbRaces  : " + MainActivity.appDataBase.raceDAO().getNbRaces());
+        System.out.println("nbPoints : " + MainActivity.appDataBase.pointFFNDAO().getNbPoint());
     }
 
     private void updateBirth() {
