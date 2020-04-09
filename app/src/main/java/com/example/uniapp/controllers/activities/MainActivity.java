@@ -80,11 +80,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //pointFFNRepository = new PointFFNRepository(getApplication());
-        //raceRepository     = new RaceRepository(getApplication());
-        //trainingRepository = new TrainingRepository(getApplication());
-        //userRepository     = new UserRepository(getApplication());
-
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -93,27 +88,28 @@ public class MainActivity extends AppCompatActivity {
 
         if (getIntent().getSerializableExtra("EXTRA_NEW_USER") != null) {
             Log.e("HERE", "HERE");
+            userRepository.deleteAll();
             userRepository.insert((User) getIntent().getSerializableExtra("EXTRA_NEW_USER"));
-            //pointFFNList = (List<PointFFN>) pointFFNRepository.getAllPoints();
-            //appDataBase.userDAO().deleteAll();
-            //appDataBase.userDAO().insert(user);
-            // PointFFN.makePointFFNApiCall();
         }
-        //startAsyncTask(getCurrentFocus(), userRepository, "User");
-        //startAsyncTask(getCurrentFocus(), raceRepository, "Race");
-        //startAsyncTask(getCurrentFocus(), trainingRepository, "Training");
-        //startAsyncTask(getCurrentFocus(), pointFFNRepository, "PointFFN");
 
-        if (pointFFNRepository == null) Log.e("NULL", "PointFFNRepository didn't load");
+        userRepository = new UserRepository(getApplication());
+        raceRepository = new RaceRepository(getApplication());
+        trainingRepository = new TrainingRepository(getApplication());
+        pointFFNRepository = new PointFFNRepository(getApplication());
+
+        System.out.println("nbUsers     : " + userRepository.getNbElement());
+        System.out.println("nbRaces     : " + raceRepository.getNbElement());
+        System.out.println("nbTrainings : " + trainingRepository.getNbElement());
+        System.out.println("nbPointsFFN : " + pointFFNRepository.getNbElement());
+        if (pointFFNRepository.getNbElement() != 54000) startAsyncTask(getCurrentFocus(), pointFFNRepository, "PointFFN");
 
 
 
-        /*if (appDataBase.userDAO().getNbUser() == 0) {
+        if (userRepository.getNbElement() == 0) {
             goSignInUser();
-        } else { */
-            //user = appDataBase.userDAO().getAll().get(0);
+        } else {
             configureAndShowFragment(new MainFragment());
-        //}
+        }
     }
 
     public void configureAndShowFragment(Fragment fragment) {
@@ -135,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startAsyncTask(View v, ElementRepertories elementRepertories, String tag) {
         Log.e("Function", "IN");
-        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(this, getApplication(), tag);
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(this);
         importPointsFFNTask.execute();
     }
 }

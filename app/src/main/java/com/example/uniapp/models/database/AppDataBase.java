@@ -51,7 +51,7 @@ public abstract class AppDataBase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDataBase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDataBase.class, "uni_app_db").addCallback(roomDatabaseCallback).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AppDataBase.class, "uni_app_db").allowMainThreadQueries().build();
                 }
             }
         }

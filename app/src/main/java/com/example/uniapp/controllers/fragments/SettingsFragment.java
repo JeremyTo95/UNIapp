@@ -82,7 +82,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         importDataRacesBtn = (Button)   layoutInflater.findViewById(R.id.fragment_settings_import_data_race);
         saveDataBtn        = (Button)   layoutInflater.findViewById(R.id.fragment_settings_save_data);
 
-        gender    = "M";
+        gender    = "Homme";
         firstname = firstnameEditText.getText().toString();
         lastname  = lastnameEditText.getText().toString();
         weight    = 0;
@@ -167,7 +167,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             MainActivity.userRepository.insert(user);
             Toast.makeText(getContext(), "New user has been saved", Toast.LENGTH_SHORT).show();
             updateUserBtn.setBackground(getResources().getDrawable(R.color.transparent));
-            Log.e("E", "It works ! (" + MainActivity.userRepository.getAllUsers().toString() + ")");
+            Log.e("E", "It works ! (" + MainActivity.userRepository.getNbElement() + "user)");
         } else {
             Toast.makeText(getContext(), "New user hasn't been saved", Toast.LENGTH_SHORT).show();
         }
@@ -183,6 +183,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         //if (MainActivity.appDataBase.pointFFNDAO().getNbPoint() == 0) PointFFN.makePointFFNApiCall();
 
         System.out.println("nbPoints : " + MainActivity.pointFFNRepository.getNbElement());
+        Toast.makeText(getContext(), MainActivity.pointFFNRepository.getNbElement() + " points chargés", Toast.LENGTH_SHORT).show();
 
         // Pour le moment ça va montrer la base tmtc
         /*MainActivity.appDataBase.raceDAO().deleteAll();

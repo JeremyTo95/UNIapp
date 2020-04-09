@@ -32,6 +32,15 @@ public class PointFFNRepository extends ElementRepertories {
         return (PointFFN) pointFFNDAO.getPointsFFNByGenderDistanceSwimTime(gender, distance, swim, time);
     }
 
+    public void deleteAll() {
+        AppDataBase.dataWriterExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                pointFFNDAO.deleteAllPointFFN();
+            }
+        });
+    }
+
     public void insert (final PointFFN pointFFN) {
         AppDataBase.dataWriterExecutor.execute(new Runnable() {
            @Override

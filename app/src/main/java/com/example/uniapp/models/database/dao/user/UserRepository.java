@@ -33,29 +33,14 @@ public class UserRepository extends ElementRepertories {
     public int getNbElement() { return userDAO.getNbUser(); }
 
     public void insert (final User user) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                userDAO.insert(user);
-            }
-        });
+        userDAO.insert(user);
     }
 
     public void deleteAll () {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                userDAO.deleteAll();
-            }
-        });
+        userDAO.deleteAll();
     }
 
     public void delete (final User user) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                userDAO.delete(user);
-            }
-        });
+        userDAO.delete(user);
     }
 }

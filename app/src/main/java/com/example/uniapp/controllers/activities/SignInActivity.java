@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,20 +30,20 @@ import java.util.List;
 
 public class SignInActivity extends AppCompatActivity {
     private User newUser;
-    private List<PointFFN> pointFFNList;
 
-    private Spinner  genderSpinner;
-    private EditText firstnameEditText;
-    private EditText lastnameEditText;
-    private EditText weightEditText;
-    private EditText heightEditText;
-    private EditText birthEditText;
-    private EditText clubEditText;
-    private EditText cityEditText;
-    private Spinner  speSpinner;
-    private Button   confirmedBtn;
+    private Spinner     genderSpinner;
+    private EditText    firstnameEditText;
+    private EditText    lastnameEditText;
+    private EditText    weightEditText;
+    private EditText    heightEditText;
+    private EditText    birthEditText;
+    private EditText    clubEditText;
+    private EditText    cityEditText;
+    private Spinner     speSpinner;
+    private Button      confirmedBtn;
+    private ImageView   imageView;
     private ProgressBar progressBar;
-    private TextView loadingText;
+    private TextView    loadingText;
 
     private String gender;
     private String firstname;
@@ -74,13 +76,14 @@ public class SignInActivity extends AppCompatActivity {
         cityEditText       = (EditText)    findViewById(R.id.activity_sign_in_city);
         speSpinner         = (Spinner)     findViewById(R.id.activity_sign_in_spe);
         confirmedBtn       = (Button)      findViewById(R.id.activity_sign_in_confirmed);
+        imageView          = (ImageView)   findViewById(R.id.activity_sign_in_logo);
         progressBar        = (ProgressBar) findViewById(R.id.activity_sign_in_progress_bar);
         loadingText        = (TextView)    findViewById(R.id.activity_sign_in_loading_textview);
 
         progressBar.setVisibility(View.GONE);
         loadingText.setVisibility(View.GONE);
 
-        gender    = "boy";
+        gender    = "Homme";
         firstname = "";
         lastname  = "";
         weight    = 0;
@@ -101,6 +104,7 @@ public class SignInActivity extends AppCompatActivity {
         confirmedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 loadingText.setVisibility(View.VISIBLE);
                 defineUserProfil();
