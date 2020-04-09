@@ -19,7 +19,7 @@ public interface TrainingDAO {
     List<Training> getAllTrainings();
 
     @Query("SELECT count(*) FROM training")
-    int getNbTraining();
+    int getNb();
 
     @Update
     void updateTraining(Training training);

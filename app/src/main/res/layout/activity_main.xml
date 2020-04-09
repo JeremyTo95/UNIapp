@@ -10,15 +10,6 @@
     android:background="@color/colorBackground"
     tools:context=".controllers.activities.MainActivity">
 
-    <ProgressBar
-        android:id="@+id/glb_progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
-
     <FrameLayout
         android:id="@+id/activty_main_fragment_layout"
         android:layout_width="match_parent"
@@ -29,6 +20,26 @@
         android:clipToPadding="false"
         android:foregroundGravity="center" />
 
+    <LinearLayout
+        android:id="@+id/glb_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:gravity="center">
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="C H A R G E M E N T   D E S   D O N N E E S"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/h4_textsize"
+            android:gravity="center" />
+    </LinearLayout>
 
     <include
         layout="@menu/full_navbar"

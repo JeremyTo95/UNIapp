@@ -13,6 +13,7 @@ import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFNAPI;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFNDAO;
+import com.example.uniapp.models.database.dao.pointFFN.PointFFNRepository;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.race.RaceDAO;
 import com.example.uniapp.models.database.dao.training.Training;
@@ -34,12 +35,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @TypeConverters({Converters.class})
-@Database(entities = {User.class, PointFFN.class, Race.class, Training.class}, version = 1, exportSchema = true)
+@Database(entities = {User.class, PointFFN.class, Race.class, Training.class}, version = 1, exportSchema = false)
 public abstract class AppDataBase extends RoomDatabase {
 
     private static volatile AppDataBase INSTANCE;
-    private static final int NUMBER_OF_THREAD = 20;
-    public static final ExecutorService dataWriterExecutor = Executors.newFixedThreadPool(NUMBER_OF_THREAD);
     public static String URL_DATA = "https://raw.githubusercontent.com/JeremyTo95/myData/";
 
     public abstract UserDAO     userDAO();
@@ -62,33 +61,29 @@ public abstract class AppDataBase extends RoomDatabase {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-            dataWriterExecutor.execute(new Runnable() {
+            PointFFNDAO pointFFNDAO = INSTANCE.pointFFNDAO();
+            pointFFNDAO.deleteAllPointFFN();
+
+            Gson gson = new GsonBuilder().setLenient().create();
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(AppDataBase.URL_DATA).addConverterFactory(GsonConverterFactory.create(gson)).build();
+            PointFFNAPI pointFFNAPI = retrofit.create(PointFFNAPI.class);
+            Call<List<PointFFN>> call = pointFFNAPI.getResponsePointsFFN();
+
+            call.enqueue(new retrofit2.Callback<List<PointFFN>>() {
                 @Override
-                public void run() {
-                    PointFFNDAO pointFFNDAO = INSTANCE.pointFFNDAO();
-                    pointFFNDAO.deleteAllPointFFN();
-
-
-                    Gson gson = new GsonBuilder().setLenient().create();
-                    Retrofit retrofit = new Retrofit.Builder().baseUrl(AppDataBase.URL_DATA).addConverterFactory(GsonConverterFactory.create(gson)).build();
-                    PointFFNAPI pointFFNAPI = retrofit.create(PointFFNAPI.class);
-                    Call<List<PointFFN>> call = pointFFNAPI.getResponsePointsFFN();
-
-                    call.enqueue(new retrofit2.Callback<List<PointFFN>>() {
-                        @Override
-                        public void onResponse(Call<List<PointFFN>> call, Response<List<PointFFN>> response) {
-                            if (response.isSuccessful() && response.body() != null) {
-                                List<PointFFN> pointFFNList = response.body();
-                                for (int i = 0; i < pointFFNList.size(); i++) {
-                                    pointFFNDAO.insertPointFFN(pointFFNList.get(i));
-                                }
-                            }
+                public void onResponse(Call<List<PointFFN>> call, Response<List<PointFFN>> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        List<PointFFN> pointFFNList = response.body();
+                        System.out.println("before : " + pointFFNList.size());
+                        for (int i = 0; i < pointFFNList.size(); i++) {
+                            pointFFNDAO.insertPointFFN(pointFFNList.get(i));
                         }
-
-                        @Override
-                        public void onFailure(Call<List<PointFFN>> call, Throwable t) { }
-                    });
+                        System.out.println("after : " + pointFFNDAO.getNb());
+                    }
                 }
+
+                @Override
+                public void onFailure(Call<List<PointFFN>> call, Throwable t) { }
             });
         }
     };

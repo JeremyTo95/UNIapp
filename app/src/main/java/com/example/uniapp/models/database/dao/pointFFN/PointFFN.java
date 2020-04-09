@@ -1,11 +1,16 @@
 package com.example.uniapp.models.database.dao.pointFFN;
 
+import android.app.Activity;
+import android.util.Log;
+import android.widget.LinearLayout;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.AppDataBase;
+import com.example.uniapp.utils.ImportPointsFFNTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -48,6 +53,12 @@ public class PointFFN implements Serializable {
         this.swim = swim;
         this.time = time;
         this.gender = gender;
+    }
+
+    public static void startAsyncTaskLoadingPointsFFN(Activity activity, LinearLayout linearLayout) {
+        Log.e("Function", "IN");
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(activity, linearLayout);
+        importPointsFFNTask.execute();
     }
 
     public int getPoint() { return point; }

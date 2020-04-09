@@ -1,6 +1,7 @@
 package com.example.uniapp.models.database.dao.training;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -26,32 +27,20 @@ public class TrainingRepository extends ElementRepertories {
     }
 
     @Override
-    public int getNbElement() { return trainingList.size(); }
+    public int getNbElement() { return trainingDAO.getNb(); }
 
     public void insert (final Training training) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                trainingDAO.insertTraining(training);
-            }
-        });
+        System.out.println("Before : " + trainingDAO.getNb());
+        trainingDAO.insertTraining(training);
+        System.out.println("After  : " + trainingDAO.getNb());
+        System.out.println("AfterBis : " + trainingDAO.getNb());
     }
 
     public void update (final Training training) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                trainingDAO.updateTraining(training);
-            }
-        });
+        trainingDAO.updateTraining(training);
     }
 
     public void delete (final Training training) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                trainingDAO.deleteTraining(training);
-            }
-        });
+        trainingDAO.deleteTraining(training);
     }
 }

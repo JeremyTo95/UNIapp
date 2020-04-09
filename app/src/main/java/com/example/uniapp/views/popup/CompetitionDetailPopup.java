@@ -72,8 +72,8 @@ public class CompetitionDetailPopup extends Dialog {
         diff             = (TextView) findViewById(R.id.fragment_detail_race_time_diff);
         points           = (TextView) findViewById(R.id.fragment_detail_race_time_points);
 
-        fullname.setText(MainActivity.userRepository.getUser().getFirstname() + " " + MainActivity.userRepository.getUser().getLastname());
-        birthday.setText(MainActivity.userRepository.getUser().getBirthday());
+        fullname.setText(MainActivity.appDataBase.userDAO().getUser().getFirstname() + " " + MainActivity.appDataBase.userDAO().getUser().getLastname());
+        birthday.setText(MainActivity.appDataBase.userDAO().getUser().getBirthday());
         club.setText(race.getClub());
         diff.setText(MarketTimes.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
         diff.setTextColor(getContext().getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
@@ -81,8 +81,8 @@ public class CompetitionDetailPopup extends Dialog {
         level.setText("Niveau " + race.getLevel());
         distance_swim.setText(race.getDistance() + " " + Race.convertShortSwim(race.getSwim()));
         time.setText(MarketTimes.fetchFloatToTime(race.getTime()));
-        if (MainActivity.pointFFNRepository.getNbElement() != 0)
-            points.setText(MainActivity.pointFFNRepository.getPointsFFNByGenderDistanceSwimTime(MainActivity.userRepository.getUser().getGender(), race.getDistance(), race.getSwim(), race.getTime()).getPoint() + " points FFN");
+        if (MainActivity.appDataBase.pointFFNDAO().getNb() != 0)
+            points.setText(MainActivity.appDataBase.pointFFNDAO().getPointsFFNByGenderDistanceSwimTime(MainActivity.appDataBase.userDAO().getUser().getGender(), race.getDistance(), race.getSwim(), race.getTime()).getPoint() + " points FFN");
     }
 
     private void updateColors() {

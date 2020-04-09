@@ -30,7 +30,7 @@ public class UserRepository extends ElementRepertories {
     }
 
     @Override
-    public int getNbElement() { return userDAO.getNbUser(); }
+    public int getNbElement() { return userDAO.getNb(); }
 
     public void insert (final User user) {
         userDAO.insert(user);

@@ -131,10 +131,10 @@ public class SignInActivity extends AppCompatActivity {
         if (checkInputUpdateUser()) {
             User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
             newUser = user;
-            Toast.makeText(getApplicationContext(), "New user has been saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
             confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.color.transparent));
         } else {
-            Toast.makeText(getApplicationContext(), "New user hasn't been saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Utitlisateur non enregistré", Toast.LENGTH_SHORT).show();
         }
     }
 

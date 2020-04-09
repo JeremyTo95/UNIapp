@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Converters {
     @TypeConverter
-    public static List<TrainingBlock> fromString(String inputJSON) {
+    public static List<TrainingBlock> toTrainingBlockList(String inputJSON) {
         System.out.println("output : " + inputJSON);
         JSONArray trainingBlockArrayJSON      = null;
         List<Float> times                     = new ArrayList<Float>();

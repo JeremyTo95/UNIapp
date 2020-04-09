@@ -30,12 +30,12 @@ public class TrainingDetailPopup extends Dialog {
     private Training training;
     private List<Race> allRaces;
 
-    public TrainingDetailPopup(@NonNull Context context, List<Race> allRaces, Training training) {
+    public TrainingDetailPopup(@NonNull Context context, Training training) {
         super(context);
         setContentView(R.layout.popup_training_detail);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        this.allRaces = allRaces;
+        this.allRaces = MainActivity.appDataBase.raceDAO().getAllRaces();
         this.training = training;
         updateTextView();
         fillDifficulty();
@@ -97,7 +97,7 @@ public class TrainingDetailPopup extends Dialog {
     private List<Float> getCompetitionRaceTime() {
         List<Float> result = new ArrayList<Float>();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++)
-            result.add(MarketRaces.getBestTime((List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
+            result.add(MarketRaces.getBestTime((List<Race>) MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
         return result;
     }
 

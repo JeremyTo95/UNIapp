@@ -121,8 +121,8 @@ public class SignInPopup extends Dialog {
         System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
             User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
-            MainActivity.userRepository.deleteAll();
-            MainActivity.userRepository.insert(user);
+            MainActivity.appDataBase.userDAO().deleteAll();
+            MainActivity.appDataBase.userDAO().insert(user);
             Toast.makeText(getContext(), "New user has been saved", Toast.LENGTH_SHORT).show();
             confirmedBtn.setBackground(getContext().getResources().getDrawable(R.color.transparent));
         } else {

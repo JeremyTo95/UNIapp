@@ -1,12 +1,17 @@
 package com.example.uniapp.models.database.dao.pointFFN;
 
+import android.app.Activity;
 import android.app.Application;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.ElementRepertories;
+import com.example.uniapp.utils.ImportPointsFFNTask;
 
 import java.util.List;
 
@@ -24,29 +29,23 @@ public class PointFFNRepository extends ElementRepertories {
         return pointFFNList;
     }
 
-    public int getNbElement() {
-        return ((List<PointFFN>) pointFFNList).size();
-    }
+    public int getNbElement() { return pointFFNDAO.getNb(); }
 
     public PointFFN getPointsFFNByGenderDistanceSwimTime(String gender, int distance, String swim, Float time) {
-        return (PointFFN) pointFFNDAO.getPointsFFNByGenderDistanceSwimTime(gender, distance, swim, time);
+        return pointFFNDAO.getPointsFFNByGenderDistanceSwimTime(gender, distance, swim, time);
     }
 
     public void deleteAll() {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                pointFFNDAO.deleteAllPointFFN();
-            }
-        });
+        pointFFNDAO.deleteAllPointFFN();
     }
 
     public void insert (final PointFFN pointFFN) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-           @Override
-           public void run() {
-            pointFFNDAO.insertPointFFN(pointFFN);
-           }
-        });
+        pointFFNDAO.insertPointFFN(pointFFN);
+    }
+
+    public static void startAsyncTaskLoadingPointsFFN(Activity activity, LinearLayout linearLayout) {
+        Log.e("Function", "IN");
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(activity, linearLayout);
+        importPointsFFNTask.execute();
     }
 }

@@ -92,30 +92,30 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         city      = cityEditText.getText().toString();
         spe       = "butterfly";
 
-        if (MainActivity.userRepository.getNbElement() != 0) {
+        if (MainActivity.appDataBase.userDAO().getNb() != 0) {
             genderSpinner.setSelection((gender == "Homme") ? 0 : 1);
-            firstnameEditText.setText(MainActivity.userRepository.getUser().getFirstname());
-            lastnameEditText.setText(MainActivity.userRepository.getUser().getLastname());
-            weightEditText.setText(String.valueOf(MainActivity.userRepository.getUser().getWeight()) + "kg");
-            heightEditText.setText(String.valueOf(MainActivity.userRepository.getUser().getHeight()) + "cm");
-            birthEditText.setText(MainActivity.userRepository.getUser().getBirthday());
-            clubEditText.setText(MainActivity.userRepository.getUser().getClub());
-            cityEditText.setText(MainActivity.userRepository.getUser().getCityTraining());
-            if (MainActivity.userRepository.getUser().getSpe().equals("butterfly")) speSpinner.setSelection(0);
-            if (MainActivity.userRepository.getUser().getSpe().equals("backstroke")) speSpinner.setSelection(1);
-            if (MainActivity.userRepository.getUser().getSpe().equals("breaststroke")) speSpinner.setSelection(2);
-            if (MainActivity.userRepository.getUser().getSpe().equals("freestyle")) speSpinner.setSelection(3);
-            if (MainActivity.userRepository.getUser().getSpe().equals("IM")) speSpinner.setSelection(4);
+            firstnameEditText.setText(MainActivity.appDataBase.userDAO().getUser().getFirstname());
+            lastnameEditText.setText(MainActivity.appDataBase.userDAO().getUser().getLastname());
+            weightEditText.setText(String.valueOf(MainActivity.appDataBase.userDAO().getUser().getWeight()) + "kg");
+            heightEditText.setText(String.valueOf(MainActivity.appDataBase.userDAO().getUser().getHeight()) + "cm");
+            birthEditText.setText(MainActivity.appDataBase.userDAO().getUser().getBirthday());
+            clubEditText.setText(MainActivity.appDataBase.userDAO().getUser().getClub());
+            cityEditText.setText(MainActivity.appDataBase.userDAO().getUser().getCityTraining());
+            if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("butterfly")) speSpinner.setSelection(0);
+            if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("backstroke")) speSpinner.setSelection(1);
+            if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("breaststroke")) speSpinner.setSelection(2);
+            if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("freestyle")) speSpinner.setSelection(3);
+            if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("IM")) speSpinner.setSelection(4);
 
-            gender    = MainActivity.userRepository.getUser().getGender();
-            firstname = MainActivity.userRepository.getUser().getFirstname();
-            lastname  = MainActivity.userRepository.getUser().getLastname();
-            weight    = MainActivity.userRepository.getUser().getWeight();
-            height    = MainActivity.userRepository.getUser().getHeight();
-            birth     = MainActivity.userRepository.getUser().getBirthday();
-            club      = MainActivity.userRepository.getUser().getClub();
-            city      = MainActivity.userRepository.getUser().getCityTraining();
-            spe       = MainActivity.userRepository.getUser().getSpe();
+            gender    = MainActivity.appDataBase.userDAO().getUser().getGender();
+            firstname = MainActivity.appDataBase.userDAO().getUser().getFirstname();
+            lastname  = MainActivity.appDataBase.userDAO().getUser().getLastname();
+            weight    = MainActivity.appDataBase.userDAO().getUser().getWeight();
+            height    = MainActivity.appDataBase.userDAO().getUser().getHeight();
+            birth     = MainActivity.appDataBase.userDAO().getUser().getBirthday();
+            club      = MainActivity.appDataBase.userDAO().getUser().getClub();
+            city      = MainActivity.appDataBase.userDAO().getUser().getCityTraining();
+            spe       = MainActivity.appDataBase.userDAO().getUser().getSpe();
         }
 
         ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item);
@@ -163,33 +163,31 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
             User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
-            MainActivity.userRepository.deleteAll();
-            MainActivity.userRepository.insert(user);
-            Toast.makeText(getContext(), "New user has been saved", Toast.LENGTH_SHORT).show();
+            MainActivity.appDataBase.userDAO().deleteAll();
+            MainActivity.appDataBase.userDAO().insert(user);
+            Toast.makeText(getContext(), "Utilisateur mis à jour", Toast.LENGTH_SHORT).show();
             updateUserBtn.setBackground(getResources().getDrawable(R.color.transparent));
-            Log.e("E", "It works ! (" + MainActivity.userRepository.getNbElement() + "user)");
+            Log.e("E", "It works ! (" + MainActivity.appDataBase.userDAO().getNb() + "user)");
         } else {
-            Toast.makeText(getContext(), "New user hasn't been saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "ATTENTION : Utilisateur non mis à jour", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void importDataRaces() {
         //TODO: Requête vers JSON sur serveur
         //      Stockage des données sur base de donnée locale
-        MainActivity.raceRepository.makeRaceApiCall(getContext());
+        Race.startAsyncTaskLoadingRace(this.getActivity());
     }
 
     private void importPointFFN() {
-        //if (MainActivity.appDataBase.pointFFNDAO().getNbPoint() == 0) PointFFN.makePointFFNApiCall();
-
-        System.out.println("nbPoints : " + MainActivity.pointFFNRepository.getNbElement());
-        Toast.makeText(getContext(), MainActivity.pointFFNRepository.getNbElement() + " points chargés", Toast.LENGTH_SHORT).show();
-
-        // Pour le moment ça va montrer la base tmtc
-        /*MainActivity.appDataBase.raceDAO().deleteAll();
-        MainActivity.appDataBase.trainingDAO().deleteAll();
-        List<User> allUsers = MainActivity.appDataBase.userDAO().getAll();
-        List<Race> allRaces = MainActivity.appDataBase.raceDAO().getAllRaces();*/
+        System.out.println("nbUser      : " + MainActivity.appDataBase.userDAO().getNb());
+        System.out.println("nbRaces     : " + MainActivity.appDataBase.raceDAO().getNb());
+        System.out.println("nbTrainings : " + MainActivity.appDataBase.trainingDAO().getNb());
+        System.out.println("nbPointsFFN : " + MainActivity.appDataBase.pointFFNDAO().getNb());
+        Toast.makeText(getContext(), MainActivity.appDataBase.userDAO().getNb() + " utilisateurs chargés", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), MainActivity.appDataBase.raceDAO().getNb() + " courses chargés", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), MainActivity.appDataBase.trainingDAO().getNb() + " entrainements chargés", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), MainActivity.appDataBase.pointFFNDAO().getNb() + " points chargés", Toast.LENGTH_SHORT).show();
     }
 
     private void updateBirth() {

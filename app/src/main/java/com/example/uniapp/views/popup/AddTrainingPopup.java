@@ -116,8 +116,8 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         btn_confirmed.setOnClickListener(this);
 
         ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item);
-        ArrayAdapter<CharSequence> swimDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
-        ArrayAdapter<CharSequence> zoneDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> swimDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> zoneDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
         levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
         levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
         levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
@@ -127,8 +127,8 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
 
 
         trainingBlockList = new ArrayList<TrainingBlock>();
-        if (MainActivity.userRepository.getUser() != null)
-            cityEditText.setText(MainActivity.userRepository.getUser().getCityTraining());
+        if (MainActivity.appDataBase.userDAO().getUser() != null)
+            cityEditText.setText(MainActivity.appDataBase.userDAO().getUser().getCityTraining());
         newDifficulty = 1;
         newSizePool   = 25;
         newDate       = dateFormat.format(today);
@@ -181,7 +181,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         } else return false;
     }
 
-    private boolean isEnabled() {
+    public boolean isEnabled() {
         if (checkInputFormatDate() && cityEditText.getText().toString().length() != 0 && trainingBlockList.size() > 0)
             return true;
         else {
@@ -273,8 +273,9 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         System.out.println("difficulty : " + newDifficulty);
         System.out.println("sizePool   : " + newSizePool);
         if (isEnabled()) {
+            Log.e("ADD", "Add training");
             Training training = new Training(UUID.randomUUID().toString(), newDifficulty, newSizePool, newDate, newCity, trainingBlockList);
-            MainActivity.trainingRepository.insert(training);
+            MainActivity.appDataBase.trainingDAO().insertTraining(training);
             dismiss();
         }
     }
@@ -334,6 +335,16 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     public EditText getDateEditText() { return dateEditText; }
     public EditText getCityEditText() { return cityEditText; }
     public Button getBtn_confirmed() { return btn_confirmed; }
+    public View getNewBlock() { return newBlock; }
+    public int getNewSet() { return newSet; }
+    public int getNewDistance() { return newDistance; }
+    public int getNewDifficulty() { return newDifficulty; }
+    public int getNewSizePool() { return newSizePool; }
+    public int getNewZone() { return newZone; }
+    public String getNewSwim() { return newSwim; }
+    public String getNewDate() { return newDate; }
+    public String getNewCity() { return newCity; }
+    public List<TrainingBlock> getTrainingBlockList() { return trainingBlockList; }
     public void setDateEditText(EditText dateEditText) { this.dateEditText = dateEditText; }
     public void setCityEditText(EditText cityEditText) { this.cityEditText = cityEditText; }
     public void setBtn_confirmed(Button btn_confirmed) { this.btn_confirmed = btn_confirmed; }

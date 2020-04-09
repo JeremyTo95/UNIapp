@@ -1,8 +1,7 @@
 package com.example.uniapp.models.database.dao.race;
 
-import android.content.Context;
+import android.app.Activity;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -11,19 +10,9 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.models.database.AppDataBase;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.example.uniapp.utils.ImportRacesTask;
 
 import java.io.Serializable;
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @Entity(tableName = "race")
 public class Race implements Serializable {
@@ -128,6 +117,12 @@ public class Race implements Serializable {
         }
     }
 
+    public static void startAsyncTaskLoadingRace(Activity activity) {
+        Log.e("Function", "IN");
+        ImportRacesTask importRacesTask = new ImportRacesTask(activity);
+        importRacesTask.execute();
+    }
+
     public void setId(String id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }
@@ -149,42 +144,4 @@ public class Race implements Serializable {
     public String getCountry() { return country; }
     public String getLevel() { return level; }
     public String getClub() { return club; }
-
-    /*public static void makeRaceApiCall(final Context context) {
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(AppDataBase.URL_DATA)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build();
-
-        final RaceAPI raceAPI = retrofit.create(RaceAPI.class);
-
-        Call<List<Race>> call = raceAPI.getResponseRace();
-        call.enqueue(new Callback<List<Race>>() {
-            @Override
-            public void onFailure(Call<List<Race>> call, Throwable t) { Toast.makeText(context, "API call failed : failure", Toast.LENGTH_SHORT).show(); }
-            @Override
-            public void onResponse(Call<List<Race>> call, Response<List<Race>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Race> raceList = response.body();
-                    Log.e("SIZE RACE", raceList.size() + "races found");
-                    if (MainActivity.appDataBase.raceDAO().getNbRaces() == 0) {
-                        Toast.makeText(context, "Races are loading...", Toast.LENGTH_LONG).show();
-                        for (int i = 0; i < raceList.size(); i++) {
-                            //System.out.println("point : " + pointFFNList.get(i).getPoint() + " distance : " + pointFFNList.get(i).getDistance() + " swim : " + pointFFNList.get(i).getSwim() + " time : " + pointFFNList.get(i).getTime());
-                            MainActivity.appDataBase.raceDAO().insertRace(raceList.get(i));
-                        }
-                    } else {
-                        Toast.makeText(context,  raceList.size() + " are already loaded", Toast.LENGTH_SHORT).show();
-                    }
-                    Toast.makeText(context,  raceList.size() + " points loaded", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "API call failed : " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }*/
 }

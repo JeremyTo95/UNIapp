@@ -20,7 +20,7 @@ public interface PointFFNDAO {
     PointFFN getPointsFFNByGenderDistanceSwimTime(String gender, int distance, String swim, float time);
 
     @Query("SELECT count(*) FROM pointFFN")
-    int getNbPoint();
+    int getNb();
 
     @Insert
     void insertPointFFN(PointFFN pointFFN);

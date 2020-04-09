@@ -38,6 +38,7 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class TrainingsFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
@@ -62,7 +63,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private RecyclerView trainingRecyclerView;
     private RvTrainingAdapter trainingRecyclerViewAdapter;
 
-    public TrainingsFragment(List<Training> allTrainings, List<Race> races) { }
+    public TrainingsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
+        updateCurrentTrainings();
         updateRecyclerViewTrainingList();
     }
 
@@ -151,9 +153,23 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addTrainingPopup.addTraining();
-                updateRecyclerViewTrainingList();
-                Toast.makeText(getContext(), "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
+                System.out.println("swims      : " + addTrainingPopup.getNewSizePool());
+                System.out.println("sets       : " + addTrainingPopup.getNewSet());
+                System.out.println("zones      : " + addTrainingPopup.getNewZone());
+                System.out.println("distance   : " + addTrainingPopup.getNewDistance());
+                System.out.println("date       : " + addTrainingPopup.getNewDate());
+                System.out.println("city       : " + addTrainingPopup.getNewCity());
+                System.out.println("difficulty : " + addTrainingPopup.getNewDifficulty());
+                System.out.println("sizePool   : " + addTrainingPopup.getNewSizePool());
+                if (addTrainingPopup.isEnabled()) {
+                    Log.e("ADD", "Add training");
+                    Training training = new Training(UUID.randomUUID().toString(), addTrainingPopup.getNewDifficulty(), addTrainingPopup.getNewSizePool(), addTrainingPopup.getNewDate(), addTrainingPopup.getNewCity(), addTrainingPopup.getTrainingBlockList());
+                    MainActivity.appDataBase.trainingDAO().insertTraining(training);
+                    addTrainingPopup.dismiss();
+                    updateCurrentTrainings();
+                    updateRecyclerViewTrainingList();
+                    Toast.makeText(getContext(), "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -174,12 +190,13 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     private void updateCurrentTrainings() {
-        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty((List<Training>) MainActivity.trainingRepository.getAllTrainings(), sizePool, swim, difficulty);
+        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(MainActivity.appDataBase.trainingDAO().getAllTrainings(), sizePool, swim, difficulty);
         Collections.sort(currentTrainings, new TrainingDateComparator());
     }
 
     private void updateRecyclerViewTrainingList() {
         updateCurrentTrainings();
+        System.out.println("sizeTraining : " + currentTrainings.size());
         trainingRecyclerViewAdapter = new RvTrainingAdapter(getContext(), currentTrainings);
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
@@ -195,7 +212,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        MainActivity.trainingRepository.delete(currentTrainings.get(viewHolder.getAdapterPosition()));
+                        MainActivity.appDataBase.trainingDAO().deleteTraining(currentTrainings.get(viewHolder.getAdapterPosition()));
                         currentTrainings.remove(viewHolder.getAdapterPosition());
                         trainingRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }

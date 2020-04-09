@@ -50,7 +50,7 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(context, (List<Race>) MainActivity.raceRepository.getRaces(), training);
+                TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(context, training);
                 trainingDetailPopup.build();
                 /*Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
                 intent.putExtra("EXTRA_TRAINING_SELECTED", (Serializable) training);

@@ -1,5 +1,6 @@
 package com.example.uniapp.models.database.dao.race;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.ElementRepertories;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFNDAO;
+import com.example.uniapp.utils.ImportRacesTask;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -45,53 +47,10 @@ public class RaceRepository extends ElementRepertories {
     }
 
     public void insert (final Race race) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                raceDAO.insertRace(race);
-            }
-        });
+        raceDAO.insertRace(race);
     }
 
     public void delete (final Race race) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                raceDAO.delete(race);
-            }
-        });
-    }
-
-    public void makeRaceApiCall(final Context context) {
-        AppDataBase.dataWriterExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(AppDataBase.URL_DATA)
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .build();
-
-                final RaceAPI raceAPI = retrofit.create(RaceAPI.class);
-
-                Call<List<Race>> call = raceAPI.getResponseRace();
-                call.enqueue(new Callback<List<Race>>() {
-                    @Override
-                    public void onFailure(Call<List<Race>> call, Throwable t) { Toast.makeText(context, "API call failed : failure", Toast.LENGTH_SHORT).show(); }
-                    @Override
-                    public void onResponse(Call<List<Race>> call, Response<List<Race>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            List<Race> raceList = response.body();
-                            for (int i = 0; i < raceList.size(); i++) {
-                                raceDAO.insertRace(raceList.get(i));
-                            }
-                        }
-                    }
-                });
-            }
-        });
+        raceDAO.delete(race);
     }
 }

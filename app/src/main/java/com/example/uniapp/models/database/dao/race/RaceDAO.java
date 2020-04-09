@@ -14,7 +14,7 @@ public interface RaceDAO {
     List<Race> getAllRaces();
 
     @Query("SELECT count(*) FROM race")
-    int getNbRaces();
+    int getNb();
 
     @Query("SELECT * FROM race WHERE sizePool = :poolSize AND distance = :distance AND swim = :swim")
     List<Race> getRacesByPoolSizeDistanceRaceSwimRace(int poolSize, int distance, String swim);

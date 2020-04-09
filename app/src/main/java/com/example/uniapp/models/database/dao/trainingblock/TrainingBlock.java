@@ -5,6 +5,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,10 +43,6 @@ public class TrainingBlock implements Serializable {
     @Override
     public String toString() {
         return String.format("nbSet : %d | swim : %s | distance : %d | times : %s | zone : %d", nbSet, swim, distance, Arrays.toString(times.toArray()), zone);
-    }
-
-    public void addTime(int index, Float time) {
-        times.add(index, time);
     }
 
     public void setNbSet(int nbSet) { this.nbSet = nbSet; }
