@@ -1,5 +1,6 @@
 package com.example.uniapp.utils;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -34,11 +35,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
+    private WeakReference<Activity> weakReference;
     private Application application;
     private ElementRepertories elementRepertories;
     private String tag;
 
-    public ImportPointsFFNTask(Application application, ElementRepertories elementRepertories, String tag) {
+    public ImportPointsFFNTask(Activity activity, Application application, ElementRepertories elementRepertories, String tag) {
+        weakReference = new WeakReference<>(activity);
         this.application = application;
         this.elementRepertories = elementRepertories;
         this.tag = tag;
@@ -64,7 +67,11 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        System.out.println("nbPointsFFN : " + elementRepertories.getNbElement());
+        //System.out.println("nbElements : " + elementRepertories.getNbElement());
+        Activity activity = weakReference.get();
+        if(activity == null) {
+            return;
+        }
         Log.e("IN POST EXECUTE", "start");
     }
 }

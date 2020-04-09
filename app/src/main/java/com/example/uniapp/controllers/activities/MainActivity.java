@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             //appDataBase.userDAO().insert(user);
             // PointFFN.makePointFFNApiCall();
         }
-        startAsyncTask(getCurrentFocus(), userRepository, "User");
+        //startAsyncTask(getCurrentFocus(), userRepository, "User");
         startAsyncTask(getCurrentFocus(), raceRepository, "Race");
         startAsyncTask(getCurrentFocus(), trainingRepository, "Training");
         startAsyncTask(getCurrentFocus(), pointFFNRepository, "PointFFN");
@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startAsyncTask(View v, ElementRepertories elementRepertories, String tag) {
         Log.e("Function", "IN");
-        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(getApplication(), elementRepertories, tag);
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(this, getApplication(), elementRepertories, tag);
         importPointsFFNTask.execute();
     }
 }
