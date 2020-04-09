@@ -40,7 +40,7 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
     private ElementRepertories elementRepertories;
     private String tag;
 
-    public ImportPointsFFNTask(Activity activity, Application application, ElementRepertories elementRepertories, String tag) {
+    public ImportPointsFFNTask(Activity activity, Application application, String tag) {
         weakReference = new WeakReference<>(activity);
         this.application = application;
         this.elementRepertories = elementRepertories;
@@ -67,7 +67,7 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        //System.out.println("nbElements : " + elementRepertories.getNbElement());
+        System.out.println("nbElements : " + elementRepertories.getNbElement());
         Activity activity = weakReference.get();
         if(activity == null) {
             return;

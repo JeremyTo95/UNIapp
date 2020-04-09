@@ -100,9 +100,11 @@ public class MainActivity extends AppCompatActivity {
             // PointFFN.makePointFFNApiCall();
         }
         //startAsyncTask(getCurrentFocus(), userRepository, "User");
-        startAsyncTask(getCurrentFocus(), raceRepository, "Race");
-        startAsyncTask(getCurrentFocus(), trainingRepository, "Training");
-        startAsyncTask(getCurrentFocus(), pointFFNRepository, "PointFFN");
+        //startAsyncTask(getCurrentFocus(), raceRepository, "Race");
+        //startAsyncTask(getCurrentFocus(), trainingRepository, "Training");
+        //startAsyncTask(getCurrentFocus(), pointFFNRepository, "PointFFN");
+
+        if (pointFFNRepository == null) Log.e("NULL", "PointFFNRepository didn't load");
 
 
 
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startAsyncTask(View v, ElementRepertories elementRepertories, String tag) {
         Log.e("Function", "IN");
-        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(this, getApplication(), elementRepertories, tag);
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(this, getApplication(), tag);
         importPointsFFNTask.execute();
     }
 }
