@@ -2,6 +2,7 @@ package com.example.uniapp.models.database.dao.training;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;

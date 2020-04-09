@@ -88,7 +88,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
                 @Override
                 public void onClick(View v) {
                     updateGraphicsElements(indexSerie);
-                    MainActivity.appDataBase.trainingDAO().updateTraining(training);
+                    MainActivity.trainingRepository.update(training);
                 }
             });
         }
@@ -99,7 +99,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
         }
 
         private void showRecyclerViewTrainingDetailTime() {
-            List<Race> subRacesList = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim());
+            List<Race> subRacesList = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim());
             float timeRef = MarketRaces.getBestTime(subRacesList, 1).getTime();
             float timeRefStr = MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime(timeRef, trainingBlock.getZone()));
             RvTrainingDetailTimeAdapter rvTrainingDetailTimeAdapter = new RvTrainingDetailTimeAdapter(itemView.getContext(), trainingBlock, timeRefStr);
@@ -156,7 +156,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
 
         private LineDataSet setupRefLineTime(TrainingBlock trainingBlock, int indexSerie) {
             ArrayList<Entry> refTimes = new ArrayList<>();
-            Race bestTime = MarketRaces.getBestTime(MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(sizePool, trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
+            Race bestTime = MarketRaces.getBestTime((List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(sizePool, trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
             for (int i = 0; i < trainingBlock.getNbSet(); i++) {
                 refTimes.add(new Entry(i, MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime((bestTime.getTime()), trainingBlock.getZone()))));
             }

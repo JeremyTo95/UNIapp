@@ -121,12 +121,10 @@ public class SignInPopup extends Dialog {
         System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
             User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
-            MainActivity.appDataBase.userDAO().deleteAll();
-            MainActivity.appDataBase.userDAO().insert(user);
-            MainActivity.user = MainActivity.appDataBase.userDAO().getAll().get(0);
+            MainActivity.userRepository.deleteAll();
+            MainActivity.userRepository.insert(user);
             Toast.makeText(getContext(), "New user has been saved", Toast.LENGTH_SHORT).show();
             confirmedBtn.setBackground(getContext().getResources().getDrawable(R.color.transparent));
-            Log.e("E", "It works ! (" + MainActivity.appDataBase.userDAO().getAll().size() + ")");
         } else {
             Toast.makeText(getContext(), "New user hasn't been saved", Toast.LENGTH_SHORT).show();
         }

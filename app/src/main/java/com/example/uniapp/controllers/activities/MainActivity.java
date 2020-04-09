@@ -19,15 +19,19 @@ import com.example.uniapp.controllers.fragments.MainFragment;
 import com.example.uniapp.controllers.fragments.SettingsFragment;
 import com.example.uniapp.controllers.fragments.StatisticsFragment;
 import com.example.uniapp.controllers.fragments.TrainingsFragment;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
-import com.example.uniapp.models.database.dao.race.Race;
-import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.database.AppDataBase;
+import com.example.uniapp.models.database.dao.ElementRepertories;
+import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
+import com.example.uniapp.models.database.dao.pointFFN.PointFFNRepository;
+import com.example.uniapp.models.database.dao.race.Race;
+import com.example.uniapp.models.database.dao.race.RaceRepository;
+import com.example.uniapp.models.database.dao.training.Training;
+import com.example.uniapp.models.database.dao.training.TrainingRepository;
 import com.example.uniapp.models.database.dao.user.User;
+import com.example.uniapp.models.database.dao.user.UserRepository;
+//import com.example.uniapp.utils.ImportPointsFFNTask;
 import com.example.uniapp.utils.ImportPointsFFNTask;
-import com.example.uniapp.utils.MyHandlerThread;
 import com.example.uniapp.views.AboutScreen;
-import com.example.uniapp.views.popup.SignInPopup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -41,13 +45,10 @@ import java.util.List;
 //TODO: ADD RACE --> UPDATE RACE
 
 public class MainActivity extends AppCompatActivity {
-    public static AppDataBase    appDataBase;
-    public static List<PointFFN> pointFFNList;
-    public static List<Race>     allRaces;
-    public static List<Training> allTrainings;
-    public static User           user;
-
-    private ProgressBar progressBar;
+    public static PointFFNRepository pointFFNRepository;
+    public static RaceRepository raceRepository;
+    public static TrainingRepository trainingRepository;
+    public static UserRepository userRepository;
 
     private BottomNavigationView mBottomNavigationView;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navbar_custom_competition_btn:
-                    configureAndShowFragment(new CompetitionsFragment(allRaces));
+                    configureAndShowFragment(new CompetitionsFragment());
                     return true;
                 case R.id.navbar_custom_training_btn:
-                    configureAndShowFragment(new TrainingsFragment(allTrainings, allRaces));
+                    configureAndShowFragment(new TrainingsFragment(trainingRepository.getAllTrainings(), raceRepository.getRaces()));
                     return true;
                 case R.id.navbar_custom_home_btn:
                     configureAndShowFragment(new MainFragment());
@@ -79,20 +80,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.glb_progress_bar);
+        //pointFFNRepository = new PointFFNRepository(getApplication());
+        //raceRepository     = new RaceRepository(getApplication());
+        //trainingRepository = new TrainingRepository(getApplication());
+        //userRepository     = new UserRepository(getApplication());
 
         mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        appDataBase  = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "uni_app_db").allowMainThreadQueries().build();
+
+
+        //appDataBase  = Room.databaseBuilder(getApplicationContext(), AppDataBase.class, "uni_app_db").allowMainThreadQueries().build();
 
         if (getIntent().getSerializableExtra("EXTRA_NEW_USER") != null) {
             Log.e("HERE", "HERE");
-            user = (User) getIntent().getSerializableExtra("EXTRA_NEW_USER");
-            appDataBase.userDAO().deleteAll();
-            appDataBase.userDAO().insert(user);
+            userRepository.insert((User) getIntent().getSerializableExtra("EXTRA_NEW_USER"));
+            //pointFFNList = (List<PointFFN>) pointFFNRepository.getAllPoints();
+            //appDataBase.userDAO().deleteAll();
+            //appDataBase.userDAO().insert(user);
             // PointFFN.makePointFFNApiCall();
         }
-            startAsyncTask(getCurrentFocus());
+        startAsyncTask(getCurrentFocus(), userRepository, "User");
+        startAsyncTask(getCurrentFocus(), raceRepository, "Race");
+        startAsyncTask(getCurrentFocus(), trainingRepository, "Training");
+        startAsyncTask(getCurrentFocus(), pointFFNRepository, "PointFFN");
+
+
 
         /*if (appDataBase.userDAO().getNbUser() == 0) {
             goSignInUser();
@@ -119,9 +131,9 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void startAsyncTask(View v) {
+    public void startAsyncTask(View v, ElementRepertories elementRepertories, String tag) {
         Log.e("Function", "IN");
-        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(getApplicationContext(), progressBar);
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(getApplication(), elementRepertories, tag);
         importPointsFFNTask.execute();
     }
 }

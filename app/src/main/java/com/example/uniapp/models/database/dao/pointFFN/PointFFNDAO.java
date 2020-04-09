@@ -1,5 +1,6 @@
 package com.example.uniapp.models.database.dao.pointFFN;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -26,4 +27,7 @@ public interface PointFFNDAO {
 
     @Delete
     void deletePointFFN(PointFFN pointFFN);
+
+    @Query("DELETE FROM pointFFN")
+    void deleteAllPointFFN();
 }

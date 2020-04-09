@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 //import com.example.uniapp.controllers.activities.DetailTrainingActivity;
+import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.views.popup.TrainingDetailPopup;
 import com.example.uniapp.models.database.dao.race.Race;
@@ -29,9 +31,8 @@ import java.util.List;
 public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.MyViewHolder> {
     private Context context;
     private List<Training> allTrainings;
-    private List<Race> allRaces;
 
-    public RvTrainingAdapter(Context context, List<Training> allTrainings, List<Race> allRaces) { this.context = context; this.allTrainings = allTrainings; this.allRaces = allRaces; }
+    public RvTrainingAdapter(Context context, List<Training> allTrainings) { this.context = context; this.allTrainings = allTrainings; }
 
     @NonNull
     @Override
@@ -49,7 +50,7 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(context, allRaces, training);
+                TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(context, (List<Race>) MainActivity.raceRepository.getRaces(), training);
                 trainingDetailPopup.build();
                 /*Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
                 intent.putExtra("EXTRA_TRAINING_SELECTED", (Serializable) training);

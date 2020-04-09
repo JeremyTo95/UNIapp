@@ -92,30 +92,30 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         city      = cityEditText.getText().toString();
         spe       = "butterfly";
 
-        if (MainActivity.user != null) {
+        if (MainActivity.userRepository.getNbElement() != 0) {
             genderSpinner.setSelection((gender == "Homme") ? 0 : 1);
-            firstnameEditText.setText(MainActivity.user.getFirstname());
-            lastnameEditText.setText(MainActivity.user.getLastname());
-            weightEditText.setText(String.valueOf(MainActivity.user.getWeight()) + "kg");
-            heightEditText.setText(String.valueOf(MainActivity.user.getHeight()) + "cm");
-            birthEditText.setText(MainActivity.user.getBirthday());
-            clubEditText.setText(MainActivity.user.getClub());
-            cityEditText.setText(MainActivity.user.getCityTraining());
-            if (MainActivity.user.getSpe().equals("butterfly")) speSpinner.setSelection(0);
-            if (MainActivity.user.getSpe().equals("backstroke")) speSpinner.setSelection(1);
-            if (MainActivity.user.getSpe().equals("breaststroke")) speSpinner.setSelection(2);
-            if (MainActivity.user.getSpe().equals("freestyle")) speSpinner.setSelection(3);
-            if (MainActivity.user.getSpe().equals("IM")) speSpinner.setSelection(4);
+            firstnameEditText.setText(MainActivity.userRepository.getUser().getFirstname());
+            lastnameEditText.setText(MainActivity.userRepository.getUser().getLastname());
+            weightEditText.setText(String.valueOf(MainActivity.userRepository.getUser().getWeight()) + "kg");
+            heightEditText.setText(String.valueOf(MainActivity.userRepository.getUser().getHeight()) + "cm");
+            birthEditText.setText(MainActivity.userRepository.getUser().getBirthday());
+            clubEditText.setText(MainActivity.userRepository.getUser().getClub());
+            cityEditText.setText(MainActivity.userRepository.getUser().getCityTraining());
+            if (MainActivity.userRepository.getUser().getSpe().equals("butterfly")) speSpinner.setSelection(0);
+            if (MainActivity.userRepository.getUser().getSpe().equals("backstroke")) speSpinner.setSelection(1);
+            if (MainActivity.userRepository.getUser().getSpe().equals("breaststroke")) speSpinner.setSelection(2);
+            if (MainActivity.userRepository.getUser().getSpe().equals("freestyle")) speSpinner.setSelection(3);
+            if (MainActivity.userRepository.getUser().getSpe().equals("IM")) speSpinner.setSelection(4);
 
-            gender    = MainActivity.user.getGender();
-            firstname = MainActivity.user.getFirstname();
-            lastname  = MainActivity.user.getLastname();
-            weight    = MainActivity.user.getWeight();
-            height    = MainActivity.user.getHeight();
-            birth     = MainActivity.user.getBirthday();
-            club      = MainActivity.user.getClub();
-            city      = MainActivity.user.getCityTraining();
-            spe       = MainActivity.user.getSpe();
+            gender    = MainActivity.userRepository.getUser().getGender();
+            firstname = MainActivity.userRepository.getUser().getFirstname();
+            lastname  = MainActivity.userRepository.getUser().getLastname();
+            weight    = MainActivity.userRepository.getUser().getWeight();
+            height    = MainActivity.userRepository.getUser().getHeight();
+            birth     = MainActivity.userRepository.getUser().getBirthday();
+            club      = MainActivity.userRepository.getUser().getClub();
+            city      = MainActivity.userRepository.getUser().getCityTraining();
+            spe       = MainActivity.userRepository.getUser().getSpe();
         }
 
         ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item);
@@ -163,12 +163,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
             User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
-            MainActivity.appDataBase.userDAO().deleteAll();
-            MainActivity.appDataBase.userDAO().insert(user);
-            MainActivity.user = MainActivity.appDataBase.userDAO().getAll().get(0);
+            MainActivity.userRepository.deleteAll();
+            MainActivity.userRepository.insert(user);
             Toast.makeText(getContext(), "New user has been saved", Toast.LENGTH_SHORT).show();
             updateUserBtn.setBackground(getResources().getDrawable(R.color.transparent));
-            Log.e("E", "It works ! (" + MainActivity.appDataBase.userDAO().getAll().size() + ")");
+            Log.e("E", "It works ! (" + MainActivity.userRepository.getAllUsers().toString() + ")");
         } else {
             Toast.makeText(getContext(), "New user hasn't been saved", Toast.LENGTH_SHORT).show();
         }
@@ -177,19 +176,19 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private void importDataRaces() {
         //TODO: Requête vers JSON sur serveur
         //      Stockage des données sur base de donnée locale
-        Race.makeRaceApiCall(getContext());
+        MainActivity.raceRepository.makeRaceApiCall(getContext());
     }
 
     private void importPointFFN() {
         //if (MainActivity.appDataBase.pointFFNDAO().getNbPoint() == 0) PointFFN.makePointFFNApiCall();
+
+        System.out.println("nbPoints : " + MainActivity.pointFFNRepository.getNbElement());
 
         // Pour le moment ça va montrer la base tmtc
         /*MainActivity.appDataBase.raceDAO().deleteAll();
         MainActivity.appDataBase.trainingDAO().deleteAll();
         List<User> allUsers = MainActivity.appDataBase.userDAO().getAll();
         List<Race> allRaces = MainActivity.appDataBase.raceDAO().getAllRaces();*/
-        System.out.println("nbRaces  : " + MainActivity.appDataBase.raceDAO().getNbRaces());
-        System.out.println("nbPoints : " + MainActivity.appDataBase.pointFFNDAO().getNbPoint());
     }
 
     private void updateBirth() {

@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.LiveData;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
@@ -64,16 +65,14 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private String  newCity;
 
     private Activity            activity;
-    private List<Training>      allTrainings;
     private List<TrainingBlock> trainingBlockList;
     private int                 nbBlock;
 
-    public AddTrainingPopup(Activity activity, List<Training> allTrainings) {
+    public AddTrainingPopup(Activity activity) {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.popup_add_training);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.activity     = activity;
-        this.allTrainings = allTrainings;
 
         setupUIElements();
         updateInputDateFormatEditText();
@@ -128,8 +127,8 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
 
 
         trainingBlockList = new ArrayList<TrainingBlock>();
-        if (MainActivity.user != null)
-            cityEditText.setText(MainActivity.user.getCityTraining());
+        if (MainActivity.userRepository.getUser() != null)
+            cityEditText.setText(MainActivity.userRepository.getUser().getCityTraining());
         newDifficulty = 1;
         newSizePool   = 25;
         newDate       = dateFormat.format(today);
@@ -275,7 +274,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         System.out.println("sizePool   : " + newSizePool);
         if (isEnabled()) {
             Training training = new Training(UUID.randomUUID().toString(), newDifficulty, newSizePool, newDate, newCity, trainingBlockList);
-            MainActivity.appDataBase.trainingDAO().insertTraining(training);
+            MainActivity.trainingRepository.insert(training);
             dismiss();
         }
     }

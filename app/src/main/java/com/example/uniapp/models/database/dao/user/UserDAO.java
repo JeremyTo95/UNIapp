@@ -1,5 +1,6 @@
 package com.example.uniapp.models.database.dao.user;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,6 +12,9 @@ import java.util.List;
 public interface UserDAO {
     @Query("SELECT * FROM user")
     List<User> getAll();
+
+    @Query("SELECT * FROM user LIMIT 1")
+    User getUser();
 
     @Query("SELECT count(*) FROM user")
     int getNbUser();

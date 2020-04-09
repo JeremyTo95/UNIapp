@@ -150,7 +150,7 @@ public class Race implements Serializable {
     public String getLevel() { return level; }
     public String getClub() { return club; }
 
-    public static void makeRaceApiCall(final Context context) {
+    /*public static void makeRaceApiCall(final Context context) {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -186,5 +186,5 @@ public class Race implements Serializable {
                 }
             }
         });
-    }
+    }*/
 }

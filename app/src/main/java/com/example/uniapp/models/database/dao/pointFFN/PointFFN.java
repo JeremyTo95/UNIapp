@@ -62,7 +62,7 @@ public class PointFFN implements Serializable {
     public void setTime(float time) { this.time = time; }
     public void setGender(String gender) { this.gender = gender; }
 
-    public static void makePointFFNApiCall() {
+    /*public static void makePointFFNApiCall() {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -94,5 +94,5 @@ public class PointFFN implements Serializable {
                 }
             }
         });
-    }
+    }*/
 }

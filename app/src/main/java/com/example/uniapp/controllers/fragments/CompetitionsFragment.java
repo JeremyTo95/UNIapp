@@ -54,7 +54,6 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     private int        sizePool;
     private String     swim;
     private int        distance;
-    private List<Race> allRaces;
     private List<Race> currentRaces;
 
     private View layoutInflater;
@@ -66,14 +65,14 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     private int                 viewPagerIndex;
     private List<SwimCards>     mSwimCardsList;
     private Spinner             selectSwimDistance;
-    private LineChart lineChart;
+    private LineChart           lineChart;
     private LineDataSet         lineDataSet;
     private Button              refreshRaceBtn;
     private Button              addRaceTimeBtn;
     private RecyclerView recyclerView;
     private RvRaceAdapter rvRaceAdapter;
 
-    public CompetitionsFragment(List<Race> allRaces) { this.allRaces = allRaces; }
+    public CompetitionsFragment() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -133,7 +132,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     }
 
     private void refreshRaces() {
-        if (MainActivity.user != null) {
+        if (MainActivity.userRepository.getAllUsers() != null) {
             Toast.makeText(getContext(), "Actualisation des temps...", Toast.LENGTH_SHORT).show();
         }
         else
@@ -150,11 +149,11 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
 
     private void updateTimesForSwimCards() {
         mSwimCardsList.clear();
-        mSwimCardsList.add(new SwimCards(allRaces,"butterfly", sizePool));
-        mSwimCardsList.add(new SwimCards(allRaces,"backstroke", sizePool));
-        mSwimCardsList.add(new SwimCards(allRaces,"breaststroke", sizePool));
-        mSwimCardsList.add(new SwimCards(allRaces,"freestyle", sizePool));
-        mSwimCardsList.add(new SwimCards(allRaces,"IM", sizePool));
+        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.raceRepository.getRaces(),"butterfly", sizePool));
+        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.raceRepository.getRaces(),"backstroke", sizePool));
+        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.raceRepository.getRaces(),"breaststroke", sizePool));
+        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.raceRepository.getRaces(),"freestyle", sizePool));
+        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.raceRepository.getRaces(),"IM", sizePool));
 
         if (mViewPager == null) mViewPager = layoutInflater.findViewById(R.id.fragment_competition_viewpager);
         mViewPager.setAdapter(new PvSwimItemAdapter(mSwimCardsList, layoutInflater.getContext(), sizePool));
@@ -251,7 +250,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     }
 
     private ArrayList<Entry> setupTimesLineChart() {
-        currentRaces = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(sizePool, distance, swim);
+        currentRaces = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(sizePool, distance, swim);
         Collections.sort(currentRaces, new RaceDateComparator());
         ArrayList<Entry> result = new ArrayList<>();
         float time;
@@ -284,11 +283,11 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
                 if (addRacePopup.isEnableConfirmed()) {
                     Race newRace = new Race(UUID.randomUUID().toString(),
                             addRacePopup.getDate(), addRacePopup.getCity(), addRacePopup.getCountry(),
-                            MainActivity.user.getClub(), addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
+                            MainActivity.userRepository.getUser().getClub(), addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
                             addRacePopup.getSwim(), addRacePopup.getTime(),
                             addRacePopup.getLevel()
                     );
-                    MainActivity.appDataBase.raceDAO().insertRace(newRace);
+                    MainActivity.raceRepository.insert(newRace);
                     addRacePopup.dismiss();
                     updateCurrentRaces();
                     updateRecyclerViewRaceList();
@@ -343,7 +342,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     private void updateCurrentRaces() {
         currentRaces.clear();
         currentRaces = new ArrayList<>();
-        currentRaces = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(sizePool, distance, swim);
+        currentRaces = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(sizePool, distance, swim);
         System.out.println(Arrays.toString(currentRaces.toArray()));
         Collections.sort(currentRaces, new RaceDateComparator());
     }
@@ -364,7 +363,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         //MarketRaces.removeRaceTime(allRaces, currentRaces.get(viewHolder.getAdapterPosition()));
-                        MainActivity.appDataBase.raceDAO().delete(currentRaces.get(viewHolder.getAdapterPosition()));
+                        MainActivity.raceRepository.delete(currentRaces.get(viewHolder.getAdapterPosition()));
                         currentRaces.remove(viewHolder.getAdapterPosition());
                         rvRaceAdapter.removeItem(viewHolder.getAdapterPosition());
                         configureAndShowLineChart(lineChart, true);

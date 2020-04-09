@@ -97,7 +97,7 @@ public class TrainingDetailPopup extends Dialog {
     private List<Float> getCompetitionRaceTime() {
         List<Float> result = new ArrayList<Float>();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++)
-            result.add(MarketRaces.getBestTime(MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
+            result.add(MarketRaces.getBestTime((List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
         return result;
     }
 

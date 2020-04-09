@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -42,8 +43,6 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private View layoutInflater;
     private AppBarLayout appBarLayout;
     private List<Training> currentTrainings;
-    private List<Training> allTrainings;
-    private List<Race> allRaces;
 
     private int sizePool;
     private String swim;
@@ -63,7 +62,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private RecyclerView trainingRecyclerView;
     private RvTrainingAdapter trainingRecyclerViewAdapter;
 
-    public TrainingsFragment(List<Training> allTrainings, List<Race> allRaces) { this.allTrainings = allTrainings; this.allRaces = allRaces; }
+    public TrainingsFragment(List<Training> allTrainings, List<Race> races) { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -147,7 +146,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     private void configureAndShowAddTrainingPopup() {
-        final AddTrainingPopup addTrainingPopup = new AddTrainingPopup(getActivity(), allTrainings);
+        final AddTrainingPopup addTrainingPopup = new AddTrainingPopup(getActivity());
         addTrainingPopup.build();
         addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,13 +174,13 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     private void updateCurrentTrainings() {
-        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(MainActivity.appDataBase.trainingDAO().getAllTrainings(), sizePool, swim, difficulty);
+        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty((List<Training>) MainActivity.trainingRepository.getAllTrainings(), sizePool, swim, difficulty);
         Collections.sort(currentTrainings, new TrainingDateComparator());
     }
 
     private void updateRecyclerViewTrainingList() {
         updateCurrentTrainings();
-        trainingRecyclerViewAdapter = new RvTrainingAdapter(getContext(), currentTrainings, allRaces);
+        trainingRecyclerViewAdapter = new RvTrainingAdapter(getContext(), currentTrainings);
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
         trainingRecyclerView.setNestedScrollingEnabled(false);
@@ -196,7 +195,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        MainActivity.appDataBase.trainingDAO().deleteTraining(currentTrainings.get(viewHolder.getAdapterPosition()));
+                        MainActivity.trainingRepository.delete(currentTrainings.get(viewHolder.getAdapterPosition()));
                         currentTrainings.remove(viewHolder.getAdapterPosition());
                         trainingRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }

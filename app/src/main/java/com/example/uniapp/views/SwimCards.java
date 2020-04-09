@@ -25,9 +25,9 @@ public class SwimCards {
     }
 
     public void loadButterfly(List<Race> allTimes, int poolSize) {
-        List<Race> times50   = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "butterfly");
-        List<Race> times100  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "butterfly");
-        List<Race> times200  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"butterfly");
+        List<Race> times50   = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "butterfly");
+        List<Race> times100  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "butterfly");
+        List<Race> times200  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"butterfly");
         Race best50          = MarketRaces.getBestTime(times50, 1);
         Race best100         = MarketRaces.getBestTime(times100, 1);
         Race best200         = MarketRaces.getBestTime(times200, 1);
@@ -39,9 +39,9 @@ public class SwimCards {
     }
 
     public void loadBackstroke(List<Race> allTimes, int poolSize) {
-        List<Race> times50   = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "backstroke");
-        List<Race> times100  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "backstroke");
-        List<Race> times200  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"backstroke");
+        List<Race> times50   = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "backstroke");
+        List<Race> times100  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "backstroke");
+        List<Race> times200  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"backstroke");
         Race best50          = MarketRaces.getBestTime(times50, 1);
         Race best100         = MarketRaces.getBestTime(times100, 1);
         Race best200         = MarketRaces.getBestTime(times200, 1);
@@ -53,9 +53,9 @@ public class SwimCards {
     }
 
     public void loadBreaststroke(List<Race> allTimes, int poolSize) {
-        List<Race> times50   = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "breaststroke");
-        List<Race> times100  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "breaststroke");
-        List<Race> times200  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"breaststroke");
+        List<Race> times50   = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "breaststroke");
+        List<Race> times100  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "breaststroke");
+        List<Race> times200  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"breaststroke");
         Race best50          = MarketRaces.getBestTime(times50, 1);
         Race best100         = MarketRaces.getBestTime(times100, 1);
         Race best200         = MarketRaces.getBestTime(times200, 1);
@@ -67,12 +67,12 @@ public class SwimCards {
     }
 
     public void loadFreestyle(List<Race> allTimes, int poolSize) {
-        List<Race> times50   = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "freestyle");
-        List<Race> times100  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "freestyle");
-        List<Race> times200  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"freestyle");
-        List<Race> times400  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,400, "freestyle");
-        List<Race> times800  = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,800,"freestyle");
-        List<Race> times1500 = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize,1500,"freestyle");
+        List<Race> times50   = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,50, "freestyle");
+        List<Race> times100  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,100, "freestyle");
+        List<Race> times200  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,200,"freestyle");
+        List<Race> times400  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,400, "freestyle");
+        List<Race> times800  = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,800,"freestyle");
+        List<Race> times1500 = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize,1500,"freestyle");
         Race best50          = MarketRaces.getBestTime(times50, 1);
         Race best100         = MarketRaces.getBestTime(times100, 1);
         Race best200         = MarketRaces.getBestTime(times200, 1);
@@ -94,16 +94,16 @@ public class SwimCards {
         Race best200;
         Race best400;
         if (poolSize == 25) {
-            List<Race> times100 = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 100,"IM");
-            List<Race> times200 = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 200, "IM");
-            List<Race> times400 = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 400, "IM");
+            List<Race> times100 = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 100,"IM");
+            List<Race> times200 = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 200, "IM");
+            List<Race> times400 = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 400, "IM");
             best100             = MarketRaces.getBestTime(times100, 1);
             best200             = MarketRaces.getBestTime(times200, 1);
             best400             = MarketRaces.getBestTime(times400, 1);
             time100             = MarketTimes.fetchFloatToTime(best100.getTime());
         } else {
-            List<Race> times200 = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 200, "IM");
-            List<Race> times400 = MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 400, "IM");
+            List<Race> times200 = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 200, "IM");
+            List<Race> times400 = (List<Race>) MainActivity.raceRepository.getRacesByPoolSizeDistanceRaceSwimRace(poolSize, 400, "IM");
             best200             = MarketRaces.getBestTime(times200, 1);
             best400             = MarketRaces.getBestTime(times400, 1);
         }
