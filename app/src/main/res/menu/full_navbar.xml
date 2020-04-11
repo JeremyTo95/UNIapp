@@ -9,7 +9,7 @@
     android:layout_gravity="bottom"
     android:background="@color/transparent"
     app:itemTextColor="@color/colorText"
-    app:itemIconTint="@color/colorText"
+    app:itemIconTint="@color/bottom_navigation_bar_icon_color"
     app:labelVisibilityMode="unlabeled"
     app:itemIconSize="@dimen/navbar_icon_size"
     app:menu="@menu/navbar" />

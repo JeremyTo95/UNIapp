@@ -6,12 +6,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.fragments.CompetitionsFragment;
@@ -21,15 +21,9 @@ import com.example.uniapp.controllers.fragments.StatisticsFragment;
 import com.example.uniapp.controllers.fragments.TrainingsFragment;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFNRepository;
 import com.example.uniapp.models.database.dao.race.Race;
-import com.example.uniapp.models.database.dao.race.RaceRepository;
-import com.example.uniapp.models.database.dao.training.TrainingRepository;
 import com.example.uniapp.models.database.dao.user.User;
-import com.example.uniapp.models.database.dao.user.UserRepository;
 //import com.example.uniapp.utils.ImportPointsFFNTask;
-import com.example.uniapp.utils.ImportPointsFFNTask;
-import com.example.uniapp.utils.ImportRacesTask;
 import com.example.uniapp.views.AboutScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -41,16 +35,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 //TODO: ADD RACE --> UPDATE RACE
 
 public class MainActivity extends AppCompatActivity {
+    private LinearLayout linearLayoutLoading;
     public static AppDataBase appDataBase;
-    /*public static PointFFNRepository pointFFNRepository;
-    public static RaceRepository raceRepository;
-    public static TrainingRepository trainingRepository;
-    public static UserRepository userRepository;*/
 
-    private LinearLayout linearLayout;
-
-    private BottomNavigationView mBottomNavigationView;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
@@ -79,23 +68,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         appDataBase = AppDataBase.getDatabase(getApplicationContext());
-        linearLayout = findViewById(R.id.glb_progress_bar);
-        mBottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
-        mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        linearLayoutLoading = findViewById(R.id.glb_loading);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
+        bottomNavigationView.setSelectedItemId(R.id.navbar_custom_home_btn);
 
-        /*userRepository     = new UserRepository(getApplication());
-        raceRepository     = new RaceRepository(getApplication());
-        trainingRepository = new TrainingRepository(getApplication());
-        pointFFNRepository = new PointFFNRepository(getApplication());*/
-
-        // PointFFNRepository.startAsyncTaskLoadingPointsFFN(this, linearLayout);
+        lockUI();
 
         if (getIntent().getSerializableExtra("EXTRA_NEW_USER") != null) {
             Log.e("HERE", "HERE");
             appDataBase.userDAO().deleteAll();
             appDataBase.userDAO().insert((User) getIntent().getSerializableExtra("EXTRA_NEW_USER"));
-            if (appDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(this, linearLayout);
-            else linearLayout.setVisibility(View.GONE);
+            if (appDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(this, linearLayoutLoading, bottomNavigationView, onNavigationItemSelectedListener);
+            else unlockUI();
             if (appDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(this);
 
             System.out.println("nbUsers     : " + appDataBase.userDAO().getNb());
@@ -109,23 +93,32 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("nbTrainings : " + appDataBase.trainingDAO().getNb());
         System.out.println("nbPointsFFN : " + appDataBase.pointFFNDAO().getNb());
 
-        if (appDataBase.userDAO().getNb() != 0) {
-            linearLayout.setVisibility(View.GONE);
-            configureAndShowFragment(new MainFragment());
-        } else {
-            goSignInUser();
-        }
+        if (appDataBase.pointFFNDAO().getNb() == 54000) unlockUI();
+        if (appDataBase.userDAO().getNb() != 0) configureAndShowFragment(new MainFragment());
+        else goSignInUser();
+    }
+
+    private void lockUI() {
+        bottomNavigationView.setEnabled(false);
+        bottomNavigationView.setFocusable(false);
+        bottomNavigationView.setFocusableInTouchMode(false);
+        bottomNavigationView.setClickable(false);
+        bottomNavigationView.setOnNavigationItemSelectedListener(null);
+        linearLayoutLoading.setVisibility(View.VISIBLE);
+    }
+
+    private void unlockUI() {
+        bottomNavigationView.setEnabled(true);
+        bottomNavigationView.setFocusable(true);
+        bottomNavigationView.setFocusableInTouchMode(true);
+        bottomNavigationView.setClickable(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        linearLayoutLoading.setVisibility(View.GONE);
     }
 
     public void configureAndShowFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.activty_main_fragment_layout, fragment).commit();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) AboutScreen.hideSystemUI(this);
     }
 
     private void goSignInUser() {

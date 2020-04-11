@@ -1,4 +1,4 @@
-package com.example.uniapp.views.popup;
+package com.example.uniapp.views.popup.training;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.controllers.adapters.RvTrainingDetailAdapter;
+import com.example.uniapp.controllers.adapters.recyclerview.RvTrainingDetailAdapter;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;

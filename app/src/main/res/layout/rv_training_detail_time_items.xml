@@ -17,8 +17,8 @@
         android:textColor="@color/colorText"
         android:textSize="@dimen/h4_textsize"/>
 
-    <EditText
-        android:id="@+id/rv_training_detail_time_edit_text"
+    <TextView
+        android:id="@+id/rv_training_detail_time_content_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:hint="00:00.00"

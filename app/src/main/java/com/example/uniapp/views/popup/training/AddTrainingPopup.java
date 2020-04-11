@@ -1,4 +1,4 @@
-package com.example.uniapp.views.popup;
+package com.example.uniapp.views.popup.training;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -118,9 +118,9 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item);
         ArrayAdapter<CharSequence> swimDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
         ArrayAdapter<CharSequence> zoneDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
+        swimDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
+        zoneDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         sizePoolDropdown.setAdapter(levelDropdownAdapter);
         swimDropdown.setAdapter(swimDropdownAdapter);
         zoneDropdown.setAdapter(zoneDropdownAdapter);
@@ -206,7 +206,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private void configureAndShowSizePoolDropdown() {
         sizePoolDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         sizePoolDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -250,7 +250,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private void configureAndShowSwimDropdown() {
         swimDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         swimDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -258,7 +258,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private void configureAndShowZoneDropdown() {
         zoneDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         zoneDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

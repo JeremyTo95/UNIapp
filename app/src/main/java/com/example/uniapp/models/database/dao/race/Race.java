@@ -103,7 +103,7 @@ public class Race implements Serializable {
     public static int getCurrentColor(String swim) {
         switch (swim) {
             case "butterfly":
-                return R.color.colorSecondary;
+                return R.color.colorSecondaryLight;
             case "backstroke":
                 return R.color.greenLight;
             case "breaststroke":

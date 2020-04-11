@@ -42,10 +42,4 @@ public class PointFFNRepository extends ElementRepertories {
     public void insert (final PointFFN pointFFN) {
         pointFFNDAO.insertPointFFN(pointFFN);
     }
-
-    public static void startAsyncTaskLoadingPointsFFN(Activity activity, LinearLayout linearLayout) {
-        Log.e("Function", "IN");
-        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(activity, linearLayout);
-        importPointsFFNTask.execute();
-    }
 }

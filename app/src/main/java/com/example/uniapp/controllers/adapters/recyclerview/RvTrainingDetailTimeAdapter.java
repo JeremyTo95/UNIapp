@@ -1,4 +1,4 @@
-package com.example.uniapp.controllers.adapters;
+package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.content.Context;
 import android.text.Editable;
@@ -50,7 +50,7 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             desc = (TextView) itemView.findViewById(R.id.rv_training_detail_time_text_view);
-            time = (EditText) itemView.findViewById(R.id.rv_training_detail_time_edit_text);
+            time = (EditText) itemView.findViewById(R.id.rv_training_detail_time_content_text_view);
             diff = (TextView) itemView.findViewById(R.id.rv_training_detail_time_diff_text_view);
         }
 

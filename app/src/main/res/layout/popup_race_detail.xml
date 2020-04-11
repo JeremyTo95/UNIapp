@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorBackground"
-    tools:context=".views.popup.CompetitionDetailPopup">
+    tools:context=".views.popup.competition.CompetitionDetailPopup">
 
     <TextView
         android:id="@+id/fragment_detail_race_time_bigtitle"
@@ -174,49 +174,6 @@
                     android:textColorHint="@color/colorText" />
             </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginHorizontal="30dp" >
-
-                <TextView
-                    android:id="@+id/fragment_detail_race_time_video_title"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="V I D E O  :"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/h3_textsize"
-                    android:textColor="@color/colorSecondaryLight" />
-
-                <Button
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/sh_round_btn"
-                    android:drawableLeft="@drawable/ic_add_white_24dp"
-                    android:paddingLeft="13dp"
-                    android:textColor="@color/colorText" />
-
-                <Button
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:drawableLeft="@drawable/ic_ondemand_video_white_24dp"
-                    android:paddingLeft="13dp"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/sh_round_btn"/>
-            </LinearLayout>
-        </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

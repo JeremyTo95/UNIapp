@@ -1,4 +1,4 @@
-package com.example.uniapp.controllers.adapters;
+package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.views.popup.CompetitionDetailPopup;
+import com.example.uniapp.views.popup.competition.CompetitionDetailPopup;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.database.dao.race.Race;
 

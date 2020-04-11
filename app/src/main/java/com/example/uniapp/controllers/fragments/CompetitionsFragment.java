@@ -1,6 +1,5 @@
 package com.example.uniapp.controllers.fragments;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -24,11 +23,11 @@ import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.controllers.adapters.RvRaceAdapter;
-import com.example.uniapp.controllers.adapters.PvSwimItemAdapter;
+import com.example.uniapp.controllers.adapters.recyclerview.RvRaceAdapter;
+import com.example.uniapp.controllers.adapters.pageviewer.PvSwimItemAdapter;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.views.comparators.RaceDateComparator;
-import com.example.uniapp.views.popup.AddRacePopup;
+import com.example.uniapp.views.popup.competition.AddRacePopup;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.views.SwimCards;
 import com.github.mikephil.charting.animation.Easing;
@@ -149,11 +148,11 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
 
     private void updateTimesForSwimCards() {
         mSwimCardsList.clear();
-        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.appDataBase.raceDAO().getAllRaces(),"butterfly", sizePool));
-        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.appDataBase.raceDAO().getAllRaces(),"backstroke", sizePool));
-        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.appDataBase.raceDAO().getAllRaces(),"breaststroke", sizePool));
-        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.appDataBase.raceDAO().getAllRaces(),"freestyle", sizePool));
-        mSwimCardsList.add(new SwimCards((List<Race>) MainActivity.appDataBase.raceDAO().getAllRaces(),"IM", sizePool));
+        mSwimCardsList.add(new SwimCards(MainActivity.appDataBase.raceDAO().getAllRaces(),"butterfly", sizePool));
+        mSwimCardsList.add(new SwimCards(MainActivity.appDataBase.raceDAO().getAllRaces(),"backstroke", sizePool));
+        mSwimCardsList.add(new SwimCards(MainActivity.appDataBase.raceDAO().getAllRaces(),"breaststroke", sizePool));
+        mSwimCardsList.add(new SwimCards(MainActivity.appDataBase.raceDAO().getAllRaces(),"freestyle", sizePool));
+        mSwimCardsList.add(new SwimCards(MainActivity.appDataBase.raceDAO().getAllRaces(),"IM", sizePool));
 
         if (mViewPager == null) mViewPager = layoutInflater.findViewById(R.id.fragment_competition_viewpager);
         mViewPager.setAdapter(new PvSwimItemAdapter(mSwimCardsList, layoutInflater.getContext(), sizePool));
@@ -192,7 +191,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         selectSwimDistance = layoutInflater.findViewById(R.id.fragment_competition_spinner);
         selectSwimDistance.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         selectSwimDistance.setAdapter(adapter);
         selectSwimDistance.setSelection(1);
         adapter.notifyDataSetChanged();
@@ -315,7 +314,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         else
             adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_item);
 
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         selectSwimDistance.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -361,7 +360,6 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        //MarketRaces.removeRaceTime(allRaces, currentRaces.get(viewHolder.getAdapterPosition()));
                         MainActivity.appDataBase.raceDAO().delete(currentRaces.get(viewHolder.getAdapterPosition()));
                         currentRaces.remove(viewHolder.getAdapterPosition());
                         rvRaceAdapter.removeItem(viewHolder.getAdapterPosition());

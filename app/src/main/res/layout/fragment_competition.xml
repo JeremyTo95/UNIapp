@@ -145,7 +145,7 @@
                     android:textColor="@color/colorText"
                     android:layout_marginRight="10dp"
                     android:textSize="@dimen/fragment_competition_button_textsize"
-                    android:background="@drawable/sh_gradient_background" />
+                    android:background="@drawable/sh_button" />
 
                 <Button
                     android:id="@+id/fragment_competition_add_race_time"
@@ -156,7 +156,7 @@
                     android:paddingLeft="13dp"
                     android:textColor="@color/colorText"
                     android:textSize="@dimen/fragment_competition_button_textsize"
-                    android:background="@drawable/sh_round_btn" />
+                    android:background="@drawable/sh_button" />
             </LinearLayout>
 
             <androidx.core.widget.NestedScrollView

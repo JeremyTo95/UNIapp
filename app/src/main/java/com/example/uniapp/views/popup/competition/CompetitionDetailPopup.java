@@ -1,4 +1,4 @@
-package com.example.uniapp.views.popup;
+package com.example.uniapp.views.popup.competition;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -31,7 +31,6 @@ public class CompetitionDetailPopup extends Dialog {
     private TextView bigTitle;
     private TextView swimmerTitle;
     private TextView performanceTitle;
-    private TextView videoTitle;
     private TextView fullname;
     private TextView birthday;
     private TextView club;
@@ -61,7 +60,6 @@ public class CompetitionDetailPopup extends Dialog {
         bigTitle         = (TextView) findViewById(R.id.fragment_detail_race_time_bigtitle);
         swimmerTitle     = (TextView) findViewById(R.id.fragment_detail_race_time_swimmer_title);
         performanceTitle = (TextView) findViewById(R.id.fragment_detail_race_time_performance_title);
-        videoTitle       = (TextView) findViewById(R.id.fragment_detail_race_time_video_title);
         fullname         = (TextView) findViewById(R.id.fragment_detail_race_time_name);
         birthday         = (TextView) findViewById(R.id.fragment_detail_race_time_birthday);
         club             = (TextView) findViewById(R.id.fragment_detail_race_time_club);
@@ -81,15 +79,16 @@ public class CompetitionDetailPopup extends Dialog {
         level.setText("Niveau " + race.getLevel());
         distance_swim.setText(race.getDistance() + " " + Race.convertShortSwim(race.getSwim()));
         time.setText(MarketTimes.fetchFloatToTime(race.getTime()));
-        if (MainActivity.appDataBase.pointFFNDAO().getNb() != 0)
+        if (MainActivity.appDataBase.pointFFNDAO().getNb() != 0 && race.getDistance() != 25)
             points.setText(MainActivity.appDataBase.pointFFNDAO().getPointsFFNByGenderDistanceSwimTime(MainActivity.appDataBase.userDAO().getUser().getGender(), race.getDistance(), race.getSwim(), race.getTime()).getPoint() + " points FFN");
+        else
+            points.setText(" ");
     }
 
     private void updateColors() {
         bigTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
         swimmerTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
         performanceTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        videoTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
         time.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
     }
 
@@ -113,12 +112,10 @@ public class CompetitionDetailPopup extends Dialog {
     public TextView getBigTitle() { return bigTitle; }
     public TextView getSwimmerTitle() { return swimmerTitle; }
     public TextView getPerformanceTitle() { return performanceTitle; }
-    public TextView getVideoTitle() { return videoTitle; }
 
     public void setBigTitle(TextView bigTitle) { this.bigTitle = bigTitle; }
     public void setSwimmerTitle(TextView swimmerTitle) { this.swimmerTitle = swimmerTitle; }
     public void setPerformanceTitle(TextView performanceTitle) { this.performanceTitle = performanceTitle; }
-    public void setVideoTitle(TextView videoTitle) { this.videoTitle = videoTitle; }
     public void setRace(Race race) { this.race = race; }
     public void setFullname(TextView fullname) { this.fullname = fullname; }
     public void setBirthday(TextView birthday) { this.birthday = birthday; }

@@ -1,4 +1,4 @@
-package com.example.uniapp.controllers.adapters;
+package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

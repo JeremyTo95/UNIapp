@@ -21,7 +21,6 @@ import com.example.uniapp.views.popup.SignInPopup;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainFragment extends Fragment {
-    // TODO: Proposer les outils tels que : Convertisseur de temps en zone
     public MainFragment() { }
 
     @Override

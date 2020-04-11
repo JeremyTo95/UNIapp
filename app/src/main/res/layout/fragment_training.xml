@@ -6,9 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/colorBackground"
     tools:context=".controllers.fragments.TrainingsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/fragment_training_appbar"
             android:layout_width="match_parent"
@@ -30,165 +34,165 @@
                 android:textSize="@dimen/h1_textsize"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/fragment_training_spinner_sizePool"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/colorText"
+                        android:fontFamily="sans-serif"
+                        android:gravity="end"
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/colorText" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/fragment_training_difficulty_star_1"
+                            android:layout_width="@dimen/rv_training_star_size"
+                            android:layout_height="@dimen/rv_training_star_size"
+                            android:background="@color/transparent"
+                            android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                            android:gravity="center"
+                            android:tag="difficulty_1" />
+
+                        <Button
+                            android:id="@+id/fragment_training_difficulty_star_2"
+                            android:layout_width="@dimen/rv_training_star_size"
+                            android:layout_height="@dimen/rv_training_star_size"
+                            android:background="@color/transparent"
+                            android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                            android:gravity="center"
+                            android:tag="difficulty_2" />
+
+                        <Button
+                            android:id="@+id/fragment_training_difficulty_star_3"
+                            android:layout_width="@dimen/rv_training_star_size"
+                            android:layout_height="@dimen/rv_training_star_size"
+                            android:background="@color/transparent"
+                            android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                            android:gravity="center"
+                            android:tag="difficulty_3" />
+
+                        <Button
+                            android:id="@+id/fragment_training_difficulty_star_4"
+                            android:layout_width="@dimen/rv_training_star_size"
+                            android:layout_height="@dimen/rv_training_star_size"
+                            android:background="@color/transparent"
+                            android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                            android:gravity="center"
+                            android:tag="difficulty_4" />
+
+                        <Button
+                            android:id="@+id/fragment_training_difficulty_star_5"
+                            android:layout_width="@dimen/rv_training_star_size"
+                            android:layout_height="@dimen/rv_training_star_size"
+                            android:background="@color/transparent"
+                            android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                            android:gravity="center"
+                            android:tag="difficulty_5" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="75dp"
+                    android:fadeScrollbars="false"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="15dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="20dp"
                         android:orientation="horizontal">
 
-                        <Spinner
-                            android:id="@+id/fragment_training_spinner_sizePool"
-                            android:layout_width="0dp"
+                        <Button
+                            android:id="@+id/fragment_training_all"
+                            android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/colorText"
-                            android:fontFamily="sans-serif"
-                            android:gravity="end"
-                            android:textAlignment="textEnd"
-                            android:textColor="@color/colorText" />
+                            android:background="@color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:tag="all"
+                            android:text="Tous"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/h4_textsize" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
+                        <Button
+                            android:id="@+id/fragment_training_butterfly"
+                            android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:layout_gravity="right"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:orientation="horizontal">
+                            android:background="@color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:tag="butterfly"
+                            android:text="Papillon"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/h4_textsize" />
 
-                            <Button
-                                android:id="@+id/fragment_training_difficulty_star_1"
-                                android:layout_width="@dimen/rv_training_star_size"
-                                android:layout_height="@dimen/rv_training_star_size"
-                                android:background="@color/transparent"
-                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                                android:gravity="center"
-                                android:tag="difficulty_1" />
+                        <Button
+                            android:id="@+id/fragment_training_backstroke"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:tag="backstroke"
+                            android:text="Dos"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/h4_textsize" />
 
-                            <Button
-                                android:id="@+id/fragment_training_difficulty_star_2"
-                                android:layout_width="@dimen/rv_training_star_size"
-                                android:layout_height="@dimen/rv_training_star_size"
-                                android:background="@color/transparent"
-                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                                android:gravity="center"
-                                android:tag="difficulty_2" />
+                        <Button
+                            android:id="@+id/fragment_training_breaststroke"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:tag="breaststroke"
+                            android:text="Brasse"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/h4_textsize" />
 
-                            <Button
-                                android:id="@+id/fragment_training_difficulty_star_3"
-                                android:layout_width="@dimen/rv_training_star_size"
-                                android:layout_height="@dimen/rv_training_star_size"
-                                android:background="@color/transparent"
-                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                                android:gravity="center"
-                                android:tag="difficulty_3" />
+                        <Button
+                            android:id="@+id/fragment_training_freestyle"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:tag="freestyle"
+                            android:text="Nage Libre"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/h4_textsize" />
 
-                            <Button
-                                android:id="@+id/fragment_training_difficulty_star_4"
-                                android:layout_width="@dimen/rv_training_star_size"
-                                android:layout_height="@dimen/rv_training_star_size"
-                                android:background="@color/transparent"
-                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                                android:gravity="center"
-                                android:tag="difficulty_4" />
-
-                            <Button
-                                android:id="@+id/fragment_training_difficulty_star_5"
-                                android:layout_width="@dimen/rv_training_star_size"
-                                android:layout_height="@dimen/rv_training_star_size"
-                                android:background="@color/transparent"
-                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                                android:gravity="center"
-                                android:tag="difficulty_5" />
-                        </LinearLayout>
+                        <Button
+                            android:id="@+id/fragment_training_IM"
+                            android:layout_width="125dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/transparent"
+                            android:fontFamily="sans-serif-light"
+                            android:tag="IM"
+                            android:text="4 Nages"
+                            android:textColor="@color/colorText"
+                            android:textSize="@dimen/h4_textsize" />
                     </LinearLayout>
-
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="75dp"
-                        android:fadeScrollbars="false"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="20dp"
-                            android:orientation="horizontal">
-
-                            <Button
-                                android:id="@+id/fragment_training_all"
-                                android:layout_width="125dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="sans-serif-light"
-                                android:tag="all"
-                                android:text="Tous"
-                                android:textColor="@color/colorText"
-                                android:textSize="@dimen/h4_textsize" />
-
-                            <Button
-                                android:id="@+id/fragment_training_butterfly"
-                                android:layout_width="125dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="sans-serif-light"
-                                android:tag="butterfly"
-                                android:text="Papillon"
-                                android:textColor="@color/colorText"
-                                android:textSize="@dimen/h4_textsize" />
-
-                            <Button
-                                android:id="@+id/fragment_training_backstroke"
-                                android:layout_width="125dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="sans-serif-light"
-                                android:tag="backstroke"
-                                android:text="Dos"
-                                android:textColor="@color/colorText"
-                                android:textSize="@dimen/h4_textsize" />
-
-                            <Button
-                                android:id="@+id/fragment_training_breaststroke"
-                                android:layout_width="125dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="sans-serif-light"
-                                android:tag="breaststroke"
-                                android:text="Brasse"
-                                android:textColor="@color/colorText"
-                                android:textSize="@dimen/h4_textsize" />
-
-                            <Button
-                                android:id="@+id/fragment_training_freestyle"
-                                android:layout_width="125dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="sans-serif-light"
-                                android:tag="freestyle"
-                                android:text="Nage Libre"
-                                android:textColor="@color/colorText"
-                                android:textSize="@dimen/h4_textsize" />
-
-                            <Button
-                                android:id="@+id/fragment_training_IM"
-                                android:layout_width="125dp"
-                                android:layout_height="match_parent"
-                                android:background="@color/transparent"
-                                android:fontFamily="sans-serif-light"
-                                android:tag="IM"
-                                android:text="4 Nages"
-                                android:textColor="@color/colorText"
-                                android:textSize="@dimen/h4_textsize" />
-                        </LinearLayout>
-                    </HorizontalScrollView>
-                </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
         </com.google.android.material.appbar.AppBarLayout>
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -199,6 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_training_floating_action_button"
@@ -209,9 +214,9 @@
         android:clickable="true"
         app:fabSize="auto"
         android:tag="addTraining"
-        app:borderWidth="3dp"
+        app:borderWidth="0dp"
         android:tint="@color/colorText"
-        android:backgroundTint="@color/colorBackgroundDark"
+        android:backgroundTint="@color/colorSecondary"
         android:layout_margin="16dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

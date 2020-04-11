@@ -1,4 +1,4 @@
-package com.example.uniapp.views.popup;
+package com.example.uniapp.views.popup.competition;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -68,7 +68,7 @@ public class AddRacePopup extends Dialog {
         dateEditText.setText(date);
 
         ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_item);
-        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         selectLevelCompetition.setAdapter(levelDropdownAdapter);
 
         updateInputDateFormatEditText();

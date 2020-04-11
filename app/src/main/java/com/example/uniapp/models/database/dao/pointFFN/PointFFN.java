@@ -11,6 +11,7 @@ import androidx.room.Entity;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.utils.ImportPointsFFNTask;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -55,9 +56,9 @@ public class PointFFN implements Serializable {
         this.gender = gender;
     }
 
-    public static void startAsyncTaskLoadingPointsFFN(Activity activity, LinearLayout linearLayout) {
+    public static void startAsyncTaskLoadingPointsFFN(Activity activity, LinearLayout linearLayout, BottomNavigationView bottomNavigationView, BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener) {
         Log.e("Function", "IN");
-        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(activity, linearLayout);
+        ImportPointsFFNTask importPointsFFNTask = new ImportPointsFFNTask(activity, linearLayout, bottomNavigationView, onNavigationItemSelectedListener);
         importPointsFFNTask.execute();
     }
 

@@ -13,6 +13,7 @@ import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFNAPI;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -28,10 +29,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Activity> weakReference;
     private LinearLayout linearLayout;
+    private BottomNavigationView bottomNavigationView;
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener;
 
-    public ImportPointsFFNTask(Activity activity, LinearLayout linearLayout) {
+    public ImportPointsFFNTask(Activity activity, LinearLayout linearLayout, BottomNavigationView bottomNavigationView, BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener) {
         weakReference = new WeakReference<>(activity);
         this.linearLayout = linearLayout;
+        this.bottomNavigationView = bottomNavigationView;
+        this.onNavigationItemSelectedListener = onNavigationItemSelectedListener;
     }
 
     @Override
@@ -52,7 +57,7 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
                     for (int i = 0; i < pointFFNList.size(); i++) {
                         MainActivity.appDataBase.pointFFNDAO().insertPointFFN(pointFFNList.get(i));
                     }
-                    linearLayout.setVisibility(View.GONE);
+                    unlockUI();
                     System.out.println("nbPointsFFN loaded : " + MainActivity.appDataBase.pointFFNDAO().getNb());
                 }
             }
@@ -69,7 +74,7 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        linearLayout.setVisibility(View.VISIBLE);
+        lockUI();
         Log.e("IN PRE EXECUTE", "start");
     }
 
@@ -81,5 +86,23 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
             return;
         }
         Log.e("IN POST EXECUTE", "start");
+    }
+
+    private void lockUI() {
+        bottomNavigationView.setEnabled(false);
+        bottomNavigationView.setFocusable(false);
+        bottomNavigationView.setFocusableInTouchMode(false);
+        bottomNavigationView.setClickable(false);
+        bottomNavigationView.setOnNavigationItemSelectedListener(null);
+        linearLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void unlockUI() {
+        bottomNavigationView.setEnabled(true);
+        bottomNavigationView.setFocusable(true);
+        bottomNavigationView.setFocusableInTouchMode(true);
+        bottomNavigationView.setClickable(true);
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        linearLayout.setVisibility(View.GONE);
     }
 }

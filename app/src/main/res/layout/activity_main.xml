@@ -21,7 +21,7 @@
         android:foregroundGravity="center" />
 
     <LinearLayout
-        android:id="@+id/glb_progress_bar"
+        android:id="@+id/glb_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"

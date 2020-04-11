@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,16 +23,13 @@ import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.controllers.adapters.RvTrainingAdapter;
+import com.example.uniapp.controllers.adapters.recyclerview.RvTrainingAdapter;
 import com.example.uniapp.models.MarketTrainings;
-import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
-import com.example.uniapp.views.popup.AddTrainingPopup;
+import com.example.uniapp.views.popup.training.AddTrainingPopup;
 import com.example.uniapp.views.comparators.TrainingDateComparator;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,6 +73,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         configureHeader();
         updateColors();
         configureAndShowSizePoolDropdown();
+        updateCurrentTrainings();
         updateRecyclerViewTrainingList();
 
         return layoutInflater;
@@ -85,6 +82,8 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onResume() {
         super.onResume();
+        configureHeader();
+        configureAndShowSizePoolDropdown();
         updateCurrentTrainings();
         updateRecyclerViewTrainingList();
     }
@@ -201,8 +200,6 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
         trainingRecyclerView.setNestedScrollingEnabled(false);
-        trainingRecyclerView.setHasFixedSize(true);
-        trainingRecyclerView.setItemViewCacheSize(20);
         trainingRecyclerViewAdapter.notifyDataSetChanged();
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
                 new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -216,7 +213,6 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
                         currentTrainings.remove(viewHolder.getAdapterPosition());
                         trainingRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }
-
                 };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(trainingRecyclerView);
@@ -226,7 +222,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         dropdownPool = layoutInflater.findViewById(R.id.fragment_training_spinner_sizePool);
         dropdownPool.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.dropdown_item);
-        adapter.setDropDownViewResource(R.layout.dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         dropdownPool.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         dropdownPool.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

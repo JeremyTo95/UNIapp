@@ -19,13 +19,8 @@ import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
-
-import org.json.JSONException;
-
-import java.util.List;
 
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
@@ -41,7 +36,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText cityEditText;
     private Spinner  speSpinner;
     private Button   updateUserBtn;
-    private Button   importDataRacesBtn;
+    private Button themeBtn;
     private Button   saveDataBtn;
 
     private String gender;
@@ -79,7 +74,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         cityEditText       = (EditText) layoutInflater.findViewById(R.id.fragment_settings_city);
         speSpinner         = (Spinner)  layoutInflater.findViewById(R.id.fragment_settings_spe);
         updateUserBtn      = (Button)   layoutInflater.findViewById(R.id.fragment_settings_update);
-        importDataRacesBtn = (Button)   layoutInflater.findViewById(R.id.fragment_settings_import_data_race);
+        themeBtn           = (Button)   layoutInflater.findViewById(R.id.fragment_settings_theme);
         saveDataBtn        = (Button)   layoutInflater.findViewById(R.id.fragment_settings_save_data);
 
         gender    = "Homme";
@@ -119,15 +114,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
 
         ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item);
-        genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         genderSpinner.setAdapter(genderDropdownAdapter);
 
         ArrayAdapter<CharSequence> speDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
-        speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         speSpinner.setAdapter(speDropdownAdapter);
 
         updateUserBtn.setOnClickListener(this);
-        importDataRacesBtn.setOnClickListener(this);
+        themeBtn.setOnClickListener(this);
         saveDataBtn.setOnClickListener(this);
     }
 
@@ -147,7 +142,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
              if (v.getTag().equals("updateBtn"))         setupUpdateUser();
         else if (v.getTag().equals("importDataRaceBtn")) importDataRaces();
-        else if (v.getTag().equals("importPointsFFN"))   importPointFFN();
+        else if (v.getTag().equals("themeBtn"))          changeTheme();
     }
 
     private void setupUpdateUser() {
@@ -179,7 +174,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         Race.startAsyncTaskLoadingRace(this.getActivity());
     }
 
-    private void importPointFFN() {
+    private void changeTheme() {
         System.out.println("nbUser      : " + MainActivity.appDataBase.userDAO().getNb());
         System.out.println("nbRaces     : " + MainActivity.appDataBase.raceDAO().getNb());
         System.out.println("nbTrainings : " + MainActivity.appDataBase.trainingDAO().getNb());

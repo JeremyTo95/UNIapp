@@ -1,4 +1,4 @@
-package com.example.uniapp.controllers.adapters;
+package com.example.uniapp.controllers.adapters.pageviewer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.example.uniapp.controllers.adapters;
+package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,14 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 //import com.example.uniapp.controllers.activities.DetailTrainingActivity;
-import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.views.popup.TrainingDetailPopup;
+import com.example.uniapp.views.popup.training.TrainingDetailPopup;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.github.mikephil.charting.animation.Easing;
@@ -37,6 +34,7 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        System.out.println("here : " + allTrainings.size());
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.rv_training_items, parent, false);
 

@@ -1,4 +1,4 @@
-package com.example.uniapp.controllers.adapters;
+package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.view.LayoutInflater;
 import android.view.View;

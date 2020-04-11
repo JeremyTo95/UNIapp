@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="I N S E R T I O N   T E M P S"
+        android:textSize="@dimen/h1_textsize"
+        android:textColor="@color/colorSecondaryLight"
+        android:gravity="center"
+        android:fontFamily="sans-serif-light" />
+
+</LinearLayout>

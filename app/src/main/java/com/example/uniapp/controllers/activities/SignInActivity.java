@@ -24,6 +24,7 @@ import com.example.uniapp.R;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.user.User;
+import com.example.uniapp.views.AboutScreen;
 
 import java.io.Serializable;
 import java.util.List;

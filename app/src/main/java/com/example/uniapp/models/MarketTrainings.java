@@ -26,7 +26,6 @@ public class MarketTrainings {
             if (allTrainings.get(i).getSizePool() == sizePool) {
                 if (allTrainings.get(i).getDifficulty() == difficulty || difficulty == 0) {
                     for (int j = 0; j < allTrainings.get(i).getTrainingBlockList().size(); j++) {
-                        System.out.println(j);
                         if (allTrainings.get(i).getTrainingBlockList().get(j).getSwim().equals(swim) || swim.equals("all")) {
                             trainings.add(allTrainings.get(i));
                             j = allTrainings.get(i).getTrainingBlockList().size();

@@ -17,13 +17,13 @@
         android:textAlignment="center"
         android:fontFamily="sans-serif-light"
         android:textSize="@dimen/h1_textsize"
-        android:text="O U T I L S" />
+        android:text="G A D G E T S" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="E N   D E V E L O P P E M E N T\n\nChrono dynamique\nConversion des temps\n"
+        android:text="E N   D E V E L O P P E M E N T\n\nChrono dynamique\nConversion des temps\nTimer pour PPG"
         android:textColor="@color/colorText"
         android:textSize="@dimen/h3_textsize"
         android:gravity="center"
