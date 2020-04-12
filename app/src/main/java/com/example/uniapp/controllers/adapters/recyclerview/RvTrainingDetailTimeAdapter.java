@@ -16,6 +16,8 @@ import com.example.uniapp.R;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 
+import org.w3c.dom.Text;
+
 import java.util.Arrays;
 
 public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTrainingDetailTimeAdapter.MyViewHolder> {
@@ -44,13 +46,13 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
 
     class MyViewHolder extends  RecyclerView.ViewHolder {
         private TextView desc;
-        private EditText time;
+        private TextView time;
         private TextView diff;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             desc = (TextView) itemView.findViewById(R.id.rv_training_detail_time_text_view);
-            time = (EditText) itemView.findViewById(R.id.rv_training_detail_time_content_text_view);
+            time = (TextView) itemView.findViewById(R.id.rv_training_detail_time_content_text_view);
             diff = (TextView) itemView.findViewById(R.id.rv_training_detail_time_diff_text_view);
         }
 
@@ -62,12 +64,12 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
                     updateDiff(diff, timeRef, index);
                 }
             }
-            updateInputTimeFormatEditText();
+            //updateInputTimeFormatEditText();
             System.out.println(Arrays.toString(trainingBlock.getTimes().toArray()));
             //updateTimeAt(index);
         }
 
-        private void updateInputTimeFormatEditText() {
+        /*private void updateInputTimeFormatEditText() {
             time.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -103,7 +105,7 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
                     time.addTextChangedListener(this);
                 }
             });
-        }
+        }*/
 
         private void updateDiff(TextView diff, float timeRef, int index) {
             String diffStr = MarketTimes.compareTwoTimes(timeRef, trainingBlock.getTimes().get(index), timeRef);

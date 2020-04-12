@@ -86,21 +86,16 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@color/transparent"
-                android:drawableLeft="@drawable/ic_refresh_white_24dp"
+                android:drawableLeft="@drawable/ic_create_white_24dp"
                 android:paddingLeft="12dp" />
 
         </LinearLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_detail_training_items_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_detail_training_items_recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"/>
-        </androidx.core.widget.NestedScrollView>
+            android:layout_weight="2"
+            android:orientation="horizontal"/>
     </LinearLayout>
 </LinearLayout>

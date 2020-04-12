@@ -1,28 +1,14 @@
-package com.example.uniapp.views.popup.training;
+package com.example.uniapp.controllers.activities;
 
-import android.app.Dialog;
-import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.recyclerview.RvTrainingDetailAdapter;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
@@ -32,16 +18,14 @@ import com.example.uniapp.models.database.dao.training.Training;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrainingDetailPopup extends Dialog {
+public class DetailTrainingActivity extends AppCompatActivity {
     private Training training;
-    public static Button updateBtn;
 
-    public TrainingDetailPopup(@NonNull Context context, Training training) {
-        super(context);
-        setContentView(R.layout.popup_training_detail);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        this.training = training;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail_training);
+        training = (Training) getIntent().getSerializableExtra("EXTRA_TRAINING_SELECTED");
         updateTextView();
         fillDifficulty();
         updateRecyclerViewTrainingList();
@@ -49,8 +33,8 @@ public class TrainingDetailPopup extends Dialog {
 
     private void updateRecyclerViewTrainingList() {
         RecyclerView serieRecyclerView = (RecyclerView) findViewById(R.id.fragment_training_detail_graphs);
-        RvTrainingDetailAdapter serieRecyclerViewAdapter = new RvTrainingDetailAdapter(getContext(), training);
-        serieRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        RvTrainingDetailAdapter serieRecyclerViewAdapter = new RvTrainingDetailAdapter(getApplicationContext(), training);
+        serieRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         serieRecyclerView.setAdapter(serieRecyclerViewAdapter);
         serieRecyclerView.setNestedScrollingEnabled(false);
         serieRecyclerView.setHasFixedSize(true);
@@ -64,9 +48,6 @@ public class TrainingDetailPopup extends Dialog {
         TextView zoneTitle          = (TextView) findViewById(R.id.fragment_detail_training_zone_title);
         TextView competitionTime    = (TextView) findViewById(R.id.fragment_detail_training_swims_competition_times);
         TextView zoneTime           = (TextView) findViewById(R.id.fragment_detail_training_swims_zone_times);
-
-        updateBtn = (Button)   findViewById(R.id.popup_training_detail_update_button);
-        updateBtn.setVisibility(View.GONE);
 
         date_city_sizePool.setText("Le " + training.getDate() + " à " + training.getCity() + " (" + training.getSizePool() + ")");
         competitionTitle.setText("C O M P E T I T I O N");
@@ -98,7 +79,7 @@ public class TrainingDetailPopup extends Dialog {
         for (int i = 0; i < difficultyStars.size(); i++) difficultyStars.get(i).setEnabled(false);
         for (int i = 0; i < training.getDifficulty(); i++) {
             difficultyStars.get(i).setEnabled(false);
-            difficultyStars.get(i).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+            difficultyStars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
         }
     }
 
@@ -108,13 +89,4 @@ public class TrainingDetailPopup extends Dialog {
             result.add(MarketRaces.getBestTime((List<Race>) MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
         return result;
     }
-
-    public void build() {
-        show();
-        Window window = getWindow();
-        if (window != null) window.setLayout(GridLayout.LayoutParams.MATCH_PARENT, GridLayout.LayoutParams.MATCH_PARENT);
-    }
-
-    public Button getUpdateBtn() { return updateBtn; }
-    public void setUpdateBtn(Button updateBtn) { this.updateBtn = updateBtn; }
 }

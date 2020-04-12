@@ -1,6 +1,7 @@
 package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 //import com.example.uniapp.controllers.activities.DetailTrainingActivity;
-import com.example.uniapp.views.popup.training.TrainingDetailPopup;
+import com.example.uniapp.controllers.activities.DetailTrainingActivity;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
+import com.example.uniapp.views.popup.training.TrainingDetailPopup;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -22,6 +24,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +53,15 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
             public void onClick(View v) {
                 TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(context, training);
                 trainingDetailPopup.build();
+                trainingDetailPopup.getUpdateBtn().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        holder.configureAndShowLineChart(holder.lineChart, true);
+                        trainingDetailPopup.dismiss();
+                    }
+                });
                 /*Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
                 intent.putExtra("EXTRA_TRAINING_SELECTED", (Serializable) training);
-                intent.putExtra("EXTRA_ALL_RACES", (Serializable) allRaces);
                 v.getContext().startActivity(intent);*/
             }
         });

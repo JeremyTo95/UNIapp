@@ -19,6 +19,8 @@ import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
+import com.example.uniapp.views.popup.training.TrainingDetailPopup;
+import com.example.uniapp.views.popup.training.UpdateTrainingTimesPopup;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -31,13 +33,11 @@ import java.util.List;
 
 public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDetailAdapter.MyViewHolder> {
     private Context context;
-    private List<Race> allRaces;
     private Training training;
     private int sizePool;
 
-    public RvTrainingDetailAdapter(Context context, List<Race> allRaces, Training training) {
+    public RvTrainingDetailAdapter(Context context, Training training) {
         this.context  = context;
-        this.allRaces = allRaces;
         this.training = training;
         sizePool      = training.getSizePool();
     }
@@ -61,10 +61,12 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TrainingBlock trainingBlock;
+        private Race          bestTime;
         private TextView      serieSubtitle;
         private TextView      serieZone;
         private LineChart     lineChart;
         private Button        updateBtn;
+        private Float         timeReference;
         private RecyclerView  recyclerViewTimes;
 
         private int[] colors = {R.color.greenLight, R.color.blueDeep, R.color.redLight, R.color.orangeLight, R.color.orangeLight};
@@ -81,14 +83,27 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
         @SuppressLint("SetTextI18n")
         public void display(final int indexSerie) {
             trainingBlock = training.getTrainingBlockList().get(indexSerie);
+            bestTime = MarketRaces.getBestTime(MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
+            timeReference = MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime((bestTime.getTime()), trainingBlock.getZone()));
             serieSubtitle.setText(trainingBlock.getNbSet() + " x " + trainingBlock.getDistance() + Race.convertShortSwim(trainingBlock.getSwim()));
             serieZone.setText("Z O N E  " + trainingBlock.getZone());
             updateGraphicsElements(indexSerie);
             updateBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    updateGraphicsElements(indexSerie);
-                    MainActivity.appDataBase.trainingDAO().updateTraining(training);
+                    UpdateTrainingTimesPopup updateTrainingTimesPopup = new UpdateTrainingTimesPopup(context, training, indexSerie, timeReference);
+                    updateTrainingTimesPopup.build();
+                    updateTrainingTimesPopup.getConfirmed().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            System.out.println(updateTrainingTimesPopup.getTrainingBlockArrayList().toArray());
+                            training.setTrainingBlockList(updateTrainingTimesPopup.getTrainingBlockArrayList());
+                            updateTrainingTimesPopup.dismiss();
+                            updateGraphicsElements(indexSerie);
+                            TrainingDetailPopup.updateBtn.setVisibility(View.VISIBLE);
+                            MainActivity.appDataBase.trainingDAO().updateTraining(training);
+                        }
+                    });
                 }
             });
         }
@@ -156,9 +171,8 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
 
         private LineDataSet setupRefLineTime(TrainingBlock trainingBlock, int indexSerie) {
             ArrayList<Entry> refTimes = new ArrayList<>();
-            Race bestTime = MarketRaces.getBestTime((List<Race>) MainActivity.appDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(sizePool, trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
             for (int i = 0; i < trainingBlock.getNbSet(); i++) {
-                refTimes.add(new Entry(i, MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime((bestTime.getTime()), trainingBlock.getZone()))));
+                refTimes.add(new Entry(i, timeReference));
             }
             LineDataSet refLineTime = new LineDataSet(refTimes, "Temps visé");
             refLineTime.setLineWidth(1.5f);

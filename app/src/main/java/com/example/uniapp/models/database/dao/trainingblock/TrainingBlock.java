@@ -48,12 +48,13 @@ public class TrainingBlock implements Serializable {
     public void setNbSet(int nbSet) { this.nbSet = nbSet; }
     public void setSwim(String swim) { this.swim = swim; }
     public void setDistance(int distance) { this.distance = distance; }
-    public void setTimes(Float t, int index) {
+    public void setTime(Float t, int index) {
         ArrayList<Float> allTimes = new ArrayList<>();
         for (int i = 0; i < times.size(); i++) allTimes.add(times.get(i));
         allTimes.set(index, t);
         times = allTimes;
     }
+    public void setTimes(List<Float> times) { this.times = times; }
 
     public void setZone(int zone) { this.zone = zone; }
     public int getNbSet() { return nbSet; }
