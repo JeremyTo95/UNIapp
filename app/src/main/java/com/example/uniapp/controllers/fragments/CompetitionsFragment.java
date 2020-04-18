@@ -112,6 +112,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         btn_25m.setOnClickListener(this);
         btn_50m.setOnClickListener(this);
         addRaceTimeBtn.setOnClickListener(this);
+        refreshRaceBtn.setOnClickListener(this);
     }
 
     private void updateToPool25() {
@@ -131,11 +132,8 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     }
 
     private void refreshRaces() {
-        if (1 == 1) {
-            Toast.makeText(getContext(), "Actualisation des temps...", Toast.LENGTH_SHORT).show();
-        }
-        else
-            Toast.makeText(getContext(), "Profil incomplet, aller dans les paramètres pour vous identifier", Toast.LENGTH_LONG).show();
+        Race.startAsyncTaskLoadingRace(this.getActivity(), MainActivity.appDataBase.userDAO().getUser());
+        Toast.makeText(getContext(), "Actualisation des temps...", Toast.LENGTH_SHORT).show();
     }
 
     @Override

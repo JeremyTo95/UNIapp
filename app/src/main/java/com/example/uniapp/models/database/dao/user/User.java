@@ -37,7 +37,10 @@ public class User implements Serializable {
     @ColumnInfo(name = "gender")
     private String gender;
 
-    public User(String gender, String firstname, String lastname, String birthday, int height, int weight, String club, String spe, String cityTraining) {
+    @ColumnInfo(name = "mykey")
+    private String mykey;
+
+    public User(String gender, String firstname, String lastname, String birthday, int height, int weight, String club, String spe, String cityTraining, String mykey) {
         this.gender = gender;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -47,6 +50,7 @@ public class User implements Serializable {
         this.club = club;
         this.spe = spe;
         this.cityTraining = cityTraining;
+        this.mykey = mykey;
     }
 
     @NonNull
@@ -66,6 +70,7 @@ public class User implements Serializable {
     public String getSpe() { return spe; }
     public String getCityTraining() { return cityTraining; }
     public String getGender() { return (gender.equals("Homme") ? "girl" : "boy"); }
+    public String getMykey() { return mykey; }
     public void setFirstname(String firstname) { this.firstname = firstname; }
     public void setLastname(String lastname) { this.lastname = lastname; }
     public void setBirthday(String birthday) { this.birthday = birthday; }
@@ -75,4 +80,5 @@ public class User implements Serializable {
     public void setSpe(String spe) { this.spe = spe; }
     public void setCityTraining(String cityTraining) { this.cityTraining = cityTraining; }
     public void setGender(String gender) { this.gender = gender; }
+    public void setMykey(String mykey) { this.mykey = mykey; }
 }

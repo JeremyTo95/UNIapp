@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.uniapp.R;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
+import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
 import com.example.uniapp.views.AboutScreen;
 
@@ -42,9 +43,11 @@ public class SignInActivity extends AppCompatActivity {
     private EditText    cityEditText;
     private Spinner     speSpinner;
     private Button      confirmedBtn;
-    private ImageView   imageView;
     private ProgressBar progressBar;
     private TextView    loadingText;
+    private EditText    key_1;
+    private EditText    key_2;
+    private EditText    key_3;
 
     private String gender;
     private String firstname;
@@ -55,6 +58,10 @@ public class SignInActivity extends AppCompatActivity {
     private String club;
     private String city;
     private String spe;
+    private String key;
+    private String key1;
+    private String key2;
+    private String key3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +83,10 @@ public class SignInActivity extends AppCompatActivity {
         clubEditText       = (EditText)    findViewById(R.id.activity_sign_in_club);
         cityEditText       = (EditText)    findViewById(R.id.activity_sign_in_city);
         speSpinner         = (Spinner)     findViewById(R.id.activity_sign_in_spe);
+        key_1              = (EditText)    findViewById(R.id.activity_sign_in_key1);
+        key_2              = (EditText)    findViewById(R.id.activity_sign_in_key2);
+        key_3              = (EditText)    findViewById(R.id.activity_sign_in_key3);
         confirmedBtn       = (Button)      findViewById(R.id.activity_sign_in_confirmed);
-        imageView          = (ImageView)   findViewById(R.id.activity_sign_in_logo);
         progressBar        = (ProgressBar) findViewById(R.id.activity_sign_in_progress_bar);
         loadingText        = (TextView)    findViewById(R.id.activity_sign_in_loading_textview);
 
@@ -93,32 +102,35 @@ public class SignInActivity extends AppCompatActivity {
         club      = "";
         city      = "";
         spe       = "butterfly";
+        key1      = "";
+        key2      = "";
+        key3      = "";
+        key = key1 + "-" + key2 + "-" + key3;
 
         ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.genders, R.layout.dropdown_item);
-        genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         genderSpinner.setAdapter(genderDropdownAdapter);
 
         ArrayAdapter<CharSequence> speDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.swims, R.layout.dropdown_item);
-        speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_item);
+        speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         speSpinner.setAdapter(speDropdownAdapter);
 
         confirmedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView.setVisibility(View.GONE);
-                progressBar.setVisibility(View.VISIBLE);
-                loadingText.setVisibility(View.VISIBLE);
-                defineUserProfil();
-
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.putExtra("EXTRA_NEW_USER", (Serializable) newUser);
-                startActivity(intent);
-                finish();
+                if (defineUserProfil()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    loadingText.setVisibility(View.VISIBLE);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.putExtra("EXTRA_NEW_USER", (Serializable) newUser);
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
     }
 
-    private void defineUserProfil() {
+    private boolean defineUserProfil() {
         Log.e("Ep", "It works but...");
         System.out.println("gender : " + gender);
         System.out.println("first  : " + firstname);
@@ -130,12 +142,14 @@ public class SignInActivity extends AppCompatActivity {
         System.out.println("city   : " + city);
         System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
-            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
+            key = key1 + "-" + key2 + "-" + key3;
+            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city, key);
             newUser = user;
-            Toast.makeText(getApplicationContext(), "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
             confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.color.transparent));
+            return true;
         } else {
             Toast.makeText(getApplicationContext(), "Utitlisateur non enregistré", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
@@ -149,6 +163,9 @@ public class SignInActivity extends AppCompatActivity {
         updateClub();
         updateCity();
         updateSpeciality();
+        updateKey1();
+        updateKey2();
+        updateKey3();
     }
 
     private void updateBirth() {
@@ -313,13 +330,73 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+    private void updateKey1() {
+        key_1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                key_1.setText("");
+            }
+        });
+        key_1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                key1 = key_1.getText().toString();
+                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
+            }
+        });
+    }
+
+    private void updateKey2() {
+        key_2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                key_2.setText("");
+            }
+        });
+        key_2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                key2 = key_2.getText().toString();
+                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
+            }
+        });
+    }
+
+    private void updateKey3() {
+        key_3.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                key_3.setText("");
+            }
+        });
+        key_3.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void afterTextChanged(Editable s) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                key3 = key_3.getText().toString();
+                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
+            }
+        });
+    }
+
     private void updateSpeciality() {
         speSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spe = parent.getSelectedItem().toString();
+                Race.convertSwimFromFrenchToEnglish(parent.getSelectedItem().toString().toLowerCase());
             }
         });
     }
@@ -330,13 +407,13 @@ public class SignInActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                gender = parent.getSelectedItem().toString();
+                gender = parent.getSelectedItem().toString().toLowerCase();
             }
         });
     }
 
     private boolean checkInputUpdateUser() {
-        if (checkFirstname() && checkLastname() && checkWeight() && checkHeight() && checkBirth() && checkClub() && checkCity()) {
+        if (checkFirstname() && checkLastname() && checkWeight() && checkHeight() && checkBirth() && checkClub() && checkCity() && checkKey1() && checkKey2() && checkKey3()) {
             return true;
         } else {
             if (!checkFirstname()) firstnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
@@ -347,6 +424,9 @@ public class SignInActivity extends AppCompatActivity {
             if (!checkClub())      firstnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
             if (!checkClub())      clubEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
             if (!checkCity())      cityEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!checkKey1())      key_1.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!checkKey2())      key_2.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!checkKey3())      key_3.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
             return false;
         }
     }
@@ -358,5 +438,8 @@ public class SignInActivity extends AppCompatActivity {
     private boolean checkBirth()     { return (birth.length()     > 0); }
     private boolean checkClub()      { return (club.length()      > 0); }
     private boolean checkCity()      { return (city.length()      > 0); }
+    private boolean checkKey1()      { return (key1.length()      > 0); }
+    private boolean checkKey2()      { return (key2.length()      > 0); }
+    private boolean checkKey3()      { return (key3.length()      > 0); }
 
 }

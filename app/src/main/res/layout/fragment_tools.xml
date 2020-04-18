@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/colorBackground" >
+    android:background="@color/colorBackground">
 
     <TextView
         android:id="@+id/fragment_statistiques_statistique_title"
@@ -19,14 +19,60 @@
         android:textSize="@dimen/h1_textsize"
         android:text="G A D G E T S" />
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="E N   D E V E L O P P E M E N T\n\nChrono dynamique\nConversion des temps\nTimer pour PPG"
-        android:textColor="@color/colorText"
-        android:textSize="@dimen/h3_textsize"
         android:gravity="center"
-        android:fontFamily="sans-serif-light" />
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/fragment_gadget_chronometer"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:tag="chronometerBtn"
+            android:background="@drawable/sh_gradient_background"
+            android:layout_margin="20dp"
+            android:padding="30dp">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_timer_white_24dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="C H R O N O M E T R E"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:layout_marginRight="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_gadget_converter"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:tag="converterBtn"
+            android:background="@drawable/sh_gradient_background"
+            android:layout_margin="20dp"
+            android:padding="30dp">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/ic_sync_alt_white_24dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="C O N V E R T I S S E U R"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:layout_marginRight="20dp" />
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

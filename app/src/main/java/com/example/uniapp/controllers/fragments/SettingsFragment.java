@@ -87,8 +87,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         city      = cityEditText.getText().toString();
         spe       = "butterfly";
 
+        ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item);
+        genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
+        genderSpinner.setAdapter(genderDropdownAdapter);
+
+        ArrayAdapter<CharSequence> speDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
+        speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
+        speSpinner.setAdapter(speDropdownAdapter);
+
         if (MainActivity.appDataBase.userDAO().getNb() != 0) {
-            genderSpinner.setSelection((gender == "Homme") ? 0 : 1);
+            genderSpinner.setSelection((MainActivity.appDataBase.userDAO().getUser().getGender() == "homme") ? 1 : 0);
             firstnameEditText.setText(MainActivity.appDataBase.userDAO().getUser().getFirstname());
             lastnameEditText.setText(MainActivity.appDataBase.userDAO().getUser().getLastname());
             weightEditText.setText(String.valueOf(MainActivity.appDataBase.userDAO().getUser().getWeight()) + "kg");
@@ -96,6 +104,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             birthEditText.setText(MainActivity.appDataBase.userDAO().getUser().getBirthday());
             clubEditText.setText(MainActivity.appDataBase.userDAO().getUser().getClub());
             cityEditText.setText(MainActivity.appDataBase.userDAO().getUser().getCityTraining());
+            System.out.println(MainActivity.appDataBase.userDAO().getUser().getGender());
             if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("butterfly")) speSpinner.setSelection(0);
             if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("backstroke")) speSpinner.setSelection(1);
             if (MainActivity.appDataBase.userDAO().getUser().getSpe().equals("breaststroke")) speSpinner.setSelection(2);
@@ -112,14 +121,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             city      = MainActivity.appDataBase.userDAO().getUser().getCityTraining();
             spe       = MainActivity.appDataBase.userDAO().getUser().getSpe();
         }
-
-        ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item);
-        genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
-        genderSpinner.setAdapter(genderDropdownAdapter);
-
-        ArrayAdapter<CharSequence> speDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
-        speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
-        speSpinner.setAdapter(speDropdownAdapter);
 
         updateUserBtn.setOnClickListener(this);
         themeBtn.setOnClickListener(this);
@@ -157,7 +158,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         System.out.println("city   : " + city);
         System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
-            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city);
+            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city, MainActivity.appDataBase.userDAO().getUser().getMykey());
             MainActivity.appDataBase.userDAO().deleteAll();
             MainActivity.appDataBase.userDAO().insert(user);
             Toast.makeText(getContext(), "Utilisateur mis à jour", Toast.LENGTH_SHORT).show();
@@ -171,7 +172,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private void importDataRaces() {
         //TODO: Requête vers JSON sur serveur
         //      Stockage des données sur base de donnée locale
-        Race.startAsyncTaskLoadingRace(this.getActivity());
+        Race.startAsyncTaskLoadingRace(this.getActivity(), MainActivity.appDataBase.userDAO().getUser());
     }
 
     private void changeTheme() {
@@ -353,7 +354,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spe = parent.getSelectedItem().toString();
+                spe = Race.convertSwimFromFrenchToEnglish(parent.getSelectedItem().toString().toLowerCase());
             }
         });
     }
@@ -364,7 +365,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                gender = parent.getSelectedItem().toString();
+                gender = parent.getSelectedItem().toString().toLowerCase();
             }
         });
     }

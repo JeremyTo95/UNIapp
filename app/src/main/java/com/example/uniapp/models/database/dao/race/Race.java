@@ -10,6 +10,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.uniapp.R;
+import com.example.uniapp.models.database.dao.user.User;
 import com.example.uniapp.utils.ImportRacesTask;
 
 import java.io.Serializable;
@@ -117,9 +118,9 @@ public class Race implements Serializable {
         }
     }
 
-    public static void startAsyncTaskLoadingRace(Activity activity) {
-        Log.e("Function", "IN");
-        ImportRacesTask importRacesTask = new ImportRacesTask(activity);
+    public static void startAsyncTaskLoadingRace(Activity activity, User user) {
+        Log.e("Function", "async task race");
+        ImportRacesTask importRacesTask = new ImportRacesTask(activity, user);
         importRacesTask.execute();
     }
 

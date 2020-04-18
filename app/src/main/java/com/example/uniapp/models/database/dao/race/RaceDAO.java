@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface RaceDAO {
     @Query("SELECT * FROM race WHERE sizePool = :poolSize AND distance = :distance AND swim = :swim")
     List<Race> getRacesByPoolSizeDistanceRaceSwimRace(int poolSize, int distance, String swim);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRace(Race race);
 
     @Delete

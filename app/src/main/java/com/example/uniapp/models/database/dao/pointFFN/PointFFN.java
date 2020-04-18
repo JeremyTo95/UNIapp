@@ -10,6 +10,7 @@ import androidx.room.Entity;
 
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.AppDataBase;
+import com.example.uniapp.models.database.dao.user.User;
 import com.example.uniapp.utils.ImportPointsFFNTask;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;

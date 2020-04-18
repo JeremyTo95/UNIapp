@@ -1,15 +1,14 @@
 package com.example.uniapp.utils;
 
 import android.app.Activity;
-import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.race.RaceAPI;
+import com.example.uniapp.models.database.dao.user.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -24,9 +23,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ImportRacesTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Activity> weakReference;
+    private User user;
 
-    public ImportRacesTask(Activity activity) {
+    public ImportRacesTask(Activity activity, User user) {
         weakReference = new WeakReference<>(activity);
+        this.user = user;
     }
 
     @Override
@@ -42,7 +43,14 @@ public class ImportRacesTask extends AsyncTask<Void, Void, Void> {
 
         final RaceAPI raceAPI = retrofit.create(RaceAPI.class);
 
-        Call<List<Race>> call = raceAPI.getResponseRace();
+        Log.e("HERE", "In async race");
+        Call<List<Race>> call = null;
+        if (user.getFirstname().equals("Jeremy") && user.getLastname().equals("Tourari"))      call = raceAPI.getResponseRaceJeremyTourari();
+        if (user.getFirstname().equals("Younes") && user.getLastname().equals("Bencherqui"))   call = raceAPI.getResponseRaceYounesBencherqui();
+        if (user.getFirstname().equals("Arthur") && user.getLastname().equals("Peuffier"))     call = raceAPI.getResponseRaceArthurPeuffier();
+        if (user.getFirstname().equals("Christophe") && user.getLastname().equals("Noirbent")) call = raceAPI.getResponseRaceChristopheNoirbent();
+        if (user.getFirstname().equals("Dylan") && user.getLastname().equals("Valenza"))       call = raceAPI.getResponseRaceDylanValenza();
+        if (user.getFirstname().equals("Baptiste") && user.getLastname().equals("Andre"))      call = raceAPI.getResponseRaceBaptisteAndre();
         call.enqueue(new Callback<List<Race>>() {
             @Override
             public void onFailure(Call<List<Race>> call, Throwable t) { Log.e("ERROR", "API call failed : failure"); }

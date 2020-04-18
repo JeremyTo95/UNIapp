@@ -6,25 +6,24 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
-import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.fragments.CompetitionsFragment;
 import com.example.uniapp.controllers.fragments.MainFragment;
 import com.example.uniapp.controllers.fragments.SettingsFragment;
-import com.example.uniapp.controllers.fragments.StatisticsFragment;
+import com.example.uniapp.controllers.fragments.GadgetsFragment;
 import com.example.uniapp.controllers.fragments.TrainingsFragment;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
 //import com.example.uniapp.utils.ImportPointsFFNTask;
-import com.example.uniapp.views.AboutScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     configureAndShowFragment(new MainFragment());
                     return true;
                 case R.id.navbar_custom_statistic_btn:
-                    configureAndShowFragment(new StatisticsFragment());
+                    configureAndShowFragment(new GadgetsFragment());
                     return true;
                 case R.id.navbar_custom_settings_btn:
                     configureAndShowFragment(new SettingsFragment());
@@ -73,28 +72,37 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.navbar_custom_home_btn);
 
         lockUI();
+        /* for (int i = 0; i < appDataBase.userDAO().getNb(); i++) {
+            System.out.println(appDataBase.userDAO().getAll().get(i).getFirstname());
+            System.out.println(appDataBase.userDAO().getAll().get(i).getKey());
+        } */
 
         if (getIntent().getSerializableExtra("EXTRA_NEW_USER") != null) {
             Log.e("HERE", "HERE");
             appDataBase.userDAO().deleteAll();
-            appDataBase.userDAO().insert((User) getIntent().getSerializableExtra("EXTRA_NEW_USER"));
-            if (appDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(this, linearLayoutLoading, bottomNavigationView, onNavigationItemSelectedListener);
-            else unlockUI();
-            if (appDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(this);
+            prepopulateUsersInDataBase();
+            User newUser = (User) getIntent().getSerializableExtra("EXTRA_NEW_USER");
+            if (appDataBase.userDAO().checkUserByKey(newUser.getFirstname(), newUser.getLastname(), newUser.getMykey()) == 0) {
+                Log.e("RETURN", "Return to SignIn menu");
+                goSignInUser();
+            } else {
+                Log.e("OK", "User authentified");
+                appDataBase.userDAO().deleteAll();
+                appDataBase.userDAO().insert(newUser);
+                Toast.makeText(getApplicationContext(), "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
+                if (appDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(this, newUser);
+                if (appDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(this, linearLayoutLoading, bottomNavigationView, onNavigationItemSelectedListener);
+                else unlockUI();
 
-            System.out.println("nbUsers     : " + appDataBase.userDAO().getNb());
-            System.out.println("nbRaces     : " + appDataBase.raceDAO().getNb());
-            System.out.println("nbTrainings : " + appDataBase.trainingDAO().getNb());
-            System.out.println("nbPointsFFN : " + appDataBase.pointFFNDAO().getNb());
+                System.out.println("nbUsers     : " + appDataBase.userDAO().getNb());
+                System.out.println("nbRaces     : " + appDataBase.raceDAO().getNb());
+                System.out.println("nbTrainings : " + appDataBase.trainingDAO().getNb());
+                System.out.println("nbPointsFFN : " + appDataBase.pointFFNDAO().getNb());
+            }
         }
 
-        System.out.println("nbUsers     : " + appDataBase.userDAO().getNb());
-        System.out.println("nbRaces     : " + appDataBase.raceDAO().getNb());
-        System.out.println("nbTrainings : " + appDataBase.trainingDAO().getNb());
-        System.out.println("nbPointsFFN : " + appDataBase.pointFFNDAO().getNb());
-
         if (appDataBase.pointFFNDAO().getNb() == 54000) unlockUI();
-        if (appDataBase.userDAO().getNb() != 0) configureAndShowFragment(new MainFragment());
+        if (appDataBase.userDAO().getNb() == 1) configureAndShowFragment(new MainFragment());
         else goSignInUser();
     }
 
@@ -125,5 +133,22 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void prepopulateUsersInDataBase() {
+        //User tourari_jeremy      = new User("Homme", "Jeremy", "Tourari", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "ahdk-1kg4-mqp0");
+        User tourari_jeremy      = new User("Homme", "Jeremy", "Tourari", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User peuffier_arthur     = new User("Homme", "Arthur", "Peuffier", "03/02/1995", 185, 73, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User noirbent_christophe = new User("Homme", "Christophe", "Noirbent", "12/11/1993", 186, 82, "AS HERBLAY NATATION", "butterfly", "Herblay", "abcd-efgh-ijkl");
+        User bencherqui_younes   = new User("Homme", "Younes", "Bencherqui", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User valenza_dylan       = new User("Homme", "Dylan", "Valenza", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User andre_baptiste      = new User("Homme", "Baptiste", "Andre", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+
+        appDataBase.userDAO().insert(tourari_jeremy);
+        appDataBase.userDAO().insert(peuffier_arthur);
+        appDataBase.userDAO().insert(noirbent_christophe);
+        appDataBase.userDAO().insert(bencherqui_younes);
+        appDataBase.userDAO().insert(valenza_dylan);
+        appDataBase.userDAO().insert(andre_baptiste);
     }
 }

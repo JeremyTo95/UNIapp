@@ -22,6 +22,9 @@ public interface UserDAO {
     @Query("SELECT * FROM user WHERE first_name LIKE :first AND last_name LIKE :last")
     User findByName(String first, String last);
 
+    @Query("SELECT count(*) FROM user WHERE first_name = :first AND last_name = :last AND mykey = :key")
+    int checkUserByKey(String first, String last, String key);
+
     @Insert
     void insert(User user);
 

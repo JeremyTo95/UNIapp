@@ -56,35 +56,4 @@ public abstract class AppDataBase extends RoomDatabase {
         }
         return INSTANCE;
     }
-
-    private static RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            PointFFNDAO pointFFNDAO = INSTANCE.pointFFNDAO();
-            pointFFNDAO.deleteAllPointFFN();
-
-            Gson gson = new GsonBuilder().setLenient().create();
-            Retrofit retrofit = new Retrofit.Builder().baseUrl(AppDataBase.URL_DATA).addConverterFactory(GsonConverterFactory.create(gson)).build();
-            PointFFNAPI pointFFNAPI = retrofit.create(PointFFNAPI.class);
-            Call<List<PointFFN>> call = pointFFNAPI.getResponsePointsFFN();
-
-            call.enqueue(new retrofit2.Callback<List<PointFFN>>() {
-                @Override
-                public void onResponse(Call<List<PointFFN>> call, Response<List<PointFFN>> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        List<PointFFN> pointFFNList = response.body();
-                        System.out.println("before : " + pointFFNList.size());
-                        for (int i = 0; i < pointFFNList.size(); i++) {
-                            pointFFNDAO.insertPointFFN(pointFFNList.get(i));
-                        }
-                        System.out.println("after : " + pointFFNDAO.getNb());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<PointFFN>> call, Throwable t) { }
-            });
-        }
-    };
 }

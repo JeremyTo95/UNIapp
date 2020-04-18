@@ -1,7 +1,6 @@
 package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 //import com.example.uniapp.controllers.activities.DetailTrainingActivity;
-import com.example.uniapp.controllers.activities.DetailTrainingActivity;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.views.popup.training.TrainingDetailPopup;
@@ -24,7 +22,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

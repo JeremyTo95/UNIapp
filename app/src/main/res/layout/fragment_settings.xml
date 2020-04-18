@@ -282,7 +282,7 @@
             android:id="@+id/fragment_settings_theme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tag="themeBtn"
+            android:tag="importDataRaceBtn"
             android:background="@drawable/sh_button"
             android:text="Theme dark"
             android:textSize="@dimen/h4_textsize"

@@ -81,4 +81,31 @@ public class MarketTimes {
         }
         return bestTime;
     }
+
+    public static long convertTimeToLongMilli(String timeStr) {
+        long timeLong = 0;
+        int min = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 8))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 7)));
+        int sec = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 5))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 4)));
+        int mil = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 2))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 1)));
+
+        System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
+
+        timeLong = mil * 10 + sec * 100 * 10 + min * 60 * 100 * 10;
+
+        return timeLong;
+    }
+
+    public static String convertLongMilliToTime(long timeLong) {
+        int mil = (int) timeLong%100;
+        int sec = (int) (timeLong/100)%60;
+        int min = (int) (timeLong/6000);
+
+        System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
+
+        String milStr = (mil < 10) ? ("0" + mil) : String.valueOf(mil);
+        String secStr = (sec < 10) ? ("0" + sec) : String.valueOf(sec);
+        String minStr = (min < 10) ? ("0" + min) : String.valueOf(min);
+
+        return (minStr + ":" + secStr + "." + milStr);
+    }
 }
