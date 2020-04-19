@@ -88,9 +88,9 @@ public class MarketTimes {
         int sec = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 5))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 4)));
         int mil = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 2))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 1)));
 
-        System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
+        // System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
 
-        timeLong = mil * 10 + sec * 100 * 10 + min * 60 * 100 * 10;
+        timeLong = mil + sec * 100 + min * 60 * 100;
 
         return timeLong;
     }
@@ -100,7 +100,7 @@ public class MarketTimes {
         int sec = (int) (timeLong/100)%60;
         int min = (int) (timeLong/6000);
 
-        System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
+        // System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
 
         String milStr = (mil < 10) ? ("0" + mil) : String.valueOf(mil);
         String secStr = (sec < 10) ? ("0" + sec) : String.valueOf(sec);
