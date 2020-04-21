@@ -1,5 +1,6 @@
 package com.example.uniapp.controllers.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,11 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
@@ -27,8 +30,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private View     layoutInflater;
 
     private Spinner  genderSpinner;
-    private EditText firstnameEditText;
-    private EditText lastnameEditText;
+    private TextView firstnameEditText;
+    private TextView lastnameEditText;
     private EditText weightEditText;
     private EditText heightEditText;
     private EditText birthEditText;
@@ -36,7 +39,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private EditText cityEditText;
     private Spinner  speSpinner;
     private Button   updateUserBtn;
-    private Button themeBtn;
+    private Button   importRaces;
     private Button   saveDataBtn;
 
     private String gender;
@@ -65,8 +68,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private void setupUIElements() {
         genderSpinner      = (Spinner)  layoutInflater.findViewById(R.id.fragment_settings_gender);
-        firstnameEditText  = (EditText) layoutInflater.findViewById(R.id.fragment_settings_firstname);
-        lastnameEditText   = (EditText) layoutInflater.findViewById(R.id.fragment_settings_lastname);
+        firstnameEditText  = (TextView) layoutInflater.findViewById(R.id.fragment_settings_firstname);
+        lastnameEditText   = (TextView) layoutInflater.findViewById(R.id.fragment_settings_lastname);
         weightEditText     = (EditText) layoutInflater.findViewById(R.id.fragment_settings_weight);
         heightEditText     = (EditText) layoutInflater.findViewById(R.id.fragment_settings_height);
         birthEditText      = (EditText) layoutInflater.findViewById(R.id.fragment_settings_birth);
@@ -74,7 +77,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         cityEditText       = (EditText) layoutInflater.findViewById(R.id.fragment_settings_city);
         speSpinner         = (Spinner)  layoutInflater.findViewById(R.id.fragment_settings_spe);
         updateUserBtn      = (Button)   layoutInflater.findViewById(R.id.fragment_settings_update);
-        themeBtn           = (Button)   layoutInflater.findViewById(R.id.fragment_settings_theme);
+        importRaces        = (Button)   layoutInflater.findViewById(R.id.fragment_settings_races);
         saveDataBtn        = (Button)   layoutInflater.findViewById(R.id.fragment_settings_save_data);
 
         gender    = "Homme";
@@ -123,14 +126,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
 
         updateUserBtn.setOnClickListener(this);
-        themeBtn.setOnClickListener(this);
+        importRaces.setOnClickListener(this);
         saveDataBtn.setOnClickListener(this);
     }
 
     private void updateUIElements() {
         updateGender();
-        updateFirstname();
-        updateLastname();
         updateWeight();
         updateHeight();
         updateBirth();
@@ -141,9 +142,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-             if (v.getTag().equals("updateBtn"))         setupUpdateUser();
+         if (v.getTag().equals("updateBtn")) {
+             setupUpdateUser();
+             hideKeybaord(v);
+         }
         else if (v.getTag().equals("importDataRaceBtn")) importDataRaces();
-        else if (v.getTag().equals("themeBtn"))          changeTheme();
+        else if (v.getTag().equals("saveData"))          saveData();
     }
 
     private void setupUpdateUser() {
@@ -170,20 +174,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void importDataRaces() {
-        //TODO: Requête vers JSON sur serveur
-        //      Stockage des données sur base de donnée locale
+        MainActivity.appDataBase.raceDAO().deleteAll();
         Race.startAsyncTaskLoadingRace(this.getActivity(), MainActivity.appDataBase.userDAO().getUser());
+        Toast.makeText(getContext(), "Actualisation des temps...", Toast.LENGTH_SHORT).show();
     }
 
-    private void changeTheme() {
-        System.out.println("nbUser      : " + MainActivity.appDataBase.userDAO().getNb());
-        System.out.println("nbRaces     : " + MainActivity.appDataBase.raceDAO().getNb());
-        System.out.println("nbTrainings : " + MainActivity.appDataBase.trainingDAO().getNb());
-        System.out.println("nbPointsFFN : " + MainActivity.appDataBase.pointFFNDAO().getNb());
-        Toast.makeText(getContext(), MainActivity.appDataBase.userDAO().getNb() + " utilisateurs chargés", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), MainActivity.appDataBase.raceDAO().getNb() + " courses chargés", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), MainActivity.appDataBase.trainingDAO().getNb() + " entrainements chargés", Toast.LENGTH_SHORT).show();
-        Toast.makeText(getContext(), MainActivity.appDataBase.pointFFNDAO().getNb() + " points chargés", Toast.LENGTH_SHORT).show();
+    private void saveData() {
+        Toast.makeText(getContext(),  "Encore en développement", Toast.LENGTH_SHORT).show();
     }
 
     private void updateBirth() {
@@ -207,44 +204,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
                     birthEditText.setText(new StringBuilder(text).insert(textSize - 1, "/").toString());
                     birthEditText.setSelection(birthEditText.getText().length());
                 }
-                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateFirstname() {
-        firstnameEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { firstnameEditText.setText("");
-            }
-        });
-        firstnameEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-            @Override
-            public void afterTextChanged(Editable s) {
-                firstname = firstnameEditText.getText().toString();
-                updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateLastname() {
-        lastnameEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { lastnameEditText.setText("");
-            }
-        });
-        lastnameEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-            @Override
-            public void afterTextChanged(Editable s) {
-                lastname = lastnameEditText.getText().toString();
                 updateUserBtn.setBackground(getResources().getDrawable(R.drawable.sh_button));
             }
         });
@@ -371,11 +330,9 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     }
 
     private boolean checkInputUpdateUser() {
-        if (checkFirstname() && checkLastname() && checkWeight() && checkHeight() && checkBirth() && checkClub() && checkCity()) {
+        if (checkWeight() && checkHeight() && checkBirth() && checkClub() && checkCity()) {
             return true;
         } else {
-            if (!checkFirstname()) firstnameEditText.setHintTextColor(getResources().getColor(R.color.redDeep));
-            if (!checkLastname())  lastnameEditText.setHintTextColor(getResources().getColor(R.color.redDeep));
             if (!checkWeight())    weightEditText.setHintTextColor(getResources().getColor(R.color.redDeep));
             if (!checkHeight())    heightEditText.setHintTextColor(getResources().getColor(R.color.redDeep));
             if (!checkBirth())     birthEditText.setHintTextColor(getResources().getColor(R.color.redDeep));
@@ -386,8 +343,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-    private boolean checkFirstname() { return (firstname.length() > 0); }
-    private boolean checkLastname()  { return (lastname.length()  > 0); }
+    private void hideKeybaord(View v) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+    }
+
     private boolean checkWeight()    { return (weight             > 0); }
     private boolean checkHeight()    { return (height             > 0); }
     private boolean checkBirth()     { return (birth.length()     > 0); }

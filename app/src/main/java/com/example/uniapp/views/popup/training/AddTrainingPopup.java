@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -142,8 +143,11 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         else if (v.getTag().equals("difficulty_3"))  newDifficulty = 3;
         else if (v.getTag().equals("difficulty_4"))  newDifficulty = 4;
         else if (v.getTag().equals("difficulty_5"))  newDifficulty = 5;
-        else if (v.getTag().equals("addBlock"))      addBlockElement();
         else if (v.getTag().equals("btn_denied"))    dismiss();
+        else if (v.getTag().equals("addBlock")) {
+            addBlockElement();
+            hideKeybaord(v);
+        }
         updateDifficulty();
     }
 
@@ -316,6 +320,11 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         trainingBlockList.add(new TrainingBlock(newSet, Race.convertSwimFromFrenchToEnglish(newSwim), newDistance, initEmptyTime(), newZone));
         gridLayout.addView(newBlock, nbBlock);
         nbBlock++;
+    }
+
+    private void hideKeybaord(View v) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
 
     public void build() {

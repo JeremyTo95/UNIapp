@@ -135,7 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <Button
+                <!-- <Button
                     android:id="@+id/fragment_competition_refresh_race_time"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -145,7 +145,7 @@
                     android:textColor="@color/colorText"
                     android:layout_marginRight="10dp"
                     android:textSize="@dimen/fragment_competition_button_textsize"
-                    android:background="@drawable/sh_button" />
+                    android:background="@drawable/sh_button" /> -->
 
                 <Button
                     android:id="@+id/fragment_competition_add_race_time"

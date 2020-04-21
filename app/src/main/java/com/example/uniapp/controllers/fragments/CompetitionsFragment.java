@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,31 +46,27 @@ import java.util.UUID;
 
 import static android.widget.AdapterView.*;
 
-/*
-TODO: Mettre de la couleur pour la suppression des éléments du RecyclerView
- */
-
 public class CompetitionsFragment extends Fragment implements View.OnClickListener {
-    private int        sizePool;
-    private String     swim;
-    private int        distance;
-    private List<Race> currentRaces;
+    private int           sizePool;
+    private String        swim;
+    private int           distance;
+    private List<Race>    currentRaces;
 
-    private View layoutInflater;
-    private TextView            competition_title;
-    private TextView            progression_title;
-    private Button              btn_25m;
-    private Button              btn_50m;
-    private ViewPager           mViewPager;
-    private int                 viewPagerIndex;
-    private List<SwimCards>     mSwimCardsList;
-    private Spinner             selectSwimDistance;
-    private LineChart           lineChart;
-    private LineDataSet         lineDataSet;
-    private Button              refreshRaceBtn;
-    private Button              addRaceTimeBtn;
-    private RecyclerView recyclerView;
-    private RvRaceAdapter rvRaceAdapter;
+    private View            layoutInflater;
+    private TextView        competition_title;
+    private TextView        progression_title;
+    private Button          btn_25m;
+    private Button          btn_50m;
+    private ViewPager       mViewPager;
+    private int             viewPagerIndex;
+    private List<SwimCards> mSwimCardsList;
+    private Spinner         selectSwimDistance;
+    private LineChart       lineChart;
+    private LineDataSet     lineDataSet;
+    // private Button          refreshRaceBtn;
+    private Button          addRaceTimeBtn;
+    private RecyclerView    recyclerView;
+    private RvRaceAdapter   rvRaceAdapter;
 
     public CompetitionsFragment() { }
 
@@ -106,13 +103,13 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         btn_50m           = (Button)       layoutInflater.findViewById(R.id.fragment_competition_pool_50);
         progression_title = (TextView)     layoutInflater.findViewById(R.id.fragment_competition_progression_title);
         lineChart         = (LineChart)    layoutInflater.findViewById(R.id.fragment_competition_linechart);
-        refreshRaceBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_refresh_race_time);
+        // refreshRaceBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_refresh_race_time);
         addRaceTimeBtn    = (Button)       layoutInflater.findViewById(R.id.fragment_competition_add_race_time);
         recyclerView      = (RecyclerView) layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
         btn_25m.setOnClickListener(this);
         btn_50m.setOnClickListener(this);
         addRaceTimeBtn.setOnClickListener(this);
-        refreshRaceBtn.setOnClickListener(this);
+        // refreshRaceBtn.setOnClickListener(this);
     }
 
     private void updateToPool25() {

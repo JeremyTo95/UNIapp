@@ -13,7 +13,7 @@ public interface RaceAPI {
     Call<List<Race>> getResponseRaceJeremyTourari();
 
 
-    @GET("master/peuffier_arthut.json")
+    @GET("master/peuffier_arthur.json")
     Call<List<Race>> getResponseRaceArthurPeuffier();
 
 

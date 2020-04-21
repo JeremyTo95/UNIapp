@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.uniapp.controllers.activities.MainActivity;
+import com.example.uniapp.controllers.fragments.CompetitionsFragment;
 import com.example.uniapp.models.database.AppDataBase;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.race.RaceAPI;
@@ -73,7 +74,6 @@ public class ImportRacesTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         Activity activity = weakReference.get();
-        if (activity == null)
-            return;
+        if (activity == null) return;
     }
 }
