@@ -23,13 +23,15 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/sh_gradient_background">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="M O N   P R O F I L"
             android:textColor="@color/colorText"
             android:gravity="center"
+            android:layout_marginTop="10dp"
             android:textSize="@dimen/h3_textsize"
             android:fontFamily="sans-serif-light" />
         <LinearLayout
@@ -327,11 +329,11 @@
                 android:id="@+id/activity_sign_in_confirmed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mettre à jour"
+                android:text="V a l i d e r"
                 android:tag="updateBtn"
                 android:textColor="@color/colorText"
                 android:paddingHorizontal="20dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="20dp"
                 android:gravity="center"
                 android:background="@color/transparent"/>
         </LinearLayout>

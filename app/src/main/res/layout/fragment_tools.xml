@@ -36,14 +36,38 @@
             android:layout_margin="20dp"
             android:padding="30dp">
             <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_timer_white_24dp" />
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/ic_timer_white_24dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:text="C H R O N O M E T R E"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:layout_marginRight="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/fragment_gadget_timer"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:tag="timerBtn"
+            android:background="@drawable/sh_gradient_background"
+            android:layout_margin="20dp"
+            android:padding="30dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_play_arrow_white_24dp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="T I M E R"
                 android:textSize="@dimen/h3_textsize"
                 android:textColor="@color/colorText"
                 android:gravity="center"
@@ -60,13 +84,13 @@
             android:layout_margin="20dp"
             android:padding="30dp">
             <ImageView
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_sync_alt_white_24dp" />
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/ic_sync_alt_white_24dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:text="C O N V E R T I S S E U R"
                 android:textSize="@dimen/h3_textsize"
                 android:textColor="@color/colorText"

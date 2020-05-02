@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.views.AboutScreen;
 
 public class ConverterActivity extends AppCompatActivity implements View.OnClickListener {
     private String inputTimeStr;
@@ -124,7 +125,7 @@ public class ConverterActivity extends AppCompatActivity implements View.OnClick
             inputTimeStr = MarketTimes.convertTimeToFormat(inputTimeET.getText().toString());
             outputTimeStr = MarketTimes.convertCompetitionTimeToZoneTime(MarketTimes.fetchTimeToFloat(inputTimeStr), Integer.parseInt(zoneSelectedStr.substring(1)));
             System.out.println("input : " + inputTimeStr + " | output : " + outputTimeStr);
-            outputTimeTV.setText(outputTimeStr);
+            outputTimeTV.setText("Temps " + zoneSelectedStr + " : " + outputTimeStr);
             outputTimeTV.setVisibility(View.VISIBLE);
         }
     }
@@ -133,4 +134,10 @@ public class ConverterActivity extends AppCompatActivity implements View.OnClick
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
+
+    /*@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) AboutScreen.hideNavigationBar(this);
+    }*/
 }

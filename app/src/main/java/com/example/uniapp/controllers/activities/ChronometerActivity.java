@@ -10,6 +10,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.recyclerview.RvChronometerAdapter;
 import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.views.AboutScreen;
 
 import java.security.Key;
 import java.util.ArrayList;
@@ -53,13 +55,13 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chronometer);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setupUIElements();
         updateLapChronoRV();
 
         startStopBtn.setOnClickListener(this);
         resetBtn.setOnClickListener(this);
-        // lapBtn.setOnClickListener(this);
     }
 
     private void setupUIElements() {
@@ -71,7 +73,6 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
 
         startStopBtn  = findViewById(R.id.activity_chronometer_btn_start);
         resetBtn      = findViewById(R.id.activity_chronometer_btn_reset);
-        //lapBtn        = findViewById(R.id.activity_chronometer_btn_lap);
 
         anchorChrono  = findViewById(R.id.activity_chronometer_anchor);
         animChrono    = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.roundingalone);
@@ -111,9 +112,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-             //if (v.getTag().equals("startStop")) startStop();
         if (v.getTag().equals("reset")) reset();
-        //else if (v.getTag().equals("lap")) lap();
     }
 
     @Override
@@ -225,4 +224,10 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
             chronoDiffTV.setTextColor(getResources().getColor(R.color.greenDeep));
         }
     }
+
+    /*@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) AboutScreen.hideNavigationBar(this);
+    }*/
 }

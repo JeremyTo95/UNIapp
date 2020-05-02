@@ -10,20 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.uniapp.controllers.activities.TimerActivity;
 import com.example.uniapp.controllers.activities.ConverterActivity;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.ChronometerActivity;
 
 /*
 TODO: STATISTIC --> TOOLS
-      CHRONO AVEC TEMPS DE PASSAGE ET SAUVEGARDE DES TEMPS
-      OUTILS DE CONVERSION DES TEMPS EN ZONE DE VITESSE
+      CHRONO AVEC TEMPS DE PASSAGE (--> OK) ET SAUVEGARDE DES TEMPS --> KO
+      OUTILS DE CONVERSION DES TEMPS EN ZONE DE VITESSE --> OK
  */
 
 public class GadgetsFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
 
     private LinearLayout chronometer;
+    private LinearLayout timer;
     private LinearLayout converter;
 
     public GadgetsFragment() { }
@@ -40,14 +42,17 @@ public class GadgetsFragment extends Fragment implements View.OnClickListener {
 
     private void setupUIElements() {
         chronometer = layoutInflater.findViewById(R.id.fragment_gadget_chronometer);
+        timer       = layoutInflater.findViewById(R.id.fragment_gadget_timer);
         converter   = layoutInflater.findViewById(R.id.fragment_gadget_converter);
         chronometer.setOnClickListener(this);
+        timer.setOnClickListener(this);
         converter.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
              if (v.getTag().equals("chronometerBtn")) goToChronometer();
+        else if (v.getTag().equals("timerBtn")) goToTimer();
         else if (v.getTag().equals("converterBtn"))   goToConverter();
     }
 
@@ -58,6 +63,11 @@ public class GadgetsFragment extends Fragment implements View.OnClickListener {
 
     private void goToChronometer() {
         Intent intent = new Intent(getContext(), ChronometerActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToTimer() {
+        Intent intent = new Intent(getContext(), TimerActivity.class);
         startActivity(intent);
     }
 }

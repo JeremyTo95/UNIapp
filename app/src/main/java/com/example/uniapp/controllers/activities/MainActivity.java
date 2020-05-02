@@ -24,14 +24,12 @@ import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
 //import com.example.uniapp.utils.ImportPointsFFNTask;
+import com.example.uniapp.views.AboutScreen;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-//TODO: METTRE EN PLACE LA RECUPERATION DE TOUS LES TEMPS DU NAGEUR SUR FFN_EXTRANAT
-//TODO: SAUVEGARDER LES COURSES DEJA EN PLACE SUR L'APPLICATION SYSTEME D'IMPORTATION DE DONNEE SUR SERVEUR ET
-//      SAUVEGARDE DES DONNEES SUR TELEPHONE, PLUS GESTION POUR NE PAS ECRASER LES DONNEE DEJA SAUVEGADER
-//TODO: METTRE EN PLACE LA MODIFICATION DES TEMPS DEJA ENREGISTRER
-//TODO: ADD RACE --> UPDATE RACE
+// TODO: SAUVEGARDER LES COURSES DEJA EN PLACE SUR L'APPLICATION,
+//       SAUVEGARDE DES DONNEES SUR TELEPHONE, PLUS GESTION POUR NE PAS ECRASER LES DONNEE DEJA SAUVEGADER
 
 public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayoutLoading;
@@ -66,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        appDataBase = AppDataBase.getDatabase(getApplicationContext());
-        linearLayoutLoading = findViewById(R.id.glb_loading);
+        appDataBase          = AppDataBase.getDatabase(getApplicationContext());
+        linearLayoutLoading  = findViewById(R.id.glb_loading);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
         bottomNavigationView.setSelectedItemId(R.id.navbar_custom_home_btn);
 
@@ -151,4 +149,10 @@ public class MainActivity extends AppCompatActivity {
         appDataBase.userDAO().insert(valenza_dylan);
         appDataBase.userDAO().insert(andre_baptiste);
     }
+
+    /*@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) AboutScreen.hideNavigationBar(this);
+    }*/
 }

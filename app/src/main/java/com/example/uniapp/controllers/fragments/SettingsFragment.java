@@ -54,8 +54,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     public SettingsFragment() { }
 
-    //TOTO: AJOUTER LES RECORDS DU CLUB
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_settings, container, false);

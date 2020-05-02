@@ -108,4 +108,19 @@ public class MarketTimes {
 
         return (minStr + ":" + secStr + "." + milStr);
     }
+
+    public static Long convertTimerToLong(String timer) {
+        String[] timerSplit = timer.split(":");
+        long time = 0;// Integer.parseInt(String.valueOf(timerSplit[0])) * 60;
+        for (int i = 0; i < timerSplit.length; i++) {
+            time += Integer.parseInt(String.valueOf(timerSplit[i])) * ((long) Math.pow(60, (timerSplit.length - (i + 1))));
+        }
+        return time;
+    }
+
+    public static String converLongToTimer(Long time) {
+        String min = (String.valueOf(time/60).length() == 1) ? ("0" + time/60) : String.valueOf(time/60);
+        String sec = (String.valueOf(time%60).length() == 1) ? ("0" + time%60) : String.valueOf(time%60);
+        return min + ":" + sec;
+    }
 }

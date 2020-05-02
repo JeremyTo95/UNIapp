@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -118,6 +119,7 @@ public class SignInActivity extends AppCompatActivity {
         confirmedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeybaord(v);
                 if (defineUserProfil()) {
                     progressBar.setVisibility(View.VISIBLE);
                     loadingText.setVisibility(View.VISIBLE);
@@ -442,4 +444,14 @@ public class SignInActivity extends AppCompatActivity {
     private boolean checkKey2()      { return (key2.length()      > 0); }
     private boolean checkKey3()      { return (key3.length()      > 0); }
 
+    private void hideKeybaord(View v) {
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+    }
+
+    /*@Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) AboutScreen.hideNavigationBar(this);
+    }*/
 }
