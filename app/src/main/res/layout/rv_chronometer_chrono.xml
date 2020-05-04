@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.75"
         android:text="L A P 1"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:textSize="@dimen/h2_textsize"
         android:gravity="center"
         android:layout_marginHorizontal="20dp"
@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:text="00:11.99"
             android:textSize="@dimen/h2_textsize"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textColor"
             android:fontFamily="sans-serif-light"
             android:gravity="center" />
         <LinearLayout
@@ -43,7 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:textColor="@color/colorSecondaryLight"
+                android:textColor="?attr/secondaryColor"
                 android:text="00:00.00"
                 android:gravity="center"
                 android:textSize="@dimen/h3_textsize"
@@ -55,7 +55,7 @@
                 android:layout_weight="1"
                 android:text="(+00.00)"
                 android:textSize="@dimen/h3_textsize"
-                android:textColor="@color/greenDeep"
+                android:textColor="?attr/greenDeepColor"
                 android:gravity="center"
                 android:fontFamily="sans-serif-light" />
         </LinearLayout>

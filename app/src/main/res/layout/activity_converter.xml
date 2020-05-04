@@ -6,7 +6,7 @@
     android:id="@+id/activity_converter_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="?attr/backgroundColor"
     android:orientation="vertical"
     tools:context=".controllers.activities.ConverterActivity">
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="20dp"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:textAlignment="center"
         android:fontFamily="sans-serif-light"
         android:textSize="@dimen/h1_textsize"
@@ -42,14 +42,14 @@
                 android:gravity="center"
                 android:text="Z O N E"
                 android:textSize="@dimen/h3_textsize"
-                android:textColor="@color/colorSecondaryLight"
+                android:textColor="?attr/secondaryColor"
                 android:fontFamily="sans-serif-light" />
             <Spinner
                 android:id="@+id/activity_converter_zone_selected"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.50"
-                android:backgroundTint="@color/colorText" />
+                android:backgroundTint="?attr/textColor" />
         </LinearLayout>
         <TextView
             android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:text="T E M P S   D E   R E F E R E N C E"
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/h3_textsize"
-            android:textColor="@color/colorSecondaryLight" />
+            android:textColor="?attr/secondaryColor" />
         <EditText
             android:id="@+id/activity_converter_input_time"
             android:layout_width="match_parent"
@@ -69,11 +69,11 @@
             android:tag="inputTime"
             android:inputType="number"
             android:digits="0123456789"
-            android:background="@color/transparent"
+            android:background="?attr/transparent"
             android:textSize="@dimen/h1_textsize"
             android:hint="00:00.00"
-            android:textColor="@color/colorText"
-            android:textColorHint="@android:color/darker_gray"
+            android:textColor="?attr/textColor"
+            android:textColorHint="?attr/hintColor"
             android:gravity="center" />
     </LinearLayout>
     <LinearLayout
@@ -94,7 +94,7 @@
                 android:text="C o n v e r t i r"
                 android:tag="converterButton"
                 android:background="@drawable/sh_button"
-                android:textColor="@color/colorText"
+                android:textColor="?attr/textButtonColor"
                 android:textSize="@dimen/h3_textsize"
                 android:fontFamily="sans-serif-light" />
         </LinearLayout>
@@ -113,7 +113,7 @@
                 android:visibility="invisible"
                 android:textSize="@dimen/h1_textsize"
                 android:fontFamily="sans-serif-light"
-                android:textColor="@color/colorSecondaryLight" />
+                android:textColor="?attr/secondaryColor" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

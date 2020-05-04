@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.recyclerview.RvRaceAdapter;
 import com.example.uniapp.controllers.adapters.pageviewer.PvSwimItemAdapter;
 import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.views.AboutScreen;
 import com.example.uniapp.views.comparators.RaceDateComparator;
 import com.example.uniapp.views.popup.competition.AddRacePopup;
 import com.example.uniapp.models.database.dao.race.Race;
@@ -185,7 +185,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     private void configureAndShowDistanceSelectionDropdown() {
         selectSwimDistance = layoutInflater.findViewById(R.id.fragment_competition_spinner);
         selectSwimDistance.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item_auto);
         adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         selectSwimDistance.setAdapter(adapter);
         selectSwimDistance.setSelection(1);
@@ -214,12 +214,12 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         lineDataSet.setLineWidth(1.75f);
         lineDataSet.setCircleRadius(5f);
         lineDataSet.setCircleHoleRadius(2.5f);
-        lineDataSet.setColor(getResources().getColor(Race.getCurrentColor(swim)));
-        lineDataSet.setCircleColor(getResources().getColor(Race.getCurrentColor(swim)));
-        lineDataSet.setHighLightColor(getResources().getColor(Race.getCurrentColor(swim)));
+        lineDataSet.setColor(Race.getCurrentColor(getContext(), swim));
+        lineDataSet.setCircleColor(Race.getCurrentColor(getContext(), swim));
+        lineDataSet.setHighLightColor(Race.getCurrentColor(getContext(), swim));
         lineDataSet.setDrawValues(false);
         lineDataSet.setDrawFilled(true);
-        lineDataSet.setFillColor(getResources().getColor(Race.getCurrentColor(swim)));
+        lineDataSet.setFillColor(Race.getCurrentColor(getContext(), swim));
         lineDataSet.setFillAlpha(100);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
@@ -300,14 +300,15 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         ArrayAdapter<CharSequence> adapter;
         String currentDistanceSelected;
 
-        if      (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke"))
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item);
-        else if (swim.equals("freestyle"))
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_item);
-        else if (swim.equals("IM") && sizePool == 25)
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_item);
-        else
-            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_item);
+        if  (swim.equals("butterfly") || swim.equals("backstroke") || swim.equals("breaststroke")) {
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_spe, R.layout.dropdown_item_auto);
+        } else if (swim.equals("freestyle")) {
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_freestyle, R.layout.dropdown_item_auto);
+        } else if (swim.equals("IM") && sizePool == 25) {
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_25, R.layout.dropdown_item_auto);
+        } else {
+            adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.distance_4N_50, R.layout.dropdown_item_auto);
+        }
 
         adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         selectSwimDistance.setAdapter(adapter);
@@ -326,10 +327,10 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     }
 
     private void updateColors() {
-        competition_title.setTextColor(getResources().getColor(Race.getCurrentColor(swim)));
-        progression_title.setTextColor(getResources().getColor(Race.getCurrentColor(swim)));
-        btn_25m.setTextColor(getResources().getColor((sizePool == 25) ? Race.getCurrentColor(swim) : R.color.colorText));
-        btn_50m.setTextColor(getResources().getColor((sizePool == 50) ? Race.getCurrentColor(swim) : R.color.colorText));
+        competition_title.setTextColor(Race.getCurrentColor(getContext(), swim));
+        progression_title.setTextColor(Race.getCurrentColor(getContext(), swim));
+        btn_25m.setTextColor((sizePool == 25) ? Race.getCurrentColor(getContext(), swim) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_50m.setTextColor((sizePool == 50) ? Race.getCurrentColor(getContext(), swim) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
     }
 
     private void updateCurrentRaces() {
@@ -342,7 +343,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
 
     private void updateRecyclerViewRaceList() {
         updateCurrentRaces();
-        rvRaceAdapter = new RvRaceAdapter(getContext(), currentRaces);
+        rvRaceAdapter = new RvRaceAdapter(getActivity(), getContext(), currentRaces);
         recyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         recyclerView.setAdapter(rvRaceAdapter);
         recyclerView.setNestedScrollingEnabled(false);

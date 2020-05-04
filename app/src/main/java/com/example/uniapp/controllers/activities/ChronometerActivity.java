@@ -5,8 +5,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -24,7 +22,6 @@ import com.example.uniapp.controllers.adapters.recyclerview.RvChronometerAdapter
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.views.AboutScreen;
 
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +51,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_chronometer);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -82,6 +80,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
         chronoDiffTV  = findViewById(R.id.activity_chronometer_diff);
         allChronosRV  = findViewById(R.id.activity_chronometer_rv);
 
+        anchorChrono.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(this)) ? R.drawable.anchor_chrono_dark : R.drawable.anchor_chrono_light));
         anchorChrono.setRotation(offsetAnchor);
         spaceResetLep.setVisibility(View.GONE);
     }

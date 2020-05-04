@@ -23,7 +23,7 @@
             android:gravity="center"
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/h4_textsize"
-            android:textColor="@color/colorSecondaryLight" />
+            android:textColor="?attr/secondaryColor" />
         <TextView
             android:id="@+id/rv_detail_training_items_serie_subtitle"
             android:layout_width="0dp"
@@ -33,7 +33,7 @@
             android:gravity="center"
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/h3_textsize"
-            android:textColor="@color/colorText" />
+            android:textColor="?attr/textColor" />
         <TextView
             android:id="@+id/rv_detail_training_items_serie_zones"
             android:layout_width="0dp"
@@ -43,7 +43,7 @@
             android:gravity="center"
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/h4_textsize"
-            android:textColor="@color/colorSecondaryLight" />
+            android:textColor="?attr/secondaryColor" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,16 +79,14 @@
                 android:gravity="center_vertical"
                 android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/h3_textsize"
-                android:textColor="@color/colorSecondaryLight" />
-
+                android:textColor="?attr/secondaryColor" />
             <Button
                 android:id="@+id/rv_training_detail_item_update_btn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@color/transparent"
+                android:background="?attr/transparent"
                 android:drawableLeft="@drawable/ic_create_white_24dp"
                 android:paddingLeft="12dp" />
-
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView

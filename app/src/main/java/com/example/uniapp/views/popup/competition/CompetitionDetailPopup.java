@@ -1,11 +1,15 @@
 package com.example.uniapp.views.popup.competition;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
 import androidx.annotation.NonNull;
+
+import android.os.Build;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
@@ -16,6 +20,7 @@ import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
+import com.example.uniapp.views.AboutScreen;
 import com.example.uniapp.views.comparators.TimeComparator;
 
 import java.util.Collections;
@@ -23,6 +28,7 @@ import java.util.List;
 
 
 public class CompetitionDetailPopup extends Dialog {
+    private Activity activity;
     private Race race;
     private Race raceUp;
     private Race raceDown;
@@ -41,12 +47,16 @@ public class CompetitionDetailPopup extends Dialog {
     private TextView points;
     private TextView diff;
 
-    public CompetitionDetailPopup(@NonNull Context context, List<Race> subListRaces, Race race) {
-        super(context);
+    public CompetitionDetailPopup(Activity activity, List<Race> subListRaces, Race race) {
+        super(activity, R.style.Theme_AppCompat_Dialog);
+        this.activity = activity;
         this.subListRaces = subListRaces;
         this.race         = race;
         setContentView(R.layout.popup_race_detail);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getContext().getResources().getColor(R.color.backgroundColorDark));
+        }
         setupUIElements();
         updateColors();
     }
@@ -86,16 +96,16 @@ public class CompetitionDetailPopup extends Dialog {
     }
 
     private void updateColors() {
-        bigTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        swimmerTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        performanceTitle.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
-        time.setTextColor(getContext().getResources().getColor(Race.getCurrentColor(race.getSwim())));
+        bigTitle.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
+        swimmerTitle.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
+        performanceTitle.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
+        time.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
     }
 
     public void build() {
         show();
         Window window = getWindow();
-        if (window != null) window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        if (window != null) window.setLayout((int) (AboutScreen.getWidth(activity) * 0.95), (int) (AboutScreen.getHeight(activity) * 0.95));
     }
 
 

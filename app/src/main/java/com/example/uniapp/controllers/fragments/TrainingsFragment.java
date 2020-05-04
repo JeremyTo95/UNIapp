@@ -26,6 +26,7 @@ import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.recyclerview.RvTrainingAdapter;
 import com.example.uniapp.models.MarketTrainings;
 import com.example.uniapp.models.database.dao.training.Training;
+import com.example.uniapp.views.AboutScreen;
 import com.example.uniapp.views.popup.training.AddTrainingPopup;
 import com.example.uniapp.views.comparators.TrainingDateComparator;
 import com.google.android.material.appbar.AppBarLayout;
@@ -72,6 +73,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
 
         configureHeader();
         updateColors();
+        updateDifficulty();
         configureAndShowSizePoolDropdown();
         updateCurrentTrainings();
         updateRecyclerViewTrainingList();
@@ -152,14 +154,6 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("swims      : " + addTrainingPopup.getNewSizePool());
-                System.out.println("sets       : " + addTrainingPopup.getNewSet());
-                System.out.println("zones      : " + addTrainingPopup.getNewZone());
-                System.out.println("distance   : " + addTrainingPopup.getNewDistance());
-                System.out.println("date       : " + addTrainingPopup.getNewDate());
-                System.out.println("city       : " + addTrainingPopup.getNewCity());
-                System.out.println("difficulty : " + addTrainingPopup.getNewDifficulty());
-                System.out.println("sizePool   : " + addTrainingPopup.getNewSizePool());
                 if (addTrainingPopup.isEnabled()) {
                     Log.e("ADD", "Add training");
                     Training training = new Training(UUID.randomUUID().toString(), addTrainingPopup.getNewDifficulty(), addTrainingPopup.getNewSizePool(), addTrainingPopup.getNewDate(), addTrainingPopup.getNewCity(), addTrainingPopup.getTrainingBlockList());
@@ -174,18 +168,23 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     private void updateColors() {
-        training_title.setTextColor(getResources().getColor(R.color.colorSecondaryLight));
-        btn_all.setTextColor(getResources().getColor((swim.equals("all")) ? R.color.colorSecondaryLight : R.color.colorText));
-        btn_butterfly.setTextColor(getResources().getColor((swim.equals("butterfly")) ? R.color.colorSecondaryLight : R.color.colorText));
-        btn_backstroke.setTextColor(getResources().getColor((swim.equals("backstroke")) ? R.color.colorSecondaryLight : R.color.colorText));
-        btn_breaststroke.setTextColor(getResources().getColor((swim.equals("breaststroke")) ? R.color.colorSecondaryLight : R.color.colorText));
-        btn_freestyle.setTextColor(getResources().getColor((swim.equals("freestyle")) ? R.color.colorSecondaryLight : R.color.colorText));
-        btn_IM.setTextColor(getResources().getColor((swim.equals("IM")) ? R.color.colorSecondaryLight : R.color.colorText));
+        training_title.setTextColor(AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark));
+        btn_all.setTextColor((swim.equals("all")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_butterfly.setTextColor((swim.equals("butterfly")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_backstroke.setTextColor((swim.equals("backstroke")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_breaststroke.setTextColor((swim.equals("breaststroke")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_freestyle.setTextColor((swim.equals("freestyle")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_IM.setTextColor((swim.equals("IM")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
     }
 
     private void updateDifficulty() {
-        for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
-        for (int i = 0; i < difficulty; i++)                  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+        if (AboutScreen.isNightMode(getActivity())) {
+            for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
+            for (int i = 0; i < difficulty; i++)                  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+        } else {
+            for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_black_24dp), null, null, null);
+            for (int i = 0; i < difficulty; i++)                  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
+        }
     }
 
     private void updateCurrentTrainings() {
@@ -196,7 +195,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private void updateRecyclerViewTrainingList() {
         updateCurrentTrainings();
         System.out.println("sizeTraining : " + currentTrainings.size());
-        trainingRecyclerViewAdapter = new RvTrainingAdapter(getContext(), currentTrainings);
+        trainingRecyclerViewAdapter = new RvTrainingAdapter(getActivity(), currentTrainings);
         trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
         trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
         trainingRecyclerView.setNestedScrollingEnabled(false);
@@ -221,7 +220,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private void configureAndShowSizePoolDropdown() {
         dropdownPool = layoutInflater.findViewById(R.id.fragment_training_spinner_sizePool);
         dropdownPool.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.dropdown_item_auto);
         adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         dropdownPool.setAdapter(adapter);
         adapter.notifyDataSetChanged();

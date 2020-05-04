@@ -35,7 +35,7 @@ public class SwimCards {
         time50               = MarketTimes.fetchFloatToTime(best50.getTime());
         time100              = MarketTimes.fetchFloatToTime(best100.getTime());
         time200              = MarketTimes.fetchFloatToTime(best200.getTime());
-        colorText            = R.color.colorSecondary;
+        colorText            = R.color.colorSecondaryLight;
     }
 
     public void loadBackstroke(List<Race> allTimes, int poolSize) {

@@ -9,4 +9,4 @@
     android:fontFamily="sans-serif-light"
     android:gravity="center"
     android:paddingVertical="20dp"
-    android:background="?attr/backgroundDarkColor"/>
+    android:background="?attr/transparent"/>

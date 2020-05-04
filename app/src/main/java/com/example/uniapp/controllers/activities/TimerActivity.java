@@ -30,6 +30,7 @@ public class TimerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_timer);
 
         setupUIElements();

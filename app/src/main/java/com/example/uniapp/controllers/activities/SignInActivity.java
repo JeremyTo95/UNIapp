@@ -1,10 +1,8 @@
 package com.example.uniapp.controllers.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,21 +13,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.database.AppDataBase;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
 import com.example.uniapp.views.AboutScreen;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class SignInActivity extends AppCompatActivity {
     private User newUser;
@@ -67,12 +61,15 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setTheme((MainActivity.sharedPrefManager.loadThemeMode() == true) ? R.style.AppTheme : R.style.LightTheme);
+        setTheme(R.style.LightTheme);
+        AboutScreen.setupDefaultNightMode(this);
         setContentView(R.layout.activity_sign_in);
+
 
         setupUIElements();
         updateUIElements();
     }
-
 
     private void setupUIElements() {
         genderSpinner      = (Spinner)     findViewById(R.id.activity_sign_in_gender);
@@ -108,11 +105,15 @@ public class SignInActivity extends AppCompatActivity {
         key3      = "";
         key = key1 + "-" + key2 + "-" + key3;
 
-        ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.genders, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> genderDropdownAdapter;
+        if (AboutScreen.isNightMode(this)) genderDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.genders, R.layout.dropdown_item_dark);
+        else genderDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.genders, R.layout.dropdown_item_light);
         genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         genderSpinner.setAdapter(genderDropdownAdapter);
 
-        ArrayAdapter<CharSequence> speDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.swims, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> speDropdownAdapter;
+        if (AboutScreen.isNightMode(this)) speDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.swims, R.layout.dropdown_item_dark);
+        else speDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.swims, R.layout.dropdown_item_light);
         speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         speSpinner.setAdapter(speDropdownAdapter);
 

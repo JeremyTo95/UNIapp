@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.uniapp.controllers.activities.TimerActivity;
 import com.example.uniapp.controllers.activities.ConverterActivity;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.ChronometerActivity;
+import com.example.uniapp.views.AboutScreen;
 
 /*
 TODO: STATISTIC --> TOOLS
@@ -28,6 +30,10 @@ public class GadgetsFragment extends Fragment implements View.OnClickListener {
     private LinearLayout timer;
     private LinearLayout converter;
 
+    private ImageView chronoLogo;
+    private ImageView timerLogo;
+    private ImageView converterLogo;
+
     public GadgetsFragment() { }
 
 
@@ -41,9 +47,17 @@ public class GadgetsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setupUIElements() {
-        chronometer = layoutInflater.findViewById(R.id.fragment_gadget_chronometer);
-        timer       = layoutInflater.findViewById(R.id.fragment_gadget_timer);
-        converter   = layoutInflater.findViewById(R.id.fragment_gadget_converter);
+        chronometer   = layoutInflater.findViewById(R.id.fragment_gadget_chronometer);
+        timer         = layoutInflater.findViewById(R.id.fragment_gadget_timer);
+        converter     = layoutInflater.findViewById(R.id.fragment_gadget_converter);
+
+        chronoLogo    = layoutInflater.findViewById(R.id.fragment_tools_chrono_logo);
+        timerLogo     = layoutInflater.findViewById(R.id.fragment_tools_timer_logo);
+        converterLogo = layoutInflater.findViewById(R.id.fragment_tools_converter_logo);
+
+        chronoLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_timer_white_24dp : R.drawable.ic_timer_black_24dp));
+        timerLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_play_arrow_white_24dp : R.drawable.ic_play_arrow_black_24dp));
+        converterLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_sync_alt_white_24dp : R.drawable.ic_sync_alt_black_24dp));
         chronometer.setOnClickListener(this);
         timer.setOnClickListener(this);
         converter.setOnClickListener(this);

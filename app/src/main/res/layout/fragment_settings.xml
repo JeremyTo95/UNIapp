@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
+    android:background="?attr/backgroundColor"
     tools:context=".controllers.fragments.SettingsFragment">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="20dp"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:fontFamily="sans-serif-light"
         android:textSize="@dimen/h1_textsize"
         android:text="P A R A M E T R E S" />
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="M O N   P R O F I L"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textColor"
             android:gravity="center"
             android:textSize="@dimen/h3_textsize"
             android:layout_marginVertical="20dp"
@@ -48,7 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="P E R S O N N E L"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="?attr/secondaryColor"
                     android:textSize="@dimen/h3_textsize"
                     android:fontFamily="sans-serif-light"
                     android:layout_marginVertical="10dp"
@@ -65,17 +65,16 @@
                         android:text="G E N R E :"
                         android:textSize="@dimen/h4_textsize"
                         android:gravity="center"
-                        android:textColor="@color/colorText" />
+                        android:textColor="?attr/textColor" />
                     <Spinner
                         android:id="@+id/fragment_settings_gender"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/colorText"/>
+                        android:backgroundTint="?attr/textColor"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/fragment_settings_lastname"
@@ -85,16 +84,15 @@
                         android:hint="N O M"
                         android:textSize="@dimen/h4_textsize"
                         android:textAlignment="center"
-                        android:textColorHint="@color/colorText"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColorHint="?attr/hintColor"
+                        android:textColor="?attr/textColor"
+                        android:background="?attr/transparent"
                         android:gravity="center"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
                     <TextView
                         android:id="@+id/fragment_settings_firstname"
@@ -104,16 +102,15 @@
                         android:hint="P R E N O M"
                         android:textSize="@dimen/h4_textsize"
                         android:textAlignment="center"
-                        android:textColor="@color/colorText"
-                        android:textColorHint="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColor="?attr/textColor"
+                        android:textColorHint="?attr/hintColor"
+                        android:background="?attr/transparent"
                         android:gravity="center"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/fragment_settings_weight"
@@ -125,16 +122,15 @@
                         android:inputType="number"
                         android:textSize="@dimen/h4_textsize"
                         android:textAlignment="center"
-                        android:textColorHint="@color/colorText"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColorHint="?attr/hintColor"
+                        android:textColor="?attr/textColor"
+                        android:background="?attr/transparent"
                         android:gravity="center"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/fragment_settings_height"
@@ -143,19 +139,18 @@
                         android:layout_weight="1"
                         android:hint="T A I L L E (en cm)"
                         android:digits="0123456789"
-                        android:textColorHint="@color/colorText"
+                        android:textColorHint="?attr/hintColor"
                         android:inputType="number"
                         android:textSize="@dimen/h4_textsize"
                         android:textAlignment="center"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColor="?attr/textColor"
+                        android:background="?attr/transparent"
                         android:gravity="center"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/fragment_settings_birth"
@@ -165,12 +160,12 @@
                         android:hint="N E  L E  DD/MM/YYYY"
                         android:maxLength="10"
                         android:textAlignment="center"
-                        android:textColorHint="@color/colorText"
+                        android:textColorHint="?attr/hintColor"
                         android:digits="0123456789"
                         android:inputType="number"
                         android:textSize="@dimen/h4_textsize"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColor="?attr/textColor"
+                        android:background="?attr/transparent"
                         android:gravity="center"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
@@ -184,7 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="N A T A T I O N"
-                    android:textColor="@color/colorSecondaryLight"
+                    android:textColor="?attr/secondaryColor"
                     android:textSize="@dimen/h3_textsize"
                     android:fontFamily="sans-serif-light"
                     android:layout_marginVertical="10dp"
@@ -192,30 +187,28 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    android:layout_height="75dp"
+                    android:orientation="vertical"
+                    android:layout_margin="10dp">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="S P E C I A L I T E :"
                         android:textSize="@dimen/h4_textsize"
                         android:gravity="center"
-                        android:textColor="@color/colorText" />
+                        android:textColor="?attr/textColor" />
                     <Spinner
                         android:id="@+id/fragment_settings_spe"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:backgroundTint="@color/colorText"
+                        android:backgroundTint="?attr/textColor"
                         android:layout_weight="1" />
                 </LinearLayout>
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/fragment_settings_club"
@@ -224,18 +217,17 @@
                         android:layout_weight="1"
                         android:hint="C L U B"
                         android:inputType="textCapCharacters"
-                        android:textColorHint="@color/colorText"
+                        android:textColorHint="?attr/hintColor"
                         android:textSize="@dimen/h4_textsize"
                         android:textAlignment="center"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColor="?attr/textColor"
+                        android:background="?attr/transparent"
                         android:gravity="center"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal">
                     <EditText
                         android:id="@+id/fragment_settings_city"
@@ -246,9 +238,9 @@
                         android:textSize="@dimen/h4_textsize"
                         android:inputType="textCapCharacters"
                         android:textAlignment="center"
-                        android:textColor="@color/colorText"
-                        android:textColorHint="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColor="?attr/textColor"
+                        android:textColorHint="?attr/hintColor"
+                        android:background="?attr/transparent"
                         android:gravity="center"
                         tools:ignore="RtlCompat" />
                 </LinearLayout>
@@ -265,11 +257,11 @@
                 android:layout_height="wrap_content"
                 android:text="Mettre à jour"
                 android:tag="updateBtn"
-                android:textColor="@color/colorText"
+                android:textColor="?attr/textColor"
                 android:paddingHorizontal="20dp"
                 android:layout_marginVertical="10dp"
                 android:gravity="center"
-                android:background="@color/transparent"/>
+                android:background="?attr/transparent"/>
         </LinearLayout>
     </LinearLayout>
     <View
@@ -283,24 +275,24 @@
         android:orientation="vertical" >
         <Button
             android:id="@+id/fragment_settings_races"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:tag="importDataRaceBtn"
             android:background="@drawable/sh_button"
             android:text="Importer Temps Compétitions"
             android:textSize="@dimen/h4_textsize"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textButtonColor"
             android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp" />
         <Button
             android:id="@+id/fragment_settings_save_data"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:background="@drawable/sh_button"
-            android:tag="saveData"
-            android:text="Sauver les données"
+            android:tag="themeManagement"
+            android:text="Changer le thème"
             android:textSize="@dimen/h4_textsize"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textButtonColor"
             android:layout_marginVertical="10dp"
             android:paddingHorizontal="20dp" />
     </LinearLayout>

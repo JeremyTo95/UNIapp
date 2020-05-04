@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="I N F O R M A T I O N S"
         android:fontFamily="sans-serif-light"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:textAlignment="center"
         android:textSize="@dimen/h2_textsize"
         android:padding="20dp"
@@ -37,7 +37,7 @@
                 android:layout_height="40dp"
                 android:text="A j o u t e r  N o u v e l l e   C o u r s e"
                 android:textSize="@dimen/h4_textsize"
-                android:textColor="@color/colorText"
+                android:textColor="?attr/textColor"
                 android:textAlignment="center"
                 android:gravity="center_horizontal" />
 
@@ -47,7 +47,7 @@
                 android:layout_height="40dp"
                 android:text="Bassin 25m : 50m crawl"
                 android:textSize="@dimen/h4_textsize"
-                android:textColor="@color/colorText"
+                android:textColor="?attr/textColor"
                 android:textAlignment="center"
                 android:gravity="center_horizontal" />
         </LinearLayout>
@@ -70,7 +70,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="Date : "
-                    android:textColor="@color/colorText"
+                    android:textColor="?attr/textColor"
                     android:textAlignment="center"
                     android:gravity="center"
                     android:textSize="@dimen/h4_textsize" />
@@ -86,8 +86,9 @@
                     android:digits="0123456789"
                     android:maxLength="10"
                     android:textSize="@dimen/h4_textsize"
-                    android:background="@color/colorBackground"
-                    android:textColor="@color/colorText" />
+                    android:textColorHint="?attr/hintColor"
+                    android:background="?attr/transparent"
+                    android:textColor="?attr/textColor" />
             </LinearLayout>
 
             <LinearLayout
@@ -102,7 +103,7 @@
                     android:layout_weight="1"
                     android:text="Ville : "
                     android:textAlignment="center"
-                    android:textColor="@color/colorText"
+                    android:textColor="?attr/textColor"
                     android:gravity="center"
                     android:textSize="@dimen/custom_popup_textsize" />
                 <EditText
@@ -114,8 +115,9 @@
                     android:hint="VILLE"
                     android:inputType="textCapCharacters"
                     android:textSize="@dimen/custom_popup_textsize"
-                    android:background="@color/colorBackground"
-                    android:textColor="@color/colorText" />
+                    android:textColorHint="?attr/hintColor"
+                    android:background="?attr/transparent"
+                    android:textColor="?attr/textColor" />
 
             </LinearLayout>
         </LinearLayout>
@@ -132,7 +134,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="Chrono : "
-                android:textColor="@color/colorText"
+                android:textColor="?attr/textColor"
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textSize="@dimen/custom_popup_textsize" />
@@ -149,8 +151,9 @@
                 android:maxLength="8"
                 android:textSize="@dimen/custom_popup_textsize"
                 android:textAlignment="center"
-                android:background="@color/colorBackground"
-                android:textColor="@color/colorText" />
+                android:textColorHint="?attr/hintColor"
+                android:background="?attr/transparent"
+                android:textColor="?attr/textColor" />
 
         </LinearLayout>
 
@@ -172,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:text="Niveau : "
                     android:textAlignment="center"
-                    android:textColor="@color/colorText"
+                    android:textColor="?attr/textColor"
                     android:gravity="center"
                     android:textSize="@dimen/custom_popup_textsize" />
 
@@ -186,8 +189,8 @@
                     android:inputType="textCapCharacters"
                     android:textSize="@dimen/custom_popup_textsize"
                     android:textAlignment="center"
-                    android:backgroundTint="@color/colorText"
-                    android:textColor="@color/colorText" />
+                    android:backgroundTint="?attr/textColor"
+                    android:textColor="?attr/textColor" />
             </LinearLayout>
 
             <LinearLayout
@@ -200,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:text="Pays : "
                     android:textAlignment="center"
-                    android:textColor="@color/colorText"
+                    android:textColor="?attr/textColor"
                     android:gravity="center"
                     android:textSize="@dimen/custom_popup_textsize" />
 
@@ -214,8 +217,9 @@
                     android:inputType="textCapCharacters"
                     android:textAlignment="center"
                     android:textSize="@dimen/custom_popup_textsize"
-                    android:background="@color/colorBackground"
-                    android:textColor="@color/colorText" />
+                    android:hint="?attr/hintColor"
+                    android:background="?attr/transparent"
+                    android:textColor="?attr/textColor" />
             </LinearLayout>
         </LinearLayout>
 
@@ -234,8 +238,8 @@
                 android:text="A N N U L E R"
                 android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/custom_popup_textsize"
-                android:textColor="@color/redLight"
-                android:background="@color/transparent" />
+                android:textColor="?attr/redLightColor"
+                android:background="?attr/transparent" />
 
             <Button
                 android:id="@+id/fragment_competition_add_race_popup_confirmed"
@@ -245,8 +249,8 @@
                 android:text="C O N F I R M E R"
                 android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/custom_popup_textsize"
-                android:textColor="@color/blueLight"
-                android:background="@color/transparent" />
+                android:textColor="?attr/blueLightColor"
+                android:background="?attr/transparent" />
 
         </LinearLayout>
     </LinearLayout>

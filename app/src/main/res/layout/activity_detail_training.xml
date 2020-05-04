@@ -195,11 +195,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-    <Button
-        android:id="@+id/popup_training_detail_update_button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="V a l i d é"
-        android:background="?attr/blueLightColor"
-        android:textColor="?attr/textButtonColor"/>
 </LinearLayout>

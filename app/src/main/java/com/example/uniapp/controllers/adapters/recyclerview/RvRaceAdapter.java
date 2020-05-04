@@ -1,5 +1,6 @@
 package com.example.uniapp.controllers.adapters.recyclerview;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
@@ -19,9 +21,14 @@ import java.util.List;
 
 public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHolder> {
     private List<Race> races;
+    private Activity activity;
     private Context context;
 
-    public RvRaceAdapter(Context context, List<Race> races) { this.context = context; this.races = races; }
+    public RvRaceAdapter(Activity activity, Context context, List<Race> races) {
+        this.activity = activity;
+        this.context = context;
+        this.races = races;
+    }
 
     @NonNull
     @Override
@@ -47,7 +54,7 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CompetitionDetailPopup competitionDetailPopup = new CompetitionDetailPopup(context, races.subList(position, races.size()), race);
+                CompetitionDetailPopup competitionDetailPopup = new CompetitionDetailPopup(activity, races.subList(position, races.size()), race);
                 competitionDetailPopup.build();
             }
         });
@@ -82,7 +89,7 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
             city.setText(String.valueOf(race.getCity()) + "\nNiveau : " + race.getLevel());
             date.setText("Le " + String.valueOf(race.getDate()));
             time.setText(String.valueOf(MarketTimes.fetchFloatToTime(race.getTime())));
-            time.setTextColor(itemView.getResources().getColor(Race.getCurrentColor(race.getSwim())));
+            time.setTextColor(Race.getCurrentColor(context, race.getSwim()));
 
             diff.setText(MarketTimes.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
             diff.setTextColor(itemView.getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));

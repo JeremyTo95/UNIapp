@@ -8,7 +8,7 @@
     android:id="@+id/popup_timer_background"
     android:tag="startstop"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
+    android:background="?attr/backgroundColor"
     tools:context=".views.popup.TimerPopup">
 
     <TextView
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-light"
         android:text="S E T S  :  0 / 5"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:textSize="@dimen/h1_textsize"
         app:layout_constraintBottom_toTopOf="@+id/popup_timer_timer"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +31,7 @@
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:text="00:00"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:textSize="150dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-thin"
         android:text="S T A R T I N G"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:textSize="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

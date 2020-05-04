@@ -3,10 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textColor="@color/colorText"
+    android:textColor="?attr/textColor"
     android:textAlignment="center"
     android:textSize="@dimen/h2_textsize"
     android:fontFamily="sans-serif-light"
     android:gravity="center"
     android:paddingVertical="20dp"
-    android:background="@color/blackDeep"/>
+    android:background="?attr/backgroundDarkColor"/>

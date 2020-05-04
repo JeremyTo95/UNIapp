@@ -21,17 +21,12 @@ import android.widget.GridLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.LiveData;
-
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 import com.example.uniapp.views.AboutScreen;
-
-import org.json.JSONException;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -109,16 +104,17 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         };
         btn_difficulty_stars = new ArrayList<Button>();
         for (int i = 0; i < idButtons.length; i++) btn_difficulty_stars.add((Button) findViewById(idButtons[i]));
-        btn_difficulty_stars.get(0).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+        updateDifficulty();
+        //btn_difficulty_stars.get(0).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
         for (int i = 0; i < 5; i++) btn_difficulty_stars.get(i).setOnClickListener(this);
         addBlock.setOnClickListener(this);
         addBlock.setEnabled(false);
         btn_denied.setOnClickListener(this);
         btn_confirmed.setOnClickListener(this);
 
-        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item);
-        ArrayAdapter<CharSequence> swimDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
-        ArrayAdapter<CharSequence> zoneDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item_auto);
+        ArrayAdapter<CharSequence> swimDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item_auto);
+        ArrayAdapter<CharSequence> zoneDropdownAdapter  = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item_auto);
         levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         swimDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         zoneDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
@@ -152,8 +148,13 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     }
 
     private void updateDifficulty() {
-        for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
-        for (int i = 0; i < newDifficulty; i++)               btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+        if (AboutScreen.isNightMode(activity)) {
+            for (int i = 0; i < newDifficulty; i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+            for (int i = newDifficulty; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
+        } else {
+            for (int i = 0; i < newDifficulty; i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
+            for (int i = newDifficulty; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_unchecked_black_24dp), null, null, null);
+        }
     }
 
     private void  updateInputDateFormatEditText() {
@@ -209,7 +210,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
 
     private void configureAndShowSizePoolDropdown() {
         sizePoolDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.sizePool, R.layout.dropdown_item_auto);
         adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         sizePoolDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -253,7 +254,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
 
     private void configureAndShowSwimDropdown() {
         swimDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item_auto);
         adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         swimDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -261,7 +262,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
 
     private void configureAndShowZoneDropdown() {
         zoneDropdown.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.zones, R.layout.dropdown_item_auto);
         adapter.setDropDownViewResource(R.layout.dropdown_all_items);
         zoneDropdown.setAdapter(adapter);
         adapter.notifyDataSetChanged();

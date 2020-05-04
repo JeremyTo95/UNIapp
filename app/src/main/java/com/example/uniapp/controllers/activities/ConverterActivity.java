@@ -2,12 +2,10 @@ package com.example.uniapp.controllers.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -37,6 +35,7 @@ public class ConverterActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_converter);
         // this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
@@ -54,7 +53,9 @@ public class ConverterActivity extends AppCompatActivity implements View.OnClick
         inputTimeET.setOnClickListener(this);
         updateInputTime();
 
-        ArrayAdapter<CharSequence> zoneSelectedAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.zones, R.layout.dropdown_big_item);
+        ArrayAdapter<CharSequence> zoneSelectedAdapter;
+        if (AboutScreen.isNightMode(this)) zoneSelectedAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.zones, R.layout.dropdown_big_item_dark);
+        else zoneSelectedAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.zones, R.layout.dropdown_big_item_light);
         zoneSelectedAdapter.setDropDownViewResource(R.layout.dropdown_all_big_items);
         zoneSelected.setAdapter(zoneSelectedAdapter);
 

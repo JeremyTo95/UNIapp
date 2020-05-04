@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.models.database.dao.race.Race;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -63,11 +62,9 @@ public class AddRacePopup extends Dialog {
         countryEditText        = (EditText) findViewById(R.id.race_popup_edit_text_country);
         deniedButton           = (Button)   findViewById(R.id.fragment_competition_add_race_popup_denied);
         confirmedButton        = (Button)   findViewById(R.id.fragment_competition_add_race_popup_confirmed);
-        confirmedButton.setTextColor(activity.getResources().getColor(R.color.colorText));
-
         dateEditText.setText(date);
 
-        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_item_auto);
         levelDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         selectLevelCompetition.setAdapter(levelDropdownAdapter);
 

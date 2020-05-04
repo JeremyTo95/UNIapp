@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorBackground"
+    android:background="?attr/backgroundColor"
     tools:context=".controllers.fragments.MainFragment">
 
     <LinearLayout
@@ -15,12 +15,15 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ImageView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_uni_app_white_24dp" />
+            android:text="U N I  a p p"
+            android:textSize="@dimen/h1_textsize"
+            android:gravity="center"
+            android:textColor="?attr/textColor"
+            android:fontFamily="sans-serif-light" />
 
         <ImageView
             android:layout_width="300dp"
@@ -42,7 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:text="B i e n v e n u e"
-                android:textColor="@color/colorSecondaryLight"
+                android:textColor="?attr/secondaryColor"
                 android:textSize="30sp"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center" />

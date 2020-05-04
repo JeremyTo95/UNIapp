@@ -10,7 +10,7 @@
         android:id="@+id/fragment_training_difficulty_star_1"
         android:layout_width="@dimen/rv_training_star_size"
         android:layout_height="@dimen/rv_training_star_size"
-        android:background="@color/transparent"
+        android:background="?attr/transparent"
         android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
         android:gravity="center"
         android:tag="difficulty_1" />
@@ -19,7 +19,7 @@
         android:id="@+id/fragment_training_difficulty_star_2"
         android:layout_width="@dimen/rv_training_star_size"
         android:layout_height="@dimen/rv_training_star_size"
-        android:background="@color/transparent"
+        android:background="?attr/transparent"
         android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
         android:gravity="center"
         android:tag="difficulty_2" />
@@ -28,7 +28,7 @@
         android:id="@+id/fragment_training_difficulty_star_3"
         android:layout_width="@dimen/rv_training_star_size"
         android:layout_height="@dimen/rv_training_star_size"
-        android:background="@color/transparent"
+        android:background="?attr/transparent"
         android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
         android:gravity="center"
         android:tag="difficulty_3" />
@@ -37,7 +37,7 @@
         android:id="@+id/fragment_training_difficulty_star_4"
         android:layout_width="@dimen/rv_training_star_size"
         android:layout_height="@dimen/rv_training_star_size"
-        android:background="@color/transparent"
+        android:background="?attr/transparent"
         android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
         android:gravity="center"
         android:tag="difficulty_4" />
@@ -46,7 +46,7 @@
         android:id="@+id/fragment_training_difficulty_star_5"
         android:layout_width="@dimen/rv_training_star_size"
         android:layout_height="@dimen/rv_training_star_size"
-        android:background="@color/transparent"
+        android:background="?attr/transparent"
         android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
         android:gravity="center"
         android:tag="difficulty_5" />

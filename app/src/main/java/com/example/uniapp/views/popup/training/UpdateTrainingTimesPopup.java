@@ -1,5 +1,6 @@
 package com.example.uniapp.views.popup.training;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,7 @@ import java.util.Arrays;
 import static android.view.View.*;
 
 public class UpdateTrainingTimesPopup extends Dialog {
+    private Activity activity;
     private Training training;
     private int position;
     private Float timeRef;
@@ -39,8 +42,9 @@ public class UpdateTrainingTimesPopup extends Dialog {
     private Button denied;
     private Button confirmed;
 
-    public UpdateTrainingTimesPopup(@NonNull Context context, Training training, int position, Float timeRef) {
-        super(context);
+    public UpdateTrainingTimesPopup(Activity activity, Training training, int position, Float timeRef) {
+        super(activity, R.style.Theme_AppCompat_Dialog);
+        this.activity = activity;
         this.training = training;
         this.position = position;
         this.timeRef = timeRef;
@@ -74,7 +78,7 @@ public class UpdateTrainingTimesPopup extends Dialog {
     public void build() {
         show();
         Window window = getWindow();
-        if (window != null) window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        if (window != null) window.setLayout((int) (AboutScreen.getWidth(activity) * 0.95), (int) (AboutScreen.getHeight(activity) * 0.95));
     }
 
 

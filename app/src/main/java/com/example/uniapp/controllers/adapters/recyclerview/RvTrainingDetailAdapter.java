@@ -1,7 +1,7 @@
 package com.example.uniapp.controllers.adapters.recyclerview;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.controllers.activities.DetailTrainingActivity;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.MarketRaces;
 import com.example.uniapp.models.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
+import com.example.uniapp.views.AboutScreen;
 import com.example.uniapp.views.popup.training.TrainingDetailPopup;
 import com.example.uniapp.views.popup.training.UpdateTrainingTimesPopup;
 import com.github.mikephil.charting.animation.Easing;
@@ -32,12 +34,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDetailAdapter.MyViewHolder> {
-    private Context context;
+    private Activity activity;
     private Training training;
     private int sizePool;
 
-    public RvTrainingDetailAdapter(Context context, Training training) {
-        this.context  = context;
+    public RvTrainingDetailAdapter(Activity activity, Training training) {
+        this.activity  = activity;
         this.training = training;
         sizePool      = training.getSizePool();
     }
@@ -45,7 +47,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.rv_training_detail_items, parent, false);
 
         return new MyViewHolder(view);
@@ -88,10 +90,15 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
             serieSubtitle.setText(trainingBlock.getNbSet() + " x " + trainingBlock.getDistance() + Race.convertShortSwim(trainingBlock.getSwim()));
             serieZone.setText("Z O N E  " + trainingBlock.getZone());
             updateGraphicsElements(indexSerie);
+            if (AboutScreen.isNightMode(activity))
+                updateBtn.setCompoundDrawablesWithIntrinsicBounds(activity.getResources().getDrawable(R.drawable.ic_create_white_24dp), null, null, null);
+            else {
+                updateBtn.setCompoundDrawablesWithIntrinsicBounds(activity.getResources().getDrawable(R.drawable.ic_create_black_24dp), null, null, null);
+            }
             updateBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UpdateTrainingTimesPopup updateTrainingTimesPopup = new UpdateTrainingTimesPopup(context, training, indexSerie, timeReference);
+                    UpdateTrainingTimesPopup updateTrainingTimesPopup = new UpdateTrainingTimesPopup(activity, training, indexSerie, timeReference);
                     updateTrainingTimesPopup.build();
                     updateTrainingTimesPopup.getConfirmed().setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -100,7 +107,6 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
                             training.setTrainingBlockList(updateTrainingTimesPopup.getTrainingBlockArrayList());
                             updateTrainingTimesPopup.dismiss();
                             updateGraphicsElements(indexSerie);
-                            TrainingDetailPopup.updateBtn.setVisibility(View.VISIBLE);
                             MainActivity.appDataBase.trainingDAO().updateTraining(training);
                         }
                     });
@@ -153,7 +159,7 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
             lineChart.setTouchEnabled(false);
             lineChart.setHighlightPerDragEnabled(true);
             lineChart.setTouchEnabled(false);
-            lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.colorText));
+            lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.textColorDark));
             lineChart.notifyDataSetChanged();
         }
 

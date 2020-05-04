@@ -1,6 +1,8 @@
 package com.example.uniapp.models.database.dao.race;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.room.PrimaryKey;
 import com.example.uniapp.R;
 import com.example.uniapp.models.database.dao.user.User;
 import com.example.uniapp.utils.ImportRacesTask;
+import com.example.uniapp.views.AboutScreen;
 
 import java.io.Serializable;
 
@@ -101,18 +104,18 @@ public class Race implements Serializable {
         else return "JSP";
     }
 
-    public static int getCurrentColor(String swim) {
+    public static int getCurrentColor(Context context, String swim) {
         switch (swim) {
             case "butterfly":
-                return R.color.colorSecondaryLight;
+                return AboutScreen.getColorByThemeAttr(context, R.attr.secondaryColor, R.color.colorSecondaryLight);
             case "backstroke":
-                return R.color.greenLight;
+                return AboutScreen.getColorByThemeAttr(context, R.attr.greenLightColor, R.color.greenLight);
             case "breaststroke":
-                return R.color.orangeLight;
+                return AboutScreen.getColorByThemeAttr(context, R.attr.orangeLightColor, R.color.orangeLight);
             case "freestyle":
-                return R.color.redLight;
+                return AboutScreen.getColorByThemeAttr(context, R.attr.redLightColor, R.color.redLight);
             case "IM":
-                return R.color.blueLight;
+                return AboutScreen.getColorByThemeAttr(context, R.attr.blueLightColor, R.color.blueLight);
             default:
                 return -1;
         }

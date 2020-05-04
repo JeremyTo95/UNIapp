@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="bottom"
-    android:background="@color/colorBackground"
+    android:background="?attr/backgroundColor"
     tools:context=".controllers.activities.MainActivity">
 
     <FrameLayout
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="C H A R G E M E N T   D E S   D O N N E E S"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textColor"
             android:textSize="@dimen/h4_textsize"
             android:gravity="center" />
     </LinearLayout>

@@ -1,8 +1,11 @@
 package com.example.uniapp.controllers.fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
@@ -24,6 +27,7 @@ import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
+import com.example.uniapp.views.AboutScreen;
 
 
 public class SettingsFragment extends Fragment implements View.OnClickListener {
@@ -88,11 +92,16 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         city      = cityEditText.getText().toString();
         spe       = "butterfly";
 
-        ArrayAdapter<CharSequence> genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item);
+
+        ArrayAdapter<CharSequence> genderDropdownAdapter;
+        if (AboutScreen.isNightMode(getActivity())) genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item_dark);
+        else genderDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item_light);
         genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         genderSpinner.setAdapter(genderDropdownAdapter);
 
-        ArrayAdapter<CharSequence> speDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item);
+        ArrayAdapter<CharSequence> speDropdownAdapter;
+        if (AboutScreen.isNightMode(getActivity())) speDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item_dark);
+        else speDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item_light);
         speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         speSpinner.setAdapter(speDropdownAdapter);
 
@@ -145,7 +154,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
              hideKeybaord(v);
          }
         else if (v.getTag().equals("importDataRaceBtn")) importDataRaces();
-        else if (v.getTag().equals("saveData"))          saveData();
+        else if (v.getTag().equals("themeManagement"))          manageTheme();
     }
 
     private void setupUpdateUser() {
@@ -177,8 +186,21 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         Toast.makeText(getContext(), "Actualisation des temps...", Toast.LENGTH_SHORT).show();
     }
 
-    private void saveData() {
-        Toast.makeText(getContext(),  "Encore en développement", Toast.LENGTH_SHORT).show();
+    private void manageTheme() {
+        if (MainActivity.sharedPrefManager.loadThemeMode() == 0)
+            Toast.makeText(getContext(),  "Dark Mode Activé", Toast.LENGTH_SHORT).show();
+        else if (MainActivity.sharedPrefManager.loadThemeMode() == 1)
+            Toast.makeText(getContext(),  "Light Mode Activé", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getContext(),  "Automatique Mode Activé", Toast.LENGTH_SHORT).show();
+        MainActivity.sharedPrefManager.savedThemeMode((MainActivity.sharedPrefManager.loadThemeMode()+1)%3);
+        restartApp();
+    }
+
+    private void restartApp() {
+        Intent i = new Intent(getContext(), MainActivity.class);
+        startActivity(i);
+        getActivity().finish();
     }
 
     private void updateBirth() {

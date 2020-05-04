@@ -23,7 +23,7 @@
             android:textSize="@dimen/h4_textsize"
             android:gravity="center_vertical"
             android:fontFamily="sans-serif-light"
-            android:textColor="@color/colorText" />
+            android:textColor="?attr/textColor" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                android:background="@color/transparent"
+                android:background="?attr/transparent"
                 android:gravity="center" />
 
             <Button
@@ -45,7 +45,7 @@
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                android:background="@color/transparent"
+                android:background="?attr/transparent"
                 android:gravity="center" />
 
             <Button
@@ -53,7 +53,7 @@
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                android:background="@color/transparent"
+                android:background="?attr/transparent"
                 android:gravity="center" />
 
             <Button
@@ -61,7 +61,7 @@
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                android:background="@color/transparent"
+                android:background="?attr/transparent"
                 android:gravity="center" />
 
             <Button
@@ -69,7 +69,7 @@
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
-                android:background="@color/transparent"
+                android:background="?attr/transparent"
                 android:gravity="center" />
         </LinearLayout>
     </LinearLayout>
@@ -96,7 +96,7 @@
                 android:gravity="top"
                 android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/h3_textsize"
-                android:textColor="@color/colorSecondaryLight" />
+                android:textColor="?attr/secondaryColor" />
             <TextView
                 android:id="@+id/rv_training_items_serie_content"
                 android:layout_width="match_parent"
@@ -105,7 +105,7 @@
                 android:textSize="@dimen/h4_textsize"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center_vertical"
-                android:textColor="@color/colorText" />
+                android:textColor="?attr/textColor" />
         </LinearLayout>
 
         <LinearLayout

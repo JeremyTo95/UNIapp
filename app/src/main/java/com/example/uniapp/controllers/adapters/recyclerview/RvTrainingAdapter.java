@@ -1,6 +1,7 @@
 package com.example.uniapp.controllers.adapters.recyclerview;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.uniapp.controllers.activities.DetailTrainingActivity;
 import com.example.uniapp.R;
 //import com.example.uniapp.controllers.activities.DetailTrainingActivity;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
-import com.example.uniapp.views.popup.training.TrainingDetailPopup;
+import com.example.uniapp.views.AboutScreen;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -22,14 +24,15 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.MyViewHolder> {
-    private Context context;
+    private Activity activity;
     private List<Training> allTrainings;
 
-    public RvTrainingAdapter(Context context, List<Training> allTrainings) { this.context = context; this.allTrainings = allTrainings; }
+    public RvTrainingAdapter(Activity activity, List<Training> allTrainings) { this.activity = activity; this.allTrainings = allTrainings; }
 
     @NonNull
     @Override
@@ -48,7 +51,7 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(context, training);
+                /*TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(activity, training);
                 trainingDetailPopup.build();
                 trainingDetailPopup.getUpdateBtn().setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -56,10 +59,10 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
                         holder.configureAndShowLineChart(holder.lineChart, true);
                         trainingDetailPopup.dismiss();
                     }
-                });
-                /*Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
+                });*/
+                Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
                 intent.putExtra("EXTRA_TRAINING_SELECTED", (Serializable) training);
-                v.getContext().startActivity(intent);*/
+                v.getContext().startActivity(intent);
             }
         });
     }
@@ -104,8 +107,13 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
             serie_content.setText(text);
 
             for (int i = 0; i < stars.size(); i++) stars.get(i).setClickable(false);
-            for (int i = 0; i < training.getDifficulty(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(this.itemView.getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
-
+            if (AboutScreen.isNightMode(activity)) {
+                for (int i = 0; i < stars.size(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(itemView.getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
+                for (int i = 0; i < training.getDifficulty(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(itemView.getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+            } else {
+                for (int i = 0; i < stars.size(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(itemView.getResources().getDrawable(R.drawable.ic_radio_button_unchecked_black_24dp), null, null, null);
+                for (int i = 0; i < training.getDifficulty(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(itemView.getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
+            }
             configureAndShowLineChart(lineChart, true);
         }
 
@@ -166,7 +174,7 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
             lineChart.getAxisRight().setEnabled(false);
             lineChart.getXAxis().setEnabled(false);
             lineChart.setTouchEnabled(false);
-            lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.colorText));
+            lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.textColorDark));
         }
     }
 }

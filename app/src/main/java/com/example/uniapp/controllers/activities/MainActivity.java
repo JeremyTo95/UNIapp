@@ -2,9 +2,11 @@ package com.example.uniapp.controllers.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +22,7 @@ import com.example.uniapp.controllers.fragments.SettingsFragment;
 import com.example.uniapp.controllers.fragments.GadgetsFragment;
 import com.example.uniapp.controllers.fragments.TrainingsFragment;
 import com.example.uniapp.models.database.AppDataBase;
+import com.example.uniapp.models.database.SharedPrefManager;
 import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.user.User;
@@ -34,6 +37,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private LinearLayout linearLayoutLoading;
     public static AppDataBase appDataBase;
+    public static SharedPrefManager sharedPrefManager;
 
     private BottomNavigationView bottomNavigationView;
     private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         appDataBase          = AppDataBase.getDatabase(getApplicationContext());
+        sharedPrefManager    = new SharedPrefManager(getApplicationContext());
+        AboutScreen.setupThemeApp(this);
+        setContentView(R.layout.activity_main);
         linearLayoutLoading  = findViewById(R.id.glb_loading);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
         bottomNavigationView.setSelectedItemId(R.id.navbar_custom_home_btn);
@@ -76,12 +82,10 @@ public class MainActivity extends AppCompatActivity {
         } */
 
         if (getIntent().getSerializableExtra("EXTRA_NEW_USER") != null) {
-            Log.e("HERE", "HERE");
             appDataBase.userDAO().deleteAll();
             prepopulateUsersInDataBase();
             User newUser = (User) getIntent().getSerializableExtra("EXTRA_NEW_USER");
             if (appDataBase.userDAO().checkUserByKey(newUser.getFirstname(), newUser.getLastname(), newUser.getMykey()) == 0) {
-                Log.e("RETURN", "Return to SignIn menu");
                 goSignInUser();
             } else {
                 Log.e("OK", "User authentified");
@@ -91,11 +95,6 @@ public class MainActivity extends AppCompatActivity {
                 if (appDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(this, newUser);
                 if (appDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(this, linearLayoutLoading, bottomNavigationView, onNavigationItemSelectedListener);
                 else unlockUI();
-
-                System.out.println("nbUsers     : " + appDataBase.userDAO().getNb());
-                System.out.println("nbRaces     : " + appDataBase.raceDAO().getNb());
-                System.out.println("nbTrainings : " + appDataBase.trainingDAO().getNb());
-                System.out.println("nbPointsFFN : " + appDataBase.pointFFNDAO().getNb());
             }
         }
 

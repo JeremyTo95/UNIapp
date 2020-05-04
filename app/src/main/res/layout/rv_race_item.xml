@@ -24,7 +24,7 @@
             android:fontFamily="sans-serif-light"
             android:textAlignment="center"
             android:textSize="@dimen/rv_race_item_textsize"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textColor"
             tools:ignore="RtlCompat" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:textAlignment="center"
             android:text="Le 20-01-2020"
             android:fontFamily="sans-serif-light"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textColor"
             android:gravity="center_horizontal" />
     </LinearLayout>
 
@@ -52,7 +52,7 @@
             android:textSize="25dp"
             android:gravity="center"
             android:layout_gravity="top"
-            android:textColor="@color/colorSecondaryLight"
+            android:textColor="?attr/secondaryColor"
             tools:ignore="Suspicious0dp" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textColor="@color/colorText"
+            android:textColor="?attr/textColor"
             android:text="+0.11s"
             android:fontFamily="sans-serif-light"
             android:gravity="center" />

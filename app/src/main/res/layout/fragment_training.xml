@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="?attr/backgroundColor"
     tools:context=".controllers.fragments.TrainingsFragment">
 
     <LinearLayout
@@ -17,7 +17,7 @@
             android:id="@+id/fragment_training_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorBackground"
+            android:background="?attr/backgroundColor"
             android:fitsSystemWindows="true"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
 
@@ -30,7 +30,7 @@
                 android:padding="20dp"
                 android:text="E N T R A I N E M E N T S"
                 android:textAlignment="center"
-                android:textColor="@color/colorSecondaryLight"
+                android:textColor="?attr/secondaryColor"
                 android:textSize="@dimen/h1_textsize"
                 app:layout_scrollFlags="scroll|enterAlwaysCollapsed" />
 
@@ -46,17 +46,16 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="15dp"
                     android:orientation="horizontal">
-
                     <Spinner
                         android:id="@+id/fragment_training_spinner_sizePool"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorText"
+                        android:backgroundTint="?attr/textColor"
                         android:fontFamily="sans-serif"
                         android:gravity="end"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/colorText" />
+                        android:textColor="?attr/textColor" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -70,7 +69,7 @@
                             android:id="@+id/fragment_training_difficulty_star_1"
                             android:layout_width="@dimen/rv_training_star_size"
                             android:layout_height="@dimen/rv_training_star_size"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                             android:gravity="center"
                             android:tag="difficulty_1" />
@@ -79,7 +78,7 @@
                             android:id="@+id/fragment_training_difficulty_star_2"
                             android:layout_width="@dimen/rv_training_star_size"
                             android:layout_height="@dimen/rv_training_star_size"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                             android:gravity="center"
                             android:tag="difficulty_2" />
@@ -88,7 +87,7 @@
                             android:id="@+id/fragment_training_difficulty_star_3"
                             android:layout_width="@dimen/rv_training_star_size"
                             android:layout_height="@dimen/rv_training_star_size"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                             android:gravity="center"
                             android:tag="difficulty_3" />
@@ -97,7 +96,7 @@
                             android:id="@+id/fragment_training_difficulty_star_4"
                             android:layout_width="@dimen/rv_training_star_size"
                             android:layout_height="@dimen/rv_training_star_size"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                             android:gravity="center"
                             android:tag="difficulty_4" />
@@ -106,7 +105,7 @@
                             android:id="@+id/fragment_training_difficulty_star_5"
                             android:layout_width="@dimen/rv_training_star_size"
                             android:layout_height="@dimen/rv_training_star_size"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                             android:gravity="center"
                             android:tag="difficulty_5" />
@@ -117,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="75dp"
                     android:fadeScrollbars="false"
+                    android:scrollbarThumbHorizontal="?attr/hintColor"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -129,66 +129,66 @@
                             android:id="@+id/fragment_training_all"
                             android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:fontFamily="sans-serif-light"
                             android:tag="all"
                             android:text="Tous"
-                            android:textColor="@color/colorText"
+                            android:textColor="?attr/textColor"
                             android:textSize="@dimen/h4_textsize" />
 
                         <Button
                             android:id="@+id/fragment_training_butterfly"
                             android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:fontFamily="sans-serif-light"
                             android:tag="butterfly"
                             android:text="Papillon"
-                            android:textColor="@color/colorText"
+                            android:textColor="?attr/textColor"
                             android:textSize="@dimen/h4_textsize" />
 
                         <Button
                             android:id="@+id/fragment_training_backstroke"
                             android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:fontFamily="sans-serif-light"
                             android:tag="backstroke"
                             android:text="Dos"
-                            android:textColor="@color/colorText"
+                            android:textColor="?attr/textColor"
                             android:textSize="@dimen/h4_textsize" />
 
                         <Button
                             android:id="@+id/fragment_training_breaststroke"
                             android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:fontFamily="sans-serif-light"
                             android:tag="breaststroke"
                             android:text="Brasse"
-                            android:textColor="@color/colorText"
+                            android:textColor="?attr/textColor"
                             android:textSize="@dimen/h4_textsize" />
 
                         <Button
                             android:id="@+id/fragment_training_freestyle"
                             android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:fontFamily="sans-serif-light"
                             android:tag="freestyle"
                             android:text="Nage Libre"
-                            android:textColor="@color/colorText"
+                            android:textColor="?attr/textColor"
                             android:textSize="@dimen/h4_textsize" />
 
                         <Button
                             android:id="@+id/fragment_training_IM"
                             android:layout_width="125dp"
                             android:layout_height="match_parent"
-                            android:background="@color/transparent"
+                            android:background="?attr/transparent"
                             android:fontFamily="sans-serif-light"
                             android:tag="IM"
                             android:text="4 Nages"
-                            android:textColor="@color/colorText"
+                            android:textColor="?attr/textColor"
                             android:textSize="@dimen/h4_textsize" />
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -215,8 +215,8 @@
         app:fabSize="auto"
         android:tag="addTraining"
         app:borderWidth="0dp"
-        android:tint="@color/colorText"
-        android:backgroundTint="@color/colorSecondary"
+        android:tint="?attr/textButtonColor"
+        android:backgroundTint="?attr/blueLightColor"
         android:layout_margin="16dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

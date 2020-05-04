@@ -1,10 +1,67 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorBackground</item>
-        <item name="colorPrimaryDark">@color/colorBackground</item>
+        <item name="colorPrimary">@color/backgroundColorDark</item>
+        <item name="colorPrimaryDark">@color/backgroundColorDark</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/backgroundColorDark</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/backgroundColorDark</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
+        <item name="backgroundColor">@color/backgroundColorDark</item>
+        <item name="backgroundDarkColor">@color/backgroundColorDarkDeep</item>
+        <item name="backgroundLightColor">@color/backgroundColorDarkLight</item>
+        <item name="secondaryColor">@color/colorSecondaryDark</item>
+        <item name="textColor">@color/textColorDark</item>
+        <item name="textButtonColor">@color/textButtonColor</item>
+        <item name="hintColor">@color/hintColorDark</item>
+        <item name="transparent">@color/transparent</item>
+
+        <item name="blueDeepColor">@color/blueDeep</item>
+        <item name="blueLightColor">@color/blueLight</item>
+        <item name="redDeepColor">@color/redDeep</item>
+        <item name="redLightColor">@color/redLight</item>
+        <item name="greenDeepColor">@color/greenDeep</item>
+        <item name="greenLightColor">@color/greenLight</item>
+        <item name="orangeDeepColor">@color/orangeDeep</item>
+        <item name="orangeLightColor">@color/orangeLight</item>
+        <item name="blackDeepColor">@color/blackDeep</item>
+        <item name="blackLightColor">@color/blackLight</item>
     </style>
 
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/backgroundColorLight</item>
+        <item name="colorPrimaryDark">@color/backgroundColorLight</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/backgroundColorLight</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:navigationBarColor" tools:targetApi="lollipop">@color/backgroundColorLight</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+
+        <item name="backgroundColor">@color/backgroundColorLight</item>
+        <item name="backgroundDarkColor">@color/backgroundColorLightDeep</item>
+        <item name="backgroundLightColor">@color/backgroundColorLightLight</item>
+        <item name="secondaryColor">@color/colorSecondaryLight</item>
+        <item name="textColor">@color/textColorLight</item>
+        <item name="hintColor">@color/hintColorLight</item>
+        <item name="transparent">@color/transparent</item>
+
+        <item name="blueDeepColor">@color/blueDeep</item>
+        <item name="blueLightColor">@color/blueLight</item>
+        <item name="redDeepColor">@color/redDeep</item>
+        <item name="redLightColor">@color/redLight</item>
+        <item name="greenDeepColor">@color/greenDeep</item>
+        <item name="greenLightColor">@color/greenLight</item>
+        <item name="orangeDeepColor">@color/orangeDeep</item>
+        <item name="orangeLightColor">@color/orangeLight</item>
+        <item name="blackDeepColor">@color/blackDeep</item>
+        <item name="blackLightColor">@color/blackLight</item>
+    </style>
+
+    <style name="WindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
 </resources>

@@ -113,9 +113,9 @@ public class TimerPopup extends Dialog {
         timerTV.setText(MarketTimes.convertLongMilliToTime(timer));
         stepState.setText("S T A R T I N G");
         updateBckColor(R.color.orangeDeep);
-        updateSetsColor(R.color.colorText);
-        updateTimerColor(R.color.colorText);
-        updateStateColor(R.color.colorText);
+        updateSetsColor(R.color.textColorDark);
+        updateTimerColor(R.color.textColorDark);
+        updateStateColor(R.color.textColorDark);
     }
 
     private void setupWorkTimer() {
@@ -124,9 +124,9 @@ public class TimerPopup extends Dialog {
         timerTV.setText(MarketTimes.converLongToTimer(timer));
         stepState.setText("W O R K");
         updateBckColor(R.color.greenDeep);
-        updateSetsColor(R.color.colorText);
-        updateTimerColor(R.color.colorText);
-        updateStateColor(R.color.colorText);
+        updateSetsColor(R.color.textColorDark);
+        updateTimerColor(R.color.textColorDark);
+        updateStateColor(R.color.textColorDark);
     }
 
     private void setupRestTimer() {
@@ -135,9 +135,9 @@ public class TimerPopup extends Dialog {
         timerTV.setText(MarketTimes.converLongToTimer(timer));
         stepState.setText("R E S T");
         updateBckColor(R.color.blueLight);
-        updateSetsColor(R.color.colorText);
-        updateTimerColor(R.color.colorText);
-        updateStateColor(R.color.colorText);
+        updateSetsColor(R.color.textColorDark);
+        updateTimerColor(R.color.textColorDark);
+        updateStateColor(R.color.textColorDark);
     }
 
     private void setupTimerThread() {

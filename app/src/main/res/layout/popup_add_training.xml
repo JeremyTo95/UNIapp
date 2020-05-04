@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="I N F O R M A T I O N S"
         android:fontFamily="sans-serif-light"
-        android:textColor="@color/colorSecondaryLight"
+        android:textColor="?attr/secondaryColor"
         android:textAlignment="center"
         android:textSize="@dimen/h2_textsize"
         android:padding="20dp"
@@ -37,7 +37,7 @@
                 android:layout_height="40dp"
                 android:text="A j o u t e r  N o u v e l   E n t r a i n e m e n t"
                 android:textSize="@dimen/h4_textsize"
-                android:textColor="@color/colorText"
+                android:textColor="?attr/textColor"
                 android:textAlignment="center"
                 android:gravity="center" />
 
@@ -57,7 +57,7 @@
                          android:layout_weight="1"
                          android:text="D a t e  :"
                          android:textSize="@dimen/h4_textsize"
-                         android:textColor="@color/colorText"
+                         android:textColor="?attr/textColor"
                          android:gravity="center" />
                      <EditText
                          android:id="@+id/popup_add_training_date_edit_text"
@@ -65,14 +65,15 @@
                          android:layout_height="0dp"
                          android:layout_weight="1"
                          android:hint="DD/MM/YYYY"
-                         android:background="@color/transparent"
+                         android:background="?attr/transparent"
                          android:gravity="center"
                          android:digits="0123456789"
                          android:inputType="number"
                          android:maxLength="10"
                          android:textSize="@dimen/h4_textsize"
                          android:fontFamily="sans-serif-light"
-                         android:textColor="@color/colorText"
+                         android:textColor="?attr/textColor"
+                         android:textColorHint="?attr/hintColor"
                          android:layout_marginTop="10dp" />
                  </LinearLayout>
                  <LinearLayout
@@ -86,7 +87,7 @@
                          android:layout_weight="1"
                          android:text="V i l l e  :"
                          android:textSize="@dimen/h4_textsize"
-                         android:textColor="@color/colorText"
+                         android:textColor="?attr/textColor"
                          android:gravity="center" />
                      <EditText
                          android:id="@+id/popup_add_training_city_edit_text"
@@ -95,10 +96,11 @@
                          android:layout_weight="1"
                          android:hint="VILLE"
                          android:inputType="textCapCharacters"
-                         android:background="@color/transparent"
+                         android:background="?attr/transparent"
                          android:gravity="center"
                          android:fontFamily="sans-serif-light"
-                         android:textColor="@color/colorText"
+                         android:textColor="?attr/textColor"
+                         android:textColorHint="?attr/hintColor"
                          android:textSize="@dimen/h4_textsize"
                          android:layout_marginTop="10dp" />
                  </LinearLayout>
@@ -112,7 +114,8 @@
                     android:id="@+id/popup_add_training_size_pool_dropdown"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="?attr/textColor"/>
                 <include layout="@menu/difficulty_selector" />
             </LinearLayout>
             <LinearLayout
@@ -129,7 +132,7 @@
                         android:layout_width="50dp"
                         android:layout_height="match_parent"
                         android:text="Sets"
-                        android:textColor="@color/colorSecondaryLight"
+                        android:textColor="?attr/secondaryColor"
                         android:textSize="@dimen/h4_textsize"
                         android:gravity="center"
                         android:fontFamily="sans-serif-light" />
@@ -138,7 +141,7 @@
                         android:layout_width="75dp"
                         android:layout_height="match_parent"
                         android:text="Distance"
-                        android:textColor="@color/colorSecondaryLight"
+                        android:textColor="?attr/secondaryColor"
                         android:textSize="@dimen/h4_textsize"
                         android:gravity="center"
                         android:fontFamily="sans-serif-light" />
@@ -148,7 +151,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Nage"
-                        android:textColor="@color/colorSecondaryLight"
+                        android:textColor="?attr/secondaryColor"
                         android:textSize="@dimen/h4_textsize"
                         android:gravity="center"
                         android:fontFamily="sans-serif-light" />
@@ -158,7 +161,7 @@
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:text="Zone"
-                        android:textColor="@color/colorSecondaryLight"
+                        android:textColor="?attr/secondaryColor"
                         android:textSize="@dimen/h4_textsize"
                         android:gravity="center"
                         android:fontFamily="sans-serif-light" />
@@ -176,8 +179,9 @@
                         android:gravity="center"
                         android:digits="0123456789"
                         android:inputType="number"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColor="?attr/textColor"
+                        android:background="?attr/transparent"
+                        android:textColorHint="?attr/hintColor"
                         android:fitsSystemWindows="true"
                         android:fontFamily="sans-serif-light"
                         android:textSize="@dimen/h4_textsize" />
@@ -189,22 +193,23 @@
                         android:gravity="center"
                         android:digits="0123456789"
                         android:inputType="number"
-                        android:textColor="@color/colorText"
-                        android:background="@color/transparent"
+                        android:textColor="?attr/textColor"
+                        android:textColorHint="?attr/hintColor"
+                        android:background="?attr/transparent"
                         android:fontFamily="sans-serif-light"
                         android:textSize="@dimen/h4_textsize" />
                     <Spinner
                         android:id="@+id/rv_popup_add_training_swim_spinner"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/colorText"
+                        android:backgroundTint="?attr/textColor"
                         android:dropDownWidth="match_parent"
                         android:layout_weight="1" />
                     <Spinner
                         android:id="@+id/rv_popup_add_training_zone_spinner"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:backgroundTint="@color/colorText"
+                        android:backgroundTint="?attr/textColor"
                         android:dropDownWidth="match_parent" />
                 </LinearLayout>
             </LinearLayout>
@@ -216,7 +221,7 @@
                 android:text="Ajouter un block"
                 android:tag="addBlock"
                 android:layout_marginBottom="10dp"
-                android:textColor="@color/colorSecondaryLight"
+                android:textColor="?attr/secondaryColor"
                 android:textSize="@dimen/h4_textsize"
                 android:fontFamily="sans-serif-light" />
          </LinearLayout>
@@ -252,8 +257,8 @@
                  android:tag="btn_denied"
                  android:fontFamily="sans-serif-light"
                  android:textSize="@dimen/custom_popup_textsize"
-                 android:textColor="@color/redLight"
-                 android:background="@color/transparent" />
+                 android:textColor="?attr/redLightColor"
+                 android:background="?attr/transparent" />
 
              <Button
                  android:id="@+id/popup_add_training_confirmed_btn"
@@ -264,8 +269,8 @@
                  android:tag="btn_confirmed"
                  android:fontFamily="sans-serif-light"
                  android:textSize="@dimen/custom_popup_textsize"
-                 android:textColor="@color/blueLight"
-                 android:background="@color/transparent" />
+                 android:textColor="?attr/blueLightColor"
+                 android:background="?attr/transparent" />
          </LinearLayout>
     </LinearLayout>
 </LinearLayout>
