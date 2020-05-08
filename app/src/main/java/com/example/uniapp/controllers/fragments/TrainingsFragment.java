@@ -1,10 +1,12 @@
 package com.example.uniapp.controllers.fragments;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,8 +26,9 @@ import android.widget.Toast;
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.recyclerview.RvTrainingAdapter;
-import com.example.uniapp.models.MarketTrainings;
+import com.example.uniapp.models.markets.MarketTrainings;
 import com.example.uniapp.models.database.dao.training.Training;
+import com.example.uniapp.models.swiptodeletecallback.SwipeToDeleteCallback;
 import com.example.uniapp.views.AboutScreen;
 import com.example.uniapp.views.popup.training.AddTrainingPopup;
 import com.example.uniapp.views.comparators.TrainingDateComparator;
@@ -38,13 +41,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class TrainingsFragment extends Fragment implements View.OnClickListener {
-    private View layoutInflater;
-    private AppBarLayout appBarLayout;
+    private View           layoutInflater;
+    private AppBarLayout   appBarLayout;
     private List<Training> currentTrainings;
 
-    private int sizePool;
+    private int    sizePool;
     private String swim;
-    private int difficulty;
+    private int    difficulty;
 
     private TextView             training_title;
     private Spinner              dropdownPool;
@@ -57,7 +60,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private Button               btn_IM;
     private FloatingActionButton floatingActionButton;
 
-    private RecyclerView trainingRecyclerView;
+    private RecyclerView      trainingRecyclerView;
     private RvTrainingAdapter trainingRecyclerViewAdapter;
 
     public TrainingsFragment() { }
@@ -74,9 +77,9 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         configureHeader();
         updateColors();
         updateDifficulty();
-        configureAndShowSizePoolDropdown();
+        setupSizePoolDropdown();
         updateCurrentTrainings();
-        updateRecyclerViewTrainingList();
+        setupTrainingList();
 
         return layoutInflater;
     }
@@ -85,21 +88,21 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     public void onResume() {
         super.onResume();
         configureHeader();
-        configureAndShowSizePoolDropdown();
+        setupSizePoolDropdown();
         updateCurrentTrainings();
-        updateRecyclerViewTrainingList();
+        setupTrainingList();
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getTag().equals("btn_25")) sizePool = 25;
-        else if (v.getTag().equals("btn_50")) sizePool = 50;
-        else if (v.getTag().equals("all")) swim = v.getTag().toString();
-        else if (v.getTag().equals("butterfly")) swim = v.getTag().toString();
-        else if (v.getTag().equals("backstroke")) swim = v.getTag().toString();
+             if (v.getTag().equals("btn_25"))       sizePool = 25;
+        else if (v.getTag().equals("btn_50"))       sizePool = 50;
+        else if (v.getTag().equals("all"))          swim = v.getTag().toString();
+        else if (v.getTag().equals("butterfly"))    swim = v.getTag().toString();
+        else if (v.getTag().equals("backstroke"))   swim = v.getTag().toString();
         else if (v.getTag().equals("breaststroke")) swim = v.getTag().toString();
-        else if (v.getTag().equals("freestyle")) swim = v.getTag().toString();
-        else if (v.getTag().equals("IM")) swim = v.getTag().toString();
+        else if (v.getTag().equals("freestyle"))    swim = v.getTag().toString();
+        else if (v.getTag().equals("IM"))           swim = v.getTag().toString();
         else if (v.getTag().equals("difficulty_1") && difficulty == 1) difficulty = 0;
         else if (v.getTag().equals("difficulty_2") && difficulty == 2) difficulty = 0;
         else if (v.getTag().equals("difficulty_3") && difficulty == 3) difficulty = 0;
@@ -110,11 +113,11 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         else if (v.getTag().equals("difficulty_3")) difficulty = 3;
         else if (v.getTag().equals("difficulty_4")) difficulty = 4;
         else if (v.getTag().equals("difficulty_5")) difficulty = 5;
-        else if (v.getTag().equals("addTraining")) configureAndShowAddTrainingPopup();
+        else if (v.getTag().equals("addTraining"))  setupAddTrainingPopup();
 
         updateColors();
         updateDifficulty();
-        updateRecyclerViewTrainingList();
+        setupTrainingList();
     }
 
     private void configureHeader() {
@@ -148,7 +151,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         floatingActionButton.setOnClickListener(this);
     }
 
-    private void configureAndShowAddTrainingPopup() {
+    private void setupAddTrainingPopup() {
         final AddTrainingPopup addTrainingPopup = new AddTrainingPopup(getActivity());
         addTrainingPopup.build();
         addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
@@ -160,7 +163,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
                     MainActivity.appDataBase.trainingDAO().insertTraining(training);
                     addTrainingPopup.dismiss();
                     updateCurrentTrainings();
-                    updateRecyclerViewTrainingList();
+                    setupTrainingList();
                     Toast.makeText(getContext(), "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -169,12 +172,12 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
 
     private void updateColors() {
         training_title.setTextColor(AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark));
-        btn_all.setTextColor((swim.equals("all")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_butterfly.setTextColor((swim.equals("butterfly")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_backstroke.setTextColor((swim.equals("backstroke")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_all.setTextColor(         (swim.equals("all"))          ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_butterfly.setTextColor(   (swim.equals("butterfly"))    ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_backstroke.setTextColor(  (swim.equals("backstroke"))   ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
         btn_breaststroke.setTextColor((swim.equals("breaststroke")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_freestyle.setTextColor((swim.equals("freestyle")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_IM.setTextColor((swim.equals("IM")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_freestyle.setTextColor(   (swim.equals("freestyle"))    ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_IM.setTextColor(          (swim.equals("IM"))           ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
     }
 
     private void updateDifficulty() {
@@ -192,32 +195,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         Collections.sort(currentTrainings, new TrainingDateComparator());
     }
 
-    private void updateRecyclerViewTrainingList() {
-        updateCurrentTrainings();
-        System.out.println("sizeTraining : " + currentTrainings.size());
-        trainingRecyclerViewAdapter = new RvTrainingAdapter(getActivity(), currentTrainings);
-        trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
-        trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
-        trainingRecyclerView.setNestedScrollingEnabled(false);
-        trainingRecyclerViewAdapter.notifyDataSetChanged();
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback =
-                new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-                    @Override
-                    public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                        return false;
-                    }
-                    @Override
-                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                        MainActivity.appDataBase.trainingDAO().deleteTraining(currentTrainings.get(viewHolder.getAdapterPosition()));
-                        currentTrainings.remove(viewHolder.getAdapterPosition());
-                        trainingRecyclerViewAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
-                    }
-                };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(trainingRecyclerView);
-    }
-
-    private void configureAndShowSizePoolDropdown() {
+    private void setupSizePoolDropdown() {
         dropdownPool = layoutInflater.findViewById(R.id.fragment_training_spinner_sizePool);
         dropdownPool.setPopupBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(layoutInflater.getContext(), R.array.sizePool, R.layout.dropdown_item_auto);
@@ -229,11 +207,35 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String newSizePool = parent.getItemAtPosition(position).toString();
-                newSizePool = newSizePool.replaceAll("[a-zA-Z ]", "");
-                sizePool = Integer.parseInt(newSizePool);
-                updateRecyclerViewTrainingList();
+                String newSizePool = parent.getItemAtPosition(position).toString().replaceAll("[a-zA-Z]", "").replace(" ", "");
+                sizePool           = Integer.parseInt(newSizePool);
+                setupTrainingList();
             }
         });
+    }
+
+    private void setupTrainingList() {
+        updateCurrentTrainings();
+        trainingRecyclerViewAdapter = new RvTrainingAdapter(getActivity(), currentTrainings);
+        trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
+        trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
+        trainingRecyclerView.setNestedScrollingEnabled(false);
+        trainingRecyclerViewAdapter.notifyDataSetChanged();
+        ItemTouchHelper onSwipe = new ItemTouchHelper(new SwipeToDeleteCallback() {
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_white_48dp));
+                setBackground(ContextCompat.getDrawable(getContext(), R.drawable.sh_gradient_blue));
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                super.onSwiped(viewHolder, direction);
+                int position = viewHolder.getAdapterPosition();
+                trainingRecyclerViewAdapter.removeItem(position);
+            }
+        });
+        onSwipe.attachToRecyclerView(trainingRecyclerView);
     }
 }

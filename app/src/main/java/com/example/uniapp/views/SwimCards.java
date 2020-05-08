@@ -2,8 +2,8 @@ package com.example.uniapp.views;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.models.MarketRaces;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketRaces;
+import com.example.uniapp.models.markets.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
 
 import java.util.List;

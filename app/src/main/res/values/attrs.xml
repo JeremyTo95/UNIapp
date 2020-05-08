@@ -23,4 +23,9 @@
         <attr name="blackDeepColor" format="color" />
         <attr name="blackLightColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="FocusScrollView">
+
+    </declare-styleable>
+
 </resources>

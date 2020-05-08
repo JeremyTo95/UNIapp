@@ -1,14 +1,12 @@
-package com.example.uniapp.models;
+package com.example.uniapp.models.markets;
 
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
 import com.example.uniapp.views.comparators.TrainingDateComparator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 public class MarketTrainings {
 
@@ -36,5 +34,29 @@ public class MarketTrainings {
         }
 
         return trainings;
+    }
+
+    public static List<Float> getFloatTimes(TrainingBlock trainingBlock) {
+        List<Float> allTimes = new ArrayList<>();
+        for (int i = 0; i < trainingBlock.getTimes().size(); i++)
+            allTimes.add(trainingBlock.getTimes().get(i));
+
+        return allTimes;
+    }
+
+    public static List<Float> getRefLine(float ref, int nbSets) {
+        List<Float> refLineData = new ArrayList<Float>();
+        for (int i = 0; i < nbSets; i++) refLineData.add(ref);
+
+        return refLineData;
+    }
+
+    public static List<String> getLegendTraining(List<TrainingBlock> allTrainingBlock) {
+        List<String> legendList = new ArrayList<>();
+        for (int i = 0; i < allTrainingBlock.size(); i++)
+            legendList.add(allTrainingBlock.get(i).getDistance() + "" + MarketSwim.convertShortSwim(allTrainingBlock.get(i).getSwim()));
+
+
+        return legendList;
     }
 }

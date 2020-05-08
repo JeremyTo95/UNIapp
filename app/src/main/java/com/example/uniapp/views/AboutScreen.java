@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
+import com.example.uniapp.models.database.SharedPrefManager;
 
 public class AboutScreen extends AppCompatActivity {
     public static int getWidth(Activity activity) {
@@ -58,7 +59,8 @@ public class AboutScreen extends AppCompatActivity {
     }
 
     public static void setupThemeApp(Activity activity) {
-        System.out.println("night mode : " + MainActivity.sharedPrefManager.loadThemeMode());
+        System.out.println("in");
+        System.out.println("night mode : " + SharedPrefManager.loadThemeMode());
         if (MainActivity.sharedPrefManager.loadThemeMode() == 0) AboutScreen.setupDefaultNightMode(activity);
         else if (MainActivity.sharedPrefManager.loadThemeMode() == 1) activity.setTheme(R.style.DarkTheme);
         else activity.setTheme(R.style.LightTheme);

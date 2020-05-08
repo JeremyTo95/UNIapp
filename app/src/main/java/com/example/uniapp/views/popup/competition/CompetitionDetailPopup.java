@@ -2,23 +2,18 @@ package com.example.uniapp.views.popup.competition;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
-import androidx.annotation.NonNull;
-
 import android.os.Build;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.models.MarketRaces;
-import com.example.uniapp.models.MarketTimes;
-import com.example.uniapp.models.database.dao.pointFFN.PointFFN;
+import com.example.uniapp.models.markets.MarketRaces;
+import com.example.uniapp.models.markets.MarketSwim;
+import com.example.uniapp.models.markets.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.views.AboutScreen;
 import com.example.uniapp.views.comparators.TimeComparator;
@@ -87,7 +82,7 @@ public class CompetitionDetailPopup extends Dialog {
         diff.setTextColor(getContext().getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
         date_city.setText("Le " + race.getDate() + " à " + race.getCity());
         level.setText("Niveau " + race.getLevel());
-        distance_swim.setText(race.getDistance() + " " + Race.convertShortSwim(race.getSwim()));
+        distance_swim.setText(race.getDistance() + " " + MarketSwim.convertShortSwim(race.getSwim()));
         time.setText(MarketTimes.fetchFloatToTime(race.getTime()));
         if (MainActivity.appDataBase.pointFFNDAO().getNb() != 0 && race.getDistance() != 25)
             points.setText(MainActivity.appDataBase.pointFFNDAO().getPointsFFNByGenderDistanceSwimTime(MainActivity.appDataBase.userDAO().getUser().getGender(), race.getDistance(), race.getSwim(), race.getTime()).getPoint() + " points FFN");
@@ -96,10 +91,10 @@ public class CompetitionDetailPopup extends Dialog {
     }
 
     private void updateColors() {
-        bigTitle.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
-        swimmerTitle.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
-        performanceTitle.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
-        time.setTextColor(Race.getCurrentColor(getContext(), race.getSwim()));
+        bigTitle.setTextColor(MarketSwim.getCurrentColor(getContext(), race.getSwim()));
+        swimmerTitle.setTextColor(MarketSwim.getCurrentColor(getContext(), race.getSwim()));
+        performanceTitle.setTextColor(MarketSwim.getCurrentColor(getContext(), race.getSwim()));
+        time.setTextColor(MarketSwim.getCurrentColor(getContext(), race.getSwim()));
     }
 
     public void build() {

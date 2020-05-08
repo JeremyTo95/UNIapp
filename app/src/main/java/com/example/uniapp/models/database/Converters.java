@@ -15,9 +15,8 @@ import java.util.List;
 public class Converters {
     @TypeConverter
     public static List<TrainingBlock> toTrainingBlockList(String inputJSON) {
-        // System.out.println("output : " + inputJSON);
-        JSONArray trainingBlockArrayJSON      = null;
-        List<Float> times                     = new ArrayList<Float>();
+        JSONArray trainingBlockArrayJSON;
+        List<Float> times;
         List<TrainingBlock> trainingBlockList = new ArrayList<TrainingBlock>();
         try {
             trainingBlockArrayJSON = new JSONArray(inputJSON);
@@ -42,13 +41,6 @@ public class Converters {
                     times.add(Float.parseFloat(timeJSON.getString("time")));
                 }
 
-                /*System.out.println("nbset    : " + nbset);
-                System.out.println("swim     : " + swim);
-                System.out.println("distance : " + distance);
-                System.out.println("times    : " + Arrays.toString(times.toArray()));
-                System.out.println("zone     : " + zone);*/
-
-
                 trainingBlockList.add(new TrainingBlock(nbset, swim, distance, times, zone));
             }
             return trainingBlockList;
@@ -57,14 +49,6 @@ public class Converters {
         }
 
         return trainingBlockList;
-    }
-
-    public static List<Float> initEmptyTime(int newSet) {
-        List<Float> allTimes = new ArrayList<Float>();
-        for (int i = 0; i < newSet; i++) {
-            allTimes.add(0.0f);
-        }
-        return allTimes;
     }
 
     @TypeConverter
@@ -89,8 +73,6 @@ public class Converters {
             else inputJSON = inputJSON + "},";
         }
         inputJSON += "]";
-
-        // System.out.println("InputJSON : " + inputJSON);
 
         return inputJSON;
     }

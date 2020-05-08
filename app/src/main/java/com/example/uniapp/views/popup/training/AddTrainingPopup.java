@@ -8,8 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -23,9 +21,10 @@ import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
-import com.example.uniapp.models.database.dao.race.Race;
-import com.example.uniapp.models.database.dao.training.Training;
+import com.example.uniapp.models.markets.MarketSwim;
 import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
+import com.example.uniapp.models.textwatcher.TextWatcherDate;
+import com.example.uniapp.models.textwatcher.TextWatcherDistance;
 import com.example.uniapp.views.AboutScreen;
 
 import java.text.DateFormat;
@@ -34,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private EditText            dateEditText;
@@ -82,17 +80,17 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     }
 
     public void setupUIElements() {
-        gridLayout              = (GridLayout)   findViewById(R.id.popup_add_training_block_space);
-        dateEditText            = (EditText)     findViewById(R.id.popup_add_training_date_edit_text);
-        cityEditText            = (EditText)     findViewById(R.id.popup_add_training_city_edit_text);
-        sizePoolDropdown        = (Spinner)      findViewById(R.id.popup_add_training_size_pool_dropdown);
-        setsEditText            = (EditText)     findViewById(R.id.rv_popup_add_training_sets_edit_text);
-        distanceEditText        = (EditText)     findViewById(R.id.rv_popup_add_training_distance_edit_text);
-        swimDropdown            = (Spinner)      findViewById(R.id.rv_popup_add_training_swim_spinner);
-        zoneDropdown            = (Spinner)      findViewById(R.id.rv_popup_add_training_zone_spinner);
-        addBlock                = (Button)       findViewById(R.id.popup_add_training_add_block_btn);
-        btn_denied              = (Button)       findViewById(R.id.popup_add_training_denied_btn);
-        btn_confirmed           = (Button)       findViewById(R.id.popup_add_training_confirmed_btn);
+        gridLayout              = (GridLayout) findViewById(R.id.popup_add_training_block_space);
+        dateEditText            = (EditText)   findViewById(R.id.popup_add_training_date_edit_text);
+        cityEditText            = (EditText)   findViewById(R.id.popup_add_training_city_edit_text);
+        sizePoolDropdown        = (Spinner)    findViewById(R.id.popup_add_training_size_pool_dropdown);
+        setsEditText            = (EditText)   findViewById(R.id.rv_popup_add_training_sets_edit_text);
+        distanceEditText        = (EditText)   findViewById(R.id.rv_popup_add_training_distance_edit_text);
+        swimDropdown            = (Spinner)    findViewById(R.id.rv_popup_add_training_swim_spinner);
+        zoneDropdown            = (Spinner)    findViewById(R.id.rv_popup_add_training_zone_spinner);
+        addBlock                = (Button)     findViewById(R.id.popup_add_training_add_block_btn);
+        btn_denied              = (Button)     findViewById(R.id.popup_add_training_denied_btn);
+        btn_confirmed           = (Button)     findViewById(R.id.popup_add_training_confirmed_btn);
         DateFormat dateFormat   = new SimpleDateFormat("dd/MM/yyyy");
         Date today              = Calendar.getInstance().getTime();
         int[] idButtons = {
@@ -105,7 +103,6 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         btn_difficulty_stars = new ArrayList<Button>();
         for (int i = 0; i < idButtons.length; i++) btn_difficulty_stars.add((Button) findViewById(idButtons[i]));
         updateDifficulty();
-        //btn_difficulty_stars.get(0).setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
         for (int i = 0; i < 5; i++) btn_difficulty_stars.get(i).setOnClickListener(this);
         addBlock.setOnClickListener(this);
         addBlock.setEnabled(false);
@@ -121,7 +118,6 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         sizePoolDropdown.setAdapter(levelDropdownAdapter);
         swimDropdown.setAdapter(swimDropdownAdapter);
         zoneDropdown.setAdapter(zoneDropdownAdapter);
-
 
         trainingBlockList = new ArrayList<TrainingBlock>();
         if (MainActivity.appDataBase.userDAO().getUser() != null)
@@ -158,22 +154,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     }
 
     private void  updateInputDateFormatEditText() {
-        dateEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { checkInputFormatDate(); }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = dateEditText.getText().toString();
-                int textSize = text.length();
-
-                if ((textSize == 3 && text.charAt(textSize - 1) != '/') || (textSize == 6 && text.charAt(textSize - 1) != '/')) {
-                    dateEditText.setText(new StringBuilder(text).insert(textSize - 1, "/").toString());
-                    dateEditText.setSelection(dateEditText.getText().length());
-                }
-            }
-        });
+        dateEditText.addTextChangedListener(new TextWatcherDate(dateEditText));
     }
 
     private boolean checkInputFormatDate() {
@@ -229,26 +210,18 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
     private void updateInputDistanceFormatEditText() {
         distanceEditText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { distanceEditText.setText(""); }
+            public void onClick(View v) {
+                distanceEditText.setText("");
+            }
         });
+        distanceEditText.addTextChangedListener(new TextWatcherDistance(distanceEditText));
         distanceEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
             @Override
             public void afterTextChanged(Editable s) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                distanceEditText.removeTextChangedListener(this);
-                if (distanceEditText.getText().length() >= 1 && !distanceEditText.getText().toString().equals("m")) {
-                    String text = distanceEditText.getText().toString().replaceAll("[a-zA-Z ]", "") + "m";
-                    distanceEditText.setText(text);
-                    distanceEditText.setSelection(text.length() - 1);
-                    if (setsEditText.getText().toString().length() > 0) addBlock.setEnabled(true);
-                } else if (distanceEditText.getText().toString().equals("m")) {
-                    distanceEditText.setText("");
-                }
-                distanceEditText.addTextChangedListener(this);
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {addBlock.setEnabled(true); }
         });
     }
 
@@ -268,43 +241,29 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         adapter.notifyDataSetChanged();
     }
 
-    public void addTraining() {
-        System.out.println("swims      : " + newSizePool);
-        System.out.println("sets       : " + newSet);
-        System.out.println("zones      : " + newZone);
-        System.out.println("distance   : " + newDistance);
-        System.out.println("date       : " + newDate);
-        System.out.println("city       : " + newCity);
-        System.out.println("difficulty : " + newDifficulty);
-        System.out.println("sizePool   : " + newSizePool);
-        if (isEnabled()) {
-            Log.e("ADD", "Add training");
-            Training training = new Training(UUID.randomUUID().toString(), newDifficulty, newSizePool, newDate, newCity, trainingBlockList);
-            MainActivity.appDataBase.trainingDAO().insertTraining(training);
-            dismiss();
-        }
-    }
-
     private void addBlockElement() {
-        // http://android-er.blogspot.com/2014/01/get-text-from-dynamically-added-view.html
-        LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         newBlock = getLayoutInflater().inflate(R.layout.popup_add_training_time, (ViewGroup) getWindow().getDecorView(), false);
 
-        TextView nbSets    = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_sets_edit_text);
-        TextView distance  = (TextView) newBlock.findViewById((R.id.rv_popup_add_training_distance_edit_text));
-        TextView swim      = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_swim_spinner);
-        TextView zone      = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_zone_spinner);
-        final Button   deleteBtn = (Button)   newBlock.findViewById(R.id.rv_popup_training_delete_btn);
-        nbSets.setText(setsEditText.getText());
+        TextView nbSets        = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_sets_edit_text);
+        TextView distance      = (TextView) newBlock.findViewById((R.id.rv_popup_add_training_distance_edit_text));
+        TextView swim          = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_swim_spinner);
+        TextView zone          = (TextView) newBlock.findViewById(R.id.rv_popup_add_training_zone_spinner);
+        final Button deleteBtn = (Button)   newBlock.findViewById(R.id.rv_popup_training_delete_btn);
         distance.setText(distanceEditText.getText());
         swim.setText(swimDropdown.getSelectedItem().toString());
         zone.setText(zoneDropdown.getSelectedItem().toString());
+
+        System.out.println(AboutScreen.isNightMode(activity));
+        if (AboutScreen.isNightMode(activity))
+            deleteBtn.setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_clear_white_24dp), null, null, null);
+        else
+            deleteBtn.setCompoundDrawablesWithIntrinsicBounds(getContext().getResources().getDrawable(R.drawable.ic_clear_black_24dp), null, null, null);
+        nbSets.setText(setsEditText.getText());
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int indexBlock = gridLayout.indexOfChild((View) deleteBtn.getParent());
-                System.out.println("index : " + indexBlock + "view : " +  gridLayout);
                 trainingBlockList.remove(indexBlock);
                 gridLayout.removeViewAt(indexBlock);
                 nbBlock--;
@@ -318,7 +277,7 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         newSwim     = swimDropdown.getSelectedItem().toString();
         newCity     = getCityEditText().getText().toString();
 
-        trainingBlockList.add(new TrainingBlock(newSet, Race.convertSwimFromFrenchToEnglish(newSwim), newDistance, initEmptyTime(), newZone));
+        trainingBlockList.add(new TrainingBlock(newSet, MarketSwim.convertSwimFromFrenchToEnglish(newSwim), newDistance, initEmptyTime(), newZone));
         gridLayout.addView(newBlock, nbBlock);
         nbBlock++;
     }

@@ -21,6 +21,7 @@
     <dimen name="h5_textsize">8sp</dimen>
 
     <dimen name="rv_training_star_size">30dp</dimen>
+    <dimen name="ic_delete">50</dimen>
 
 
 </resources>

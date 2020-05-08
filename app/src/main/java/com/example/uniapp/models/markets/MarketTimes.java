@@ -1,4 +1,4 @@
-package com.example.uniapp.models;
+package com.example.uniapp.models.markets;
 
 import android.util.Log;
 
@@ -88,8 +88,6 @@ public class MarketTimes {
         int sec = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 5))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 4)));
         int mil = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 2))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 1)));
 
-        // System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
-
         timeLong = mil + sec * 100 + min * 60 * 100;
 
         return timeLong;
@@ -100,13 +98,30 @@ public class MarketTimes {
         int sec = (int) (timeLong/100)%60;
         int min = (int) (timeLong/6000);
 
-        // System.out.println("min : " + min + " | sec : " + sec + " | mil : " + mil);
-
         String milStr = (mil < 10) ? ("0" + mil) : String.valueOf(mil);
         String secStr = (sec < 10) ? ("0" + sec) : String.valueOf(sec);
         String minStr = (min < 10) ? ("0" + min) : String.valueOf(min);
 
         return (minStr + ":" + secStr + "." + milStr);
+    }
+
+    public static String getDiffTime(double diffDouble) {
+        int integer = (int) diffDouble;
+        int decimal = (int) (diffDouble*100)%100;
+
+        String integerStr = String.valueOf(integer);
+        String decimalStr = String.valueOf(decimal);
+
+        if (integer <= -10) integerStr = String.valueOf(integer * (-1));
+        else if (integer > -10 && integer <  0) integerStr = "0" + integer*(-1);
+        else if (integer >= 0  && integer < 10) integerStr = "0" + integer;
+
+        if (decimal <= -10) decimalStr = String.valueOf(decimal * (-1));
+        else if (decimal > -10 && decimal <  0) decimalStr = "0" + decimal*(-1);
+        else if (decimal >= 0  && decimal < 10) decimalStr = "0" + decimal;
+
+        if (diffDouble > 0) return "(+" + integerStr + "." + decimalStr + ")";
+        else return "(-" + integerStr + "." + decimalStr + ")";
     }
 
     public static Long convertTimerToLong(String timer) {

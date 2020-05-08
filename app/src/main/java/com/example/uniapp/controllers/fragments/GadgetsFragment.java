@@ -26,34 +26,25 @@ TODO: STATISTIC --> TOOLS
 public class GadgetsFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
 
-    private LinearLayout chronometer;
-    private LinearLayout timer;
-    private LinearLayout converter;
-
-    private ImageView chronoLogo;
-    private ImageView timerLogo;
-    private ImageView converterLogo;
-
     public GadgetsFragment() { }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_tools, container, false);
-
         setupUIElements();
 
         return layoutInflater;
     }
 
     private void setupUIElements() {
-        chronometer   = layoutInflater.findViewById(R.id.fragment_gadget_chronometer);
-        timer         = layoutInflater.findViewById(R.id.fragment_gadget_timer);
-        converter     = layoutInflater.findViewById(R.id.fragment_gadget_converter);
+        LinearLayout chronometer = layoutInflater.findViewById(R.id.fragment_gadget_chronometer);
+        LinearLayout timer       = layoutInflater.findViewById(R.id.fragment_gadget_timer);
+        LinearLayout converter   = layoutInflater.findViewById(R.id.fragment_gadget_converter);
 
-        chronoLogo    = layoutInflater.findViewById(R.id.fragment_tools_chrono_logo);
-        timerLogo     = layoutInflater.findViewById(R.id.fragment_tools_timer_logo);
-        converterLogo = layoutInflater.findViewById(R.id.fragment_tools_converter_logo);
+        ImageView chronoLogo     = layoutInflater.findViewById(R.id.fragment_tools_chrono_logo);
+        ImageView timerLogo      = layoutInflater.findViewById(R.id.fragment_tools_timer_logo);
+        ImageView converterLogo  = layoutInflater.findViewById(R.id.fragment_tools_converter_logo);
 
         chronoLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_timer_white_24dp : R.drawable.ic_timer_black_24dp));
         timerLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_play_arrow_white_24dp : R.drawable.ic_play_arrow_black_24dp));

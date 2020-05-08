@@ -3,10 +3,7 @@ package com.example.uniapp.controllers.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,37 +15,37 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketTimes;
+import com.example.uniapp.models.textwatcher.TextWatcherChrono;
 import com.example.uniapp.views.AboutScreen;
 
 public class ConverterActivity extends AppCompatActivity implements View.OnClickListener {
-    private String inputTimeStr;
-    private String outputTimeStr;
-    private String zoneSelectedStr;
-
     private LinearLayout linearLayout;
     private Spinner  zoneSelected;
     private EditText inputTimeET;
     private Button   converterBtn;
     private TextView outputTimeTV;
 
+    private String inputTimeStr;
+    private String outputTimeStr;
+    private String zoneSelectedStr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_converter);
-        // this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         setupUIElements();
         updateZone();
     }
 
     private void setupUIElements() {
-        linearLayout     = (LinearLayout) findViewById(R.id.activity_converter_main_layout);
-        zoneSelected     = (Spinner)      findViewById(R.id.activity_converter_zone_selected);
-        inputTimeET      = (EditText)     findViewById(R.id.activity_converter_input_time);
-        converterBtn     = (Button)       findViewById(R.id.activity_converter_convert_btn);
-        outputTimeTV     = (TextView)     findViewById(R.id.activity_converter_output_time);
+        linearLayout  = (LinearLayout) findViewById(R.id.activity_converter_main_layout);
+        zoneSelected  = (Spinner)      findViewById(R.id.activity_converter_zone_selected);
+        inputTimeET   = (EditText)     findViewById(R.id.activity_converter_input_time);
+        converterBtn  = (Button)       findViewById(R.id.activity_converter_convert_btn);
+        outputTimeTV  = (TextView)     findViewById(R.id.activity_converter_output_time);
         converterBtn.setOnClickListener(this);
         inputTimeET.setOnClickListener(this);
         updateInputTime();
@@ -69,44 +66,10 @@ public class ConverterActivity extends AppCompatActivity implements View.OnClick
             convertTime();
             hideKeybaord(v);
         }
-        inputTimeET.onEditorAction(EditorInfo.IME_ACTION_DONE);
-        //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        //imm.hideSoftInputFromWindow(linearLayout.getWindowToken(), 0);
-        // this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SO);
     }
 
     private void updateInputTime() {
-        inputTimeET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                inputTimeET.removeTextChangedListener(this);
-                int timeInt = Integer.parseInt(inputTimeET.getText().toString().replaceAll("[:.]", "")); // permet de retirer les premiers zéros du String
-                String text = String.valueOf(timeInt);
-                int textSize = text.length();
-
-                if (textSize >= 5) {
-                    text = new StringBuilder(text).insert(textSize - 2, ".").insert(textSize - 4, ":").toString();
-                    inputTimeET.setText(text);
-                    inputTimeET.setSelection(text.length());
-                } else if (textSize > 2) {
-                    text = new StringBuilder(text).insert(textSize - 2, ".").toString();
-                    inputTimeET.setText(text);
-                    inputTimeET.setSelection(text.length());
-                } else {
-                    for (int i = 0; i < 3 - textSize; i++) {
-                        text = new StringBuilder(text).insert(i, "0").toString();
-                    }
-                    text = new StringBuilder(text).insert(text.length() - 2, ".").toString();
-                    inputTimeET.setText(text);
-                    inputTimeET.setSelection(text.length());
-                }
-                inputTimeET.addTextChangedListener(this);
-            }
-        });
+        inputTimeET.addTextChangedListener(new TextWatcherChrono(inputTimeET));
     }
 
     private void updateZone() {
@@ -114,7 +77,9 @@ public class ConverterActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { zoneSelectedStr = parent.getItemAtPosition(position).toString(); }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                zoneSelectedStr = parent.getItemAtPosition(position).toString();
+            }
         });
     }
 
@@ -135,10 +100,4 @@ public class ConverterActivity extends AppCompatActivity implements View.OnClick
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
-
-    /*@Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) AboutScreen.hideNavigationBar(this);
-    }*/
 }

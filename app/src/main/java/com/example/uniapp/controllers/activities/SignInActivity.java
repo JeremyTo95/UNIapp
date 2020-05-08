@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -19,13 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.database.dao.race.Race;
+import com.example.uniapp.models.markets.MarketSwim;
 import com.example.uniapp.models.database.dao.user.User;
+import com.example.uniapp.models.textwatcher.TextWatcherDate;
+import com.example.uniapp.models.textwatcher.TextWatcherHeight;
+import com.example.uniapp.models.textwatcher.TextWatcherWeight;
 import com.example.uniapp.views.AboutScreen;
 
 import java.io.Serializable;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements TextWatcher {
     private User newUser;
 
     private Spinner     genderSpinner;
@@ -61,11 +63,8 @@ public class SignInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setTheme((MainActivity.sharedPrefManager.loadThemeMode() == true) ? R.style.AppTheme : R.style.LightTheme);
-        setTheme(R.style.LightTheme);
         AboutScreen.setupDefaultNightMode(this);
         setContentView(R.layout.activity_sign_in);
-
 
         setupUIElements();
         updateUIElements();
@@ -88,22 +87,24 @@ public class SignInActivity extends AppCompatActivity {
         progressBar        = (ProgressBar) findViewById(R.id.activity_sign_in_progress_bar);
         loadingText        = (TextView)    findViewById(R.id.activity_sign_in_loading_textview);
 
-        progressBar.setVisibility(View.GONE);
-        loadingText.setVisibility(View.GONE);
+        firstnameEditText.addTextChangedListener(this);
+        lastnameEditText.addTextChangedListener(this);
+        weightEditText.addTextChangedListener(this);
+        heightEditText.addTextChangedListener(this);
+        birthEditText.addTextChangedListener(this);
+        clubEditText.addTextChangedListener(this);
+        key_1.addTextChangedListener(this);
+        key_2.addTextChangedListener(this);
+        key_3.addTextChangedListener(this);
+        weightEditText.addTextChangedListener(new TextWatcherWeight(weightEditText));
+        heightEditText.addTextChangedListener(new TextWatcherHeight(heightEditText));
+        birthEditText.addTextChangedListener(new TextWatcherDate(birthEditText));
 
         gender    = "Homme";
-        firstname = "";
-        lastname  = "";
-        weight    = 0;
-        height    = 0;
-        birth     = "";
-        club      = "";
-        city      = "";
         spe       = "butterfly";
-        key1      = "";
-        key2      = "";
-        key3      = "";
-        key = key1 + "-" + key2 + "-" + key3;
+
+        progressBar.setVisibility(View.GONE);
+        loadingText.setVisibility(View.GONE);
 
         ArrayAdapter<CharSequence> genderDropdownAdapter;
         if (AboutScreen.isNightMode(this)) genderDropdownAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.genders, R.layout.dropdown_item_dark);
@@ -134,20 +135,9 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private boolean defineUserProfil() {
-        Log.e("Ep", "It works but...");
-        System.out.println("gender : " + gender);
-        System.out.println("first  : " + firstname);
-        System.out.println("last   : " + lastname);
-        System.out.println("weight : " + weight);
-        System.out.println("height : " + height);
-        System.out.println("birth  : " + birth);
-        System.out.println("club   : " + club);
-        System.out.println("city   : " + city);
-        System.out.println("spe    : " + spe);
         if (checkInputUpdateUser()) {
             key = key1 + "-" + key2 + "-" + key3;
-            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city, key);
-            newUser = user;
+            newUser = new User(gender, firstname, lastname, birth, height, weight, club, spe, city, key);
             confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.color.transparent));
             return true;
         } else {
@@ -158,239 +148,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void updateUIElements() {
         updateGender();
-        updateFirstname();
-        updateLastname();
-        updateWeight();
-        updateHeight();
-        updateBirth();
-        updateClub();
-        updateCity();
         updateSpeciality();
-        updateKey1();
-        updateKey2();
-        updateKey3();
-    }
-
-    private void updateBirth() {
-        birthEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                birthEditText.setText("");
-            }
-        });
-        birthEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { birth = birthEditText.getText().toString(); }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = birthEditText.getText().toString();
-                int textSize = text.length();
-
-                if ((textSize == 3 && text.charAt(textSize - 1) != '/') || (textSize == 6 && text.charAt(textSize - 1) != '/')) {
-                    birthEditText.setText(new StringBuilder(text).insert(textSize - 1, "/").toString());
-                    birthEditText.setSelection(birthEditText.getText().length());
-                }
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateFirstname() {
-        firstnameEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { firstnameEditText.setText("");
-            }
-        });
-        firstnameEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-            @Override
-            public void afterTextChanged(Editable s) {
-                firstname = firstnameEditText.getText().toString();
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateLastname() {
-        lastnameEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { lastnameEditText.setText("");
-            }
-        });
-        lastnameEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-            @Override
-            public void afterTextChanged(Editable s) {
-                lastname = lastnameEditText.getText().toString();
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateWeight() {
-        weightEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                weightEditText.setText("");
-            }
-        });
-        weightEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-            @Override
-            public void afterTextChanged(Editable s) {
-                weightEditText.removeTextChangedListener(this);
-                if (weightEditText.getText().length() >= 1 && !weightEditText.getText().toString().equals("kg")) {
-                    String text = weightEditText.getText().toString().replaceAll("[a-zA-Z ]", "") + "kg";
-                    weightEditText.setText(text);
-                    weightEditText.setSelection(text.length() - 2);
-                    weight = Integer.parseInt(weightEditText.getText().toString().replaceAll("[a-zA-Z ]", ""));
-                } else if (weightEditText.getText().toString().equals("kg")) {
-                    weightEditText.setText("");
-                }
-                weightEditText.addTextChangedListener(this);
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateHeight() {
-        heightEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                heightEditText.setText("");
-            }
-        });
-        heightEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-            @Override
-            public void afterTextChanged(Editable s) {
-                heightEditText.removeTextChangedListener(this);
-                if (heightEditText.getText().length() >= 1 && !heightEditText.getText().toString().equals("cm")) {
-                    String text = heightEditText.getText().toString().replaceAll("[a-zA-Z ]", "") + "cm";
-                    heightEditText.setText(text);
-                    heightEditText.setSelection(text.length() - 2);
-                    height = Integer.parseInt(heightEditText.getText().toString().replaceAll("[a-zA-Z ]", ""));
-                } else if (heightEditText.getText().toString().equals("cm")) {
-                    heightEditText.setText("");
-                }
-                heightEditText.addTextChangedListener(this);
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateClub() {
-        clubEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clubEditText.setText("");
-            }
-        });
-        clubEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                club = clubEditText.getText().toString();
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateCity() {
-        cityEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cityEditText.setText("");
-            }
-        });
-        cityEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                city = cityEditText.getText().toString();
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateKey1() {
-        key_1.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                key_1.setText("");
-            }
-        });
-        key_1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                key1 = key_1.getText().toString();
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateKey2() {
-        key_2.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                key_2.setText("");
-            }
-        });
-        key_2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                key2 = key_2.getText().toString();
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
-    }
-
-    private void updateKey3() {
-        key_3.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                key_3.setText("");
-            }
-        });
-        key_3.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                key3 = key_3.getText().toString();
-                confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
-            }
-        });
     }
 
     private void updateSpeciality() {
@@ -399,7 +157,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Race.convertSwimFromFrenchToEnglish(parent.getSelectedItem().toString().toLowerCase());
+                MarketSwim.convertSwimFromFrenchToEnglish(parent.getSelectedItem().toString().toLowerCase());
             }
         });
     }
@@ -415,7 +173,22 @@ public class SignInActivity extends AppCompatActivity {
         });
     }
 
+    private void enableConfirmeButton() {
+        confirmedBtn.setEnabled(true);
+        confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.sh_button));
+        confirmedBtn.setTextColor(getResources().getColor(R.color.textButtonColor));
+    }
+
+    private void disableConfirmeButton() {
+        confirmedBtn.setEnabled(false);
+        confirmedBtn.setBackgroundColor(getResources().getColor(R.color.transparent));
+        if (AboutScreen.isNightMode(this)) confirmedBtn.setTextColor(getResources().getColor(R.color.textColorDark));
+        else confirmedBtn.setTextColor(getResources().getColor(R.color.textColorLight));
+    }
+
     private boolean checkInputUpdateUser() {
+        loadInputs();
+
         if (checkFirstname() && checkLastname() && checkWeight() && checkHeight() && checkBirth() && checkClub() && checkCity() && checkKey1() && checkKey2() && checkKey3()) {
             return true;
         } else {
@@ -430,8 +203,27 @@ public class SignInActivity extends AppCompatActivity {
             if (!checkKey1())      key_1.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
             if (!checkKey2())      key_2.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
             if (!checkKey3())      key_3.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            disableConfirmeButton();
             return false;
         }
+    }
+
+    private void loadInputs() {
+        String tmp;
+        firstname = firstnameEditText.getText().toString();
+        lastname  = lastnameEditText.getText().toString();
+        birth     = birthEditText.getText().toString();
+        tmp       = heightEditText.getText().toString().replaceAll("[a-zA-Z]", "").toString();
+        if (tmp.length() != 0) height = Integer.parseInt(tmp);
+        else height = 0;
+        tmp       = weightEditText.getText().toString().replaceAll("[a-zA-Z]", "").toString();
+        if (tmp.length() != 0) weight = Integer.parseInt(tmp);
+        else weight = 0;
+        club      = clubEditText.getText().toString();
+        city      = cityEditText.getText().toString();
+        key1      = key_1.getText().toString();
+        key2      = key_2.getText().toString();
+        key3      = key_3.getText().toString();
     }
 
     private boolean checkFirstname() { return (firstname.length() > 0); }
@@ -450,9 +242,10 @@ public class SignInActivity extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
 
-    /*@Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) AboutScreen.hideNavigationBar(this);
-    }*/
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) { }
+    @Override
+    public void afterTextChanged(Editable s) { enableConfirmeButton(); }
 }

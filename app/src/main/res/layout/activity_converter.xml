@@ -69,6 +69,7 @@
             android:tag="inputTime"
             android:inputType="number"
             android:digits="0123456789"
+            android:maxLength="8"
             android:background="?attr/transparent"
             android:textSize="@dimen/h1_textsize"
             android:hint="00:00.00"

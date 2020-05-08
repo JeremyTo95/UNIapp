@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketTimes;
 
 public class TimerPopup extends Dialog {
     private Activity activity;

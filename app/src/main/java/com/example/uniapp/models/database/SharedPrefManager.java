@@ -1,21 +1,34 @@
 package com.example.uniapp.models.database;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SharedPrefManager {
-    private SharedPreferences sharedPreferences;
-    public SharedPrefManager(Context context) {
-        sharedPreferences = context.getSharedPreferences("quicksave", Context.MODE_PRIVATE);
+    private static SharedPrefManager sharedPrefManager;
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
+
+    public SharedPrefManager() {
+        //sharedPrefManager = context.getSharedPreferences("quicksave", Context.MODE_PRIVATE);
+        sharedPrefManager = new SharedPrefManager();
     }
 
-    public void savedThemeMode(int state) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    public static SharedPrefManager getSharedPref(Context context) {
+        if (sharedPreferences == null) {
+            sharedPreferences = context.getSharedPreferences("quicksave", Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        }
+        return sharedPrefManager;
+    }
+
+    public static void savedThemeMode(int state) {
+        //SharedPreferences.Editor editor = sharedPrefManager.edit();
         editor.putInt("DarkMode", state);
         editor.commit();
     }
 
-    public int loadThemeMode() {
+    public static int loadThemeMode() {
         return sharedPreferences.getInt("DarkMode", 0);
     }
 }

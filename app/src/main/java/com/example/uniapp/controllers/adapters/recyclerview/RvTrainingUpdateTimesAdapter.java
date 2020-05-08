@@ -13,11 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketTimes;
 import com.example.uniapp.models.database.dao.trainingblock.TrainingBlock;
+import com.example.uniapp.models.textwatcher.TextWatcherChrono;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class RvTrainingUpdateTimesAdapter extends RecyclerView.Adapter<RvTrainingUpdateTimesAdapter.MyViewHolder> {
     private Context context;
@@ -25,9 +25,9 @@ public class RvTrainingUpdateTimesAdapter extends RecyclerView.Adapter<RvTrainin
     private ArrayList<Float> times;
 
     public RvTrainingUpdateTimesAdapter(Context context, TrainingBlock trainingBlock) {
-        this.context = context;
+        this.context       = context;
         this.trainingBlock = trainingBlock;
-        times = new ArrayList<Float>();
+        times              = new ArrayList<Float>();
         for (int i = 0; i < trainingBlock.getTimes().size(); i++)
             times.add(trainingBlock.getTimes().get(i));
     }
@@ -66,42 +66,17 @@ public class RvTrainingUpdateTimesAdapter extends RecyclerView.Adapter<RvTrainin
             textView.setText("T E M P S  " + (position + 1) + " : ");
             if (trainingBlock.getTimes().get(position) != 0.0f) editText.setText(MarketTimes.fetchFloatToTime(trainingBlock.getTimes().get(position)));
             updateTime(position);
-            System.out.println(Arrays.toString(trainingBlock.getTimes().toArray()));
         }
 
         private void updateTime(int position) {
+            editText.addTextChangedListener(new TextWatcherChrono(editText));
             editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
                 @Override
-                public void afterTextChanged(Editable s) {
-                    // times.set(position, MarketTimes.fetchTimeToFloat(MarketTimes.convertTimeToFormat(editText.getText().toString())));
-                    trainingBlock.setTime(MarketTimes.fetchTimeToFloat(MarketTimes.convertTimeToFormat(editText.getText().toString())), position);
-                }
+                public void onTextChanged(CharSequence s, int start, int before, int count) { }
                 @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    editText.removeTextChangedListener(this);
-                    int timeInt = Integer.parseInt(editText.getText().toString().replaceAll("[:.]", "")); // permet de retirer les premiers zéros du String
-                    String text = String.valueOf(timeInt);
-                    int textSize = text.length();
-
-                    if (textSize >= 5) {
-                        text = new StringBuilder(text).insert(textSize - 2, ".").insert(textSize - 4, ":").toString();
-                        editText.setText(text);
-                        editText.setSelection(text.length());
-                    } else if (textSize > 2) {
-                        text = new StringBuilder(text).insert(textSize - 2, ".").toString();
-                        editText.setText(text);
-                        editText.setSelection(text.length());
-                    } else {
-                        for (int i = 0; i < 3 - textSize; i++) text = new StringBuilder(text).insert(i, "0").toString();
-                        text = new StringBuilder(text).insert(text.length() - 2, ".").toString();
-                        editText.setText(text);
-                        editText.setSelection(text.length());
-                    }
-                    System.out.println(Arrays.toString(trainingBlock.getTimes().toArray()));
-                    editText.addTextChangedListener(this);
-                }
+                public void afterTextChanged(Editable s) { trainingBlock.setTime(MarketTimes.fetchTimeToFloat(MarketTimes.convertTimeToFormat(editText.getText().toString())), position); }
             });
         }
     }

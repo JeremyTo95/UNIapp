@@ -17,7 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketTimes;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -172,7 +172,8 @@ public class AddRacePopup extends Dialog {
                 }
                 time = MarketTimes.fetchTimeToFloat(text);
                 return true;
-            } else return false;
+            } else if (textSize == 8) return true;
+            else return false;
         } else return false;
     }
 
@@ -181,11 +182,6 @@ public class AddRacePopup extends Dialog {
         boolean checkTime = checkInputFormatTime();
 
         if (checkDate && checkTime && city.length() > 0 && country.length() > 0) {
-            System.out.println("date    : "+  date);
-            System.out.println("city    : "+  city);
-            System.out.println("time    : "+  time);
-            System.out.println("level   : "+  level);
-            System.out.println("country : "+  level);
             dismiss();
             return true;
         } else {
@@ -255,7 +251,6 @@ public class AddRacePopup extends Dialog {
     public EditText getDateEditText() { return dateEditText; }
     public EditText getCityEditText() { return cityEditText; }
     public EditText getTimeEditText() { return timeEditText; }
-    //public EditText getLevelEditText() { return levelEditText; }
     public Spinner getSelectLevelCompetition() { return selectLevelCompetition; }
     public String getCountry() { return country; }
     public EditText getCountryEditText() { return countryEditText; }
@@ -263,7 +258,6 @@ public class AddRacePopup extends Dialog {
     public void setDateEditText(EditText dateEditText) { this.dateEditText = dateEditText; }
     public void setCityEditText(EditText cityEditText) { this.cityEditText = cityEditText; }
     public void setTimeEditText(EditText timeEditText) { this.timeEditText = timeEditText; }
-    //public void setLevelEditText(EditText levelEditText) { this.levelEditText = levelEditText; }
     public void setTitle(String title) { this.title = title; }
     public void setCity(String city) { this.city = city; }
     public void setDate(String date) { this.date = date; }

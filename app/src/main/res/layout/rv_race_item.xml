@@ -5,8 +5,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_margin="20dp"
     android:padding="10dp"
+    android:layout_margin="20dp"
     android:background="@drawable/sh_gradient_background">
 
     <LinearLayout
@@ -65,5 +65,4 @@
             android:fontFamily="sans-serif-light"
             android:gravity="center" />
     </LinearLayout>
-
 </LinearLayout>

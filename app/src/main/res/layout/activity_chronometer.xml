@@ -114,7 +114,7 @@
                 android:background="@drawable/sh_button"
                 android:text="R E S E T"
                 android:tag="reset"
-                android:textColor="?attr/textColor"
+                android:textColor="?attr/textButtonColor"
                 android:fontFamily="sans-serif-light"
                 android:textSize="@dimen/h3_textsize"/>
         </LinearLayout>

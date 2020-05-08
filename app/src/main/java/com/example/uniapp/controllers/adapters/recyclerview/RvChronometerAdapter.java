@@ -10,19 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketTimes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RvChronometerAdapter extends RecyclerView.Adapter<RvChronometerAdapter.MyViewHolder> {
     private Context context;
-    private List<Long> allChronos;
+    private List<Long> chrono;
+    private List<Long> lap;
+    private List<Double> diff;
 
-    public RvChronometerAdapter(Context context, List<Long> allChronos) {
+    public RvChronometerAdapter(Context context, List<Long> chrono, List<Long> lap, List<Double> diff) {
         this.context = context;
-        this.allChronos = allChronos;
+        this.chrono = chrono;
+        this.lap = lap;
+        this.diff = diff;
     }
 
     @NonNull
@@ -41,7 +43,7 @@ public class RvChronometerAdapter extends RecyclerView.Adapter<RvChronometerAdap
 
     @Override
     public int getItemCount() {
-        return allChronos.size();
+        return chrono.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -49,7 +51,6 @@ public class RvChronometerAdapter extends RecyclerView.Adapter<RvChronometerAdap
         private TextView chronoTV;
         private TextView lapChronoTV;
         private TextView diffTV;
-        private long lapChrono;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -60,39 +61,19 @@ public class RvChronometerAdapter extends RecyclerView.Adapter<RvChronometerAdap
         }
 
         public void display(int position) {
-            if (position == allChronos.size() - 1) lapChrono = allChronos.get(0);
-            else lapChrono = (allChronos.get(allChronos.size() - position - 1) - allChronos.get(allChronos.size() - position - 2));
-
-            lapTV.setText("L A P  " + (allChronos.size() - position));
-            chronoTV.setText(MarketTimes.convertLongMilliToTime(allChronos.get(allChronos.size() - position - 1)));
-            lapChronoTV.setText(MarketTimes.convertLongMilliToTime(lapChrono));
-            diffTV.setText(getDiffLaps(position));
-            if (diffTV.getText().toString().charAt(1) == '-') diffTV.setTextColor(context.getResources().getColor(R.color.greenDeep));
-            else                                              diffTV.setTextColor(context.getResources().getColor(R.color.redDeep));
+            lapTV.setText("L A P  " + (chrono.size() - position));
+            chronoTV.setText(MarketTimes.convertLongMilliToTime(chrono.get(chrono.size() - position - 1)));
+            lapChronoTV.setText(MarketTimes.convertLongMilliToTime(lap.get(lap.size() - position - 1)));
+            printDiff(diff.get(diff.size() - position - 1));
         }
 
-        private String getDiffLaps(int position) {
-            String result = "";
-            long diff;
-            long diff1 = 0;
-            long diff2 = 0;
+        private void printDiff(double diffChrono) {
+            String diffStr = MarketTimes.getDiffTime(diffChrono);
+            diffTV.setText(diffStr);
 
-            if (position == allChronos.size() - 1) diff1 = 0;
-            else diff1 = (allChronos.get(allChronos.size() - position - 1) - allChronos.get(allChronos.size() - position - 2));
+            if (diffChrono > 0) diffTV.setTextColor(context.getResources().getColor(R.color.redDeep));
+            else diffTV.setTextColor(context.getResources().getColor(R.color.greenDeep));
 
-            if (position == allChronos.size() - 1) diff2 = diff1;
-            else if (position == allChronos.size() - 2) diff2 = allChronos.get(allChronos.size() - 1) - 0 - lapChrono ;
-            else diff2 = (allChronos.get(allChronos.size() - position - 2) - allChronos.get(allChronos.size() - position - 3));
-
-            diff = diff2 - diff1;
-
-            double time = (double) diff / 100;
-
-            if (time == 0)     result = "(-0.00)";
-            else if (time > 0) result = "(-" + time + ")";
-            else               result = "(+" + time*(-1) + ")";
-
-            return result;
         }
     }
 }

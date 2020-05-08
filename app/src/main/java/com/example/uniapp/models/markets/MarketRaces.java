@@ -1,4 +1,4 @@
-package com.example.uniapp.models;
+package com.example.uniapp.models.markets;
 
 import android.util.Log;
 
@@ -32,6 +32,14 @@ public class MarketRaces {
             bestTime.setTime(0.0f);
         }
         return bestTime;
+    }
+
+    public static List<Float> getFloatTimes(List<Race> allRaces) {
+        List<Float> allTimes = new ArrayList<>();
+        for (int i = 0; i < allRaces.size(); i++) {
+            allTimes.add(allRaces.get(allRaces.size() - (i + 1)).getTime());
+        }
+        return allTimes;
     }
 
     public static void sortRacesByDate(List<Race> allTimes) {

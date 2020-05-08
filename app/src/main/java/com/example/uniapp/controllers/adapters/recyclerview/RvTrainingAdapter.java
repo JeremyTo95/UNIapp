@@ -14,30 +14,36 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.uniapp.controllers.activities.DetailTrainingActivity;
 import com.example.uniapp.R;
 //import com.example.uniapp.controllers.activities.DetailTrainingActivity;
-import com.example.uniapp.models.database.dao.race.Race;
+import com.example.uniapp.controllers.activities.MainActivity;
+import com.example.uniapp.models.markets.MarketSwim;
+import com.example.uniapp.models.markets.MarketTrainings;
+import com.example.uniapp.models.SetupLineChart;
 import com.example.uniapp.models.database.dao.training.Training;
 import com.example.uniapp.views.AboutScreen;
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.MyViewHolder> {
-    private Activity activity;
-    private List<Training> allTrainings;
+    private Activity           activity;
+    private List<Training>     allTrainings;
+    private List<List<Float>>  inputTimes;
+    private List<List<String>> legendValues;
 
-    public RvTrainingAdapter(Activity activity, List<Training> allTrainings) { this.activity = activity; this.allTrainings = allTrainings; }
+    private Training trainingDeleted;
+    private int      trainingDeletedPosition;
+
+    public RvTrainingAdapter(Activity activity, List<Training> allTrainings) {
+        this.activity     = activity;
+        this.allTrainings = allTrainings;
+    }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        System.out.println("here : " + allTrainings.size());
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.rv_training_items, parent, false);
 
@@ -47,19 +53,16 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Training training = allTrainings.get(position);
+        inputTimes              = new ArrayList<List<Float>>();
+        legendValues            = new ArrayList<List<String>>();
+        for (int i = 0; i < training.getTrainingBlockList().size(); i++) {
+            inputTimes.add(training.getTrainingBlockList().get(i).getTimes());
+            legendValues.add(MarketTrainings.getLegendTraining(training.getTrainingBlockList()));
+        }
         holder.display(training);
         holder.itemView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                /*TrainingDetailPopup trainingDetailPopup = new TrainingDetailPopup(activity, training);
-                trainingDetailPopup.build();
-                trainingDetailPopup.getUpdateBtn().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        holder.configureAndShowLineChart(holder.lineChart, true);
-                        trainingDetailPopup.dismiss();
-                    }
-                });*/
                 Intent intent = new Intent(v.getContext(), DetailTrainingActivity.class);
                 intent.putExtra("EXTRA_TRAINING_SELECTED", (Serializable) training);
                 v.getContext().startActivity(intent);
@@ -67,13 +70,31 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         });
     }
 
-    @Override
-    public int getItemCount() { return allTrainings.size(); }
-
     public void removeItem(int position) {
+        trainingDeleted         = allTrainings.get(position);
+        trainingDeletedPosition = position;
+        MainActivity.appDataBase.trainingDAO().deleteTraining(allTrainings.get(position));
         allTrainings.remove(position);
         notifyItemRemoved(position);
+        showUndoSnackbar();
     }
+
+    private void showUndoSnackbar() {
+        View view = activity.findViewById(R.id.activty_main_fragment_layout);
+        Snackbar snackbar = Snackbar.make(view, "Entrainement supprimé", Snackbar.LENGTH_LONG);
+        snackbar.setAction("Annuler", v -> undoDelete());
+        snackbar.show();
+    }
+
+    private void undoDelete() {
+        MainActivity.appDataBase.trainingDAO().insertTraining(trainingDeleted);
+        allTrainings.add(trainingDeletedPosition, trainingDeleted);
+        notifyItemInserted(trainingDeletedPosition);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemCount() { return allTrainings.size(); }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView date_sizePool_title;
@@ -98,13 +119,14 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         }
 
         private void display(Training training) {
-            String text = "";
-
+            StringBuilder text = new StringBuilder();
             date_sizePool_title.setText(training.getDate());
+
             for (int i = 0; i < training.getTrainingBlockList().size(); i++)
-                text += training.getTrainingBlockList().get(i).getNbSet() + " x " + training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " Z" + training.getTrainingBlockList().get(i).getZone() + "\n";
-            text = text.substring(0, text.length() - 1);
-            serie_content.setText(text);
+                text.append(training.getTrainingBlockList().get(i).getNbSet()).append(" x ").append(training.getTrainingBlockList().get(i).getDistance()).append(MarketSwim.convertShortSwim(training.getTrainingBlockList().get(i).getSwim())).append(" Z").append(training.getTrainingBlockList().get(i).getZone()).append("\n");
+
+            text.delete(text.length() - 1, text.length() - 1);
+            serie_content.setText(text.toString());
 
             for (int i = 0; i < stars.size(); i++) stars.get(i).setClickable(false);
             if (AboutScreen.isNightMode(activity)) {
@@ -114,67 +136,8 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
                 for (int i = 0; i < stars.size(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(itemView.getResources().getDrawable(R.drawable.ic_radio_button_unchecked_black_24dp), null, null, null);
                 for (int i = 0; i < training.getDifficulty(); i++) stars.get(i).setCompoundDrawablesWithIntrinsicBounds(itemView.getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
             }
-            configureAndShowLineChart(lineChart, true);
-        }
 
-        private void configureAndShowLineChart(LineChart lineChart, boolean isAnimation) {
-            lineChart.clear();
-            lineChart.setScaleEnabled(false);
-
-            LineData lineData = setupTrainingLineData();
-            configureLineChart(lineData, isAnimation);
-        }
-
-        private LineData setupTrainingLineData() {
-            int[] colors = {R.color.greenLight, R.color.redLight, R.color.blueDeep, R.color.orangeLight, R.color.orangeLight};
-            ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-
-            for (int i = 0; i < allTrainings.get(getAdapterPosition()).getTrainingBlockList().size(); i++) {
-                ArrayList<Entry> yValues = setupTimesLineChart(allTrainings.get(getAdapterPosition()), i);
-                LineDataSet lineDataSet = new LineDataSet(yValues, allTrainings.get(getAdapterPosition()).getTrainingBlockList().get(i).getDistance() + "" + Race.convertShortSwim(allTrainings.get(getAdapterPosition()).getTrainingBlockList().get(i).getSwim()));
-                lineDataSet.setLineWidth(1.5f);
-                lineDataSet.setCircleRadius(3f);
-                lineDataSet.setCircleHoleRadius(1.5f);
-                lineDataSet.setColor(this.itemView.getResources().getColor(colors[i%colors.length]));
-                lineDataSet.setCircleColor(this.itemView.getResources().getColor(colors[i%colors.length]));
-                lineDataSet.setHighLightColor(this.itemView.getResources().getColor(colors[i%colors.length]));
-                lineDataSet.setDrawValues(false);
-                lineDataSet.setDrawFilled(true);
-                lineDataSet.setFillColor(this.itemView.getResources().getColor(colors[i%colors.length]));
-                lineDataSet.setFillAlpha(100);
-                dataSets.add(lineDataSet);
-            }
-            LineData data = new LineData(dataSets);
-            data.setHighlightEnabled(false);
-            return data;
-        }
-
-        private ArrayList<Entry> setupTimesLineChart(Training training, int setIndex) {
-            ArrayList<Entry> result = new ArrayList<>();
-            int cpt = 0;
-            if (training.getTrainingBlockList().get(setIndex).getTimes() != null) {
-                for (int i = 0; i < training.getTrainingBlockList().get(setIndex).getTimes().size(); i++) {
-                    result.add(new Entry(cpt, training.getTrainingBlockList().get(setIndex).getTimes().get(i)));
-                    cpt++;
-                }
-            }
-            return result;
-        }
-
-        private void configureLineChart(LineData lineData, boolean isAnimation) {
-            if (isAnimation) lineChart.animateXY(400, 800, Easing.EaseInOutQuad);
-            lineChart.notifyDataSetChanged();
-            lineChart.setData(lineData);
-            lineChart.getDescription().setEnabled(false); //ok
-            lineChart.setDrawGridBackground(false); //ok
-            lineChart.getAxisLeft().setEnabled(false);
-            lineChart.getAxisLeft().setSpaceTop(40);
-            lineChart.getAxisLeft().setSpaceBottom(40);
-            lineChart.getAxisLeft().setAxisMinimum(0.0f);
-            lineChart.getAxisRight().setEnabled(false);
-            lineChart.getXAxis().setEnabled(false);
-            lineChart.setTouchEnabled(false);
-            lineChart.getLegend().setTextColor(itemView.getResources().getColor(R.color.textColorDark));
+            SetupLineChart.configureMyLinesChart(activity, inputTimes, lineChart, legendValues.get(0), true);
         }
     }
 }

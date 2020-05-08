@@ -2,14 +2,11 @@ package com.example.uniapp.controllers.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -35,52 +32,22 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 //       SAUVEGARDE DES DONNEES SUR TELEPHONE, PLUS GESTION POUR NE PAS ECRASER LES DONNEE DEJA SAUVEGADER
 
 public class MainActivity extends AppCompatActivity {
-    private LinearLayout linearLayoutLoading;
     public static AppDataBase appDataBase;
     public static SharedPrefManager sharedPrefManager;
 
+    private LinearLayout linearLayoutLoading;
     private BottomNavigationView bottomNavigationView;
-    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navbar_custom_competition_btn:
-                    configureAndShowFragment(new CompetitionsFragment());
-                    return true;
-                case R.id.navbar_custom_training_btn:
-                    configureAndShowFragment(new TrainingsFragment());
-                    return true;
-                case R.id.navbar_custom_home_btn:
-                    configureAndShowFragment(new MainFragment());
-                    return true;
-                case R.id.navbar_custom_statistic_btn:
-                    configureAndShowFragment(new GadgetsFragment());
-                    return true;
-                case R.id.navbar_custom_settings_btn:
-                    configureAndShowFragment(new SettingsFragment());
-                    return true;
-            }
-            return false;
-        }
-    };
+    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         appDataBase          = AppDataBase.getDatabase(getApplicationContext());
-        sharedPrefManager    = new SharedPrefManager(getApplicationContext());
+        sharedPrefManager    = SharedPrefManager.getSharedPref(getApplicationContext());
         AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_main);
-        linearLayoutLoading  = findViewById(R.id.glb_loading);
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
-        bottomNavigationView.setSelectedItemId(R.id.navbar_custom_home_btn);
-
+        setupUIElements();
         lockUI();
-        /* for (int i = 0; i < appDataBase.userDAO().getNb(); i++) {
-            System.out.println(appDataBase.userDAO().getAll().get(i).getFirstname());
-            System.out.println(appDataBase.userDAO().getAll().get(i).getKey());
-        } */
-
         if (getIntent().getSerializableExtra("EXTRA_NEW_USER") != null) {
             appDataBase.userDAO().deleteAll();
             prepopulateUsersInDataBase();
@@ -88,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             if (appDataBase.userDAO().checkUserByKey(newUser.getFirstname(), newUser.getLastname(), newUser.getMykey()) == 0) {
                 goSignInUser();
             } else {
-                Log.e("OK", "User authentified");
                 appDataBase.userDAO().deleteAll();
                 appDataBase.userDAO().insert(newUser);
                 Toast.makeText(getApplicationContext(), "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
@@ -101,6 +67,35 @@ public class MainActivity extends AppCompatActivity {
         if (appDataBase.pointFFNDAO().getNb() == 54000) unlockUI();
         if (appDataBase.userDAO().getNb() == 1) configureAndShowFragment(new MainFragment());
         else goSignInUser();
+    }
+
+    private void setupUIElements() {
+        linearLayoutLoading  = findViewById(R.id.glb_loading);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navbar);
+        bottomNavigationView.setSelectedItemId(R.id.navbar_custom_home_btn);
+        onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navbar_custom_competition_btn:
+                        configureAndShowFragment(new CompetitionsFragment());
+                        return true;
+                    case R.id.navbar_custom_training_btn:
+                        configureAndShowFragment(new TrainingsFragment());
+                        return true;
+                    case R.id.navbar_custom_home_btn:
+                        configureAndShowFragment(new MainFragment());
+                        return true;
+                    case R.id.navbar_custom_statistic_btn:
+                        configureAndShowFragment(new GadgetsFragment());
+                        return true;
+                    case R.id.navbar_custom_settings_btn:
+                        configureAndShowFragment(new SettingsFragment());
+                        return true;
+                }
+                return false;
+            }
+        };
     }
 
     private void lockUI() {
@@ -133,13 +128,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void prepopulateUsersInDataBase() {
-        //User tourari_jeremy      = new User("Homme", "Jeremy", "Tourari", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "ahdk-1kg4-mqp0");
-        User tourari_jeremy      = new User("Homme", "Jeremy", "Tourari", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
-        User peuffier_arthur     = new User("Homme", "Arthur", "Peuffier", "03/02/1995", 185, 73, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
-        User noirbent_christophe = new User("Homme", "Christophe", "Noirbent", "12/11/1993", 186, 82, "AS HERBLAY NATATION", "butterfly", "Herblay", "abcd-efgh-ijkl");
-        User bencherqui_younes   = new User("Homme", "Younes", "Bencherqui", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
-        User valenza_dylan       = new User("Homme", "Dylan", "Valenza", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
-        User andre_baptiste      = new User("Homme", "Baptiste", "Andre", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User tourari_jeremy      = new User("Homme", "Jeremy",     "Tourari",    "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User peuffier_arthur     = new User("Homme", "Arthur",     "Peuffier",   "03/02/1995", 185, 73, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User noirbent_christophe = new User("Homme", "Christophe", "Noirbent",   "12/11/1993", 186, 82, "AS HERBLAY NATATION", "butterfly", "Herblay", "abcd-efgh-ijkl");
+        User bencherqui_younes   = new User("Homme", "Younes",     "Bencherqui", "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User valenza_dylan       = new User("Homme", "Dylan",      "Valenza",    "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
+        User andre_baptiste      = new User("Homme", "Baptiste",   "Andre",      "11/11/1999", 180, 70, "AS HERBLAY NATATION", "freestyle", "Herblay", "abcd-efgh-ijkl");
 
         appDataBase.userDAO().insert(tourari_jeremy);
         appDataBase.userDAO().insert(peuffier_arthur);
@@ -149,9 +143,4 @@ public class MainActivity extends AppCompatActivity {
         appDataBase.userDAO().insert(andre_baptiste);
     }
 
-    /*@Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) AboutScreen.hideNavigationBar(this);
-    }*/
 }

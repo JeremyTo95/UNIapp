@@ -19,6 +19,16 @@
         android:overScrollMode="never"
         android:clipToPadding="false"
         android:foregroundGravity="center" />
+    <!-- <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout> -->
 
     <LinearLayout
         android:id="@+id/glb_loading"

@@ -2,36 +2,28 @@ package com.example.uniapp.views.popup.training;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.activities.MainActivity;
 import com.example.uniapp.controllers.adapters.recyclerview.RvTrainingDetailAdapter;
-import com.example.uniapp.models.MarketRaces;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketRaces;
+import com.example.uniapp.models.markets.MarketSwim;
+import com.example.uniapp.models.markets.MarketTimes;
 import com.example.uniapp.models.database.dao.race.Race;
 import com.example.uniapp.models.database.dao.training.Training;
-import com.example.uniapp.views.AboutScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +74,8 @@ public class TrainingDetailPopup extends Dialog {
         String trainingZoneTimeStr = "";
         List<Float> bestTimes = getCompetitionRaceTime();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++) {
-            competitionTimeStr  += training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + bestTimes.get(i) + "\n";
-            trainingZoneTimeStr += "Z" + training.getTrainingBlockList().get(i).getZone() + " " + training.getTrainingBlockList().get(i).getDistance() + Race.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + MarketTimes.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getTrainingBlockList().get(i).getZone()) + "\n";
+            competitionTimeStr  += training.getTrainingBlockList().get(i).getDistance() + MarketSwim.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + bestTimes.get(i) + "\n";
+            trainingZoneTimeStr += "Z" + training.getTrainingBlockList().get(i).getZone() + " " + training.getTrainingBlockList().get(i).getDistance() + MarketSwim.convertShortSwim(training.getTrainingBlockList().get(i).getSwim()) + " : " + MarketTimes.convertCompetitionTimeToZoneTime(bestTimes.get(i), training.getTrainingBlockList().get(i).getZone()) + "\n";
         }
         competitionTimeStr  = competitionTimeStr.substring(0, competitionTimeStr.length() - 1);
         trainingZoneTimeStr = trainingZoneTimeStr.substring(0, trainingZoneTimeStr.length() - 1);

@@ -19,34 +19,36 @@ import android.widget.Toast;
 
 import com.example.uniapp.R;
 import com.example.uniapp.controllers.adapters.recyclerview.RvChronometerAdapter;
-import com.example.uniapp.models.MarketTimes;
+import com.example.uniapp.models.markets.MarketTimes;
 import com.example.uniapp.views.AboutScreen;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChronometerActivity extends AppCompatActivity implements View.OnClickListener {
-    private LinearLayout spaceResetLep;
-
-    private ImageView anchorChrono;
-    private Animation animChrono;
-    private RecyclerView allChronosRV;
-    private RvChronometerAdapter rvChronometerAdapter;
     private ConstraintLayout startStopBtn;
-    private Button resetBtn;
-    private Button lapBtn;
+    private LinearLayout     spaceResetLep;
+    private Animation        animChrono;
+    private ImageView        anchorChrono;
+    private int              offsetAnchor;
 
     private TextView chronoTV;
     private TextView chronoLapTV;
     private TextView chronoDiffTV;
-    private Thread chronoThread;
+    private Button   resetBtn;
 
-    private boolean isRunning;
-    private int offsetAnchor;
-    private long chronoTime;
-    private long startTime;
-    private long oldDiffTime;
-    private List<Long> allChronos;
+    private Thread       chronoThread;
+    private long         startTime;
+    private boolean      isRunning;
+    private long         currentChrono;
+    private long         currentLapChrono;
+    private Double       currentDiffChrono;
+    private List<Long>   allChronos;
+    private List<Long>   lapChronos;
+    private List<Double> diffChronos;
+
+    private RecyclerView         allChronosRV;
+    private RvChronometerAdapter rvChronometerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,22 +65,24 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void setupUIElements() {
-        offsetAnchor = 32;
-        chronoTime   = 0;
-        oldDiffTime  = 0;
-        isRunning    = false;
-        allChronos   = new ArrayList<Long>();
+        offsetAnchor      = 32;
+        currentChrono     = 0;
+        currentLapChrono  = 0l;
+        currentDiffChrono = 0d;
+        allChronos        = new ArrayList<Long>();
+        lapChronos        = new ArrayList<Long>();
+        diffChronos       = new ArrayList<Double>();
+        isRunning         = false;
 
-        startStopBtn  = findViewById(R.id.activity_chronometer_btn_start);
-        resetBtn      = findViewById(R.id.activity_chronometer_btn_reset);
-
-        anchorChrono  = findViewById(R.id.activity_chronometer_anchor);
-        animChrono    = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.roundingalone);
-        spaceResetLep = findViewById(R.id.activity_chronometer_linear_layout_options);
-        chronoTV      = findViewById(R.id.activity_chronometer_chrono);
-        chronoLapTV   = findViewById(R.id.activity_chronometer_lap);
-        chronoDiffTV  = findViewById(R.id.activity_chronometer_diff);
-        allChronosRV  = findViewById(R.id.activity_chronometer_rv);
+        startStopBtn      = findViewById(R.id.activity_chronometer_btn_start);
+        resetBtn          = findViewById(R.id.activity_chronometer_btn_reset);
+        anchorChrono      = findViewById(R.id.activity_chronometer_anchor);
+        animChrono        = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.roundingalone);
+        spaceResetLep     = findViewById(R.id.activity_chronometer_linear_layout_options);
+        chronoTV          = findViewById(R.id.activity_chronometer_chrono);
+        chronoLapTV       = findViewById(R.id.activity_chronometer_lap);
+        chronoDiffTV      = findViewById(R.id.activity_chronometer_diff);
+        allChronosRV      = findViewById(R.id.activity_chronometer_rv);
 
         anchorChrono.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(this)) ? R.drawable.anchor_chrono_dark : R.drawable.anchor_chrono_light));
         anchorChrono.setRotation(offsetAnchor);
@@ -89,22 +93,24 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
         chronoThread = new Thread() {
             @Override
             public void run() {
-                super.run();
-                try {
-                    while (!isInterrupted()) {
-                        Thread.sleep(10);
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                chronoTV = findViewById(R.id.activity_chronometer_chrono);
-                                chronoTime = System.currentTimeMillis()/10 - startTime + oldTime;
-                                chronoTV.setText(MarketTimes.convertLongMilliToTime(chronoTime));
-                                updateChronoLap();
-                                updateChronoDiff();
-                            }
-                        });
-                    }
-                } catch (Exception ex) {}
+            super.run();
+            try {
+                while (!isInterrupted()) {
+                    Thread.sleep(10);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            chronoTV = findViewById(R.id.activity_chronometer_chrono);
+                            currentChrono = System.currentTimeMillis()/10 - startTime + oldTime;
+                            chronoTV.setText(MarketTimes.convertLongMilliToTime(currentChrono));
+                            updateChronoLap();
+                            updateChronoDiff();
+                        }
+                    });
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             }
         };
     }
@@ -116,11 +122,8 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        int action;
-        int keyCode;
-
-        action = event.getAction();
-        keyCode = event.getKeyCode();
+        int action  = event.getAction();
+        int keyCode = event.getKeyCode();
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && action == KeyEvent.ACTION_DOWN) {
             lap();
@@ -135,12 +138,12 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
         isRunning = !isRunning;
         if (isRunning) {
             startTime = System.currentTimeMillis()/10;
-            setupThreadChrono(MarketTimes.convertTimeToLongMilli(chronoTV.getText().toString()));
+            setupThreadChrono(currentChrono);
             chronoThread.start();
             anchorChrono.startAnimation(animChrono);
         } else {
             chronoThread.interrupt();
-            chronoTime = MarketTimes.convertTimeToLongMilli(chronoTV.getText().toString());
+            currentChrono = MarketTimes.convertTimeToLongMilli(chronoTV.getText().toString());
             anchorChrono.clearAnimation();
             rotateAnchorStopping(10);
         }
@@ -152,7 +155,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(getApplicationContext(), "Le chronomètre doit être arréter", Toast.LENGTH_SHORT).show();
         } else {
             chronoThread = null;
-            allChronos = new ArrayList<Long>();
+            allChronos   = new ArrayList<Long>();
             updateLapChronoRV();
             setupThreadChrono(0);
             chronoTV.setText("00:00.00");
@@ -166,67 +169,41 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void lap() {
-        allChronos.add(chronoTime);
+        allChronos.add(currentChrono);
+        lapChronos.add(currentLapChrono);
+        diffChronos.add(currentDiffChrono);
         updateLapChronoRV();
-
-        if (allChronos.size() == 1) oldDiffTime = 0;
-        if (allChronos.size() == 2) oldDiffTime = chronoTime - allChronos.get(allChronos.size() - 1);
-        if (allChronos.size()  > 2) oldDiffTime = chronoTime - allChronos.get(allChronos.size() - 1) - (allChronos.get(allChronos.size() - 1) - allChronos.get(allChronos.size() - 2));
     }
 
     private void rotateAnchorStopping(int timeForRoundInS) {
-        anchorChrono.setRotation((int) ((((double) chronoTime / 100) * 360 / timeForRoundInS) + offsetAnchor)%360);
+        anchorChrono.setRotation((int) ((((double) currentChrono / 100) * 360 / timeForRoundInS) + offsetAnchor)%360);
     }
 
     private void updateLapChronoRV() {
         allChronosRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rvChronometerAdapter = new RvChronometerAdapter(getApplicationContext(), allChronos);
+        rvChronometerAdapter = new RvChronometerAdapter(getApplicationContext(), allChronos, lapChronos, diffChronos);
         allChronosRV.setAdapter(rvChronometerAdapter);
         allChronosRV.setNestedScrollingEnabled(false);
         rvChronometerAdapter.notifyDataSetChanged();
     }
 
     private void updateChronoLap() {
-        if (allChronos.size() != 0) chronoLapTV.setText(MarketTimes.convertLongMilliToTime(chronoTime - allChronos.get(allChronos.size() - 1)));
-        else chronoLapTV.setText(MarketTimes.convertLongMilliToTime(chronoTime));
+        if (allChronos.size() != 0) currentLapChrono = currentChrono - allChronos.get(allChronos.size() - 1);
+        else currentLapChrono = currentChrono;
+        chronoLapTV.setText(MarketTimes.convertLongMilliToTime(currentLapChrono));
     }
 
     private void updateChronoDiff() {
-        double diffChrono;
         long diffChronoLong = 0;
 
         if (allChronos.size() == 0) diffChronoLong = 0;
-        if (allChronos.size() == 1) diffChronoLong = chronoTime - allChronos.get(allChronos.size() - 1) - (allChronos.get(allChronos.size() - 1) - 0);
-        if (allChronos.size() >= 2) diffChronoLong = chronoTime - allChronos.get(allChronos.size() - 1) - (allChronos.get(allChronos.size() - 1) - allChronos.get(allChronos.size() - 2));
+        if (allChronos.size() == 1) diffChronoLong = currentLapChrono - (allChronos.get(allChronos.size() - 1) - 0);
+        if (allChronos.size() >= 2) diffChronoLong = currentLapChrono - (allChronos.get(allChronos.size() - 1) - allChronos.get(allChronos.size() - 2));
 
-        diffChrono = (double) diffChronoLong / 100; // OK
+        currentDiffChrono = (double) diffChronoLong / 100;
+        chronoDiffTV.setText(MarketTimes.getDiffTime(currentDiffChrono));
 
-        int integer = (int) diffChrono;
-        int decimal = (int) (diffChrono*100)%100;
-
-        String integerStr = String.valueOf(integer);
-        String decimalStr = String.valueOf(decimal);
-
-        if (integer <= -10) integerStr = String.valueOf(integer * (-1));
-        else if (integer > -10 && integer <  0) integerStr = "0" + integer*(-1);
-        else if (integer >= 0  && integer < 10) integerStr = "0" + integer;
-
-        if (decimal <= -10) decimalStr = String.valueOf(decimal * (-1));
-        else if (decimal > -10 && decimal <  0) decimalStr = "0" + decimal*(-1);
-        else if (decimal >= 0  && decimal < 10) decimalStr = "0" + decimal;
-
-        if (diffChrono > 0) {
-            chronoDiffTV.setText("(+" + integerStr + "." + decimalStr + ")");
-            chronoDiffTV.setTextColor(getResources().getColor(R.color.redDeep));
-        } else {
-            chronoDiffTV.setText("(-" + integerStr + "." + decimalStr + ")");
-            chronoDiffTV.setTextColor(getResources().getColor(R.color.greenDeep));
-        }
+        if (currentDiffChrono > 0) chronoDiffTV.setTextColor(getResources().getColor(R.color.redDeep));
+        else chronoDiffTV.setTextColor(getResources().getColor(R.color.greenDeep));
     }
-
-    /*@Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) AboutScreen.hideNavigationBar(this);
-    }*/
 }
