@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/backgroundColor"
-    tools:context=".views.popup.training.TrainingDetailPopup">
+    tools:context=".front.view.popup.TrainingDetailPopup">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

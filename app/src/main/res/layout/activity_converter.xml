@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor"
     android:orientation="vertical"
-    tools:context=".controllers.activities.ConverterActivity">
+    tools:context=".front.view.actvities.ConverterActivity">
 
     <TextView
         android:id="@+id/fragment_statistiques_statistique_title"

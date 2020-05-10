@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/backgroundColor"
+    tools:context=".front.view.popup.TrainingDetailPopup">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:text="DETAILS ENTRAINEMENTS"
+                android:textSize="@dimen/fragment_bigtitle_textsize"
+                android:gravity="center"
+                android:fontFamily="sans-serif-light"
+                android:textColor="?attr/secondaryColor" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/fragment_detail_race_time_date_and_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/h3_textsize"
+                    android:text="Le 26/03/2020 à HERBLAY (25m)"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:layout_marginVertical="20dp"
+                    android:textColor="?attr/textColor"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginHorizontal="30dp"
+                    android:layout_marginVertical="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_detail_race_time_swimmer_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="I N F O R M A T I O N S :"
+                        android:textSize="@dimen/h3_textsize"
+                        android:textColor="?attr/secondaryColor" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/fragment_detail_training_competition_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_margin="3dp"
+                                android:text="C O M P E T I T I O N"
+                                android:fontFamily="sans-serif"
+                                android:textSize="@dimen/h4_textsize"
+                                android:gravity="center"
+                                android:textColor="?attr/secondaryColor" />
+                            <TextView
+                                android:id="@+id/fragment_detail_training_zone_title"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_margin="3dp"
+                                android:text="Z O N E"
+                                android:gravity="center"
+                                android:fontFamily="sans-serif"
+                                android:textSize="@dimen/h4_textsize"
+                                android:textColor="?attr/secondaryColor" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/fragment_detail_training_swims_competition_times"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_margin="3dp"
+                                android:text="100NL : 00:55.66\n50NL : 00:24.93"
+                                android:fontFamily="sans-serif"
+                                android:textSize="@dimen/h4_textsize"
+                                android:gravity="center"
+                                android:textColor="?attr/textColor" />
+                            <TextView
+                                android:id="@+id/fragment_detail_training_swims_zone_times"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_margin="3dp"
+                                android:text="100NL : 58.59\n50NL : 26.24"
+                                android:fontFamily="sans-serif"
+                                android:textSize="@dimen/h4_textsize"
+                                android:gravity="center"
+                                android:textColor="?attr/textColor" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginVertical="10dp">
+
+                        <TextView
+                            android:id="@+id/fragment_detail_race_time_performance_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="S E R I E S :"
+                            android:textSize="@dimen/h3_textsize"
+                            android:textColor="?attr/secondaryColor" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_gravity="right"
+                            android:orientation="horizontal">
+                            <Button
+                                android:id="@+id/fragment_training_detail_difficulty_star_1"
+                                android:layout_width="@dimen/rv_training_star_size"
+                                android:layout_height="@dimen/rv_training_star_size"
+                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                                android:background="?attr/transparent"
+                                android:gravity="center" />
+
+                            <Button
+                                android:id="@+id/fragment_training_detail_difficulty_star_2"
+                                android:layout_width="@dimen/rv_training_star_size"
+                                android:layout_height="@dimen/rv_training_star_size"
+                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                                android:background="?attr/transparent"
+                                android:gravity="center" />
+
+                            <Button
+                                android:id="@+id/fragment_training_detail_difficulty_star_3"
+                                android:layout_width="@dimen/rv_training_star_size"
+                                android:layout_height="@dimen/rv_training_star_size"
+                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                                android:background="?attr/transparent"
+                                android:gravity="center" />
+
+                            <Button
+                                android:id="@+id/fragment_training_detail_difficulty_star_4"
+                                android:layout_width="@dimen/rv_training_star_size"
+                                android:layout_height="@dimen/rv_training_star_size"
+                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                                android:background="?attr/transparent"
+                                android:gravity="center" />
+
+                            <Button
+                                android:id="@+id/fragment_training_detail_difficulty_star_5"
+                                android:layout_width="@dimen/rv_training_star_size"
+                                android:layout_height="@dimen/rv_training_star_size"
+                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                                android:background="?attr/transparent"
+                                android:gravity="center" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fragment_training_detail_graphs"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </androidx.core.widget.NestedScrollView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

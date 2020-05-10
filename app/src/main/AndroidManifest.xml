@@ -11,12 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/DarkTheme">
-        <activity android:name=".controllers.activities.DetailTrainingActivity" android:configChanges="uiMode" ></activity>
-        <activity android:name=".controllers.activities.TimerActivity" android:configChanges="uiMode" />
-        <activity android:name=".controllers.activities.ConverterActivity" android:configChanges="uiMode" />
-        <activity android:name=".controllers.activities.ChronometerActivity" android:configChanges="uiMode" />
-        <activity android:name=".controllers.activities.SignInActivity" android:configChanges="uiMode" />
-        <activity android:name=".controllers.activities.MainActivity" android:configChanges="uiMode" >
+        <activity android:name=".front.view.actvities.ChronometerActivity" android:configChanges="uiMode" />
+        <activity android:name=".front.view.actvities.SignInActivity" android:configChanges="uiMode" />
+        <activity android:name=".front.view.actvities.MainActivity" android:configChanges="uiMode" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

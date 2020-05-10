@@ -9,7 +9,7 @@
     android:tag="startstop"
     android:orientation="vertical"
     android:background="?attr/backgroundColor"
-    tools:context=".views.popup.TimerPopup">
+    tools:context=".front.view.popup.TimerPopup">
 
     <TextView
         android:id="@+id/popup_timer_setsTV"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/backgroundColor"
-    tools:context=".controllers.activities.SignInActivity">
+    tools:context=".front.view.actvities.SignInActivity">
 
     <TextView
         android:layout_width="match_parent"

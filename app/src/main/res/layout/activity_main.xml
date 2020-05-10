@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="bottom"
     android:background="?attr/backgroundColor"
-    tools:context=".controllers.activities.MainActivity">
+    tools:context=".front.view.actvities.MainActivity">
 
     <FrameLayout
         android:id="@+id/activty_main_fragment_layout"

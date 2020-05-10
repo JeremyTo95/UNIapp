@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/sh_popup_menu"
-    tools:context=".views.popup.competition.CompetitionDetailPopup">
+    tools:context=".front.view.popup.CompetitionDetailPopup">
 
     <TextView
         android:id="@+id/fragment_detail_race_time_bigtitle"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/backgroundColor"
-    tools:context=".controllers.activities.ChronometerActivity">
+    tools:context=".front.view.actvities.ChronometerActivity">
 
     <TextView
         android:id="@+id/fragment_statistiques_statistique_title"
