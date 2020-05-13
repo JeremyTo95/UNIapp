@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="distance_spe">
-        <item>2 5 m</item>
-        <item>5 0 m</item>
-        <item>1 0 0 m</item>
-        <item>2 0 0 m</item>
+        <item>@string/distance_25m</item>
+        <item>@string/distance_50m</item>
+        <item>@string/distance_100m</item>
+        <item>@string/distance_200m</item>
     </string-array>
 
     <string-array name="distance_freestyle">
-        <item>2 5 m</item>
-        <item>5 0 m</item>
-        <item>1 0 0 m</item>
-        <item>2 0 0 m</item>
-        <item>4 0 0 m</item>
-        <item>8 0 0 m</item>
-        <item>1 5 0 0 m</item>
+        <item>@string/distance_25m</item>
+        <item>@string/distance_50m</item>
+        <item>@string/distance_100m</item>
+        <item>@string/distance_200m</item>
+        <item>@string/distance_400m</item>
+        <item>@string/distance_800m</item>
+        <item>@string/distance_1500m</item>
     </string-array>
 
     <string-array name="distance_4N_25">
-        <item>1 0 0 m</item>
-        <item>2 0 0 m</item>
-        <item>4 0 0 m</item>
+        <item>@string/distance_100m</item>
+        <item>@string/distance_200m</item>
+        <item>@string/distance_400m</item>
     </string-array>
 
     <string-array name="distance_4N_50">
-        <item>2 0 0 m</item>
-        <item>4 0 0 m</item>
+        <item>@string/distance_200m</item>
+        <item>@string/distance_400m</item>
     </string-array>
 
     <string-array name="competition_level">
@@ -36,16 +36,16 @@
     </string-array>
 
     <string-array name="swims">
-        <item>PAPILLON</item>
-        <item>DOS</item>
-        <item>BRASSE</item>
-        <item>NAGE LIBRE</item>
-        <item>4 NAGES</item>
+        <item>@string/butterfly</item>
+        <item>@string/backstroke</item>
+        <item>@string/breaststroke</item>
+        <item>@string/freestyle</item>
+        <item>@string/IM</item>
     </string-array>
 
     <string-array name="sizePool">
-        <item>B A S S I N  2 5 M</item>
-        <item>B A S S I N  5 0 M</item>
+        <item>@string/sizePool25title</item>
+        <item>@string/sizePool50title</item>
     </string-array>
 
     <string-array name="zones">

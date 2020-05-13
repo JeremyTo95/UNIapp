@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridLayout;
@@ -16,8 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.fragmentcontroller.TimerController;
-import com.example.uniapp.front.model.market.MarketTimes;
+import com.example.uniapp.front.controller.controller_fragment.TimerController;
 
 public class TimerPopup extends Dialog {
     private TimerController controller;

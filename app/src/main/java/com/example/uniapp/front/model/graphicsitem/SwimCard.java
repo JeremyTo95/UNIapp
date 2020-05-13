@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.example.uniapp.back.room.RoomDataBase;
 import com.example.uniapp.front.controller.global.AboutScreen;
 import com.example.uniapp.R;
@@ -28,7 +30,7 @@ public class SwimCard extends LinearLayout {
 
     private View rootView;
     private TextView title;
-    private LinearLayout rightSide;
+    private ConstraintLayout rightSide;
     private TextView time1, time2, time3;
     private TextView time4, time5, time6;
 

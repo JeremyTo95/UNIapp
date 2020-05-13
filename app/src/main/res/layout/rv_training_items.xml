@@ -1,111 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/sh_gradient_background"
     android:layout_margin="10dp"
     android:minHeight="150dp"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/content">
 
         <TextView
             android:id="@+id/rv_training_items_date_sizePool_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Le 12/01/2020"
-            android:textSize="@dimen/h4_textsize"
-            android:gravity="center_vertical"
             android:fontFamily="sans-serif-light"
-            android:textColor="?attr/textColor" />
+            android:gravity="center_vertical"
+            android:text="@string/hint_date"
+            android:textColor="?attr/textColor"
+            android:textSize="@dimen/h4_textsize" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="end"
             android:layout_weight="1"
-            android:gravity="right"
-            android:layout_gravity="right"
+            android:gravity="end"
             android:orientation="horizontal">
+
             <Button
                 android:id="@+id/rv_training_items_difficulty_star_1"
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
-                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                 android:background="?attr/transparent"
-                android:gravity="center" />
+                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:gravity="center"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/rv_training_items_difficulty_star_2"
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
-                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                 android:background="?attr/transparent"
-                android:gravity="center" />
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:gravity="center"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/rv_training_items_difficulty_star_3"
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
-                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                 android:background="?attr/transparent"
-                android:gravity="center" />
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:gravity="center"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/rv_training_items_difficulty_star_4"
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
-                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                 android:background="?attr/transparent"
-                android:gravity="center" />
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:gravity="center"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/rv_training_items_difficulty_star_5"
                 android:layout_width="@dimen/rv_training_star_size"
                 android:layout_height="@dimen/rv_training_star_size"
-                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                 android:background="?attr/transparent"
-                android:gravity="center" />
+                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                android:gravity="center"
+                style="?android:attr/buttonBarButtonStyle"/>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="20dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        android:baselineAligned="false">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/rv_training_items_serie_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="S E R I E  :"
                 android:layout_marginVertical="10dp"
-                android:gravity="top"
                 android:fontFamily="sans-serif-light"
-                android:textSize="@dimen/h3_textsize"
-                android:textColor="?attr/secondaryColor" />
+                android:gravity="top"
+                android:text="@string/serie"
+                android:textColor="?attr/secondaryColor"
+                android:textSize="@dimen/h3_textsize" />
+
             <TextView
                 android:id="@+id/rv_training_items_serie_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2x100NL\n4x50NL"
-                android:textSize="@dimen/h4_textsize"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center_vertical"
-                android:textColor="?attr/textColor" />
+                android:text=""
+                android:textColor="?attr/textColor"
+                android:textSize="@dimen/h4_textsize" />
         </LinearLayout>
 
         <LinearLayout
@@ -113,10 +137,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/rv_training_items_line_chart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="?attr/backgroundColor"
     tools:context=".front.view.fragments.SettingsFragment">
-
     <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -16,286 +17,320 @@
         android:textColor="?attr/secondaryColor"
         android:fontFamily="sans-serif-light"
         android:textSize="@dimen/h1_textsize"
-        android:text="P A R A M E T R E S" />
+        android:text="@string/settings_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/content" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="20dp"
-        android:background="@drawable/sh_gradient_background"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="M O N   P R O F I L"
-            android:textColor="?attr/textColor"
-            android:gravity="center"
-            android:textSize="@dimen/h3_textsize"
-            android:layout_marginVertical="20dp"
-            android:fontFamily="sans-serif-light" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="P E R S O N N E L"
-                    android:textColor="?attr/secondaryColor"
-                    android:textSize="@dimen/h3_textsize"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_marginVertical="10dp"
-                    android:gravity="center" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:orientation="vertical"
-                    android:layout_margin="10dp" >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="G E N R E :"
-                        android:textSize="@dimen/h4_textsize"
-                        android:gravity="center"
-                        android:textColor="?attr/textColor" />
-                    <Spinner
-                        android:id="@+id/fragment_settings_gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:backgroundTint="?attr/textColor"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/fragment_settings_lastname"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="N O M"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColorHint="?attr/hintColor"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/fragment_settings_firstname"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="P R E N O M"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:textColorHint="?attr/hintColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/fragment_settings_weight"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="P O I D S (en kg)"
-                        android:digits="0123456789"
-                        android:maxLength="5"
-                        android:inputType="number"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColorHint="?attr/hintColor"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/fragment_settings_height"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="T A I L L E (en cm)"
-                        android:digits="0123456789"
-                        android:maxLength="5"
-                        android:textColorHint="?attr/hintColor"
-                        android:inputType="number"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/fragment_settings_birth"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="N E  L E  DD/MM/YYYY"
-                        android:maxLength="10"
-                        android:textAlignment="center"
-                        android:textColorHint="?attr/hintColor"
-                        android:digits="0123456789"
-                        android:inputType="number"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="N A T A T I O N"
-                    android:textColor="?attr/secondaryColor"
-                    android:textSize="@dimen/h3_textsize"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_marginVertical="10dp"
-                    android:gravity="center" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:orientation="vertical"
-                    android:layout_margin="10dp">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="S P E C I A L I T E :"
-                        android:textSize="@dimen/h4_textsize"
-                        android:gravity="center"
-                        android:textColor="?attr/textColor" />
-                    <Spinner
-                        android:id="@+id/fragment_settings_spe"
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:backgroundTint="?attr/textColor"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/fragment_settings_club"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="C L U B"
-                        android:inputType="textCapCharacters"
-                        android:textColorHint="?attr/hintColor"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/fragment_settings_city"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="V I L L E"
-                        android:textSize="@dimen/h4_textsize"
-                        android:inputType="textCapCharacters"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:textColorHint="?attr/hintColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <Button
-                android:id="@+id/fragment_settings_update"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mettre à jour"
-                android:tag="updateBtn"
-                android:textColor="?attr/textColor"
-                android:paddingHorizontal="20dp"
-                android:layout_marginVertical="10dp"
-                android:gravity="center"
-                android:background="?attr/transparent"/>
-        </LinearLayout>
-    </LinearLayout>
-    <View
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
-        <Button
-            android:id="@+id/fragment_settings_races"
-            android:layout_width="250dp"
+        app:layout_constraintVertical_weight="1"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:tag="importDataRaceBtn"
-            android:background="@drawable/sh_button"
-            android:text="Réinitialiser temps compétition"
-            android:textSize="@dimen/h4_textsize"
-            android:textColor="?attr/textButtonColor"
-            android:layout_marginVertical="10dp"
-            android:paddingHorizontal="20dp" />
-        <Button
-            android:id="@+id/fragment_settings_save_data"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/sh_button"
-            android:tag="themeManagement"
-            android:text="Changer le thème"
-            android:textSize="@dimen/h4_textsize"
-            android:textColor="?attr/textButtonColor"
-            android:layout_marginVertical="10dp"
-            android:paddingHorizontal="20dp" />
-    </LinearLayout>
-</LinearLayout>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="20dp"
+                android:background="@drawable/sh_gradient_background"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mon_profil"
+                    android:textColor="?attr/textColor"
+                    android:gravity="center"
+                    android:textSize="@dimen/h3_textsize"
+                    android:layout_marginVertical="20dp"
+                    android:fontFamily="sans-serif-light" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/personnel"
+                            android:textColor="?attr/secondaryColor"
+                            android:textSize="@dimen/h3_textsize"
+                            android:fontFamily="sans-serif-light"
+                            android:layout_marginVertical="10dp"
+                            android:gravity="center" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="75dp"
+                            android:orientation="vertical"
+                            android:layout_margin="10dp" >
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/gender"
+                                android:textSize="@dimen/h4_textsize"
+                                android:gravity="center"
+                                android:textColor="?attr/textColor" />
+                            <Spinner
+                                android:id="@+id/fragment_settings_gender"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="?attr/textColor"
+                                tools:targetApi="lollipop" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/fragment_settings_lastname"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="@string/lastname"
+                                android:textSize="@dimen/h4_textsize"
+                                android:textAlignment="center"
+                                android:textColorHint="?attr/hintColor"
+                                android:textColor="?attr/textColor"
+                                android:background="?attr/transparent"
+                                android:gravity="center"
+                                tools:ignore="RtlCompat" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:id="@+id/fragment_settings_firstname"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="@string/firstname"
+                                android:textSize="@dimen/h4_textsize"
+                                android:textAlignment="center"
+                                android:textColor="?attr/textColor"
+                                android:textColorHint="?attr/hintColor"
+                                android:background="?attr/transparent"
+                                android:gravity="center"
+                                tools:ignore="RtlCompat" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/fragment_settings_weight"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="@string/weight"
+                                android:digits="0123456789"
+                                android:maxLength="5"
+                                android:inputType="number"
+                                android:textSize="@dimen/h4_textsize"
+                                android:textAlignment="center"
+                                android:textColorHint="?attr/hintColor"
+                                android:textColor="?attr/textColor"
+                                android:background="?attr/transparent"
+                                android:gravity="center"
+                                tools:ignore="RtlCompat"
+                                android:autofillHints="" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/fragment_settings_height"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="@string/height"
+                                android:digits="0123456789"
+                                android:maxLength="5"
+                                android:textColorHint="?attr/hintColor"
+                                android:inputType="number"
+                                android:textSize="@dimen/h4_textsize"
+                                android:textAlignment="center"
+                                android:textColor="?attr/textColor"
+                                android:background="?attr/transparent"
+                                android:gravity="center"
+                                tools:ignore="RtlCompat"
+                                android:autofillHints="" />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+                            <EditText
+                                android:id="@+id/fragment_settings_birth"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:hint="@string/birth"
+                                android:maxLength="10"
+                                android:textAlignment="center"
+                                android:textColorHint="?attr/hintColor"
+                                android:digits="0123456789"
+                                android:inputType="number"
+                                android:textSize="@dimen/h4_textsize"
+                                android:textColor="?attr/textColor"
+                                android:background="?attr/transparent"
+                                android:gravity="center"
+                                tools:ignore="RtlCompat"
+                                android:autofillHints="" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="10dp"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="center"
+                            android:text="@string/natation"
+                            android:textColor="?attr/secondaryColor"
+                            android:textSize="@dimen/h3_textsize" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="75dp"
+                            android:layout_margin="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/speciality"
+                                android:textColor="?attr/textColor"
+                                android:textSize="@dimen/h4_textsize" />
+
+                            <Spinner
+                                android:id="@+id/fragment_settings_spe"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="?attr/textColor"
+                                tools:targetApi="lollipop" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/fragment_settings_club"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="?attr/transparent"
+                                android:gravity="center"
+                                android:hint="@string/club"
+                                android:inputType="textCapCharacters"
+                                android:textAlignment="center"
+                                android:textColor="?attr/textColor"
+                                android:textColorHint="?attr/hintColor"
+                                android:textSize="@dimen/h4_textsize"
+                                tools:ignore="RtlCompat"
+                                android:autofillHints="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/fragment_settings_city"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="?attr/transparent"
+                                android:gravity="center"
+                                android:hint="@string/hint_city"
+                                android:inputType="textCapCharacters"
+                                android:textAlignment="center"
+                                android:textColor="?attr/textColor"
+                                android:textColorHint="?attr/hintColor"
+                                android:textSize="@dimen/h4_textsize"
+                                tools:ignore="RtlCompat"
+                                android:autofillHints="" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/fragment_settings_update"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/update"
+                        android:tag="updateBtn"
+                        android:textColor="?attr/textColor"
+                        android:paddingHorizontal="20dp"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center"
+                        android:background="?attr/transparent"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical" >
+                <Button
+                    android:id="@+id/fragment_settings_races"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:tag="importDataRaceBtn"
+                    android:background="@drawable/sh_button"
+                    android:text="@string/reinitialiser_temps_competition"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="?attr/textButtonColor"
+                    android:layout_marginVertical="10dp"
+                    android:paddingHorizontal="20dp" />
+                <Button
+                    android:id="@+id/fragment_settings_save_data"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/sh_button"
+                    android:tag="themeManagement"
+                    android:text="@string/changer_le_th_me"
+                    android:textSize="@dimen/h4_textsize"
+                    android:textColor="?attr/textButtonColor"
+                    android:layout_marginVertical="10dp"
+                    android:paddingHorizontal="20dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

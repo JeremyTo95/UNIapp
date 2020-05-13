@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/backgroundColor"
-    tools:context=".front.view.popup.TrainingDetailPopup">
+    tools:context=".front.view.fragments.TrainingDetailFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="75dp"
-                android:text="DETAILS ENTRAINEMENTS"
+                android:text="@string/detail_training"
                 android:textSize="@dimen/fragment_bigtitle_textsize"
                 android:gravity="center"
                 android:fontFamily="sans-serif-light"
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/h3_textsize"
-                    android:text="Le 26/03/2020 à HERBLAY (25m)"
+                    android:text=""
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:layout_marginVertical="20dp"
@@ -54,7 +54,7 @@
                         android:id="@+id/fragment_detail_race_time_swimmer_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="I N F O R M A T I O N S :"
+                        android:text="@string/informations"
                         android:textSize="@dimen/h3_textsize"
                         android:textColor="?attr/secondaryColor" />
 
@@ -74,7 +74,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_margin="3dp"
-                                android:text="C O M P E T I T I O N"
+                                android:text="@string/competiton_title"
                                 android:fontFamily="sans-serif"
                                 android:textSize="@dimen/h4_textsize"
                                 android:gravity="center"
@@ -85,7 +85,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_margin="3dp"
-                                android:text="Z O N E"
+                                android:text="@string/zone"
                                 android:gravity="center"
                                 android:fontFamily="sans-serif"
                                 android:textSize="@dimen/h4_textsize"
@@ -101,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_margin="3dp"
-                                android:text="100NL : 00:55.66\n50NL : 00:24.93"
+                                android:text=""
                                 android:fontFamily="sans-serif"
                                 android:textSize="@dimen/h4_textsize"
                                 android:gravity="center"
@@ -112,7 +112,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:layout_margin="3dp"
-                                android:text="100NL : 58.59\n50NL : 26.24"
+                                android:text=""
                                 android:fontFamily="sans-serif"
                                 android:textSize="@dimen/h4_textsize"
                                 android:gravity="center"
@@ -132,7 +132,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="S E R I E S :"
+                            android:text="@string/serie"
                             android:textSize="@dimen/h3_textsize"
                             android:textColor="?attr/secondaryColor" />
 
@@ -140,47 +140,57 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:layout_gravity="right"
+                            android:layout_gravity="end"
                             android:orientation="horizontal">
                             <Button
                                 android:id="@+id/fragment_training_detail_difficulty_star_1"
                                 android:layout_width="@dimen/rv_training_star_size"
                                 android:layout_height="@dimen/rv_training_star_size"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                                 android:background="?attr/transparent"
-                                android:gravity="center" />
+                                android:gravity="center"
+                                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp" />
 
                             <Button
                                 android:id="@+id/fragment_training_detail_difficulty_star_2"
                                 android:layout_width="@dimen/rv_training_star_size"
                                 android:layout_height="@dimen/rv_training_star_size"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                                 android:background="?attr/transparent"
-                                android:gravity="center" />
+                                android:gravity="center"
+                                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp" />
 
                             <Button
                                 android:id="@+id/fragment_training_detail_difficulty_star_3"
                                 android:layout_width="@dimen/rv_training_star_size"
                                 android:layout_height="@dimen/rv_training_star_size"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                                 android:background="?attr/transparent"
-                                android:gravity="center" />
+                                android:gravity="center"
+                                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp" />
 
                             <Button
                                 android:id="@+id/fragment_training_detail_difficulty_star_4"
                                 android:layout_width="@dimen/rv_training_star_size"
                                 android:layout_height="@dimen/rv_training_star_size"
-                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
+                                style="?android:attr/buttonBarButtonStyle"
+                                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp"
                                 android:background="?attr/transparent"
-                                android:gravity="center" />
+                                android:gravity="center"
+                                android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp" />
 
                             <Button
                                 android:id="@+id/fragment_training_detail_difficulty_star_5"
                                 android:layout_width="@dimen/rv_training_star_size"
                                 android:layout_height="@dimen/rv_training_star_size"
+                                style="?android:attr/buttonBarButtonStyle"
                                 android:drawableLeft="@drawable/ic_radio_button_unchecked_white_24dp"
                                 android:background="?attr/transparent"
-                                android:gravity="center" />
+                                android:gravity="center"
+                                android:drawableStart="@drawable/ic_radio_button_unchecked_white_24dp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

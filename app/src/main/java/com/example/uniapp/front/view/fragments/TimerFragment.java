@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.fragmentcontroller.TimerController;
+import com.example.uniapp.front.controller.controller_fragment.TimerController;
 import com.example.uniapp.front.controller.textwatcher.TextWatcherTimer;
 
 public class TimerFragment extends Fragment {

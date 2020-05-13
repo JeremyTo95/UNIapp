@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="?attr/backgroundColor">
 
@@ -17,7 +15,7 @@
         android:textAlignment="center"
         android:fontFamily="sans-serif-light"
         android:textSize="@dimen/h1_textsize"
-        android:text="G A D G E T S" />
+        android:text="@string/gadget_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,20 +33,23 @@
             android:background="@drawable/sh_gradient_background"
             android:layout_margin="20dp"
             android:padding="30dp">
+
             <ImageView
                 android:id="@+id/fragment_tools_chrono_logo"
                 android:layout_width="50dp"
-                android:layout_height="match_parent"
+                android:layout_height="35dp"
+                android:contentDescription="@string/desc_logo_chrono"
                 android:src="@drawable/ic_timer_white_24dp" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="C H R O N O M E T R E"
+                android:text="@string/chronometre"
                 android:textSize="@dimen/h3_textsize"
                 android:textColor="?attr/textColor"
                 android:gravity="center"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,16 +65,18 @@
                 android:id="@+id/fragment_tools_timer_logo"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/desc_logo_timer"
                 android:src="@drawable/ic_play_arrow_white_24dp" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="T I M E R"
+                android:text="@string/timer"
                 android:textSize="@dimen/h3_textsize"
                 android:textColor="?attr/textColor"
                 android:gravity="center"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,16 +92,18 @@
                 android:id="@+id/fragment_tools_converter_logo"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/desc_logo_converter"
                 android:src="@drawable/ic_sync_alt_white_24dp" />
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="C O N V E R T I S S E U R"
+                android:text="@string/converter"
                 android:textSize="@dimen/h3_textsize"
                 android:textColor="?attr/textColor"
                 android:gravity="center"
-                android:layout_marginRight="20dp" />
+                android:layout_marginRight="20dp"
+                android:layout_marginEnd="20dp" />
         </LinearLayout>
 
     </LinearLayout>

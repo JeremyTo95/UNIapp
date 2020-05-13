@@ -8,14 +8,13 @@ import android.widget.LinearLayout;
 
 //import com.example.uniapp.front.controller.asynctask.ImportPointsFFNTask;
 import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.activitycontroller.MainController;
+import com.example.uniapp.front.controller.controller_activity.MainController;
 import com.example.uniapp.front.controller.listener.BottomNavigationViewListener;
 import com.example.uniapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
-    private MainController mainController;
-
+    private MainController       controller;
     private LinearLayout         linearLayoutLoading;
     private BottomNavigationView bottomNavigationView;
 
@@ -25,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_main);
 
-        mainController = new MainController(this);
-        mainController.onStart();
+        controller = new MainController(this);
+        controller.onStart();
     }
 
     public void setupUIElements() {

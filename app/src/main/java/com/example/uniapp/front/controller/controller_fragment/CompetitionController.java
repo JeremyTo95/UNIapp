@@ -1,4 +1,4 @@
-package com.example.uniapp.front.controller.fragmentcontroller;
+package com.example.uniapp.front.controller.controller_fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

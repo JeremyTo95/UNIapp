@@ -1,4 +1,4 @@
-package com.example.uniapp.front.controller.activitycontroller;
+package com.example.uniapp.front.controller.controller_activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.uniapp.R;
 import com.example.uniapp.back.room.RoomDataBase;
 import com.example.uniapp.back.sharedpreferences.SharedPrefManager;
+import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.model.data.PointFFN;
 import com.example.uniapp.front.model.data.Race;
 import com.example.uniapp.front.model.data.User;
@@ -17,12 +18,13 @@ import com.example.uniapp.front.view.actvities.MainActivity;
 import com.example.uniapp.front.view.actvities.SignInActivity;
 import com.example.uniapp.front.view.fragments.HomeFragment;
 
-public class MainController {
+public class MainController extends Controller {
     private RoomDataBase roomDataBase;
     private MainActivity view;
     private Context      context;
 
     public MainController(MainActivity view) {
+        super(view);
         this.view         = view;
         this.context      = view.getApplicationContext();
         this.roomDataBase = RoomDataBase.getDatabase(context);
@@ -32,31 +34,33 @@ public class MainController {
         view.setupUIElements();
         view.lockUI(true);
         System.out.println("user : " + SharedPrefManager.getUser(context));
-        if (SharedPrefManager.getUser(context) != null) {
-            roomDataBase.userDAO().deleteAll();
-            prepopulateUsersInDataBase();
-            User newUser = SharedPrefManager.getUser(context);
-            SharedPrefManager.clearUser(context);
-            if (roomDataBase.userDAO().checkUserByKey(newUser.getFirstname(), newUser.getLastname(), newUser.getMykey()) == 0) {
-                goSignInUser();
-            } else {
-                roomDataBase.userDAO().deleteAll();
-                roomDataBase.userDAO().insert(newUser);
-                Toast.makeText(context, "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
-                if (roomDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(view);
-                if (roomDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(view);
-                else view.unlockUI();
-            }
-        }
+        if (SharedPrefManager.getUser(context) != null) setupNewUser();
 
         if (roomDataBase.pointFFNDAO().getNb() == 54000) view.unlockUI();
         if (roomDataBase.userDAO().getNb() == 1) configureAndShowFragment(new HomeFragment());
-        else {
+        else goSignInUser();
+
+    }
+
+    private void setupNewUser() {
+        roomDataBase.userDAO().deleteAll();
+        prepopulateUsersInDataBase();
+        User newUser = SharedPrefManager.getUser(context);
+        SharedPrefManager.clearUser(context);
+
+        if (roomDataBase.userDAO().checkUserByKey(newUser.getFirstname(), newUser.getLastname(), newUser.getMykey()) == 0) {
             goSignInUser();
+        } else {
+            roomDataBase.userDAO().deleteAll();
+            roomDataBase.userDAO().insert(newUser);
+            Toast.makeText(context, "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
+            if (roomDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(view);
+            if (roomDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(view);
+            else view.unlockUI();
         }
     }
 
-    public void configureAndShowFragment(Fragment fragment) {
+    private void configureAndShowFragment(Fragment fragment) {
         FragmentManager fragmentManager = view.getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.activty_main_fragment_layout, fragment).commit();
     }
@@ -82,4 +86,5 @@ public class MainController {
         view.startActivity(intent);
         view.finish();
     }
+
 }

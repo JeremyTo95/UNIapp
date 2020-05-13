@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.fragmentcontroller.CompetitionController;
+import com.example.uniapp.front.controller.controller_fragment.CompetitionController;
 import com.example.uniapp.front.controller.simplecallback.SwipeToDeleteCallback;
 import com.example.uniapp.front.model.graphicsitem.BuildLineChart;
 import com.example.uniapp.front.model.graphicsitem.SwimCard;

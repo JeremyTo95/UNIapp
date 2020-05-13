@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.fragmentcontroller.TrainingController;
+import com.example.uniapp.front.controller.controller_fragment.TrainingController;
 import com.example.uniapp.front.controller.simplecallback.SwipeToDeleteCallback;
 import com.example.uniapp.front.view.recyclerview.RvTrainingAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,7 +50,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        layoutInflater = inflater.inflate(R.layout.fragment_training, container, false);
+        layoutInflater = inflater.inflate(R.layout.fragment_training_bis, container, false);
 
         controller = new TrainingController(this);
         controller.onStart();

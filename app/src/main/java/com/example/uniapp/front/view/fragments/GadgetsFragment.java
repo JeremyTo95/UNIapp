@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 
 import com.example.uniapp.front.controller.global.AboutScreen;
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.fragmentcontroller.GadgetController;
+import com.example.uniapp.front.controller.controller_fragment.GadgetController;
 
 public class GadgetsFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
@@ -20,7 +20,7 @@ public class GadgetsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        layoutInflater = inflater.inflate(R.layout.fragment_tools, container, false);
+        layoutInflater = inflater.inflate(R.layout.fragment_gadget, container, false);
 
         controller     = new GadgetController(this);
         controller.onStart();

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
 import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.fragmentcontroller.DetailTrainingController;
+import com.example.uniapp.front.controller.controller_fragment.DetailTrainingController;
 import com.example.uniapp.front.model.data.Training;
 import com.example.uniapp.front.view.recyclerview.RvTrainingDetailAdapter;
 

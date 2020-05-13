@@ -1,4 +1,4 @@
-package com.example.uniapp.front.controller.fragmentcontroller;
+package com.example.uniapp.front.controller.controller_fragment;
 
 import android.content.Context;
 import android.media.MediaPlayer;

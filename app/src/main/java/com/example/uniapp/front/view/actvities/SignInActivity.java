@@ -65,6 +65,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher {
         AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_sign_in);
 
+
         setupUIElements();
         updateUIElements();
     }

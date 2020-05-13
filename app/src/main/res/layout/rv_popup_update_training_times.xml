@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="T E M P S  1"
+        android:text=""
         android:fontFamily="sans-serif-light"
         android:textColor="?attr/secondaryColor"
         android:gravity="center"
@@ -22,13 +22,14 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:hint="00:00.00"
+        android:hint="@string/hint_time"
         android:inputType="number"
         android:digits="0123456789"
         android:textSize="@dimen/h4_textsize"
         android:textColor="?attr/textColor"
         android:textColorHint="?attr/hintColor"
         android:background="?attr/transparent"
-        android:gravity="center" />
+        android:gravity="center"
+        android:autofillHints="" />
 
 </LinearLayout>

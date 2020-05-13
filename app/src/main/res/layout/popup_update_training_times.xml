@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@drawable/sh_popup_menu">
 
@@ -10,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:text="I N S E R T I O N   T E M P S"
+        android:text="@string/insert_times"
         android:textSize="@dimen/h1_textsize"
         android:textColor="?attr/secondaryColor"
         android:gravity="center"
@@ -24,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="S E L E C T I O N   D E S   T E M P S"
+            android:text="@string/select_times"
             android:textSize="@dimen/h3_textsize"
             android:gravity="center"
             android:fontFamily="sans-serif-light"
@@ -34,7 +33,7 @@
             android:id="@+id/popup_update_training_times_title_serie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="4 x 50 NL Z4 : 31.16"
+            android:text=""
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/h3_textsize"
             android:gravity="center"
@@ -65,7 +64,8 @@
             android:layout_weight="1"
             android:background="?attr/transparent"
             android:textColor="?attr/redDeepColor"
-            android:text="A N N U L E R"
+            android:text="@string/denied"
+            style="?android:attr/buttonBarButtonStyle"
             android:textSize="@dimen/h4_textsize" />
 
         <Button
@@ -75,7 +75,8 @@
             android:layout_weight="1"
             android:background="?attr/transparent"
             android:textColor="?attr/blueLightColor"
-            android:text="C O N F I R M E R"
+            android:text="@string/confirmed"
+            style="?android:attr/buttonBarButtonStyle"
             android:textSize="@dimen/h4_textsize" />
     </LinearLayout>
 

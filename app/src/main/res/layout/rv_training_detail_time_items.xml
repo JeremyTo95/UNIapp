@@ -11,7 +11,7 @@
         android:id="@+id/rv_training_detail_time_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="t1 : "
+        android:text=""
         android:gravity="center"
         android:fontFamily="sans-serif-light"
         android:textColor="?attr/textColor"
@@ -21,7 +21,7 @@
         android:id="@+id/rv_training_detail_time_content_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="00:00.00"
+        android:text="@string/hint_time"
         android:textColor="?attr/textColor"
         android:digits="0123456789"
         android:inputType="number"
@@ -30,13 +30,14 @@
         android:gravity="center"
         android:background="?attr/transparent"
         android:layout_marginHorizontal="10dp"
-        android:fontFamily="sans-serif-light" />
+        android:fontFamily="sans-serif-light"
+        tools:ignore="TextViewEdits" />
 
     <TextView
         android:id="@+id/rv_training_detail_time_diff_text_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="(+00.00)"
+        android:text="@string/hint_diff"
         android:textColor="?attr/textColor"
         android:textSize="@dimen/h4_textsize"
         android:gravity="center"

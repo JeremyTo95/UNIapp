@@ -1,357 +1,381 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/backgroundColor"
     tools:context=".front.view.actvities.SignInActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="M E N U  C O N F I G U R A T I O N"
-        android:textSize="@dimen/h2_textsize"
-        android:padding="20dp"
-        android:textColor="?attr/secondaryColor"
-        android:gravity="center" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        android:background="@drawable/sh_gradient_background">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="M O N   P R O F I L"
-            android:textColor="?attr/textColor"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/h3_textsize"
-            android:fontFamily="sans-serif-light" />
+            android:text="@string/configuration"
+            android:textSize="@dimen/h2_textsize"
+            android:padding="20dp"
+            android:fontFamily="sans-serif-light"
+            android:textColor="?attr/secondaryColor"
+            android:gravity="center" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/sh_gradient_background">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/mon_profil"
+                android:textColor="?attr/textColor"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/h3_textsize"
+                android:fontFamily="sans-serif-light" />
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="P E R S O N N E L"
-                    android:textColor="?attr/secondaryColor"
-                    android:textSize="@dimen/h3_textsize"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_marginVertical="10dp"
-                    android:gravity="center" />
-
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="75dp"
-                    android:orientation="vertical"
-                    android:layout_margin="10dp" >
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="G E N R E :"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textColor="?attr/textColor" />
-                    <Spinner
-                        android:id="@+id/activity_sign_in_gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:backgroundTint="?attr/textColor"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/activity_sign_in_lastname"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="N O M"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColorHint="?attr/hintColor"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/activity_sign_in_firstname"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="P R E N O M"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:textColorHint="?attr/hintColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/activity_sign_in_weight"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="P O I D S (en kg)"
-                        android:digits="0123456789"
-                        android:maxLength="5"
-                        android:inputType="number"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColorHint="?attr/hintColor"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/activity_sign_in_height"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="T A I L L E (en cm)"
-                        android:digits="0123456789"
-                        android:textColorHint="?attr/hintColor"
-                        android:maxLength="5"
-                        android:inputType="number"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/activity_sign_in_birth"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="N E  L E  DD/MM/YYYY"
-                        android:maxLength="10"
-                        android:textAlignment="center"
-                        android:textColorHint="?attr/hintColor"
-                        android:digits="0123456789"
-                        android:inputType="number"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="N A T A T I O N"
-                    android:textColor="?attr/secondaryColor"
-                    android:textSize="@dimen/h3_textsize"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_marginVertical="10dp"
-                    android:gravity="center" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="10dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="S P E C I A L I T E :"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textColor="?attr/textColor" />
-                    <Spinner
-                        android:id="@+id/activity_sign_in_spe"
+                        android:text="@string/personnel"
+                        android:textColor="?attr/secondaryColor"
+                        android:textSize="@dimen/h3_textsize"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:backgroundTint="?attr/textColor"
-                        android:layout_weight="1" />
+                        android:layout_height="75dp"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp" >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gender"
+                            android:textSize="@dimen/h4_textsize"
+                            android:textColor="?attr/textColor" />
+                        <Spinner
+                            android:id="@+id/activity_sign_in_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTint="?attr/textColor"
+                            tools:targetApi="lollipop" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/activity_sign_in_lastname"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/lastname"
+                            android:textSize="@dimen/h4_textsize"
+                            android:inputType="textPersonName"
+                            android:textAlignment="center"
+                            android:textColorHint="?attr/hintColor"
+                            android:textColor="?attr/textColor"
+                            android:background="?attr/transparent"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat"
+                            android:autofillHints="" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/activity_sign_in_firstname"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/firstname"
+                            android:textSize="@dimen/h4_textsize"
+                            android:inputType="textPersonName"
+                            android:textAlignment="center"
+                            android:textColor="?attr/textColor"
+                            android:textColorHint="?attr/hintColor"
+                            android:background="?attr/transparent"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat"
+                            android:autofillHints="" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/activity_sign_in_weight"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/weight"
+                            android:digits="0123456789"
+                            android:maxLength="5"
+                            android:inputType="number"
+                            android:textSize="@dimen/h4_textsize"
+                            android:textAlignment="center"
+                            android:textColorHint="?attr/hintColor"
+                            android:textColor="?attr/textColor"
+                            android:background="?attr/transparent"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat"
+                            android:autofillHints="" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/activity_sign_in_height"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/height"
+                            android:digits="0123456789"
+                            android:textColorHint="?attr/hintColor"
+                            android:maxLength="5"
+                            android:inputType="number"
+                            android:textSize="@dimen/h4_textsize"
+                            android:textAlignment="center"
+                            android:textColor="?attr/textColor"
+                            android:background="?attr/transparent"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat"
+                            android:autofillHints="" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/activity_sign_in_birth"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/birth"
+                            android:maxLength="10"
+                            android:textAlignment="center"
+                            android:textColorHint="?attr/hintColor"
+                            android:digits="0123456789"
+                            android:inputType="number"
+                            android:textSize="@dimen/h4_textsize"
+                            android:textColor="?attr/textColor"
+                            android:background="?attr/transparent"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat"
+                            android:autofillHints="" />
+                    </LinearLayout>
                 </LinearLayout>
-
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/activity_sign_in_club"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="C L U B"
-                        android:inputType="textCapCharacters"
-                        android:textColorHint="?attr/hintColor"
-                        android:textSize="@dimen/h4_textsize"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal">
-                    <EditText
-                        android:id="@+id/activity_sign_in_city"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:hint="V I L L E"
-                        android:textSize="@dimen/h4_textsize"
-                        android:inputType="textCapCharacters"
-                        android:textAlignment="center"
-                        android:textColor="?attr/textColor"
-                        android:textColorHint="?attr/hintColor"
-                        android:background="?attr/transparent"
-                        android:gravity="center"
-                        tools:ignore="RtlCompat" />
-                </LinearLayout>
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/natation"
+                        android:textColor="?attr/secondaryColor"
+                        android:textSize="@dimen/h3_textsize"
+                        android:fontFamily="sans-serif-light"
+                        android:layout_marginVertical="10dp"
+                        android:gravity="center" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="10dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/speciality"
+                            android:textSize="@dimen/h4_textsize"
+                            android:textColor="?attr/textColor" />
+                        <Spinner
+                            android:id="@+id/activity_sign_in_spe"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:backgroundTint="?attr/textColor"
+                            android:layout_weight="1"
+                            tools:targetApi="lollipop" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/activity_sign_in_club"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/club"
+                            android:inputType="textCapCharacters"
+                            android:textColorHint="?attr/hintColor"
+                            android:textSize="@dimen/h4_textsize"
+                            android:textAlignment="center"
+                            android:textColor="?attr/textColor"
+                            android:background="?attr/transparent"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat"
+                            android:autofillHints="" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+                        <EditText
+                            android:id="@+id/activity_sign_in_city"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:hint="@string/hint_city"
+                            android:textSize="@dimen/h4_textsize"
+                            android:inputType="textCapCharacters"
+                            android:textAlignment="center"
+                            android:textColor="?attr/textColor"
+                            android:textColorHint="?attr/hintColor"
+                            android:background="?attr/transparent"
+                            android:gravity="center"
+                            tools:ignore="RtlCompat"
+                            android:autofillHints="" />
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Clé d'activation"
-                android:textSize="@dimen/h3_textsize"
-                android:textColor="?attr/textColor"
-                android:gravity="center"
-                android:layout_marginVertical="10dp" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="10dp"
-                android:orientation="horizontal">
-                <EditText
-                    android:id="@+id/activity_sign_in_key1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="XXXX"
-                    android:maxLength="4"
-                    android:background="?attr/transparent"
-                    android:textColor="?attr/textColor"
-                    android:textColorHint="?attr/hintColor"
-                    android:fontFamily="sans-serif-light"
-                    android:gravity="center"
-                    android:textSize="@dimen/h3_textsize" />
+                android:orientation="vertical"
+                android:gravity="center">
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/key_activation"
                     android:textSize="@dimen/h3_textsize"
                     android:textColor="?attr/textColor"
-                    android:text="-" />
+                    android:gravity="center"
+                    android:layout_marginVertical="10dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_marginVertical="10dp"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/activity_sign_in_key1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/unknow_input"
+                        android:maxLength="4"
+                        android:inputType="none"
+                        android:background="?attr/transparent"
+                        android:textColor="?attr/textColor"
+                        android:textColorHint="?attr/hintColor"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="center"
+                        android:textSize="@dimen/h3_textsize"
+                        android:autofillHints="" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/h3_textsize"
+                        android:textColor="?attr/textColor"
+                        android:text="@string/separator" />
 
-                <EditText
-                    android:id="@+id/activity_sign_in_key2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="XXXX"
-                    android:maxLength="4"
-                    android:background="?attr/transparent"
-                    android:textColor="?attr/textColor"
-                    android:textColorHint="?attr/hintColor"
-                    android:gravity="center"
-                    android:fontFamily="sans-serif-light"
-                    android:textSize="@dimen/h3_textsize" />
-                <TextView
+                    <EditText
+                        android:id="@+id/activity_sign_in_key2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/unknow_input"
+                        android:maxLength="4"
+                        android:inputType="none"
+                        android:background="?attr/transparent"
+                        android:textColor="?attr/textColor"
+                        android:textColorHint="?attr/hintColor"
+                        android:gravity="center"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="@dimen/h3_textsize"
+                        android:autofillHints="" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/h3_textsize"
+                        android:textColor="?attr/textColor"
+                        android:text="@string/separator" />
+                    <EditText
+                        android:id="@+id/activity_sign_in_key3"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="@string/unknow_input"
+                        android:maxLength="4"
+                        android:background="?attr/transparent"
+                        android:textColor="?attr/textColor"
+                        android:textColorHint="?attr/hintColor"
+                        android:gravity="center"
+                        android:inputType="none"
+                        android:fontFamily="sans-serif-light"
+                        android:textSize="@dimen/h3_textsize"
+                        android:autofillHints="" />
+                </LinearLayout>
+                <Button
+                    android:id="@+id/activity_sign_in_confirmed"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/h3_textsize"
+                    android:layout_height="wrap_content"
+                    android:text="@string/confirmed"
+                    android:tag="updateBtn"
                     android:textColor="?attr/textColor"
-                    android:text="-" />
-                <EditText
-                    android:id="@+id/activity_sign_in_key3"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="XXXX"
-                    android:maxLength="4"
-                    android:background="?attr/transparent"
-                    android:textColor="?attr/textColor"
-                    android:textColorHint="?attr/hintColor"
-                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:layout_marginVertical="20dp"
                     android:fontFamily="sans-serif-light"
-                    android:textSize="@dimen/h3_textsize" />
+                    android:gravity="center"
+                    android:background="@color/transparent"/>
             </LinearLayout>
-            <Button
-                android:id="@+id/activity_sign_in_confirmed"
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ProgressBar
+                android:id="@+id/activity_sign_in_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/activity_sign_in_loading_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="V a l i d e r"
-                android:tag="updateBtn"
-                android:textColor="?attr/textColor"
-                android:paddingHorizontal="20dp"
-                android:layout_marginVertical="20dp"
-                android:gravity="center"
-                android:background="@color/transparent"/>
+                android:layout_marginTop="10dp"
+                android:text="@string/loading"
+                android:textSize="@dimen/h3_textsize"
+                android:textColor="?attr/textColor" />
         </LinearLayout>
     </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.3"
-        android:orientation="vertical"
-        android:gravity="center">
-        <ProgressBar
-            android:id="@+id/activity_sign_in_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/activity_sign_in_loading_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="CHARGEMENT DE L'APPLICATION"
-            android:textSize="@dimen/h3_textsize"
-            android:textColor="?attr/textColor" />
-    </LinearLayout>
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

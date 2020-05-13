@@ -1,152 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?attr/backgroundColor"
-    tools:context=".front.view.actvities.TimerActivity">
-
-    <TextView
-        android:id="@+id/fragment_statistiques_statistique_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="20dp"
-        android:textColor="?attr/secondaryColor"
-        android:textAlignment="center"
-        android:fontFamily="sans-serif-light"
-        android:textSize="@dimen/h1_textsize"
-        android:text="T I M E R" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.5"
-        android:text="C O N F I G U R A T I O N"
-        android:textSize="@dimen/h2_textsize"
-        android:textColor="?attr/textColor"
-        android:gravity="center"
-        android:fontFamily="sans-serif-light"
-        android:layout_marginVertical="10dp" />
-
+    android:background="?attr/backgroundColor">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/sh_gradient_background"
-        android:layout_marginHorizontal="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
+        <TextView
+            android:id="@+id/fragment_statistiques_statistique_title"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="S E T S"
-                android:gravity="center"
-                android:textColor="?attr/secondaryColor"
-                android:fontFamily="sans-serif-light"
-                android:textSize="@dimen/h2_textsize" />
-            <EditText
-                android:id="@+id/activity_timer_set"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="0"
-                android:inputType="number"
-                android:digits="0123456789"
-                android:maxLength="3"
-                android:textColor="?attr/textColor"
-                android:textColorHint="?attr/hintColor"
-                android:gravity="center"
-                android:textSize="@dimen/h2_textsize"
-                android:background="?attr/transparent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="W O R K"
-                android:gravity="center"
-                android:textColor="?attr/secondaryColor"
-                android:fontFamily="sans-serif-light"
-                android:textSize="@dimen/h2_textsize" />
-            <EditText
-                android:id="@+id/activity_timer_work_time"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="00:00"
-                android:inputType="number"
-                android:digits="0123456789"
-                android:maxLength="5"
-                android:textColor="?attr/textColor"
-                android:textColorHint="?attr/hintColor"
-                android:gravity="center"
-                android:textSize="@dimen/h2_textsize"
-                android:background="?attr/transparent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginVertical="10dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="R E S T"
-                android:gravity="center"
-                android:textColor="?attr/secondaryColor"
-                android:fontFamily="sans-serif-light"
-                android:textSize="@dimen/h2_textsize" />
-            <EditText
-                android:id="@+id/activity_timer_rest_time"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:hint="00:00"
-                android:inputType="number"
-                android:digits="0123456789"
-                android:maxLength="5"
-                android:textColor="?attr/textColor"
-                android:textColorHint="?attr/hintColor"
-                android:gravity="center"
-                android:textSize="@dimen/h2_textsize"
-                android:background="?attr/transparent" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginVertical="10dp"
-        android:gravity="center">
-        <Button
-            android:id="@+id/activity_timer_button"
-            android:layout_width="300dp"
-            android:layout_height="55dp"
-            android:text="C o m m e n c e r"
-            android:textSize="@dimen/h3_textsize"
-            android:background="@drawable/sh_button"
-            android:textColor="?attr/textButtonColor"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="20dp"
+            android:textColor="?attr/secondaryColor"
+            android:textAlignment="center"
             android:fontFamily="sans-serif-light"
-            android:paddingHorizontal="20dp" />
+            android:textSize="@dimen/h1_textsize"
+            android:text="@string/timer" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:text="@string/configuration"
+            android:textSize="@dimen/h2_textsize"
+            android:textColor="?attr/textColor"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginVertical="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/sh_gradient_background"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h1_input_text"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/sets_title"
+                    android:gravity="center"
+                    android:textColor="?attr/secondaryColor"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="@dimen/h2_textsize" />
+                <EditText
+                    android:id="@+id/activity_timer_set"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/default_value_0"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:maxLength="3"
+                    android:textColor="?attr/textColor"
+                    android:textColorHint="?attr/hintColor"
+                    android:gravity="center"
+                    android:textSize="@dimen/h2_textsize"
+                    android:background="?attr/transparent"
+                    android:autofillHints="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h1_input_text"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/work_title"
+                    android:gravity="center"
+                    android:textColor="?attr/secondaryColor"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="@dimen/h2_textsize" />
+                <EditText
+                    android:id="@+id/activity_timer_work_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_timer"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:maxLength="5"
+                    android:textColor="?attr/textColor"
+                    android:textColorHint="?attr/hintColor"
+                    android:gravity="center"
+                    android:textSize="@dimen/h2_textsize"
+                    android:background="?attr/transparent"
+                    android:autofillHints="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/h1_input_text"
+                android:layout_marginVertical="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/rest_title"
+                    android:gravity="center"
+                    android:textColor="?attr/secondaryColor"
+                    android:fontFamily="sans-serif-light"
+                    android:textSize="@dimen/h2_textsize" />
+                <EditText
+                    android:id="@+id/activity_timer_rest_time"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/hint_timer"
+                    android:inputType="number"
+                    android:digits="0123456789"
+                    android:maxLength="5"
+                    android:textColor="?attr/textColor"
+                    android:textColorHint="?attr/hintColor"
+                    android:gravity="center"
+                    android:textSize="@dimen/h2_textsize"
+                    android:background="?attr/transparent"
+                    android:autofillHints="" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginVertical="10dp"
+            android:gravity="center">
+            <Button
+                android:id="@+id/activity_timer_button"
+                android:layout_width="300dp"
+                android:layout_height="55dp"
+                android:text="@string/confirmed"
+                android:textSize="@dimen/h3_textsize"
+                android:background="@drawable/sh_button"
+                android:textColor="?attr/textButtonColor"
+                android:fontFamily="sans-serif-light"
+                android:paddingHorizontal="20dp" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</androidx.core.widget.NestedScrollView>

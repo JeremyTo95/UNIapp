@@ -1,4 +1,4 @@
-package com.example.uniapp.front.controller.fragmentcontroller;
+package com.example.uniapp.front.controller.controller_fragment;
 
 import android.content.Context;
 import android.util.Log;
@@ -105,7 +105,7 @@ public class TrainingController extends Controller {
         view.setupTrainingList();
     }
 
-    public List<Training> getCurrentTrainings() { return currentTrainings; }
+    public List<Training> getCurrentTrainings() { updateCurrentTrainings(); return currentTrainings; }
     public int getSizePool() { return sizePool; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
     public String getSwim() { return swim; }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/popup_add_training_item"
     android:layout_width="match_parent"
-    android:layout_height="75dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:layout_margin="10dp"
     android:background="@drawable/sh_gradient_background"
@@ -14,9 +14,8 @@
         <TextView
             android:id="@+id/rv_popup_add_training_sets_text_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Sets"
+            android:layout_height="@dimen/h4_input_text"
+            android:text="@string/sets_title"
             android:textColor="?attr/secondaryColor"
             android:textSize="@dimen/h4_textsize"
             android:gravity="center"
@@ -24,16 +23,16 @@
         <TextView
             android:id="@+id/rv_popup_add_training_sets_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:hint="2"
+            android:layout_height="@dimen/h4_input_text"
+            android:hint=""
             android:gravity="center"
             android:inputType="number"
             android:textColor="?attr/textColor"
             android:textColorHint="?attr/hintColor"
             android:background="?attr/transparent"
             android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/h4_textsize" />
+            android:textSize="@dimen/h4_textsize"
+            tools:ignore="TextViewEdits" />
     </LinearLayout>
 
     <LinearLayout
@@ -43,9 +42,8 @@
         <TextView
             android:id="@+id/rv_popup_add_training_distance_text_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Distance"
+            android:layout_height="@dimen/h4_input_text"
+            android:text="@string/distance_title"
             android:textColor="?attr/secondaryColor"
             android:textSize="@dimen/h4_textsize"
             android:gravity="center"
@@ -53,16 +51,16 @@
         <TextView
             android:id="@+id/rv_popup_add_training_distance_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:hint="100m"
+            android:layout_height="@dimen/h4_input_text"
+            android:hint=""
             android:gravity="center"
             android:inputType="number"
             android:textColor="?attr/textColor"
             android:textColorHint="?attr/hintColor"
             android:background="?attr/transparent"
             android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/h4_textsize" />
+            android:textSize="@dimen/h4_textsize"
+            tools:ignore="TextViewEdits" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,9 +71,8 @@
         <TextView
             android:id="@+id/rv_popup_add_training_swim_text_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Nage"
+            android:layout_height="@dimen/h4_input_text"
+            android:text="@string/swim_title"
             android:textColor="?attr/secondaryColor"
             android:textSize="@dimen/h4_textsize"
             android:gravity="center"
@@ -83,14 +80,12 @@
         <TextView
             android:id="@+id/rv_popup_add_training_swim_spinner"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:backgroundTint="?attr/textColor"
+            android:layout_height="@dimen/h4_input_text"
             android:gravity="center"
-            android:text="Nage Libre"
+            android:text=""
             android:textColor="?attr/textColor"
             android:textSize="@dimen/h4_textsize"
-            android:fontFamily="sans-serif-light"
-            android:layout_weight="1" />
+            android:fontFamily="sans-serif-light" />
     </LinearLayout>
 
     <LinearLayout
@@ -100,9 +95,8 @@
         <TextView
             android:id="@+id/rv_popup_add_training_zone_text_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="Zone"
+            android:layout_height="@dimen/h4_input_text"
+            android:text="@string/zone_title"
             android:textColor="?attr/secondaryColor"
             android:textSize="@dimen/h4_textsize"
             android:gravity="center"
@@ -110,14 +104,12 @@
         <TextView
             android:id="@+id/rv_popup_add_training_zone_spinner"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:backgroundTint="?attr/textColor"
+            android:layout_height="@dimen/h4_input_text"
             android:gravity="center"
-            android:text="6"
+            android:text=""
             android:fontFamily="sans-serif-light"
             android:textColor="?attr/textColor"
-            android:textSize="@dimen/h4_textsize"
-            android:layout_weight="1" />
+            android:textSize="@dimen/h4_textsize" />
     </LinearLayout>
     
     <Button
@@ -126,5 +118,6 @@
         android:layout_height="match_parent"
         android:paddingHorizontal="16dp"
         android:background="?attr/transparent"
-        android:drawableLeft="@drawable/ic_clear_white_24dp" />
+        android:drawableLeft="@drawable/ic_clear_white_24dp"
+        android:drawableStart="@drawable/ic_clear_white_24dp" />
 </LinearLayout>

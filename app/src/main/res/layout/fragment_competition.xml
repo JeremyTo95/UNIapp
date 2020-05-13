@@ -21,7 +21,7 @@
             android:textColor="?attr/secondaryColor"
             android:fontFamily="sans-serif-light"
             android:textSize="@dimen/h1_textsize"
-            android:text="C O M P E T I T I O N S" />
+            android:text="@string/competiton_title" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,8 +40,9 @@
                     android:layout_weight="1"
                     android:tag="pool25"
                     android:background="?attr/transparent"
-                    android:text="B a s s i n  2 5 m"
+                    android:text="@string/sizePool25title"
                     android:textSize="@dimen/h3_textsize"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:textColor="?attr/textColor"
                     android:fontFamily="sans-serif-light" />
 
@@ -52,7 +53,8 @@
                     android:layout_weight="1"
                     android:tag="pool50"
                     android:background="?attr/transparent"
-                    android:text="B a s s i n  5 0 m"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:text="@string/sizePool25title"
                     android:textSize="@dimen/h3_textsize"
                     android:textColor="?attr/textColor"
                     android:fontFamily="sans-serif-light" />
@@ -67,7 +69,7 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:id="@+id/linearLayout"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
                 </LinearLayout>
@@ -84,7 +86,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif"
-                    android:text="D i s t a n c e"
+                    android:text="@string/competition_distance_title"
                     android:textColor="?attr/textColor"
                     android:textSize="@dimen/h3_textsize"
                     android:gravity="center" />
@@ -100,14 +102,14 @@
                     android:textSize="@dimen/h3_textsize"
                     android:backgroundTint="?attr/textColor"
                     android:fontFamily="sans-serif"
-                    android:gravity="end" />
+                    android:gravity="end" tools:targetApi="lollipop" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/fragment_competition_progression_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="C o u r b e   d e   p r o g r e s s i o n"
+                android:text="@string/competition_chart_title"
                 android:textColor="?attr/secondaryColor"
                 android:textAlignment="center"
                 android:gravity="center_horizontal"
@@ -131,7 +133,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="L e s   t e m p s"
+                    android:text="@string/competition_times_title"
                     android:textSize="@dimen/h3_textsize"
                     android:textColor="?attr/textColor"
                     android:layout_gravity="center"
@@ -141,29 +143,19 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
-
-                <!-- <Button
-                    android:id="@+id/fragment_competition_refresh_race_time"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:tag="refreshBtn"
-                    android:drawableLeft="@drawable/ic_refresh_white_24dp"
-                    android:paddingLeft="13dp"
-                    android:textColor="@color/colorText"
-                    android:layout_marginRight="10dp"
-                    android:textSize="@dimen/fragment_competition_button_textsize"
-                    android:background="@drawable/sh_button" /> -->
-
                 <Button
                     android:id="@+id/fragment_competition_add_race_time"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:tag="addBtn"
-                    android:drawableLeft="@drawable/ic_add_white_24dp"
+                    android:drawableStart="@drawable/ic_add_white_24dp"
                     android:paddingLeft="13dp"
+                    android:paddingRight="13dp"
                     android:textColor="?attr/textButtonColor"
                     android:textSize="@dimen/fragment_competition_button_textsize"
-                    android:background="@drawable/sh_button" />
+                    android:background="@drawable/sh_button"
+                    android:drawableLeft="@drawable/ic_add_white_24dp"
+                    android:paddingStart="13dp" />
             </LinearLayout>
 
             <androidx.core.widget.NestedScrollView

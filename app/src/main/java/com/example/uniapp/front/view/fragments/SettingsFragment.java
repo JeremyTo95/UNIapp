@@ -16,7 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.fragmentcontroller.SettingsController;
+import com.example.uniapp.front.controller.controller_fragment.SettingsController;
 import com.example.uniapp.R;
 import com.example.uniapp.front.controller.textwatcher.TextWatcherDate;
 import com.example.uniapp.front.controller.textwatcher.TextWatcherHeight;

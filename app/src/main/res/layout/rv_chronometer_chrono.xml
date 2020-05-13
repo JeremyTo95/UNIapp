@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.75"
-        android:text="L A P 1"
+        android:text=""
         android:textColor="?attr/secondaryColor"
         android:textSize="@dimen/h2_textsize"
         android:gravity="center"
@@ -26,17 +26,15 @@
         <TextView
             android:id="@+id/chrono_chrono"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:text="00:11.99"
+            android:layout_height="50dp"
+            android:text="@string/hint_time"
             android:textSize="@dimen/h2_textsize"
             android:textColor="?attr/textColor"
             android:fontFamily="sans-serif-light"
             android:gravity="center" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="50dp"
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/lap_chrono"
@@ -44,7 +42,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:textColor="?attr/secondaryColor"
-                android:text="00:00.00"
+                android:text="@string/hint_time"
                 android:gravity="center"
                 android:textSize="@dimen/h3_textsize"
                 android:fontFamily="sans-serif-light" />
@@ -53,7 +51,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="(+00.00)"
+                android:text="@string/hint_diff"
                 android:textSize="@dimen/h3_textsize"
                 android:textColor="?attr/greenDeepColor"
                 android:gravity="center"

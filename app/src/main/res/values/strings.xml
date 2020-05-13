@@ -1,3 +1,98 @@
 <resources>
     <string name="app_name">UNIapp</string>
+    <string name="welcome">B i e n v e n u e</string>
+
+    <string name="home_title">U N I a p p</string>
+    <string name="competiton_title">C O M P E T I T I O N </string>
+    <string name="converter_title">C O N V E R T I S S E U R</string>
+    <string name="settings_title">P A R A M E T R E S</string>
+    <string name="training_title">E N T R A I N E M E N T S</string>
+    <string name="converter">C O N V E R T I S S E U R</string>
+    <string name="configuration">C O N F I G U R A T I O N</string>
+    <string name="gadget_title">G A D G E T S</string>
+    <string name="chronometre">C H R O N O M E T R E</string>
+    <string name="timer">T I M E R</string>
+    <string name="performance_title">P E R F O R M A N C E :</string>
+
+    <string name="converter_zone_title">Z O N E</string>
+    <string name="converter_btn_title">C o n v e r t i r</string>
+    <string name="competition_distance_title">D i s t a n c e</string>
+    <string name="zone">Z O N E</string>
+    <string name="serie">S E R I E S</string>
+    <string name="swimmer_title">N A G E U R :</string>
+    <string name="personnel">P E R S O N N E L</string>
+    <string name="natation">N A T A T I O N</string>
+    <string name="gender">G E N R E :</string>
+    <string name="speciality">S P E C I A L I T E :</string>
+    <string name="informations">I N F O R M A T I O N S</string>
+
+    <string name="hint_time">00:00.00</string>
+    <string name="sizePool50title">BASSIN 50m</string>
+    <string name="sizePool25title">BASSIN 25m</string>
+    <string name="distance_25m">2 5 m</string>
+    <string name="distance_50m">5 0 m</string>
+    <string name="distance_100m">1 0 0 m</string>
+    <string name="distance_200m">2 0 0 m</string>
+    <string name="distance_400m">4 0 0 m</string>
+    <string name="distance_800m">8 0 0 m</string>
+    <string name="distance_1500m">1 5 0 0 m</string>
+    <string name="lastname">N O M</string>
+    <string name="firstname">P R E N O M</string>
+    <string name="weight">P O I D S (en kg)</string>
+    <string name="height">T A I L L E (en cm)</string>
+    <string name="birth">N E L E DD/MM/YYYY</string>
+    <string name="club">C L U B</string>
+    <string name="hint_city">V I L L E</string>
+    <string name="unknow_input">XXXX</string>
+    <string name="separator">-</string>
+    <string name="all">Tous</string>
+    <string name="butterfly">Papillon</string>
+    <string name="backstroke">Dos</string>
+    <string name="breaststroke">Brasse</string>
+    <string name="freestyle">Nage Libre</string>
+    <string name="IM">4 Nages</string>
+    <string name="hint_diff">(+00.00)</string>
+    <string name="hint_date">DD/MM/YYYY</string>
+    <string name="default_value_0">0</string>
+    <string name="default_value_25m">25m</string>
+
+    <string name="country">Pays :</string>
+    <string name="update">Mettre à jour</string>
+    <string name="reinitialiser_temps_competition">Réinitialiser temps compétition</string>
+    <string name="denied">A N N U L E R</string>
+    <string name="hint_country">P A Y S</string>
+    <string name="time_title">T E M P S</string>
+    <string name="confirmed">V a l i d e r</string>
+    <string name="loading">C H A R G E M E N T</string>
+
+    <string name="add_new_race">Ajouter Nouvelle Course</string>
+    <string name="changer_le_th_me">Changer le thème</string>
+    <string name="add_new_element">Ajouter Nouvel element</string>
+    <string name="detail_race">DETAILS COURSE</string>
+    <string name="detail_training">DETAILS ENTRAINEMENT</string>
+    <string name="insert_times">INSERTION TEMPS</string>
+    <string name="select_times">SELECTION DES TEMPS</string>
+    <string name="converter_time_reference_title">TEMPS DE REFERENCE</string>
+    <string name="competition_chart_title">Courbe de progression</string>
+    <string name="competition_times_title">Les temps</string>
+    <string name="mon_profil">MON PROFIL</string>
+
+    <string name="key_activation">Clé d\'activation</string>
+    <string name="date">Date :</string>
+    <string name="city">Ville :</string>
+    <string name="temps">Temps</string>
+    <string name="level">Niveau :</string>
+    <string name="sets_title">Sets</string>
+    <string name="distance_title">Distance</string>
+    <string name="swim_title">Nage</string>
+    <string name="zone_title">Zone</string>
+
+    <string name="desc_logo_chrono">logo_chrono</string>
+    <string name="desc_logo_timer">logoTimer</string>
+    <string name="desc_logo_converter">logoConverter</string>
+    <string name="desc_img_home">LogoUNI</string>
+    <string name="work_title">W O R K</string>
+    <string name="hint_timer">00:00</string>
+    <string name="rest_title">R E S T</string>
+
 </resources>

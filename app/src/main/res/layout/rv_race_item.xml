@@ -7,20 +7,20 @@
     android:layout_height="100dp"
     android:padding="10dp"
     android:layout_margin="20dp"
-    android:background="@drawable/sh_gradient_background">
+    android:background="@drawable/sh_gradient_background"
+    android:baselineAligned="false">
 
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="0dp"
         android:layout_weight="2"
-        android:orientation="vertical"
-        tools:ignore="Suspicious0dp">
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/rv_race_item_competition_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Meeting Saint Germains"
+            android:text="@string/hint_city"
             android:fontFamily="sans-serif-light"
             android:textAlignment="center"
             android:textSize="@dimen/rv_race_item_textsize"
@@ -30,12 +30,11 @@
         <TextView
             android:id="@+id/rv_race_item_date"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textAlignment="center"
-            android:text="Le 20-01-2020"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="@string/hint_date"
             android:fontFamily="sans-serif-light"
-            android:textColor="?attr/textColor"
-            android:gravity="center_horizontal" />
+            android:textColor="?attr/textColor" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,10 +45,9 @@
         <TextView
             android:id="@+id/rv_race_item_time"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:text="57.81s"
-            android:textSize="25dp"
+            android:layout_height="50dp"
+            android:text="@string/hint_time"
+            android:textSize="@dimen/h2_textsize"
             android:gravity="center"
             android:layout_gravity="top"
             android:textColor="?attr/secondaryColor"
@@ -58,10 +56,9 @@
         <TextView
             android:id="@+id/rv_race_item_diff"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="30dp"
             android:textColor="?attr/textColor"
-            android:text="+0.11s"
+            android:text="@string/hint_diff"
             android:fontFamily="sans-serif-light"
             android:gravity="center" />
     </LinearLayout>
