@@ -33,10 +33,14 @@ public class Training implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return String.format("id : %s | difficulty : %d | sizePool : %d | date : %s | city : %s | trainingBlock : %s", id, difficulty, sizePool, date, city, Arrays.toString(trainingBlockList.toArray()));
+        return String.format(getTraining(), id, difficulty, sizePool, date, city, Arrays.toString(trainingBlockList.toArray()));
     }
 
-    public Training(String id, int difficulty, int sizePool, String date, String city, List<TrainingBlock> trainingBlockList) {
+    private String getTraining() {
+        return ("id : %s | difficulty : %d | sizePool : %d | date : %s | city : %s | trainingBlock : %s");
+    }
+
+    public Training(@NonNull String id, int difficulty, int sizePool, String date, String city, List<TrainingBlock> trainingBlockList) {
         this.id = id;
         this.difficulty = difficulty;
         this.sizePool = sizePool;
@@ -45,17 +49,7 @@ public class Training implements Serializable {
         this.trainingBlockList = trainingBlockList;
     }
 
-    public static int getStartIndexFromSetIndex(List<Integer> allSets, int setIndex) {
-        int startIndex = 0;
-        for (int i = 0; i < setIndex; i++) startIndex += allSets.get(i);
-        System.out.println("startIndex : " + startIndex);
-        return startIndex;
-    }
-
-    public static int getEndIndexFromSetIndex(List<Integer> allSets, int setIndex) {
-        return getStartIndexFromSetIndex(allSets, setIndex) + allSets.get(setIndex);
-    }
-
+    @NonNull
     public String getId() { return id; }
     public int getSizePool() { return sizePool; }
     public String getDate() { return date; }
@@ -63,7 +57,7 @@ public class Training implements Serializable {
     public int getDifficulty() { return difficulty; }
     public List<TrainingBlock> getTrainingBlockList() { return trainingBlockList; }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(@NonNull String id) { this.id = id; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }

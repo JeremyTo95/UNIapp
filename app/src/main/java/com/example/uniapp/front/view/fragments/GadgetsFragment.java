@@ -37,9 +37,11 @@ public class GadgetsFragment extends Fragment implements View.OnClickListener {
         ImageView timerLogo      = layoutInflater.findViewById(R.id.fragment_tools_timer_logo);
         ImageView converterLogo  = layoutInflater.findViewById(R.id.fragment_tools_converter_logo);
 
-        chronoLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_timer_white_24dp : R.drawable.ic_timer_black_24dp));
-        timerLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_play_arrow_white_24dp : R.drawable.ic_play_arrow_black_24dp));
-        converterLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_sync_alt_white_24dp : R.drawable.ic_sync_alt_black_24dp));
+        if (getActivity() != null) {
+            chronoLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_timer_white_24dp : R.drawable.ic_timer_black_24dp));
+            timerLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_play_arrow_white_24dp : R.drawable.ic_play_arrow_black_24dp));
+            converterLogo.setImageDrawable(getResources().getDrawable((AboutScreen.isNightMode(getActivity())) ? R.drawable.ic_sync_alt_white_24dp : R.drawable.ic_sync_alt_black_24dp));
+        }
         chronometer.setOnClickListener(this);
         timer.setOnClickListener(this);
         converter.setOnClickListener(this);

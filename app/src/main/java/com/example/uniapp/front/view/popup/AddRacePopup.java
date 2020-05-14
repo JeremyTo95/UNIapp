@@ -1,12 +1,11 @@
 package com.example.uniapp.front.view.popup;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -31,18 +30,15 @@ import java.util.Date;
 public class AddRacePopup extends Dialog {
     private Activity activity;
 
-    private String title;
     private String city;
     private String date;
     private int distanceRace;
     private int sizePool;
     private float time;
     private String swim;
-    private int pointFFN;
     private String level;
     private String country;
 
-    private TextView titleTextView;
     private TextView subtitleDescription;
     private EditText dateEditText;
     private EditText cityEditText;
@@ -55,21 +51,21 @@ public class AddRacePopup extends Dialog {
     public AddRacePopup(final Activity activity) {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.popup_add_race);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        if (getWindow() != null) getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.activity = activity;
 
+        @SuppressLint("SimpleDateFormat")
         DateFormat dateFormat  = new SimpleDateFormat("dd/MM/yyyy");
         Date today             = Calendar.getInstance().getTime();
         date                   = dateFormat.format(today);
-        titleTextView          = (TextView) findViewById(R.id.fragment_competition_add_race_popup_title);
-        subtitleDescription    = (TextView) findViewById(R.id.fragment_competition_add_race_popup_swim_description);
-        dateEditText           = (EditText) findViewById(R.id.race_popup_edit_text_date);
-        cityEditText           = (EditText) findViewById(R.id.race_popup_edit_text_city);
-        timeEditText           = (EditText) findViewById(R.id.race_popup_edit_text_time);
-        selectLevelCompetition = (Spinner)  findViewById(R.id.race_popup_spinner_level);
-        countryEditText        = (EditText) findViewById(R.id.race_popup_edit_text_country);
-        deniedButton           = (Button)   findViewById(R.id.fragment_competition_add_race_popup_denied);
-        confirmedButton        = (Button)   findViewById(R.id.fragment_competition_add_race_popup_confirmed);
+        subtitleDescription    = findViewById(R.id.fragment_competition_add_race_popup_swim_description);
+        dateEditText           = findViewById(R.id.race_popup_edit_text_date);
+        cityEditText           = findViewById(R.id.race_popup_edit_text_city);
+        timeEditText           = findViewById(R.id.race_popup_edit_text_time);
+        selectLevelCompetition = findViewById(R.id.race_popup_spinner_level);
+        countryEditText        = findViewById(R.id.race_popup_edit_text_country);
+        deniedButton           = findViewById(R.id.fragment_competition_add_race_popup_denied);
+        confirmedButton        = findViewById(R.id.fragment_competition_add_race_popup_confirmed);
         dateEditText.setText(date);
 
         ArrayAdapter<CharSequence> levelDropdownAdapter = ArrayAdapter.createFromResource(getContext(), R.array.competition_level, R.layout.dropdown_item_auto);
@@ -126,8 +122,8 @@ public class AddRacePopup extends Dialog {
         String text = getTimeEditText().getText().toString();
         int textSize = text.length();
         if (textSize != 0) {
-            if (Integer.parseInt(text.replaceAll("[:.]", "").toString()) == 0) return false;
-            else if (textSize != 8 && textSize != 0) {
+            if (Integer.parseInt(text.replaceAll("[:.]", "")) == 0) return false;
+            else if (textSize != 8) {
                 for (int i = textSize; i < 8; i++) {
                     if      (8 - i == 3) text = new StringBuilder(text).insert(0, ":").toString();
                     else if (8 - i == 6) text = new StringBuilder(text).insert(0, ".").toString();
@@ -135,8 +131,7 @@ public class AddRacePopup extends Dialog {
                 }
                 time = MarketTimes.fetchTimeToFloat(text);
                 return true;
-            } else if (textSize == 8) return true;
-            else return false;
+            } else return true;
         } else return false;
     }
 
@@ -154,7 +149,6 @@ public class AddRacePopup extends Dialog {
                 getDateEditText().setHintTextColor(getLayoutInflater().getContext().getResources().getColor(R.color.redDeep));
             }
             if (!checkTime) {
-                getTimeEditText().getText().toString().replaceAll("[.:0-9]", "");
                 getTimeEditText().setHint("Champ vide");
                 getTimeEditText().setTextColor(getLayoutInflater().getContext().getResources().getColor(R.color.redDeep));
                 getTimeEditText().setHintTextColor(getLayoutInflater().getContext().getResources().getColor(R.color.redDeep));
@@ -169,26 +163,18 @@ public class AddRacePopup extends Dialog {
     }
 
     private void onClickConfirmedButton() {
-        confirmedButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDate(getDateEditText().getText().toString());
-                setCity(getCityEditText().getText().toString());
-                setCountry(getCountryEditText().getText().toString());
-                setTime(MarketTimes.fetchTimeToFloat(getTimeEditText().getText().toString()));
-                checkInputFormatTime();
-                isEnableConfirmed();
-            }
+        confirmedButton.setOnClickListener(v -> {
+            setDate(getDateEditText().getText().toString());
+            setCity(getCityEditText().getText().toString());
+            setCountry(getCountryEditText().getText().toString());
+            setTime(MarketTimes.fetchTimeToFloat(getTimeEditText().getText().toString()));
+            checkInputFormatTime();
+            isEnableConfirmed();
         });
     }
 
     private void onClickDeniedButton() {
-        getDeniedButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        getDeniedButton().setOnClickListener(v -> dismiss());
     }
 
     public void build() {
@@ -197,41 +183,27 @@ public class AddRacePopup extends Dialog {
         if (window != null) window.setLayout((int) (AboutScreen.getWidth(activity) * 0.8), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
-    public Button getDeniedButton() { return deniedButton; }
+    private Button getDeniedButton() { return deniedButton; }
     public Button getConfirmedButton() { return confirmedButton; }
-    public String getTitle() { return title; }
     public String getCity() { return city; }
     public String getDate() { return date; }
     public int getDistanceRace() { return distanceRace; }
     public int getSizePool() { return sizePool; }
     public float getTime() { return time; }
     public String getSwim() { return swim; }
-    public int getPointFFN() { return pointFFN; }
     public String getLevel() { return level; }
-    public TextView getTitleTextView() { return titleTextView; }
     public TextView getSubtitleDescription() { return subtitleDescription; }
     public EditText getDateEditText() { return dateEditText; }
     public EditText getCityEditText() { return cityEditText; }
     public EditText getTimeEditText() { return timeEditText; }
-    public Spinner getSelectLevelCompetition() { return selectLevelCompetition; }
     public String getCountry() { return country; }
     public EditText getCountryEditText() { return countryEditText; }
 
-    public void setDateEditText(EditText dateEditText) { this.dateEditText = dateEditText; }
-    public void setCityEditText(EditText cityEditText) { this.cityEditText = cityEditText; }
-    public void setTimeEditText(EditText timeEditText) { this.timeEditText = timeEditText; }
-    public void setTitle(String title) { this.title = title; }
     public void setCity(String city) { this.city = city; }
     public void setDate(String date) { this.date = date; }
     public void setDistanceRace(int distanceRace) { this.distanceRace = distanceRace; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
     public void setTime(float time) { this.time = time; }
     public void setSwim(String swim) { this.swim = swim; }
-    public void setPointFFN(int pointFFN) { this.pointFFN = pointFFN; }
-    public void setLevel(String level) { this.level = level; }
-    public void setTitleTextView(TextView titleTextView) { this.titleTextView = titleTextView; }
-    public void setSubtitleDescription(TextView subtitleDescription) { this.subtitleDescription = subtitleDescription; }
-    public void setSelectLevelCompetition(Spinner selectLevelCompetition) { this.selectLevelCompetition = selectLevelCompetition; }
     public void setCountry(String country) { this.country = country; }
-    public void setCountryEditText(EditText countryEditText) { this.countryEditText = countryEditText; }
 }

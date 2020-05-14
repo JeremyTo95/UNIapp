@@ -53,7 +53,7 @@ public class BottomNavigationViewListener implements BottomNavigationView.OnNavi
         return false;
     }
 
-    public void configureAndShowFragment(Fragment fragment) {
+    private void configureAndShowFragment(Fragment fragment) {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.activty_main_fragment_layout, fragment).commit();
     }

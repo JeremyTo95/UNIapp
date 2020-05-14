@@ -25,8 +25,6 @@ public class TrainingDateComparator implements Comparator<Training> {
         int cptO1 = getDayValue(o1.getDate()) + getMonthValue(o1.getDate()) + getYearValue(o1.getDate());
         int cptO2 = getDayValue(o2.getDate()) + getMonthValue(o2.getDate()) + getYearValue(o2.getDate());
 
-        if (cptO1 > cptO2) return -1;
-        else if (cptO1 == cptO2) return 0;
-        else return 1;
+        return Integer.compare(cptO2, cptO1);
     }
 }

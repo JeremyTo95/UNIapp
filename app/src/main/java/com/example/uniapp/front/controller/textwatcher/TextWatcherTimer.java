@@ -6,7 +6,6 @@ import android.widget.EditText;
 
 public class TextWatcherTimer implements TextWatcher {
     private EditText editText;
-    private String   strValue;
 
     public TextWatcherTimer(EditText editText) {
         this.editText = editText;
@@ -18,6 +17,7 @@ public class TextWatcherTimer implements TextWatcher {
     public void afterTextChanged(Editable s) { }
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        String strValue;
         editText.removeTextChangedListener(this);
         strValue = editText.getText().toString().replaceAll(":", "");
         if (strValue.length() > 2) strValue = new StringBuilder(strValue).insert(strValue.length() - 2, ":").toString();

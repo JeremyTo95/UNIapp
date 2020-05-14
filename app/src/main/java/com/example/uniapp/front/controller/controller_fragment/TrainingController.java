@@ -6,10 +6,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.example.uniapp.back.executor.AppExecutors;
 import com.example.uniapp.back.room.RoomDataBase;
-import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.controller.comparator.TrainingDateComparator;
+import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.model.data.Training;
 import com.example.uniapp.front.model.market.MarketTrainings;
 import com.example.uniapp.front.view.fragments.TrainingsFragment;
@@ -57,7 +56,7 @@ public class TrainingController extends Controller {
         Collections.sort(currentTrainings, new TrainingDateComparator());
     }
 
-    public void updatePoolSizeSpinner() {
+    private void updatePoolSizeSpinner() {
         view.getDropdownPool().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
@@ -74,14 +73,11 @@ public class TrainingController extends Controller {
     public void setupAddTrainingPopup() {
         addTrainingPopup = new AddTrainingPopup(view.getActivity());
         addTrainingPopup.build();
-        addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (addTrainingPopup.isEnabled()) {
-                    Log.e("ADD", "Add training");
-                    Training training = new Training(UUID.randomUUID().toString(), addTrainingPopup.getNewDifficulty(), addTrainingPopup.getNewSizePool(), addTrainingPopup.getNewDate(), addTrainingPopup.getNewCity(), addTrainingPopup.getTrainingBlockList());
-                    insertNewTraining(training);
-                }
+        addTrainingPopup.getBtn_confirmed().setOnClickListener(v -> {
+            if (addTrainingPopup.isEnabled()) {
+                Log.e("ADD", "Add training");
+                Training training = new Training(UUID.randomUUID().toString(), addTrainingPopup.getNewDifficulty(), addTrainingPopup.getNewSizePool(), addTrainingPopup.getNewDate(), addTrainingPopup.getNewCity(), addTrainingPopup.getTrainingBlockList());
+                insertNewTraining(training);
             }
         });
     }

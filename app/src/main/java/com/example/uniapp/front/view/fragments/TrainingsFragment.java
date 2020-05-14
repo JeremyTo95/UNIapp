@@ -42,7 +42,6 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     private Button               btn_breaststroke;
     private Button               btn_freestyle;
     private Button               btn_IM;
-    private FloatingActionButton floatingActionButton;
 
     private RecyclerView      trainingRecyclerView;
     private RvTrainingAdapter trainingRecyclerViewAdapter;
@@ -89,19 +88,19 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
                 R.id.fragment_training_difficulty_star_4,
                 R.id.fragment_training_difficulty_star_5
         };
-        btn_difficulty_stars = new ArrayList<Button>();
-        for (int i = 0; i < 5; i++) btn_difficulty_stars.add((Button) layoutInflater.findViewById(idButtons[i]));
+        btn_difficulty_stars = new ArrayList<>();
+        for (int i = 0; i < 5; i++) btn_difficulty_stars.add(layoutInflater.findViewById(idButtons[i]));
         for (int i = 0; i < 5; i++) btn_difficulty_stars.get(i).setOnClickListener(this);
 
-        training_title       = (TextView)             layoutInflater.findViewById(R.id.fragment_training_title);
-        btn_all              = (Button)               layoutInflater.findViewById(R.id.fragment_training_all);
-        btn_butterfly        = (Button)               layoutInflater.findViewById(R.id.fragment_training_butterfly);
-        btn_backstroke       = (Button)               layoutInflater.findViewById(R.id.fragment_training_backstroke);
-        btn_breaststroke     = (Button)               layoutInflater.findViewById(R.id.fragment_training_breaststroke);
-        btn_freestyle        = (Button)               layoutInflater.findViewById(R.id.fragment_training_freestyle);
-        btn_IM               = (Button)               layoutInflater.findViewById(R.id.fragment_training_IM);
-        floatingActionButton = (FloatingActionButton) layoutInflater.findViewById(R.id.fragment_training_floating_action_button);
-        trainingRecyclerView = (RecyclerView)         layoutInflater.findViewById(R.id.fragment_training_recycler_view);
+        training_title                            = layoutInflater.findViewById(R.id.fragment_training_title);
+        btn_all                                   = layoutInflater.findViewById(R.id.fragment_training_all);
+        btn_butterfly                             = layoutInflater.findViewById(R.id.fragment_training_butterfly);
+        btn_backstroke                            = layoutInflater.findViewById(R.id.fragment_training_backstroke);
+        btn_breaststroke                          = layoutInflater.findViewById(R.id.fragment_training_breaststroke);
+        btn_freestyle                             = layoutInflater.findViewById(R.id.fragment_training_freestyle);
+        btn_IM                                    = layoutInflater.findViewById(R.id.fragment_training_IM);
+        FloatingActionButton floatingActionButton = layoutInflater.findViewById(R.id.fragment_training_floating_action_button);
+        trainingRecyclerView                      = layoutInflater.findViewById(R.id.fragment_training_recycler_view);
 
         btn_all.setOnClickListener(this);
         btn_butterfly.setOnClickListener(this);
@@ -116,7 +115,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
 
 
     public void updateColors() {
-        training_title.setTextColor(AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark));
+        if (getContext() != null) training_title.setTextColor(AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark));
         btn_all.setTextColor(         (controller.getSwim().equals("all"))          ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
         btn_butterfly.setTextColor(   (controller.getSwim().equals("butterfly"))    ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
         btn_backstroke.setTextColor(  (controller.getSwim().equals("backstroke"))   ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
@@ -126,12 +125,14 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     public void updateDifficulty() {
-        if (AboutScreen.isNightMode(getActivity())) {
-            for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
-            for (int i = 0; i < controller.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
-        } else {
-            for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_black_24dp), null, null, null);
-            for (int i = 0; i < controller.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
+        if (getActivity() != null) {
+            if (AboutScreen.isNightMode(getActivity())) {
+                for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
+                for (int i = 0; i < controller.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+            } else {
+                for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_black_24dp), null, null, null);
+                for (int i = 0; i < controller.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
+            }
         }
     }
 
@@ -145,29 +146,34 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     }
 
     public void setupTrainingList() {
-        trainingRecyclerViewAdapter = new RvTrainingAdapter(getActivity(), controller.getCurrentTrainings());
-        trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
-        trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
-        trainingRecyclerView.setHasFixedSize(true);
-        trainingRecyclerView.setNestedScrollingEnabled(false);
-        trainingRecyclerViewAdapter.notifyDataSetChanged();
-        ItemTouchHelper onSwipe = new ItemTouchHelper(new SwipeToDeleteCallback() {
-            @Override
-            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_white_48dp));
-                setBackground(ContextCompat.getDrawable(getContext(), R.drawable.sh_gradient_blue));
-                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-            }
+        if (getActivity() != null) {
 
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                super.onSwiped(viewHolder, direction);
-                int position = viewHolder.getAdapterPosition();
-                trainingRecyclerViewAdapter.removeItem(position);
-                controller.updateCurrentTrainings();
-            }
-        });
-        onSwipe.attachToRecyclerView(trainingRecyclerView);
+            trainingRecyclerViewAdapter = new RvTrainingAdapter(getActivity(), controller.getCurrentTrainings());
+            trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
+            trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
+            trainingRecyclerView.setHasFixedSize(true);
+            trainingRecyclerView.setNestedScrollingEnabled(false);
+            trainingRecyclerViewAdapter.notifyDataSetChanged();
+            ItemTouchHelper onSwipe = new ItemTouchHelper(new SwipeToDeleteCallback() {
+                @Override
+                public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    if (getContext() != null) {
+                        setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_white_48dp));
+                        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.sh_gradient_blue));
+                    }
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    super.onSwiped(viewHolder, direction);
+                    int position = viewHolder.getAdapterPosition();
+                    trainingRecyclerViewAdapter.removeItem(position);
+                    controller.updateCurrentTrainings();
+                }
+            });
+            onSwipe.attachToRecyclerView(trainingRecyclerView);
+        }
     }
 
     public Spinner getDropdownPool() { return dropdownPool; }

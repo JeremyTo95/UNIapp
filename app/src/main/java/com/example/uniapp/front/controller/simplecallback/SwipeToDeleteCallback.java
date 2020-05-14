@@ -12,7 +12,7 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
     private Drawable icon;
     private Drawable background;
 
-    public SwipeToDeleteCallback() {
+    protected SwipeToDeleteCallback() {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
     }
 
@@ -54,6 +54,6 @@ public class SwipeToDeleteCallback extends ItemTouchHelper.SimpleCallback {
         icon.draw(c);
     }
 
-    public void setIcon(Drawable icon) { this.icon = icon; }
+    protected void setIcon(Drawable icon) { this.icon = icon; }
     public void setBackground(Drawable background) { this.background = background; }
 }

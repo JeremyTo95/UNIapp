@@ -2,20 +2,13 @@ package com.example.uniapp.front.model.market;
 
 import com.example.uniapp.front.model.data.Training;
 import com.example.uniapp.front.model.data.TrainingBlock;
-import com.example.uniapp.front.controller.comparator.TrainingDateComparator;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class MarketTrainings {
 
     public MarketTrainings() { }
-
-    public static void sortTrainingsByDate(List<Training> allTrainings) {
-        TrainingDateComparator trainingDateComparator = new TrainingDateComparator();
-        Collections.sort(allTrainings, trainingDateComparator);
-    }
 
     public static List<Training> getTrainingsBySizePoolSwimDifficulty(List<Training> allTrainings, int sizePool, String swim, int difficulty) {
         List<Training> trainings = new ArrayList<>();
@@ -36,16 +29,8 @@ public class MarketTrainings {
         return trainings;
     }
 
-    public static List<Float> getFloatTimes(TrainingBlock trainingBlock) {
-        List<Float> allTimes = new ArrayList<>();
-        for (int i = 0; i < trainingBlock.getTimes().size(); i++)
-            allTimes.add(trainingBlock.getTimes().get(i));
-
-        return allTimes;
-    }
-
     public static List<Float> getRefLine(float ref, int nbSets) {
-        List<Float> refLineData = new ArrayList<Float>();
+        List<Float> refLineData = new ArrayList<>();
         for (int i = 0; i < nbSets; i++) refLineData.add(ref);
 
         return refLineData;

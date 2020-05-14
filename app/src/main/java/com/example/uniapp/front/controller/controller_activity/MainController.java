@@ -47,15 +47,17 @@ public class MainController extends Controller {
         User newUser = SharedPrefManager.getUser(context);
         SharedPrefManager.clearUser(context);
 
-        if (roomDataBase.userDAO().checkUserByKey(newUser.getFirstname(), newUser.getLastname(), newUser.getMykey()) == 0) {
-            goSignInUser();
-        } else {
-            roomDataBase.userDAO().deleteAll();
-            roomDataBase.userDAO().insert(newUser);
-            Toast.makeText(context, "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
-            if (roomDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(view);
-            if (roomDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(view);
-            else view.unlockUI();
+        if (newUser != null) {
+            if (roomDataBase.userDAO().checkUserByKey(newUser.getFirstname(), newUser.getLastname(), newUser.getMykey()) == 0) {
+                goSignInUser();
+            } else {
+                roomDataBase.userDAO().deleteAll();
+                roomDataBase.userDAO().insert(newUser);
+                Toast.makeText(context, "Nouvel utilisateur enregistré", Toast.LENGTH_SHORT).show();
+                if (roomDataBase.raceDAO().getNb() == 0) Race.startAsyncTaskLoadingRace(view);
+                if (roomDataBase.pointFFNDAO().getNb() != 54000) PointFFN.startAsyncTaskLoadingPointsFFN(view);
+                else view.unlockUI();
+            }
         }
     }
 

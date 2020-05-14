@@ -1,5 +1,6 @@
 package com.example.uniapp.back.sharedpreferences;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -12,13 +13,14 @@ public class SharedPrefManager {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
-    public SharedPrefManager() {
+    private SharedPrefManager() {
         sharedPrefManager = new SharedPrefManager();
     }
 
-    public static SharedPrefManager getSharedPref(Context context) {
+    @SuppressLint("CommitPrefEdits")
+    private static SharedPrefManager getSharedPref(Context context) {
         if (sharedPreferences == null) {
-            Log.i("SHAREDPREF", "new shared pref is loading");
+            Log.i("SharedPred", "new shared pref is loading");
             sharedPreferences = context.getSharedPreferences("quicksave", Context.MODE_PRIVATE);
             editor = sharedPreferences.edit();
         }

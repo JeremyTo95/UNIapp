@@ -32,13 +32,11 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
     private RoomDataBase roomDataBase;
     private Activity     activity;
     private Training     training;
-    private int          sizePool;
 
     public RvTrainingDetailAdapter(Activity activity, Training training) {
         this.activity     = activity;
         this.training     = training;
         this.roomDataBase = RoomDataBase.getDatabase(activity.getApplicationContext());
-        this.sizePool     = training.getSizePool();
     }
 
     @NonNull
@@ -60,60 +58,52 @@ public class RvTrainingDetailAdapter extends RecyclerView.Adapter<RvTrainingDeta
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private TrainingBlock trainingBlock;
-        private Race bestTime;
         private TextView      serieSubtitle;
         private TextView      serieZone;
         private LineChart     lineChart;
         private Button        updateBtn;
         private Float         timeReference;
-        private List<List<Float>> timeValues;
-        private List<String> legendValues;
         private RecyclerView  recyclerViewTimes;
 
-        public MyViewHolder(@NonNull final View itemView) {
+        MyViewHolder(@NonNull final View itemView) {
             super(itemView);
-            serieSubtitle     = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_subtitle);
-            serieZone         = (TextView)     itemView.findViewById(R.id.rv_detail_training_items_serie_zones);
-            lineChart         = (LineChart)    itemView.findViewById(R.id.rv_detail_training_items_line_chart);
-            updateBtn         = (Button)       itemView.findViewById(R.id.rv_training_detail_item_update_btn);
-            recyclerViewTimes = (RecyclerView) itemView.findViewById(R.id.rv_detail_training_items_recyclerview);
+            serieSubtitle     = itemView.findViewById(R.id.rv_detail_training_items_serie_subtitle);
+            serieZone         = itemView.findViewById(R.id.rv_detail_training_items_serie_zones);
+            lineChart         = itemView.findViewById(R.id.rv_detail_training_items_line_chart);
+            updateBtn         = itemView.findViewById(R.id.rv_training_detail_item_update_btn);
+            recyclerViewTimes = itemView.findViewById(R.id.rv_detail_training_items_recyclerview);
         }
 
-        public void display(final int indexSerie) {
+        private String getSerieSubtitle() { return trainingBlock.getNbSet() + " x " + trainingBlock.getDistance() + MarketSwim.convertShortSwim(trainingBlock.getSwim()); }
+        private String getSerieZone()     { return "Z O N E  " + trainingBlock.getZone(); }
+
+        private void display(final int indexSerie) {
             trainingBlock = training.getTrainingBlockList().get(indexSerie);
-            bestTime      = MarketRaces.getBestTime(roomDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
+            Race bestTime = MarketRaces.getBestTime(roomDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), trainingBlock.getDistance(), trainingBlock.getSwim()), 1);
             timeReference = MarketTimes.fetchTimeToFloat(MarketTimes.convertCompetitionTimeToZoneTime((bestTime.getTime()), trainingBlock.getZone()));
 
-            serieSubtitle.setText(trainingBlock.getNbSet() + " x " + trainingBlock.getDistance() + MarketSwim.convertShortSwim(trainingBlock.getSwim()));
-            serieZone.setText("Z O N E  " + trainingBlock.getZone());
+            serieSubtitle.setText(getSerieSubtitle());
+            serieZone.setText(getSerieZone());
 
             updateGraphicsElements();
             if (AboutScreen.isNightMode(activity)) updateBtn.setCompoundDrawablesWithIntrinsicBounds(activity.getResources().getDrawable(R.drawable.ic_create_white_24dp), null, null, null);
             else updateBtn.setCompoundDrawablesWithIntrinsicBounds(activity.getResources().getDrawable(R.drawable.ic_create_black_24dp), null, null, null);
 
-            updateBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    UpdateTrainingTimesPopup updateTrainingTimesPopup = new UpdateTrainingTimesPopup(activity, training, indexSerie, timeReference);
-                    updateTrainingTimesPopup.build();
-                    updateTrainingTimesPopup.getConfirmed().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            System.out.println(updateTrainingTimesPopup.getTrainingBlockArrayList().toArray());
-                            training.setTrainingBlockList(updateTrainingTimesPopup.getTrainingBlockArrayList());
-                            updateTrainingTimesPopup.dismiss();
-                            roomDataBase.trainingDAO().updateTraining(training);
-                            System.out.println(training);
-                            updateGraphicsElements();
-                        }
-                    });
-                }
+            updateBtn.setOnClickListener(v -> {
+                UpdateTrainingTimesPopup updateTrainingTimesPopup = new UpdateTrainingTimesPopup(activity, training, indexSerie, timeReference);
+                updateTrainingTimesPopup.build();
+                updateTrainingTimesPopup.getConfirmed().setOnClickListener(v1 -> {
+                    training.setTrainingBlockList(updateTrainingTimesPopup.getTrainingBlockArrayList());
+                    updateTrainingTimesPopup.dismiss();
+                    roomDataBase.trainingDAO().updateTraining(training);
+                    updateGraphicsElements();
+                });
             });
         }
 
         private void updateGraphicsElements() {
-            timeValues   = new ArrayList<List<Float>>();
-            legendValues = new ArrayList<String>();
+            List<List<Float>> timeValues = new ArrayList<>();
+            List<String> legendValues = new ArrayList<>();
             timeValues.add(trainingBlock.getTimes());
             timeValues.add(MarketTrainings.getRefLine(timeReference, trainingBlock.getTimes().size()));
             legendValues.add("Temps réalisé");

@@ -1,6 +1,7 @@
 package com.example.uniapp.back.executor;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -9,7 +10,7 @@ import java.util.concurrent.Executors;
 
 public class AppExecutors {
 
-    private static AppExecutors sInstance;
+    private static AppExecutors appExecutors;
     private Executor diskIo;
     private Executor UIThread;
 
@@ -19,10 +20,11 @@ public class AppExecutors {
     }
 
     public static AppExecutors getInstance(Context context){
-        if (sInstance == null){
-            sInstance = new AppExecutors(Executors.newSingleThreadExecutor(), ContextCompat.getMainExecutor(context));
+        if (appExecutors == null) {
+            Log.i("AppExecutor", "new app executor is loading");
+            appExecutors = new AppExecutors(Executors.newSingleThreadExecutor(), ContextCompat.getMainExecutor(context));
         }
-        return sInstance;
+        return appExecutors;
     }
 
     public Executor getDiskIo(){

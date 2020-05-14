@@ -1,5 +1,6 @@
 package com.example.uniapp.front.controller.global;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -16,6 +17,7 @@ import com.example.uniapp.R;
 import com.example.uniapp.back.sharedpreferences.SharedPrefManager;
 import com.example.uniapp.front.view.actvities.MainActivity;
 
+@SuppressLint("Registered")
 public class AboutScreen extends AppCompatActivity {
     public static int getWidth(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
@@ -42,8 +44,7 @@ public class AboutScreen extends AppCompatActivity {
         System.out.println(SharedPrefManager.loadThemeMode(activity.getApplicationContext()));
         if (SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 1) return true;
         else if (SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 2) return false;
-        else if (SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 0 && (activity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES) return true;
-        else return false;
+        else return SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 0 && (activity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
     }
 
     public static void setupDefaultNightMode(Activity activity) {
@@ -74,32 +75,6 @@ public class AboutScreen extends AppCompatActivity {
 
     public static void hideKeybaord(Activity activity, View v) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
-    }
-
-    public static void hideSystemUI(Activity activity) {
-        View decorView = activity.getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_IMMERSIVE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_FULLSCREEN
-        );
-    }
-
-    public static void hideNavigationBar(Activity activity) {
-        View decorView = activity.getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-        decorView.setSystemUiVisibility(uiOptions);
-    }
-
-    private static void showSystemUI(Activity activity) {
-        View decorView = activity.getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        if (inputMethodManager != null) inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
 }

@@ -3,7 +3,6 @@ package com.example.uniapp.front.view.fragments;
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.os.Bundle;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,13 +44,12 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     private TextView             progression_title;
     private Button               btn_25m;
     private Button               btn_50m;
-    private GestureDetector      gestureDetector;
+    private GestureDetectorCompat gestureDetector;
     private HorizontalScrollView horizontalScrollView;
     private List<SwimCard>       swimCardList;
     private LinearLayout         linearLayout;
     private Spinner              selectSwimDistance;
     private LineChart            lineChart;
-    private Button               addRaceTimeBtn;
     private RecyclerView         recyclerView;
     private RvRaceAdapter        rvRaceAdapter;
 
@@ -65,23 +64,22 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     }
 
     public void setupUIElements() {
-        competition_title    = layoutInflater.findViewById(R.id.fragment_competition_competition_title);
-        btn_25m              = layoutInflater.findViewById(R.id.fragment_competition_pool_25);
-        btn_50m              = layoutInflater.findViewById(R.id.fragment_competition_pool_50);
-        progression_title    = layoutInflater.findViewById(R.id.fragment_competition_progression_title);
-        horizontalScrollView = layoutInflater.findViewById(R.id.horizontalScrollView);
-        linearLayout         = layoutInflater.findViewById(R.id.linearLayout);
-        selectSwimDistance   = layoutInflater.findViewById(R.id.fragment_competition_spinner);
-        lineChart            = layoutInflater.findViewById(R.id.fragment_competition_linechart);
-        addRaceTimeBtn       = layoutInflater.findViewById(R.id.fragment_competition_add_race_time);
-        recyclerView         = layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
+        competition_title     = layoutInflater.findViewById(R.id.fragment_competition_competition_title);
+        btn_25m               = layoutInflater.findViewById(R.id.fragment_competition_pool_25);
+        btn_50m               = layoutInflater.findViewById(R.id.fragment_competition_pool_50);
+        progression_title     = layoutInflater.findViewById(R.id.fragment_competition_progression_title);
+        horizontalScrollView  = layoutInflater.findViewById(R.id.horizontalScrollView);
+        linearLayout          = layoutInflater.findViewById(R.id.linearLayout);
+        selectSwimDistance    = layoutInflater.findViewById(R.id.fragment_competition_spinner);
+        lineChart             = layoutInflater.findViewById(R.id.fragment_competition_linechart);
+        recyclerView          = layoutInflater.findViewById(R.id.fragment_competition_recycler_view);
+        Button addRaceTimeBtn = layoutInflater.findViewById(R.id.fragment_competition_add_race_time);
 
         btn_25m.setOnClickListener(this);
         btn_50m.setOnClickListener(this);
         addRaceTimeBtn.setOnClickListener(this);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.distance_spe, R.layout.dropdown_item_auto);
-        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
+        ArrayAdapter<CharSequence> adapter = controller.getDistanceAdapter();
         selectSwimDistance.setAdapter(adapter);
         selectSwimDistance.setSelection(1);
 
@@ -89,10 +87,10 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     }
 
     public void updateUIColors() {
-        competition_title.setTextColor(MarketSwim.getCurrentColor(getContext(), controller.getSwim()));
-        progression_title.setTextColor(MarketSwim.getCurrentColor(getContext(), controller.getSwim()));
-        btn_25m.setTextColor((controller.getSizePool() == 25) ? MarketSwim.getCurrentColor(getContext(), controller.getSwim()) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_50m.setTextColor((controller.getSizePool() == 50) ? MarketSwim.getCurrentColor(getContext(), controller.getSwim()) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        competition_title.setTextColor(controller.getCurrentColor());
+        progression_title.setTextColor(controller.getCurrentColor());
+        btn_25m.setTextColor((controller.getSizePool() == 25) ? controller.getCurrentColor() : controller.getTextColor());
+        btn_50m.setTextColor((controller.getSizePool() == 50) ? controller.getCurrentColor() : controller.getTextColor());
     }
 
     @Override
@@ -104,19 +102,21 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
 
     @SuppressLint("ClickableViewAccessibility")
     public void setupSelectedSwim() {
-        double widthCard       =  AboutScreen.getWidth(getActivity()) * 0.9;
-        double widthCardMargin = (AboutScreen.getWidth(getActivity()) * 0.1)/2;
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(widthCard), LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins((int) widthCardMargin, 0, (int) widthCardMargin, 0);
+        if (getActivity() != null) {
+            double widthCard       =  AboutScreen.getWidth(getActivity()) * 0.9;
+            double widthCardMargin = (AboutScreen.getWidth(getActivity()) * 0.1)/2;
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(widthCard), LayoutParams.MATCH_PARENT);
+            layoutParams.setMargins((int) widthCardMargin, 0, (int) widthCardMargin, 0);
 
-        swimCardList = controller.loadSwimCards();
-        linearLayout.removeAllViews();
-        for (int i = 0; i < swimCardList.size(); i++) linearLayout.addView(swimCardList.get(i), i, layoutParams);
-        horizontalScrollView.removeAllViews();
-        horizontalScrollView.addView(linearLayout);
+            swimCardList = controller.loadSwimCards();
+            linearLayout.removeAllViews();
+            for (int i = 0; i < swimCardList.size(); i++) linearLayout.addView(swimCardList.get(i), i, layoutParams);
+            horizontalScrollView.removeAllViews();
+            horizontalScrollView.addView(linearLayout);
 
-        gestureDetector = controller.loadGestureSwimCard();
-        controller.configureHorizontalScrollViewTouchListener();
+            gestureDetector = controller.loadGestureSwimCard();
+            controller.configureHorizontalScrollViewTouchListener();
+        }
     }
 
     public void setupLineChart(boolean isAnimation) {
@@ -141,8 +141,10 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         ItemTouchHelper onSwipe = new ItemTouchHelper(new SwipeToDeleteCallback() {
             @Override
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_white_48dp));
-                setBackground(ContextCompat.getDrawable(getContext(), MarketSwim.getCurrentDrawable(controller.getSwim())));
+                if (getContext() != null) {
+                    setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_white_48dp));
+                    setBackground(ContextCompat.getDrawable(getContext(), MarketSwim.getCurrentDrawable(controller.getSwim())));
+                }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
 
@@ -163,5 +165,5 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     public CompetitionController getController() { return controller; }
     public List<SwimCard> getSwimCardList() { return swimCardList; }
     public HorizontalScrollView getHorizontalScrollView() { return horizontalScrollView; }
-    public GestureDetector getGestureDetector() { return gestureDetector; }
+    public GestureDetectorCompat getGestureDetector() { return gestureDetector; }
 }

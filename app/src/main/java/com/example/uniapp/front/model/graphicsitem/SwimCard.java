@@ -1,5 +1,6 @@
 package com.example.uniapp.front.model.graphicsitem;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.uniapp.front.model.market.MarketTimes;
 
 import java.util.List;
 
+@SuppressLint("ViewConstructor")
 public class SwimCard extends LinearLayout {
     private RoomDataBase roomDataBase;
     private Context      context;
@@ -51,11 +53,23 @@ public class SwimCard extends LinearLayout {
     }
 
     private void setupSwimFeature() {
-        if (swim.equals("butterfly"))         loadButterfly(sizePool);
-        else if (swim.equals("backstroke"))   loadBackstroke(sizePool);
-        else if (swim.equals("breaststroke")) loadBreaststroke(sizePool);
-        else if (swim.equals("freestyle"))    loadFreestyle(sizePool);
-        else if (swim.equals("IM"))           loadIM(sizePool);
+        switch (swim) {
+            case "butterfly":
+                loadButterfly(sizePool);
+                break;
+            case "backstroke":
+                loadBackstroke(sizePool);
+                break;
+            case "breaststroke":
+                loadBreaststroke(sizePool);
+                break;
+            case "freestyle":
+                loadFreestyle(sizePool);
+                break;
+            case "IM":
+                loadIM(sizePool);
+                break;
+        }
     }
 
     private void setupUIElements() {
@@ -81,29 +95,29 @@ public class SwimCard extends LinearLayout {
             case "D o s":
             case "B r a s s e":
                 rightSide.setVisibility(LinearLayout.GONE);
-                time1.setText("50m   : " + time50);
-                time2.setText("100m  : " + time100);
-                time3.setText("200m  : " + time200);
+                time1.setText(String.format("50m   : %s", time50));
+                time2.setText(String.format("100m  : %s", time100));
+                time3.setText(String.format("200m  : %s", time200));
                 break;
 
             case "N a g e  L i b r e":
-                time1.setText("50m   : " + time50);
-                time2.setText("100m  : " + time100);
-                time3.setText("200m  : " + time200);
-                time4.setText("400m  : " + time400);
-                time5.setText("800m  : " + time800);
-                time6.setText("1500m : " + time1500);
+                time1.setText(String.format("50m   : %s", time50));
+                time2.setText(String.format("100m  : %s", time100));
+                time3.setText(String.format("200m  : %s", time200));
+                time4.setText(String.format("400m  : %s", time400));
+                time5.setText(String.format("800m  : %s", time800));
+                time6.setText(String.format("1500m : %s", time1500));
                 break;
 
             case "4  N a g e s":
                 rightSide.setVisibility(LinearLayout.GONE);
                 if (sizePool == 25) {
-                    time1.setText("100m  : " + time100);
-                    time2.setText("200m  : " + time200);
-                    time3.setText("400m  : " + time400);
+                    time1.setText(String.format("100m  : %s", time100));
+                    time2.setText(String.format("200m  : %s", time200));
+                    time3.setText(String.format("400m  : %s", time400));
                 } else {
-                    time1.setText("200m  : " + time200);
-                    time2.setText("400m  : " + time400);
+                    time1.setText(String.format("200m  : %s", time200));
+                    time2.setText(String.format("400m  : %s", time400));
                     time3.setText("");
                 }
                 break;
@@ -196,7 +210,7 @@ public class SwimCard extends LinearLayout {
         titleSwim = "4  N a g e s";
         time200   = MarketTimes.fetchFloatToTime(best200.getTime());
         time400   = MarketTimes.fetchFloatToTime(best400.getTime());
-        colorText = AboutScreen.getColorByThemeAttr(context, R.attr.blueLightColor, R.color.blueLight);;
+        colorText = AboutScreen.getColorByThemeAttr(context, R.attr.blueLightColor, R.color.blueLight);
     }
 
     public String getSwim() { return swim; }

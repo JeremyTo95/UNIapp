@@ -1,9 +1,10 @@
 package com.example.uniapp.front.controller.controller_fragment;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
@@ -14,11 +15,11 @@ import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.model.data.Race;
 import com.example.uniapp.front.model.data.User;
 import com.example.uniapp.front.model.market.MarketSwim;
-import com.example.uniapp.front.view.actvities.MainActivity;
 import com.example.uniapp.front.view.fragments.SettingsFragment;
 
 public class SettingsController extends Controller {
     private SettingsFragment view;
+    private Activity         activity;
     private Context          context;
     private RoomDataBase     roomDataBase;
 
@@ -35,6 +36,7 @@ public class SettingsController extends Controller {
     public SettingsController(SettingsFragment view) {
         super(view);
         this.view         = view;
+        this.activity     = view.getActivity();
         this.context      = view.getContext();
         this.roomDataBase = RoomDataBase.getDatabase(context);
     }
@@ -56,8 +58,8 @@ public class SettingsController extends Controller {
     }
 
     public void manageTheme() {
-        if (SharedPrefManager.loadThemeMode(context) == 0) Toast.makeText(context,  "Dark Mode Activé", Toast.LENGTH_SHORT).show();
-        else if (SharedPrefManager.loadThemeMode(context) == 1) Toast.makeText(context,  "Light Mode Activé", Toast.LENGTH_SHORT).show();
+        if (SharedPrefManager.loadThemeMode(context) == 0) Toast.makeText(context, "Dark Mode Activé", Toast.LENGTH_SHORT).show();
+        else if (SharedPrefManager.loadThemeMode(context) == 1) Toast.makeText(context, "Light Mode Activé", Toast.LENGTH_SHORT).show();
         else Toast.makeText(context,  "Mode Automatique Activé", Toast.LENGTH_SHORT).show();
         SharedPrefManager.savedThemeMode((SharedPrefManager.loadThemeMode(context)+1)%3);
         restartApp();
@@ -85,17 +87,17 @@ public class SettingsController extends Controller {
         view.getGenderSpinner().setSelection((gender.equals("homme")) ? 1 : 0);
         view.getFirstnameEditText().setText(firstname);
         view.getLastnameEditText().setText(lastname);
-        view.getWeightEditText().setText(weight + "kg");
-        view.getHeightEditText().setText(height + "cm");
+        view.getWeightEditText().setText(getWeightET());
+        view.getHeightEditText().setText(getHeightET());
         view.getBirthEditText().setText(birth);
         view.getClubEditText().setText(club);
         view.getCityEditText().setText(city);
 
-        if (spe.equals("butterfly")) view.getSpeSpinner().setSelection(0);
-        if (spe.equals("backstroke")) view.getSpeSpinner().setSelection(1);
+        if (spe.equals("butterfly"))    view.getSpeSpinner().setSelection(0);
+        if (spe.equals("backstroke"))   view.getSpeSpinner().setSelection(1);
         if (spe.equals("breaststroke")) view.getSpeSpinner().setSelection(2);
-        if (spe.equals("freestyle")) view.getSpeSpinner().setSelection(3);
-        if (spe.equals("IM")) view.getSpeSpinner().setSelection(4);
+        if (spe.equals("freestyle"))    view.getSpeSpinner().setSelection(3);
+        if (spe.equals("IM"))           view.getSpeSpinner().setSelection(4);
     }
 
     private void updateUIElements() {
@@ -125,6 +127,16 @@ public class SettingsController extends Controller {
         });
     }
 
+    public ArrayAdapter<CharSequence> getGenderAdapter() {
+        if (AboutScreen.isNightMode(activity)) return ArrayAdapter.createFromResource(context, R.array.genders, R.layout.dropdown_item_dark);
+        else return ArrayAdapter.createFromResource(context, R.array.genders, R.layout.dropdown_item_light);
+    }
+
+    public ArrayAdapter<CharSequence> getSpeAdapter() {
+        if (AboutScreen.isNightMode(activity)) return ArrayAdapter.createFromResource(context, R.array.swims, R.layout.dropdown_item_dark);
+        else return ArrayAdapter.createFromResource(context, R.array.swims, R.layout.dropdown_item_light);
+    }
+
     private void disableUpdateUserBtn() {
         view.getUpdateUserBtn().setEnabled(false);
         view.getUpdateUserBtn().setBackground(view.getResources().getDrawable(R.color.transparent));
@@ -142,10 +154,10 @@ public class SettingsController extends Controller {
         firstname = view.getFirstnameEditText().getText().toString();
         lastname  = view.getLastnameEditText().getText().toString();
         birth     = view.getBirthEditText().getText().toString();
-        tmp       = view.getHeightEditText().getText().toString().replaceAll("[a-zA-Z]", "").toString();
+        tmp       = view.getHeightEditText().getText().toString().replaceAll("[a-zA-Z]", "");
         if (tmp.length() != 0) height = Integer.parseInt(tmp);
         else height = 0;
-        tmp       = view.getWeightEditText().getText().toString().replaceAll("[a-zA-Z]", "").toString();
+        tmp       = view.getWeightEditText().getText().toString().replaceAll("[a-zA-Z]", "");
         if (tmp.length() != 0) weight = Integer.parseInt(tmp);
         else weight = 0;
         club      = view.getClubEditText().getText().toString();
@@ -183,22 +195,20 @@ public class SettingsController extends Controller {
     private boolean checkCity()      { return (city.length()      > 0); }
 
     public String getGender() { return gender; }
-    public String getFirstname() { return firstname; }
-    public String getLastname() { return lastname; }
-    public int getWeight() { return weight; }
     public int getHeight() { return height; }
-    public String getBirth() { return birth; }
     public String getClub() { return club; }
     public String getCity() { return city; }
-    public String getSpe() { return spe; }
 
     public void setGender(String gender) { this.gender = gender; }
-    public void setFirstname(String firstname) { this.firstname = firstname; }
-    public void setLastname(String lastname) { this.lastname = lastname; }
-    public void setWeight(int weight) { this.weight = weight; }
     public void setHeight(int height) { this.height = height; }
-    public void setBirth(String birth) { this.birth = birth; }
     public void setClub(String club) { this.club = club; }
     public void setCity(String city) { this.city = city; }
-    public void setSpe(String spe) { this.spe = spe; }
+
+    private String getWeightET() {
+        return weight + "kg";
+    }
+
+    private String getHeightET() {
+        return height + "cm";
+    }
 }

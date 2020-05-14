@@ -18,28 +18,28 @@ public class BuildLineChart {
     private LineChart lineChart;
     private Activity activity;
 
-    public BuildLineChart(Activity activity, LineChart lineChart, List<List<Float>> inputValues) {
+    private BuildLineChart(Activity activity, LineChart lineChart) {
         this.activity = activity;
         this.lineChart = lineChart;
     }
 
     public static void configureMyLinesChart(Activity activity, List<List<Float>> inputValues, LineChart lineChart, List<String> legendLines, boolean isAnimation) {
-        BuildLineChart buildLineChart = new BuildLineChart(activity, lineChart, inputValues);
+        BuildLineChart buildLineChart = new BuildLineChart(activity, lineChart);
         LineData lineData = buildLineChart.setupTrainingLinesData(inputValues, legendLines);
         lineChart.setScaleEnabled(false);
         buildLineChart.configureLineChart(lineData, isAnimation, legendLines);
     }
 
     public static void configureMyLineChart(Activity activity, List<Float> inputValues, LineChart lineChart, int idColor, boolean isAnimation) {
-        List<List<Float>> inputValuesParent = new ArrayList<List<Float>>();
+        List<List<Float>> inputValuesParent = new ArrayList<>();
         inputValuesParent.add(inputValues);
-        BuildLineChart buildLineChart = new BuildLineChart(activity, lineChart, inputValuesParent);
+        BuildLineChart buildLineChart = new BuildLineChart(activity, lineChart);
         LineData lineData = buildLineChart.setupTrainingLineData(inputValuesParent, null, idColor);
         lineChart.setScaleEnabled(false);
         buildLineChart.configureLineChart(lineData, isAnimation, null);
     }
 
-    public LineData setupTrainingLineData(List<List<Float>> inputValues, List<String> legendLines, int idColor) {
+    private LineData setupTrainingLineData(List<List<Float>> inputValues, List<String> legendLines, int idColor) {
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
         for (int i = 0; i < inputValues.size(); i++) {
@@ -53,7 +53,7 @@ public class BuildLineChart {
         return data;
     }
 
-    public static ArrayList<Entry> setupTimesLineChart(List<List<Float>> inputValues, int setIndex) {
+    private static ArrayList<Entry> setupTimesLineChart(List<List<Float>> inputValues, int setIndex) {
         ArrayList<Entry> result = new ArrayList<>();
         int cpt = 0;
         if (inputValues.get(setIndex) != null) {
@@ -65,7 +65,7 @@ public class BuildLineChart {
         return result;
     }
 
-    public LineData setupTrainingLinesData(List<List<Float>> inputValues, List<String> legendLines) {
+    private LineData setupTrainingLinesData(List<List<Float>> inputValues, List<String> legendLines) {
         int[] colors = {R.color.colorSecondaryDark, R.color.redLight, R.color.greenLight, R.color.blueDeep, R.color.orangeLight, R.color.orangeLight};
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
@@ -80,7 +80,7 @@ public class BuildLineChart {
         return data;
     }
 
-    public void configureLineChart(LineData lineData, boolean isAnimation, List<String> legendLines) {
+    private void configureLineChart(LineData lineData, boolean isAnimation, List<String> legendLines) {
         if (isAnimation) lineChart.animateXY(400, 800, Easing.EaseInOutQuad);
         else lineChart.animateXY(0, 0, Easing.EaseInOutQuad);
         lineChart.notifyDataSetChanged();
@@ -96,11 +96,11 @@ public class BuildLineChart {
         lineChart.setTouchEnabled(false);
         if (legendLines == null) lineChart.getLegend().setEnabled(false);
         else {
-            lineChart.getLegend().setTextColor(activity.getResources().getColor((AboutScreen.isNightMode(activity) == true) ? R.color.textColorDark : R.color.textColorLight));
+            lineChart.getLegend().setTextColor(activity.getResources().getColor((AboutScreen.isNightMode(activity)) ? R.color.textColorDark : R.color.textColorLight));
         }
     }
 
-    public static void setupLineDataSet(LineDataSet lineDataSet, int idColor) {
+    private static void setupLineDataSet(LineDataSet lineDataSet, int idColor) {
         lineDataSet.setLineWidth(1.5f);
         lineDataSet.setCircleRadius(3f);
         lineDataSet.setCircleHoleRadius(1.5f);

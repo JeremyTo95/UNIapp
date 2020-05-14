@@ -54,20 +54,17 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         final Training training = allTrainings.get(position);
-        inputTimes              = new ArrayList<List<Float>>();
-        legendValues            = new ArrayList<List<String>>();
+        inputTimes              = new ArrayList<>();
+        legendValues            = new ArrayList<>();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++) {
             inputTimes.add(training.getTrainingBlockList().get(i).getTimes());
             legendValues.add(MarketTrainings.getLegendTraining(training.getTrainingBlockList()));
         }
         holder.display(training);
-        holder.itemView.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                TrainingDetailFragment trainingDetailFragment = new TrainingDetailFragment(training);
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.activty_main_fragment_layout, trainingDetailFragment).addToBackStack(null).commit();
-            }
+        holder.itemView.setOnClickListener(v -> {
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            TrainingDetailFragment trainingDetailFragment = new TrainingDetailFragment(training);
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.activty_main_fragment_layout, trainingDetailFragment).addToBackStack(null).commit();
         });
     }
 
@@ -106,16 +103,16 @@ public class RvTrainingAdapter extends RecyclerView.Adapter<RvTrainingAdapter.My
         private MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            date_sizePool_title = (TextView) itemView.findViewById(R.id.rv_training_items_date_sizePool_title);
-            serie_content       = (TextView) itemView.findViewById(R.id.rv_training_items_serie_content);
-            lineChart           = (LineChart) itemView.findViewById(R.id.rv_training_items_line_chart);
-            stars               = new ArrayList<Button>();
+            date_sizePool_title = itemView.findViewById(R.id.rv_training_items_date_sizePool_title);
+            serie_content       = itemView.findViewById(R.id.rv_training_items_serie_content);
+            lineChart           = itemView.findViewById(R.id.rv_training_items_line_chart);
+            stars               = new ArrayList<>();
             for (int i = 0; i < 5; i++) {
-                if (i == 0) stars.add((Button) itemView.findViewById(R.id.rv_training_items_difficulty_star_1));
-                if (i == 1) stars.add((Button) itemView.findViewById(R.id.rv_training_items_difficulty_star_2));
-                if (i == 2) stars.add((Button) itemView.findViewById(R.id.rv_training_items_difficulty_star_3));
-                if (i == 3) stars.add((Button) itemView.findViewById(R.id.rv_training_items_difficulty_star_4));
-                if (i == 4) stars.add((Button) itemView.findViewById(R.id.rv_training_items_difficulty_star_5));
+                if (i == 0) stars.add(itemView.findViewById(R.id.rv_training_items_difficulty_star_1));
+                if (i == 1) stars.add(itemView.findViewById(R.id.rv_training_items_difficulty_star_2));
+                if (i == 2) stars.add(itemView.findViewById(R.id.rv_training_items_difficulty_star_3));
+                if (i == 3) stars.add(itemView.findViewById(R.id.rv_training_items_difficulty_star_4));
+                if (i == 4) stars.add(itemView.findViewById(R.id.rv_training_items_difficulty_star_5));
             }
         }
 

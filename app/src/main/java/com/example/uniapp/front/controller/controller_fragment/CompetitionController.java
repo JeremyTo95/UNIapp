@@ -2,16 +2,17 @@ package com.example.uniapp.front.controller.controller_fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.core.view.GestureDetectorCompat;
+
 import com.example.uniapp.R;
-import com.example.uniapp.back.executor.AppExecutors;
 import com.example.uniapp.back.room.RoomDataBase;
+import com.example.uniapp.front.controller.global.AboutScreen;
 import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.controller.comparator.RaceDateComparator;
 import com.example.uniapp.front.controller.listener.SwimCardListener;
@@ -105,10 +106,13 @@ public class CompetitionController extends Controller {
         adapter.notifyDataSetChanged();
 
         for (i = 0; i < adapter.getCount(); i++) {
-            currentDistanceSelected = adapter.getItem(i).toString().replace(" ", "").replace("m", "");
-            if (currentDistanceSelected.equals(String.valueOf(distance))) {
-                view.getSelectSwimDistance().setSelection(i);
-                i = adapter.getCount() + 2;
+            CharSequence item = adapter.getItem(i);
+            if (item != null) {
+                currentDistanceSelected = item.toString().replace(" ", "").replace("m", "");
+                if (currentDistanceSelected.equals(String.valueOf(distance))) {
+                    view.getSelectSwimDistance().setSelection(i);
+                    i = adapter.getCount() + 2;
+                }
             }
         }
         if (i == adapter.getCount()) {
@@ -135,7 +139,7 @@ public class CompetitionController extends Controller {
     }
 
     public List<SwimCard> loadSwimCards() {
-        List<SwimCard> swimCardList  =  new ArrayList<SwimCard>();
+        List<SwimCard> swimCardList  =  new ArrayList<>();
         swimCardList.add(new SwimCard(context, "butterfly", sizePool));
         swimCardList.add(new SwimCard(context, "backstroke", sizePool));
         swimCardList.add(new SwimCard(context, "breaststroke", sizePool));
@@ -144,8 +148,8 @@ public class CompetitionController extends Controller {
         return swimCardList;
     }
 
-    public GestureDetector loadGestureSwimCard() {
-        return new GestureDetector(new SwimCardListener(view.getSwimCardList(), view.getHorizontalScrollView(), swim) {
+    public GestureDetectorCompat loadGestureSwimCard() {
+        return new GestureDetectorCompat(context, new SwimCardListener(view.getSwimCardList(), view.getHorizontalScrollView(), swim) {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 super.onFling(e1, e2, velocityX, velocityY);
@@ -162,20 +166,25 @@ public class CompetitionController extends Controller {
 
     @SuppressLint("ClickableViewAccessibility")
     public void configureHorizontalScrollViewTouchListener() {
-        view.getHorizontalScrollView().setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (view.getGestureDetector().onTouchEvent(event)) return true;
-                else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
-                    int indexSwimCard = MarketSwim.getSwimIndex(swim);
-                    int scrollTo      = indexSwimCard * view.getHorizontalScrollView().getMeasuredWidth();
-                    view.getHorizontalScrollView().smoothScrollTo(scrollTo, 0);
-                    return true;
-                } else {
-                    return false;
-                }
+        view.getHorizontalScrollView().setOnTouchListener((v, event) -> {
+            if (view.getGestureDetector().onTouchEvent(event)) return true;
+            else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                int indexSwimCard = MarketSwim.getSwimIndex(swim);
+                int scrollTo      = indexSwimCard * view.getHorizontalScrollView().getMeasuredWidth();
+                view.getHorizontalScrollView().smoothScrollTo(scrollTo, 0);
+                return true;
+            } else {
+                return false;
             }
         });
+    }
+
+    private String getPopupSubtitle() {
+        return "Bassin " + sizePool + "m : " + distance + "m " + MarketSwim.convertSwimFromEnglishToFrench(swim);
+    }
+
+    private String getBaseCountry() {
+        return "FRANCE";
     }
 
     public void setupAddRacePopup() {
@@ -183,29 +192,40 @@ public class CompetitionController extends Controller {
         addRacePopup.setSizePool(sizePool);
         addRacePopup.setSwim(swim);
         addRacePopup.setDistanceRace(distance);
-        addRacePopup.getSubtitleDescription().setText("Bassin " + sizePool + "m : " + distance + "m " + MarketSwim.convertSwimFromEnglishToFrench(swim));
-        addRacePopup.getCountryEditText().setText("FRANCE");
+        addRacePopup.getSubtitleDescription().setText(getPopupSubtitle());
+        addRacePopup.getCountryEditText().setText(getBaseCountry());
         addRacePopup.build();
 
-        addRacePopup.getConfirmedButton().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addRacePopup.setDate(addRacePopup.getDateEditText().getText().toString());
-                addRacePopup.setCity(addRacePopup.getCityEditText().getText().toString());
-                addRacePopup.setCountry(addRacePopup.getCountryEditText().getText().toString());
-                addRacePopup.setTime(MarketTimes.fetchTimeToFloat(addRacePopup.getTimeEditText().getText().toString()));
-                addRacePopup.checkInputFormatTime();
-                if (addRacePopup.isEnableConfirmed()) {
-                    Race newRace = new Race(UUID.randomUUID().toString(),
-                            addRacePopup.getDate(), addRacePopup.getCity(), addRacePopup.getCountry(),
-                            roomDataBase.userDAO().getUser().getClub(), addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
-                            addRacePopup.getSwim(), addRacePopup.getTime(),
-                            addRacePopup.getLevel()
-                    );
-                    insertNewRace(newRace);
-                }
+        addRacePopup.getConfirmedButton().setOnClickListener(v -> {
+            addRacePopup.setDate(addRacePopup.getDateEditText().getText().toString());
+            addRacePopup.setCity(addRacePopup.getCityEditText().getText().toString());
+            addRacePopup.setCountry(addRacePopup.getCountryEditText().getText().toString());
+            addRacePopup.setTime(MarketTimes.fetchTimeToFloat(addRacePopup.getTimeEditText().getText().toString()));
+            addRacePopup.checkInputFormatTime();
+            if (addRacePopup.isEnableConfirmed()) {
+                Race newRace = new Race(UUID.randomUUID().toString(),
+                        addRacePopup.getDate(), addRacePopup.getCity(), addRacePopup.getCountry(),
+                        roomDataBase.userDAO().getUser().getClub(), addRacePopup.getDistanceRace(), addRacePopup.getSizePool(),
+                        addRacePopup.getSwim(), addRacePopup.getTime(),
+                        addRacePopup.getLevel()
+                );
+                insertNewRace(newRace);
             }
         });
+    }
+
+    public ArrayAdapter<CharSequence> getDistanceAdapter() {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.distance_spe, R.layout.dropdown_item_auto);
+        adapter.setDropDownViewResource(R.layout.dropdown_all_items);
+        return adapter;
+    }
+
+    public int getCurrentColor() {
+        return MarketSwim.getCurrentColor(context, swim);
+    }
+
+    public int getTextColor() {
+        return AboutScreen.getColorByThemeAttr(context, R.attr.textColor, R.color.textColorDark);
     }
 
     private void insertNewRace(Race newRace) {

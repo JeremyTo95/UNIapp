@@ -29,7 +29,7 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
     private Race         raceDeleted;
     private int          raceDeletedPosition;
 
-    public RvRaceAdapter(Activity activity, Context context, List<Race> races) {
+    protected RvRaceAdapter(Activity activity, Context context, List<Race> races) {
         this.activity     = activity;
         this.context      = context;
         this.races        = races;
@@ -58,12 +58,9 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
 
         holder.display(raceDown, races.get(position), raceUp);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CompetitionDetailPopup competitionDetailPopup = new CompetitionDetailPopup(activity, races.subList(position, races.size()), race);
-                competitionDetailPopup.build();
-            }
+        holder.itemView.setOnClickListener(v -> {
+            CompetitionDetailPopup competitionDetailPopup = new CompetitionDetailPopup(activity, races.subList(position, races.size()), race);
+            competitionDetailPopup.build();
         });
     }
 
@@ -95,28 +92,32 @@ public class RvRaceAdapter extends RecyclerView.Adapter<RvRaceAdapter.MyViewHold
         notifyDataSetChanged();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         private TextView city;
         private TextView date;
         private TextView time;
         private TextView diff;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            city  = (TextView) itemView.findViewById(R.id.rv_race_item_competition_name);
-            date  = (TextView) itemView.findViewById(R.id.rv_race_item_date);
-            time  = (TextView) itemView.findViewById(R.id.rv_race_item_time);
-            diff  = (TextView) itemView.findViewById(R.id.rv_race_item_diff);
+            city  = itemView.findViewById(R.id.rv_race_item_competition_name);
+            date  = itemView.findViewById(R.id.rv_race_item_date);
+            time  = itemView.findViewById(R.id.rv_race_item_time);
+            diff  = itemView.findViewById(R.id.rv_race_item_diff);
         }
 
-        public void display(Race raceDown, Race race, Race raceUp) {
-            city.setText(String.valueOf(race.getCity()) + "\nNiveau : " + race.getLevel());
-            date.setText("Le " + String.valueOf(race.getDate()));
-            time.setText(String.valueOf(MarketTimes.fetchFloatToTime(race.getTime())));
+        private void display(Race raceDown, Race race, Race raceUp) {
+            city.setText(getCityTV(race));
+            date.setText(getDateTV(race));
+            time.setText(getTimeTV(race));
             time.setTextColor(MarketSwim.getCurrentColor(context, race.getSwim()));
 
             diff.setText(MarketTimes.compareTwoTimes(raceDown.getTime(), race.getTime(), raceUp.getTime()));
             diff.setTextColor(itemView.getResources().getColor((diff.getText().toString().charAt(1) != '+') ? R.color.greenDeep : R.color.redDeep));
         }
+
+        private String getCityTV(Race race) { return race.getCity() + "\nNiveau : " + race.getLevel(); }
+        private String getDateTV(Race race) { return "Le " + race.getDate(); }
+        private String getTimeTV(Race race) { return MarketTimes.fetchFloatToTime(race.getTime()); }
     }
 }

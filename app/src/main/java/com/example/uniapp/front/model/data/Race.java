@@ -9,8 +9,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.example.uniapp.back.repository.RaceRepository;
-import com.example.uniapp.front.controller.asynctask.ImportRacesTask;
+import com.example.uniapp.back.asynctask.ImportRacesTask;
 
 import java.io.Serializable;
 
@@ -48,7 +47,7 @@ public class Race implements Serializable {
     private String level;
 
 
-    public Race(String id, String date, String city, String country, String club, int distance, int sizePool, String swim, float time, String level) {
+    public Race(@NonNull String id, String date, String city, String country, String club, int distance, int sizePool, String swim, float time, String level) {
         this.id = id;
         this.date = date;
         this.city = city;
@@ -70,17 +69,16 @@ public class Race implements Serializable {
         importRacesTask.execute();
     }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(@NonNull String id) { this.id = id; }
     public void setDate(String date) { this.date = date; }
     public void setCity(String city) { this.city = city; }
     public void setDistance(int distance) { this.distance = distance; }
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }
     public void setSwim(String swim) { this.swim = swim; }
     public void setTime(float time) { this.time = time; }
-    public void setCountry(String country) { this.country = country; }
-    public void setLevel(String level) { this.level = level; }
     public void setClub(String club) { this.club = club; }
 
+    @NonNull
     public String getId() { return id; }
     public String getDate() { return date; }
     public String getCity() { return city; }

@@ -38,9 +38,4 @@ public class MarketRaces {
         }
         return allTimes;
     }
-
-    public static void sortRacesByDate(List<Race> allTimes) {
-        RaceDateComparator raceDateComparator = new RaceDateComparator();
-        Collections.sort(allTimes, raceDateComparator);
-    }
 }

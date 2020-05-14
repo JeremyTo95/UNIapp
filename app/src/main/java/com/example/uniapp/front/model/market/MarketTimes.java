@@ -1,20 +1,14 @@
 package com.example.uniapp.front.model.market;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
-import java.util.List;
-
 public class MarketTimes {
-
-    public static int convertTimeToInt(String time) { return Integer.parseInt(time.replaceAll("[:.]", "").toString()); }
-    public static String convertIntToTime(int time) { return String.valueOf(time/10000%100) + ":" + String.valueOf(time/100%100) + "." + String.valueOf(time%100); }
-
     public static String convertCompetitionTimeToZoneTime(float time, int zone) {
-        float timeFloat = time;
-        return fetchFloatToTime(timeFloat/convertZoneToPercent(zone));
+        return fetchFloatToTime(time /convertZoneToPercent(zone));
     }
 
-    public static float convertZoneToPercent(int zone) {
+    private static float convertZoneToPercent(int zone) {
         if (zone == 1) return 0.60f;
         else if (zone == 2) return 0.65f;
         else if (zone == 3) return 0.75f;
@@ -25,11 +19,10 @@ public class MarketTimes {
         else return 0;
     }
 
+    @SuppressLint("DefaultLocale")
     public static String compareTwoTimes(float raceDown, float race, float raceUp) {
-        String result = "";
-        if (race > raceUp) result = String.format("(+%.2fs)", (race - raceUp));
-        else result = String.format("(-%.2fs)", (raceDown - race));
-        return result;
+        if (race > raceUp) return String.format("(+%.2fs)", (race - raceUp));
+        else return String.format("(-%.2fs)", (raceDown - race));
     }
 
     public static float fetchTimeToFloat(String time) {
@@ -46,8 +39,7 @@ public class MarketTimes {
     }
 
     public static String fetchFloatToTime(float time) {
-        int myTime = 0;
-        myTime = (int) (time * 100);
+        int myTime = (int) (time * 100);
         String ms  = String.valueOf(myTime%100);
         String sec = String.valueOf((myTime/100%60));
         String min = String.valueOf(myTime/6000);
@@ -74,23 +66,11 @@ public class MarketTimes {
         return newTime;
     }
 
-    public static String getBestTimes(List<String> allTimes) {
-        String bestTime = allTimes.get(0);
-        for (int i = 0; i < allTimes.size(); i++) {
-            if (convertTimeToInt(bestTime) > convertTimeToInt(allTimes.get(i))) bestTime = allTimes.get(i);
-        }
-        return bestTime;
-    }
-
     public static long convertTimeToLongMilli(String timeStr) {
-        long timeLong = 0;
         int min = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 8))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 7)));
         int sec = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 5))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 4)));
         int mil = Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 2))) * 10 + Integer.parseInt(String.valueOf(timeStr.charAt(timeStr.length() - 1)));
-
-        timeLong = mil + sec * 100 + min * 60 * 100;
-
-        return timeLong;
+        return mil + sec * 100 + min * 60 * 100;
     }
 
     public static String convertLongMilliToTime(long timeLong) {
@@ -109,16 +89,18 @@ public class MarketTimes {
         int integer = (int) diffDouble;
         int decimal = (int) (diffDouble*100)%100;
 
-        String integerStr = String.valueOf(integer);
-        String decimalStr = String.valueOf(decimal);
+        String integerStr;
+        String decimalStr;
 
-        if (integer <= -10) integerStr = String.valueOf(integer * (-1));
-        else if (integer > -10 && integer <  0) integerStr = "0" + integer*(-1);
-        else if (integer >= 0  && integer < 10) integerStr = "0" + integer;
+        if (integer <= -10)    integerStr = String.valueOf(integer * (-1));
+        else if (integer < 0)  integerStr = "0" + integer*(-1);
+        else if (integer < 10) integerStr = "0" + integer;
+        else                   integerStr = String.valueOf(integer);
 
-        if (decimal <= -10) decimalStr = String.valueOf(decimal * (-1));
-        else if (decimal > -10 && decimal <  0) decimalStr = "0" + decimal*(-1);
-        else if (decimal >= 0  && decimal < 10) decimalStr = "0" + decimal;
+        if (decimal <= -10)    decimalStr = String.valueOf(decimal * (-1));
+        else if (decimal < 0)  decimalStr = "0" + decimal*(-1);
+        else if (decimal < 10) decimalStr = "0" + decimal;
+        else                   decimalStr = String.valueOf(decimal);
 
         if (diffDouble > 0) return "(+" + integerStr + "." + decimalStr + ")";
         else return "(-" + integerStr + "." + decimalStr + ")";
@@ -126,7 +108,7 @@ public class MarketTimes {
 
     public static Long convertTimerToLong(String timer) {
         String[] timerSplit = timer.split(":");
-        long time = 0;// Integer.parseInt(String.valueOf(timerSplit[0])) * 60;
+        long time = 0;
         for (int i = 0; i < timerSplit.length; i++) {
             time += Integer.parseInt(String.valueOf(timerSplit[i])) * ((long) Math.pow(60, (timerSplit.length - (i + 1))));
         }

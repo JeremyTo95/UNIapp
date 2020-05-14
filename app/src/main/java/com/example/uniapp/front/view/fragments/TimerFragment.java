@@ -22,7 +22,6 @@ public class TimerFragment extends Fragment {
     private EditText nbSetsET;
     private EditText timeWorkET;
     private EditText timeRestET;
-    private Button startButton;
 
     @Nullable
     @Override
@@ -35,18 +34,15 @@ public class TimerFragment extends Fragment {
     }
 
     public void setupUIElements() {
-        nbSetsET    = (EditText) layoutInflater.findViewById(R.id.activity_timer_set);
-        timeWorkET  = (EditText) layoutInflater.findViewById(R.id.activity_timer_work_time);
-        timeRestET  = (EditText) layoutInflater.findViewById(R.id.activity_timer_rest_time);
-        startButton = (Button)   layoutInflater.findViewById(R.id.activity_timer_button);
+        nbSetsET           = layoutInflater.findViewById(R.id.activity_timer_set);
+        timeWorkET         = layoutInflater.findViewById(R.id.activity_timer_work_time);
+        timeRestET         = layoutInflater.findViewById(R.id.activity_timer_rest_time);
+        Button startButton = layoutInflater.findViewById(R.id.activity_timer_button);
 
         timeWorkET.addTextChangedListener(new TextWatcherTimer(timeWorkET));
         timeRestET.addTextChangedListener(new TextWatcherTimer(timeRestET));
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { controller.startTimer(); }
-        });
+        startButton.setOnClickListener(v -> controller.startTimer());
 
         controller.lockUI(null);
     }

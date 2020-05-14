@@ -27,9 +27,12 @@ public class TimerPopup extends Dialog {
     public TimerPopup(Activity activity, TimerController controller) {
         super(activity, R.style.Theme_AppCompat_Dialog);
         this.setContentView(R.layout.popup_timer);
-        this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        this.controller  = controller;
+        this.controller = controller;
+
+        if (getWindow() != null) {
+            this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
 
         controller.onStartPopup(this);
         controller.initTests();
@@ -49,9 +52,9 @@ public class TimerPopup extends Dialog {
         timerTV.setText(controller.getTimerStr());
         stepState.setText("S T A R T I N G");
         updateBckColor(R.color.orangeDeep);
-        updateSetsColor(R.color.textColorDark);
-        updateTimerColor(R.color.textColorDark);
-        updateStateColor(R.color.textColorDark);
+        updateSetsColor();
+        updateTimerColor();
+        updateStateColor();
     }
 
     public void setupWorkTimer() {
@@ -60,9 +63,9 @@ public class TimerPopup extends Dialog {
         timerTV.setText(controller.getTimerStr());
         stepState.setText("W O R K");
         updateBckColor(R.color.greenDeep);
-        updateSetsColor(R.color.textColorDark);
-        updateTimerColor(R.color.textColorDark);
-        updateStateColor(R.color.textColorDark);
+        updateSetsColor();
+        updateTimerColor();
+        updateStateColor();
     }
 
     public void setupRestTimer() {
@@ -71,9 +74,9 @@ public class TimerPopup extends Dialog {
         timerTV.setText(controller.getTimerStr());
         stepState.setText("R E S T");
         updateBckColor(R.color.blueLight);
-        updateSetsColor(R.color.textColorDark);
-        updateTimerColor(R.color.textColorDark);
-        updateStateColor(R.color.textColorDark);
+        updateSetsColor();
+        updateTimerColor();
+        updateStateColor();
     }
 
     @Override
@@ -92,9 +95,9 @@ public class TimerPopup extends Dialog {
     }
 
     private void updateBckColor(int idColor)   { backgroundLayout.setBackgroundColor(getContext().getResources().getColor(idColor)); }
-    private void updateSetsColor(int idColor)  { setsCounter.setTextColor(getContext().getResources().getColor(idColor)); }
-    private void updateTimerColor(int idColor) { timerTV.setTextColor(getContext().getResources().getColor(idColor)); }
-    private void updateStateColor(int idColor) { stepState.setTextColor(getContext().getResources().getColor(idColor)); }
+    private void updateSetsColor()  { setsCounter.setTextColor(getContext().getResources().getColor(R.color.textColorDark)); }
+    private void updateTimerColor() { timerTV.setTextColor(getContext().getResources().getColor(R.color.textColorDark)); }
+    private void updateStateColor() { stepState.setTextColor(getContext().getResources().getColor(R.color.textColorDark)); }
 
     public void build() {
         show();
@@ -105,8 +108,5 @@ public class TimerPopup extends Dialog {
 
     public void setTimerTVText(String text) { timerTV.setText(text); }
     public ConstraintLayout getBackgroundLayout() { return backgroundLayout; }
-    public TextView getSetsCounter() { return setsCounter; }
-    public TextView getTimerTV() { return timerTV; }
-    public TextView getStepState() { return stepState; }
 
 }

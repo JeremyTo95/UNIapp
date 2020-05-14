@@ -18,7 +18,7 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
     private TrainingBlock trainingBlock;
     private float         timeRef;
 
-    public RvTrainingDetailTimeAdapter(Context context, TrainingBlock trainingBlock, float timeRef) {
+    RvTrainingDetailTimeAdapter(Context context, TrainingBlock trainingBlock, float timeRef) {
         this.context = context;
         this.trainingBlock = trainingBlock;
         this.timeRef = timeRef;
@@ -46,21 +46,25 @@ public class RvTrainingDetailTimeAdapter extends RecyclerView.Adapter<RvTraining
         private TextView time;
         private TextView diff;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            desc = (TextView) itemView.findViewById(R.id.rv_training_detail_time_text_view);
-            time = (TextView) itemView.findViewById(R.id.rv_training_detail_time_content_text_view);
-            diff = (TextView) itemView.findViewById(R.id.rv_training_detail_time_diff_text_view);
+            desc = itemView.findViewById(R.id.rv_training_detail_time_text_view);
+            time = itemView.findViewById(R.id.rv_training_detail_time_content_text_view);
+            diff = itemView.findViewById(R.id.rv_training_detail_time_diff_text_view);
         }
 
-        public void display(int index) {
-            desc.setText("t" + (index + 1) + " : ");
+        void display(int index) {
+            desc.setText(getTimeIndexText(index));
             if (trainingBlock.getTimes() != null) {
                 if (trainingBlock.getTimes().get(index) != 0.0f) {
                     time.setText(MarketTimes.fetchFloatToTime(trainingBlock.getTimes().get(index)));
                     updateDiff(diff, timeRef, index);
                 }
             }
+        }
+
+        private String getTimeIndexText(int index) {
+            return "t" + (index + 1) + " : ";
         }
 
         private void updateDiff(TextView diff, float timeRef, int index) {

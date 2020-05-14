@@ -32,8 +32,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
     private TextView chronoDiffTV;
     private Button   resetBtn;
 
-    private RecyclerView         allChronosRV;
-    private RvChronometerAdapter rvChronometerAdapter;
+    private RecyclerView allChronosRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +105,9 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
     }
 
     public void initChronoUI() {
-        chronoTV.setText("00:00.00");
-        chronoLapTV.setText("00:00.00");
-        chronoDiffTV.setText("(-00.00)");
+        chronoTV.setText(R.string.hint_time);
+        chronoLapTV.setText(R.string.hint_time);
+        chronoDiffTV.setText(R.string.hint_diff);
         chronoDiffTV.setTextColor(getResources().getColor(R.color.greenDeep));
         hideResetButton();
         rotateAnchorStopping(controller.getPeriodeAnchor());
@@ -124,7 +123,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
 
     public void updateLapChronoRV() {
         allChronosRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        rvChronometerAdapter = new RvChronometerAdapter(getApplicationContext(), controller.getAllChronos(), controller.getLapChronos(), controller.getDiffChronos());
+        RvChronometerAdapter rvChronometerAdapter = new RvChronometerAdapter(getApplicationContext(), controller.getAllChronos(), controller.getLapChronos(), controller.getDiffChronos());
         allChronosRV.setAdapter(rvChronometerAdapter);
         allChronosRV.setNestedScrollingEnabled(false);
         rvChronometerAdapter.notifyDataSetChanged();

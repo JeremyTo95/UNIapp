@@ -35,9 +35,9 @@ public class ChronometerController extends Controller {
     @Override
     public void onStart() {
         super.onStart();
-        offsetAnchor      = 32;
-        periodeAnchor     = 5;
-        isRunning         = false;
+        offsetAnchor  = 32;
+        periodeAnchor = 5;
+        isRunning     = false;
         initChronos();
 
         view.setupUIElements();
@@ -46,11 +46,11 @@ public class ChronometerController extends Controller {
     private void initChronos() {
         chronoThread      = null;
         currentChrono     = 0;
-        currentLapChrono  = 0l;
-        currentDiffChrono = 0d;
-        allChronos        = new ArrayList<Long>();
-        lapChronos        = new ArrayList<Long>();
-        diffChronos       = new ArrayList<Double>();
+        currentLapChrono  = 0L;
+        currentDiffChrono = 0D;
+        allChronos        = new ArrayList<>();
+        lapChronos        = new ArrayList<>();
+        diffChronos       = new ArrayList<>();
     }
 
     private void setupThreadChrono(long oldTime) {
@@ -61,17 +61,13 @@ public class ChronometerController extends Controller {
                 try {
                     while (!isInterrupted()) {
                         Thread.sleep(5);
-                         view.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //view.setChronoTV(view.findViewById(R.id.activity_chronometer_chrono));
-                                currentChrono = System.currentTimeMillis()/10 - startTime + oldTime;
-                                view.setChronoTVText(MarketTimes.convertLongMilliToTime(currentChrono));
-                                view.rotateAnchorStopping(periodeAnchor);
-                                updateChronoLap();
-                                updateChronoDiff();
-                            }
-                        });
+                         view.runOnUiThread(() -> {
+                             currentChrono = System.currentTimeMillis()/10 - startTime + oldTime;
+                             view.setChronoTVText(MarketTimes.convertLongMilliToTime(currentChrono));
+                             view.rotateAnchorStopping(periodeAnchor);
+                             updateChronoLap();
+                             updateChronoDiff();
+                         });
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -122,8 +118,7 @@ public class ChronometerController extends Controller {
     private void updateChronoDiff() {
         long diffChronoLong = 0;
 
-        if (allChronos.size() == 0) diffChronoLong = 0;
-        if (allChronos.size() == 1) diffChronoLong = currentLapChrono - (allChronos.get(allChronos.size() - 1) - 0);
+        if (allChronos.size() == 1) diffChronoLong = currentLapChrono - (allChronos.get(allChronos.size() - 1));
         if (allChronos.size() >= 2) diffChronoLong = currentLapChrono - (allChronos.get(allChronos.size() - 1) - allChronos.get(allChronos.size() - 2));
 
         currentDiffChrono = (double) diffChronoLong / 100;

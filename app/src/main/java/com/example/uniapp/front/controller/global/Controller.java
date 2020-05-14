@@ -3,6 +3,7 @@ package com.example.uniapp.front.controller.global;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 
 import androidx.fragment.app.Fragment;
 
@@ -38,7 +39,11 @@ public abstract class Controller {
         AboutScreen.unlockUI((MainActivity) activity);
     }
 
-    public void restartApp() {
+    public void hideKeybaord(View v) {
+        AboutScreen.hideKeybaord(activity, v);
+    }
+
+    protected void restartApp() {
         Intent i = new Intent(context, MainActivity.class);
         activity.startActivity(i);
         activity.finish();

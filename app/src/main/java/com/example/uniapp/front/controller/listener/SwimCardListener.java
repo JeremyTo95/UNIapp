@@ -17,7 +17,7 @@ public class SwimCardListener extends GestureDetector.SimpleOnGestureListener {
     private static final int SWIPE_MIN_DISTANCE        = 5;
     private static final int SWIPE_THRESHOLD_VELOCITY  = 100;
 
-    public SwimCardListener(List<SwimCard> swimItem, HorizontalScrollView horizontalScrollView, String swim) {
+    protected SwimCardListener(List<SwimCard> swimItem, HorizontalScrollView horizontalScrollView, String swim) {
         this.swimItem             = swimItem;
         this.horizontalScrollView = horizontalScrollView;
         indexSwimCard = MarketSwim.getSwimIndex(swim);
@@ -46,6 +46,5 @@ public class SwimCardListener extends GestureDetector.SimpleOnGestureListener {
         return false;
     }
 
-    public List<SwimCard> getSwimItem() { return swimItem; }
-    public int getIndexSwimCard() { return indexSwimCard; }
+    protected int getIndexSwimCard() { return indexSwimCard; }
 }

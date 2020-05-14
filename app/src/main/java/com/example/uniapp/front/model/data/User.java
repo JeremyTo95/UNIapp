@@ -40,7 +40,7 @@ public class User implements Serializable {
     @ColumnInfo(name = "mykey")
     private String mykey;
 
-    public User(String gender, String firstname, String lastname, String birthday, int height, int weight, String club, String spe, String cityTraining, String mykey) {
+    public User(String gender, @NonNull String firstname, @NonNull String lastname, String birthday, int height, int weight, String club, String spe, String cityTraining, String mykey) {
         this.gender = gender;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -61,7 +61,9 @@ public class User implements Serializable {
                 + "club : " + club + "\nspe : " + spe + "\ncity : " + cityTraining;
     }
 
+    @NonNull
     public String getFirstname() { return firstname; }
+    @NonNull
     public String getLastname() { return lastname; }
     public String getBirthday() { return birthday; }
     public int getHeight() { return height; }
@@ -71,14 +73,7 @@ public class User implements Serializable {
     public String getCityTraining() { return cityTraining; }
     public String getGender() { return (gender.equals("Homme") ? "girl" : "boy"); }
     public String getMykey() { return mykey; }
-    public void setFirstname(String firstname) { this.firstname = firstname; }
-    public void setLastname(String lastname) { this.lastname = lastname; }
-    public void setBirthday(String birthday) { this.birthday = birthday; }
     public void setHeight(int height) { this.height = height; }
-    public void setWeight(int weight) { this.weight = weight; }
     public void setClub(String club) { this.club = club; }
-    public void setSpe(String spe) { this.spe = spe; }
-    public void setCityTraining(String cityTraining) { this.cityTraining = cityTraining; }
     public void setGender(String gender) { this.gender = gender; }
-    public void setMykey(String mykey) { this.mykey = mykey; }
 }

@@ -16,15 +16,13 @@ import java.util.List;
 public class DetailTrainingController extends Controller {
     private RoomDataBase           roomDataBase;
     private TrainingDetailFragment view;
-    private Context                context;
 
     private Training training;
 
     public DetailTrainingController(TrainingDetailFragment view, Training training) {
         super(view);
         this.view         = view;
-        this.context      = view.getContext();
-        this.roomDataBase = RoomDataBase.getDatabase(context);
+        this.roomDataBase = RoomDataBase.getDatabase(view.getContext());
         this.training     = training;
     }
 
@@ -81,7 +79,7 @@ public class DetailTrainingController extends Controller {
     }
 
     private List<Float> getCompetitionRaceTime() {
-        List<Float> result = new ArrayList<Float>();
+        List<Float> result = new ArrayList<>();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++)
             result.add(MarketRaces.getBestTime(roomDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
         return result;

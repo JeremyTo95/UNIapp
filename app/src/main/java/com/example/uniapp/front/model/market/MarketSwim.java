@@ -23,23 +23,38 @@ public class MarketSwim {
     }
 
     public static String convertShortSwim(String swim) {
-        System.out.println(swim);
-        if (swim.equals("butterfly")) return "pap";
-        else if (swim.equals("backstroke")) return "dos";
-        else if (swim.equals("breaststroke")) return "br";
-        else if (swim.equals("freestyle")) return "NL";
-        else if (swim.equals("IM")) return "4N";
-        else return "JSP";
+        switch (swim) {
+            case "butterfly":
+                return "pap";
+            case "backstroke":
+                return "dos";
+            case "breaststroke":
+                return "br";
+            case "freestyle":
+                return "NL";
+            case "IM":
+                return "4N";
+            default:
+                return "JSP";
+        }
     }
 
     public static String convertSwimFromFrenchToEnglish(String swim) {
         swim = swim.toLowerCase();
-        if (swim.equals("papillon")) return "butterfly";
-        else if (swim.equals("dos")) return "backstroke";
-        else if (swim.equals("brasse")) return "breaststroke";
-        else if (swim.equals("nage libre")) return "freestyle";
-        else if (swim.equals("4 nages")) return "IM";
-        else return "JSP";
+        switch (swim) {
+            case "papillon":
+                return "butterfly";
+            case "dos":
+                return "backstroke";
+            case "brasse":
+                return "breaststroke";
+            case "nage libre":
+                return "freestyle";
+            case "4 nages":
+                return "IM";
+            default:
+                return "JSP";
+        }
     }
 
     public static int getCurrentColor(Context context, String swim) {
@@ -76,11 +91,19 @@ public class MarketSwim {
     }
 
     public static int getSwimIndex(String swim) {
-        if (swim.equals("butterfly")) return 0;
-        else if (swim.equals("backstroke")) return 1;
-        else if (swim.equals("breaststroke")) return 2;
-        else if (swim.equals("freestyle")) return 3;
-        else if (swim.equals("IM")) return 4;
-        else return -1;
+        switch (swim) {
+            case "butterfly":
+                return 0;
+            case "backstroke":
+                return 1;
+            case "breaststroke":
+                return 2;
+            case "freestyle":
+                return 3;
+            case "IM":
+                return 4;
+            default:
+                return -1;
+        }
     }
 }

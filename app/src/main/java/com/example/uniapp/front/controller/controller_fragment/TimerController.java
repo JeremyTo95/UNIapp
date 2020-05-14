@@ -1,8 +1,8 @@
 package com.example.uniapp.front.controller.controller_fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.view.View;
 
 import com.example.uniapp.R;
 import com.example.uniapp.front.controller.global.Controller;
@@ -13,6 +13,7 @@ import com.example.uniapp.front.view.popup.TimerPopup;
 public class TimerController extends Controller {
     private TimerFragment view;
     private TimerPopup timerPopup;
+    private Activity activity;
     private Context context;
 
     private String nbSetsStr;
@@ -21,8 +22,9 @@ public class TimerController extends Controller {
 
     public TimerController(TimerFragment view) {
         super(view);
-        this.view    = view;
-        this.context = view.getContext();
+        this.view     = view;
+        this.activity = view.getActivity();
+        this.context  = view.getContext();
     }
 
     @Override
@@ -88,8 +90,8 @@ public class TimerController extends Controller {
         nbSetsIndex = 0;
         oldTimer    = 0L;
         isRunning   = true;
-        soundTic    = MediaPlayer.create(view.getActivity().getApplicationContext(), R.raw.tic);
-        soundStart  = MediaPlayer.create(view.getActivity().getApplicationContext(), R.raw.start);
+        soundTic    = MediaPlayer.create(context, R.raw.tic);
+        soundStart  = MediaPlayer.create(context, R.raw.start);
 
         this.timerPopup = timerPopup;
         this.timerPopup.setupUIElements();
@@ -147,9 +149,8 @@ public class TimerController extends Controller {
             try {
                 while (!isInterrupted()) {
                     Thread.sleep(10);
-                    view.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
+                    if (activity != null) {
+                        activity.runOnUiThread(() -> {
                             currentTimer = timerForThread - System.currentTimeMillis()/10;
                             System.out.println("time : " + currentTimer);
                             if (currentTimer >= 390 && currentTimer <= 399 && !isTic3) {
@@ -175,14 +176,9 @@ public class TimerController extends Controller {
                                 nextTimer();
                             } else timerPopup.setTimerTVText(MarketTimes.converLongToTimer(currentTimer/100));
 
-                            timerPopup.getBackgroundLayout().setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    manageStartStop();
-                                }
-                            });
-                        }
-                    });
+                            timerPopup.getBackgroundLayout().setOnClickListener(v -> manageStartStop());
+                        });
+                    }
                 }
             } catch (Exception ex) { System.out.println(ex.getMessage()); }
             }

@@ -51,7 +51,7 @@
     <string name="breaststroke">Brasse</string>
     <string name="freestyle">Nage Libre</string>
     <string name="IM">4 Nages</string>
-    <string name="hint_diff">(+00.00)</string>
+    <string name="hint_diff">(-00.00)</string>
     <string name="hint_date">DD/MM/YYYY</string>
     <string name="default_value_0">0</string>
     <string name="default_value_25m">25m</string>
@@ -98,5 +98,6 @@
     <string name="reset">R E S E T</string>
     <string name="desc_anchor_chrono">desc_anchor_chrono</string>
     <string name="desc_circle_chrono">desc_circle_chrono</string>
+    <string name="all_caps">[a-zA-Z]</string>
 
 </resources>

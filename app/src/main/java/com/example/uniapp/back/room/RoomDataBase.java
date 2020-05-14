@@ -1,6 +1,7 @@
 package com.example.uniapp.back.room;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.room.Database;
 import androidx.room.Room;
@@ -35,12 +36,11 @@ public abstract class RoomDataBase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (RoomDataBase.class) {
                 if (INSTANCE == null) {
+                    Log.i("Room", "new room instance is loading");
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RoomDataBase.class, "uni_app_db").allowMainThreadQueries().build();
                 }
             }
         }
         return INSTANCE;
     }
-
-    // source : https://steemit.com/utopian-io/@davidemi/using-room-persistence-in-android
 }

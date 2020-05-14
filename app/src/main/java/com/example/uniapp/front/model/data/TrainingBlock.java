@@ -2,18 +2,11 @@ package com.example.uniapp.front.model.data;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 public class TrainingBlock implements Serializable {
     @ColumnInfo(name = "nbset")
@@ -42,21 +35,22 @@ public class TrainingBlock implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return String.format("nbSet : %d | swim : %s | distance : %d | times : %s | zone : %d", nbSet, swim, distance, Arrays.toString(times.toArray()), zone);
+        return String.format(getTrainingBlock(), nbSet, swim, distance, Arrays.toString(times.toArray()), zone);
     }
 
-    public void setNbSet(int nbSet) { this.nbSet = nbSet; }
+    private String getTrainingBlock() {
+        return "nbSet : %d | swim : %s | distance : %d | times : %s | zone : %d";
+    }
+
     public void setSwim(String swim) { this.swim = swim; }
     public void setDistance(int distance) { this.distance = distance; }
     public void setTime(Float t, int index) {
-        ArrayList<Float> allTimes = new ArrayList<>();
-        for (int i = 0; i < times.size(); i++) allTimes.add(times.get(i));
+        ArrayList<Float> allTimes = new ArrayList<>(times);
         allTimes.set(index, t);
         times = allTimes;
     }
     public void setTimes(List<Float> times) { this.times = times; }
 
-    public void setZone(int zone) { this.zone = zone; }
     public int getNbSet() { return nbSet; }
     public int getDistance() { return distance; }
     public int getZone() { return zone; }

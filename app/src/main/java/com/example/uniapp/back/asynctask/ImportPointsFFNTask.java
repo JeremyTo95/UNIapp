@@ -1,7 +1,7 @@
-package com.example.uniapp.front.controller.asynctask;
+package com.example.uniapp.back.asynctask;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -13,7 +13,6 @@ import com.example.uniapp.front.controller.global.AboutScreen;
 import com.example.uniapp.front.model.data.PointFFN;
 import com.example.uniapp.front.view.actvities.MainActivity;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,19 +22,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
-    private WeakReference<Activity> weakReference;
+    @SuppressLint("StaticFieldLeak")
     private Activity activity;
     private RoomDataBase roomDataBase;
 
     public ImportPointsFFNTask(Activity activity) {
-        this.weakReference = new WeakReference<>(activity);
         this.activity      = activity;
         this.roomDataBase  = RoomDataBase.getDatabase(activity.getApplicationContext());
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
-        Log.e("IN BACKGROUND", "start");
         roomDataBase.pointFFNDAO().deleteAll();
         Retrofit retrofit = new Retrofit.Builder().baseUrl(RoomDataBase.URL_DATA).addConverterFactory(GsonConverterFactory.create(GsonManager.getGsonInstance())).build();
         PointFFNAPI pointFFNAPI = retrofit.create(PointFFNAPI.class);
@@ -46,29 +43,16 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
             public void onResponse(Call<List<PointFFN>> call, Response<List<PointFFN>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<PointFFN> pointFFNList = response.body();
-                    AppExecutors.getInstance(activity.getApplicationContext()).getDiskIo().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            System.out.println("nbPointsFFN to load : " + pointFFNList.size());
-                            for (int i = 0; i < pointFFNList.size(); i++) {
-                                PointFFN currentPointFFN = pointFFNList.get(i);
-                                roomDataBase.pointFFNDAO().insert(currentPointFFN);
-                                System.out.println("input value " + i);
-                                int indexElementLoaded = i+1;
-                                AppExecutors.getInstance(activity.getApplicationContext()).getUIThread().execute(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        AboutScreen.lockUI((MainActivity) activity, true, indexElementLoaded + " / " + pointFFNList.size() + " points ffn chargés");
-                                    }
-                                });
-                            }
-                            AppExecutors.getInstance(activity.getApplicationContext()).getUIThread().execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AboutScreen.unlockUI((MainActivity) activity);
-                                }
-                            });
+                    AppExecutors.getInstance(activity.getApplicationContext()).getDiskIo().execute(() -> {
+                        System.out.println("nbPointsFFN to load : " + pointFFNList.size());
+                        for (int i = 0; i < pointFFNList.size(); i++) {
+                            PointFFN currentPointFFN = pointFFNList.get(i);
+                            roomDataBase.pointFFNDAO().insert(currentPointFFN);
+                            System.out.println("input value " + i);
+                            int indexElementLoaded = i+1;
+                            AppExecutors.getInstance(activity.getApplicationContext()).getUIThread().execute(() -> AboutScreen.lockUI((MainActivity) activity, true, indexElementLoaded + " / " + pointFFNList.size() + " points ffn chargés"));
                         }
+                        AppExecutors.getInstance(activity.getApplicationContext()).getUIThread().execute(() -> AboutScreen.unlockUI((MainActivity) activity));
                     });
                 }
             }
@@ -85,16 +69,10 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        Log.e("IN PRE EXECUTE", "start");
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Activity activity = weakReference.get();
-        if(activity == null) {
-            return;
-        }
-        Log.e("IN POST EXECUTE", "start");
     }
 }

@@ -52,7 +52,7 @@ public class RvChronometerAdapter extends RecyclerView.Adapter<RvChronometerAdap
         private TextView lapChronoTV;
         private TextView diffTV;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
             lapTV        = itemView.findViewById(R.id.laptv_chrono);
             chronoTV     = itemView.findViewById(R.id.chrono_chrono);
@@ -60,11 +60,15 @@ public class RvChronometerAdapter extends RecyclerView.Adapter<RvChronometerAdap
             diffTV       = itemView.findViewById(R.id.diff_chrono);
         }
 
-        public void display(int position) {
-            lapTV.setText("L A P  " + (chrono.size() - position));
+        private void display(int position) {
+            lapTV.setText(getLapTV(position));
             chronoTV.setText(MarketTimes.convertLongMilliToTime(chrono.get(chrono.size() - position - 1)));
             lapChronoTV.setText(MarketTimes.convertLongMilliToTime(lap.get(lap.size() - position - 1)));
             printDiff(diff.get(diff.size() - position - 1));
+        }
+
+        private String getLapTV(int position) {
+            return "L A P  " + (chrono.size() - position);
         }
 
         private void printDiff(double diffChrono) {

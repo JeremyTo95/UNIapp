@@ -20,16 +20,13 @@ import com.example.uniapp.front.controller.textwatcher.TextWatcherChrono;
 import java.util.ArrayList;
 
 public class RvTrainingUpdateTimesAdapter extends RecyclerView.Adapter<RvTrainingUpdateTimesAdapter.MyViewHolder> {
-    private Context context;
     private TrainingBlock trainingBlock;
     private ArrayList<Float> times;
 
-    public RvTrainingUpdateTimesAdapter(Context context, TrainingBlock trainingBlock) {
-        this.context       = context;
+    public RvTrainingUpdateTimesAdapter(TrainingBlock trainingBlock) {
         this.trainingBlock = trainingBlock;
-        times              = new ArrayList<Float>();
-        for (int i = 0; i < trainingBlock.getTimes().size(); i++)
-            times.add(trainingBlock.getTimes().get(i));
+        times              = new ArrayList<>();
+        times.addAll(trainingBlock.getTimes());
     }
 
     @NonNull
@@ -56,16 +53,20 @@ public class RvTrainingUpdateTimesAdapter extends RecyclerView.Adapter<RvTrainin
         private TextView textView;
         private EditText editText;
 
-        public MyViewHolder(@NonNull View itemView) {
+        private MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = (TextView) itemView.findViewById(R.id.rv_popup_update_training_times_time_text_view);
-            editText = (EditText) itemView.findViewById(R.id.rv_popup_update_training_times_time_edit_text);
+            textView = itemView.findViewById(R.id.rv_popup_update_training_times_time_text_view);
+            editText = itemView.findViewById(R.id.rv_popup_update_training_times_time_edit_text);
         }
 
-        public void display(int position) {
-            textView.setText("T E M P S  " + (position + 1) + " : ");
+        private void display(int position) {
+            textView.setText(getTime(position));
             if (trainingBlock.getTimes().get(position) != 0.0f) editText.setText(MarketTimes.fetchFloatToTime(trainingBlock.getTimes().get(position)));
             updateTime(position);
+        }
+
+        private String getTime(int position) {
+            return "T E M P S  " + (position + 1) + " : ";
         }
 
         private void updateTime(int position) {
