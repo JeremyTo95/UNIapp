@@ -12,9 +12,9 @@ import com.example.uniapp.front.view.actvities.MainActivity;
 
 public abstract class Controller {
     private RoomDataBase roomDataBase;
-    private Activity activity;
-    private Fragment fragment;
-    private Context context;
+    private Activity     activity;
+    private Fragment     fragment;
+    private Context      context;
 
     public Controller(Activity activity) {
         this.activity     = activity;
@@ -48,4 +48,9 @@ public abstract class Controller {
         activity.startActivity(i);
         activity.finish();
     }
+
+    public RoomDataBase getRoomDataBase() { return roomDataBase; }
+    public Activity getActivity()         { return activity; }
+    public Fragment getFragment()         { return fragment; }
+    public Context  getContext()          { return context; }
 }

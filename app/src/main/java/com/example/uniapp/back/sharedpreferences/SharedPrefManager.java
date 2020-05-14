@@ -9,8 +9,8 @@ import com.example.uniapp.back.gson.GsonManager;
 import com.example.uniapp.front.model.data.User;
 
 public class SharedPrefManager {
-    private static SharedPrefManager sharedPrefManager;
-    private static SharedPreferences sharedPreferences;
+    private static SharedPrefManager        sharedPrefManager;
+    private static SharedPreferences        sharedPreferences;
     private static SharedPreferences.Editor editor;
 
     private SharedPrefManager() {
@@ -22,7 +22,7 @@ public class SharedPrefManager {
         if (sharedPreferences == null) {
             Log.i("SharedPred", "new shared pref is loading");
             sharedPreferences = context.getSharedPreferences("quicksave", Context.MODE_PRIVATE);
-            editor = sharedPreferences.edit();
+            editor            = sharedPreferences.edit();
         }
         return sharedPrefManager;
     }
@@ -44,7 +44,7 @@ public class SharedPrefManager {
 
     public static User getUser(Context context) {
         sharedPrefManager = getSharedPref(context);
-        String userJSON = sharedPreferences.getString("user", "null");
+        String userJSON   = sharedPreferences.getString("user", "null");
         if (userJSON.equals("null")) return null;
         else return GsonManager.getGsonInstance().fromJson(userJSON, User.class);
     }

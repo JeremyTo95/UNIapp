@@ -21,14 +21,14 @@ import com.example.uniapp.front.view.actvities.MainActivity;
 public class AboutScreen extends AppCompatActivity {
     public static int getWidth(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
+        Point   size    = new Point();
         display.getSize(size);
         return size.x;
     }
 
     public static int getHeight(Activity activity) {
         Display display = activity.getWindowManager().getDefaultDisplay();
-        Point size = new Point();
+        Point   size    = new Point();
         display.getSize(size);
         return size.y;
     }
@@ -41,8 +41,7 @@ public class AboutScreen extends AppCompatActivity {
     }
 
     public static boolean isNightMode(Activity activity) {
-        System.out.println(SharedPrefManager.loadThemeMode(activity.getApplicationContext()));
-        if (SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 1) return true;
+             if (SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 1) return true;
         else if (SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 2) return false;
         else return SharedPrefManager.loadThemeMode(activity.getApplicationContext()) == 0 && (activity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
     }
@@ -65,16 +64,11 @@ public class AboutScreen extends AppCompatActivity {
         else activity.setTheme(R.style.LightTheme);
     }
 
-    public static void lockUI(MainActivity activity, boolean isAnimation, String loadingText) {
-        activity.lockUI(isAnimation, loadingText);
-    }
-
-    public static void unlockUI(MainActivity activity) {
-        activity.unlockUI();
-    }
-
     public static void hideKeybaord(Activity activity, View v) {
         InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputMethodManager != null) inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
+
+    public static void lockUI(MainActivity activity, boolean isAnimation, String loadingText) { activity.lockUI(isAnimation, loadingText); }
+    public static void unlockUI(MainActivity activity) { activity.unlockUI(); }
 }

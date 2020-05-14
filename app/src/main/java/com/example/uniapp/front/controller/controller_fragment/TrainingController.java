@@ -1,12 +1,10 @@
 package com.example.uniapp.front.controller.controller_fragment;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.example.uniapp.back.room.RoomDataBase;
 import com.example.uniapp.front.controller.comparator.TrainingDateComparator;
 import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.model.data.Training;
@@ -20,8 +18,6 @@ import java.util.UUID;
 
 public class TrainingController extends Controller {
     private TrainingsFragment view;
-    private Context           context;
-    private RoomDataBase      roomDataBase;
     private AddTrainingPopup  addTrainingPopup;
 
     private List<Training> currentTrainings;
@@ -31,9 +27,7 @@ public class TrainingController extends Controller {
 
     public TrainingController(TrainingsFragment view) {
         super(view);
-        this.view = view;
-        this.context           = view.getContext();
-        this.roomDataBase      = RoomDataBase.getDatabase(context);
+        this.view    = view;
     }
 
     @Override
@@ -52,7 +46,7 @@ public class TrainingController extends Controller {
     }
 
     public void updateCurrentTrainings() {
-        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(roomDataBase.trainingDAO().getAllTrainings(), sizePool, swim, difficulty);
+        currentTrainings = MarketTrainings.getTrainingsBySizePoolSwimDifficulty(getRoomDataBase().trainingDAO().getAllTrainings(), sizePool, swim, difficulty);
         Collections.sort(currentTrainings, new TrainingDateComparator());
     }
 
@@ -83,11 +77,11 @@ public class TrainingController extends Controller {
     }
 
     private void insertNewTraining(Training training) {
-        roomDataBase.trainingDAO().insertTraining(training);
+        getRoomDataBase().trainingDAO().insertTraining(training);
         addTrainingPopup.dismiss();
         updateCurrentTrainings();
         view.setupTrainingList();
-        Toast.makeText(context, "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
     }
 
     public void updateDifficulty(int difficulty) {
@@ -108,10 +102,10 @@ public class TrainingController extends Controller {
     }
 
     public List<Training> getCurrentTrainings() { updateCurrentTrainings(); return currentTrainings; }
-    public int getSizePool() { return sizePool; }
-    public void setSizePool(int sizePool) { this.sizePool = sizePool; }
-    public String getSwim() { return swim; }
-    public void setSwim(String swim) { this.swim = swim; }
-    public int getDifficulty() { return difficulty; }
+    public int getSizePool()                    { return sizePool; }
+    public String getSwim()                     { return swim; }
+    public int getDifficulty()                  { return difficulty; }
+    public void setSizePool(int sizePool)       { this.sizePool = sizePool; }
+    public void setSwim(String swim)            { this.swim = swim; }
 
 }

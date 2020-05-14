@@ -23,19 +23,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
     @SuppressLint("StaticFieldLeak")
-    private Activity activity;
+    private Activity     activity;
     private RoomDataBase roomDataBase;
 
     public ImportPointsFFNTask(Activity activity) {
-        this.activity      = activity;
-        this.roomDataBase  = RoomDataBase.getDatabase(activity.getApplicationContext());
+        this.activity     = activity;
+        this.roomDataBase = RoomDataBase.getDatabase(activity.getApplicationContext());
     }
 
     @Override
     protected Void doInBackground(Void... voids) {
         roomDataBase.pointFFNDAO().deleteAll();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(RoomDataBase.URL_DATA).addConverterFactory(GsonConverterFactory.create(GsonManager.getGsonInstance())).build();
-        PointFFNAPI pointFFNAPI = retrofit.create(PointFFNAPI.class);
+        Retrofit retrofit         = new Retrofit.Builder().baseUrl(RoomDataBase.URL_DATA).addConverterFactory(GsonConverterFactory.create(GsonManager.getGsonInstance())).build();
+        PointFFNAPI pointFFNAPI   = retrofit.create(PointFFNAPI.class);
         Call<List<PointFFN>> call = pointFFNAPI.getResponsePointsFFN();
 
         call.enqueue(new Callback<List<PointFFN>>() {

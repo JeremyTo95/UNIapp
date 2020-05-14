@@ -12,12 +12,10 @@ import com.example.uniapp.front.view.fragments.TimerFragment;
 
 public class GadgetController extends Controller {
     private GadgetsFragment view;
-    private Context         context;
 
     public GadgetController(GadgetsFragment view) {
         super(view);
-        this.view         = view;
-        this.context      = view.getContext();
+        this.view = view;
     }
 
     @Override
@@ -28,7 +26,7 @@ public class GadgetController extends Controller {
     }
 
     public void goToChronometer() {
-        Intent intent = new Intent(context, ChronometerActivity.class);
+        Intent intent = new Intent(getContext(), ChronometerActivity.class);
         view.startActivity(intent);
     }
 

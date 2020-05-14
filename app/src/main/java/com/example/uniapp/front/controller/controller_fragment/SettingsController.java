@@ -1,14 +1,11 @@
 package com.example.uniapp.front.controller.controller_fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
-import com.example.uniapp.back.room.RoomDataBase;
 import com.example.uniapp.back.sharedpreferences.SharedPrefManager;
 import com.example.uniapp.front.controller.global.AboutScreen;
 import com.example.uniapp.front.controller.global.Controller;
@@ -19,9 +16,6 @@ import com.example.uniapp.front.view.fragments.SettingsFragment;
 
 public class SettingsController extends Controller {
     private SettingsFragment view;
-    private Activity         activity;
-    private Context          context;
-    private RoomDataBase     roomDataBase;
 
     private String gender;
     private String firstname;
@@ -35,10 +29,7 @@ public class SettingsController extends Controller {
 
     public SettingsController(SettingsFragment view) {
         super(view);
-        this.view         = view;
-        this.activity     = view.getActivity();
-        this.context      = view.getContext();
-        this.roomDataBase = RoomDataBase.getDatabase(context);
+        this.view = view;
     }
 
     @Override
@@ -52,16 +43,14 @@ public class SettingsController extends Controller {
     }
 
     private void setupInfoUser() {
-        if (roomDataBase.userDAO().getNb() != 0) {
-            showUserInfo();
-        }
+        if (getRoomDataBase().userDAO().getNb() != 0) showUserInfo();
     }
 
     public void manageTheme() {
-        if (SharedPrefManager.loadThemeMode(context) == 0) Toast.makeText(context, "Dark Mode Activé", Toast.LENGTH_SHORT).show();
-        else if (SharedPrefManager.loadThemeMode(context) == 1) Toast.makeText(context, "Light Mode Activé", Toast.LENGTH_SHORT).show();
-        else Toast.makeText(context,  "Mode Automatique Activé", Toast.LENGTH_SHORT).show();
-        SharedPrefManager.savedThemeMode((SharedPrefManager.loadThemeMode(context)+1)%3);
+        if (SharedPrefManager.loadThemeMode(getContext()) == 0) Toast.makeText(getContext(), "Dark Mode Activé", Toast.LENGTH_SHORT).show();
+        else if (SharedPrefManager.loadThemeMode(getContext()) == 1) Toast.makeText(getContext(), "Light Mode Activé", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(getContext(),  "Mode Automatique Activé", Toast.LENGTH_SHORT).show();
+        SharedPrefManager.savedThemeMode((SharedPrefManager.loadThemeMode(getContext())+1)%3);
         restartApp();
     }
 
@@ -70,15 +59,15 @@ public class SettingsController extends Controller {
     }
 
     private void loadUserInfosFromDB() {
-        gender    = roomDataBase.userDAO().getUser().getGender();
-        firstname = roomDataBase.userDAO().getUser().getFirstname();
-        lastname  = roomDataBase.userDAO().getUser().getLastname();
-        weight    = roomDataBase.userDAO().getUser().getWeight();
-        height    = roomDataBase.userDAO().getUser().getHeight();
-        birth     = roomDataBase.userDAO().getUser().getBirthday();
-        club      = roomDataBase.userDAO().getUser().getClub();
-        city      = roomDataBase.userDAO().getUser().getCityTraining();
-        spe       = roomDataBase.userDAO().getUser().getSpe();
+        gender    = getRoomDataBase().userDAO().getUser().getGender();
+        firstname = getRoomDataBase().userDAO().getUser().getFirstname();
+        lastname  = getRoomDataBase().userDAO().getUser().getLastname();
+        weight    = getRoomDataBase().userDAO().getUser().getWeight();
+        height    = getRoomDataBase().userDAO().getUser().getHeight();
+        birth     = getRoomDataBase().userDAO().getUser().getBirthday();
+        club      = getRoomDataBase().userDAO().getUser().getClub();
+        city      = getRoomDataBase().userDAO().getUser().getCityTraining();
+        spe       = getRoomDataBase().userDAO().getUser().getSpe();
     }
 
     private void showUserInfo() {
@@ -110,9 +99,7 @@ public class SettingsController extends Controller {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                gender = parent.getSelectedItem().toString().toLowerCase();
-            }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { gender = parent.getSelectedItem().toString().toLowerCase(); }
         });
     }
 
@@ -121,26 +108,24 @@ public class SettingsController extends Controller {
             @Override
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spe = MarketSwim.convertSwimFromFrenchToEnglish(parent.getSelectedItem().toString().toLowerCase());
-            }
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) { spe = MarketSwim.convertSwimFromFrenchToEnglish(parent.getSelectedItem().toString().toLowerCase()); }
         });
     }
 
     public ArrayAdapter<CharSequence> getGenderAdapter() {
-        if (AboutScreen.isNightMode(activity)) return ArrayAdapter.createFromResource(context, R.array.genders, R.layout.dropdown_item_dark);
-        else return ArrayAdapter.createFromResource(context, R.array.genders, R.layout.dropdown_item_light);
+        if (AboutScreen.isNightMode(getActivity())) return ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item_dark);
+        else return ArrayAdapter.createFromResource(getContext(), R.array.genders, R.layout.dropdown_item_light);
     }
 
     public ArrayAdapter<CharSequence> getSpeAdapter() {
-        if (AboutScreen.isNightMode(activity)) return ArrayAdapter.createFromResource(context, R.array.swims, R.layout.dropdown_item_dark);
-        else return ArrayAdapter.createFromResource(context, R.array.swims, R.layout.dropdown_item_light);
+        if (AboutScreen.isNightMode(getActivity())) return ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item_dark);
+        else return ArrayAdapter.createFromResource(getContext(), R.array.swims, R.layout.dropdown_item_light);
     }
 
     private void disableUpdateUserBtn() {
         view.getUpdateUserBtn().setEnabled(false);
         view.getUpdateUserBtn().setBackground(view.getResources().getDrawable(R.color.transparent));
-        view.getUpdateUserBtn().setTextColor(AboutScreen.getColorByThemeAttr(context, R.attr.textColor, R.color.textColorDark));
+        view.getUpdateUserBtn().setTextColor(AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
     }
 
     public void enableUpdateUserBtn() {
@@ -180,12 +165,12 @@ public class SettingsController extends Controller {
 
     public void setupUpdateUser() {
         if (checkInputUpdateUser()) {
-            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city, roomDataBase.userDAO().getUser().getMykey());
-            roomDataBase.userDAO().deleteAll();
-            roomDataBase.userDAO().insert(user);
+            User user = new User(gender, firstname, lastname, birth, height, weight, club, spe, city, getRoomDataBase().userDAO().getUser().getMykey());
+            getRoomDataBase().userDAO().deleteAll();
+            getRoomDataBase().userDAO().insert(user);
             disableUpdateUserBtn();
-            Toast.makeText(context, "Utilisateur mis à jour", Toast.LENGTH_SHORT).show();
-        } else Toast.makeText(context, "ATTENTION : Utilisateur non mis à jour", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Utilisateur mis à jour", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(getContext(), "ATTENTION : Utilisateur non mis à jour", Toast.LENGTH_SHORT).show();
     }
 
     private boolean checkWeight()    { return (weight             > 0); }
@@ -195,20 +180,15 @@ public class SettingsController extends Controller {
     private boolean checkCity()      { return (city.length()      > 0); }
 
     public String getGender() { return gender; }
-    public int getHeight() { return height; }
-    public String getClub() { return club; }
-    public String getCity() { return city; }
+    public int getHeight()    { return height; }
+    public String getClub()   { return club; }
+    public String getCity()   { return city; }
 
     public void setGender(String gender) { this.gender = gender; }
-    public void setHeight(int height) { this.height = height; }
-    public void setClub(String club) { this.club = club; }
-    public void setCity(String city) { this.city = city; }
+    public void setHeight(int height)    { this.height = height; }
+    public void setClub(String club)     { this.club = club; }
+    public void setCity(String city)     { this.city = city; }
 
-    private String getWeightET() {
-        return weight + "kg";
-    }
-
-    private String getHeightET() {
-        return height + "cm";
-    }
+    private String getWeightET() { return weight + "kg"; }
+    private String getHeightET() { return height + "cm"; }
 }

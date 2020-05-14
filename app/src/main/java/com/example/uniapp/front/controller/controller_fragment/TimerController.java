@@ -1,7 +1,5 @@
 package com.example.uniapp.front.controller.controller_fragment;
 
-import android.app.Activity;
-import android.content.Context;
 import android.media.MediaPlayer;
 
 import com.example.uniapp.R;
@@ -12,9 +10,7 @@ import com.example.uniapp.front.view.popup.TimerPopup;
 
 public class TimerController extends Controller {
     private TimerFragment view;
-    private TimerPopup timerPopup;
-    private Activity activity;
-    private Context context;
+    private TimerPopup    timerPopup;
 
     private String nbSetsStr;
     private String timeWorkStr;
@@ -23,8 +19,6 @@ public class TimerController extends Controller {
     public TimerController(TimerFragment view) {
         super(view);
         this.view     = view;
-        this.activity = view.getActivity();
-        this.context  = view.getContext();
     }
 
     @Override
@@ -38,7 +32,7 @@ public class TimerController extends Controller {
             nbSetsStr   = view.getNbSetsET().getText().toString();
             timeWorkStr = view.getTimeWorkET().getText().toString();
             timeRestStr = view.getTimeRestET().getText().toString();
-            timerPopup = new TimerPopup(view.getActivity(), this);
+            timerPopup  = new TimerPopup(view.getActivity(), this);
             timerPopup.build();
         }
     }
@@ -54,7 +48,7 @@ public class TimerController extends Controller {
         }
     }
 
-    private boolean checkNbSet() {    return view.getNbSetsET().getText().length() != 0; }
+    private boolean checkNbSet()    { return view.getNbSetsET().getText().length() != 0; }
     private boolean checkWorkTime() { return view.getTimeWorkET().getText().length() != 0; }
     private boolean checkRestTime() { return view.getTimeRestET().getText().length() != 0; }
 
@@ -90,8 +84,8 @@ public class TimerController extends Controller {
         nbSetsIndex = 0;
         oldTimer    = 0L;
         isRunning   = true;
-        soundTic    = MediaPlayer.create(context, R.raw.tic);
-        soundStart  = MediaPlayer.create(context, R.raw.start);
+        soundTic    = MediaPlayer.create(getContext(), R.raw.tic);
+        soundStart  = MediaPlayer.create(getContext(), R.raw.start);
 
         this.timerPopup = timerPopup;
         this.timerPopup.setupUIElements();
@@ -109,9 +103,8 @@ public class TimerController extends Controller {
         if (nbSetsIndex != nbSets+1) {
             if (timerIndex == 0)      runWorkTimer();
             else if (timerIndex == 1) runRestTimer();
-        } else {
-            timerPopup.dismiss();
-        }
+        } else timerPopup.dismiss();
+
         timerIndex = (timerIndex + 1)%2;
     }
 
@@ -149,8 +142,8 @@ public class TimerController extends Controller {
             try {
                 while (!isInterrupted()) {
                     Thread.sleep(10);
-                    if (activity != null) {
-                        activity.runOnUiThread(() -> {
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() -> {
                             currentTimer = timerForThread - System.currentTimeMillis()/10;
                             System.out.println("time : " + currentTimer);
                             if (currentTimer >= 390 && currentTimer <= 399 && !isTic3) {
@@ -201,8 +194,8 @@ public class TimerController extends Controller {
     }
 
     public void interruptThread() { timerThread.interrupt(); }
-    public String getTitleSet() { return "S E T S  :  " + nbSetsIndex + " / " + nbSets; }
-    public String getTimerStr() { return MarketTimes.converLongToTimer(timer); }
-    public Long getTimeWork() { return timeWork * 100; }
-    public Long getTimeRest() { return timeRest * 100; }
+    public String getTitleSet()   { return "S E T S  :  " + nbSetsIndex + " / " + nbSets; }
+    public String getTimerStr()   { return MarketTimes.converLongToTimer(timer); }
+    public Long getTimeWork()     { return timeWork * 100; }
+    public Long getTimeRest()     { return timeRest * 100; }
 }

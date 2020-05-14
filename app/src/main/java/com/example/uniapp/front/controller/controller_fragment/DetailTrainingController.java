@@ -1,8 +1,5 @@
 package com.example.uniapp.front.controller.controller_fragment;
 
-import android.content.Context;
-
-import com.example.uniapp.back.room.RoomDataBase;
 import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.model.data.Training;
 import com.example.uniapp.front.model.market.MarketRaces;
@@ -14,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailTrainingController extends Controller {
-    private RoomDataBase           roomDataBase;
     private TrainingDetailFragment view;
 
     private Training training;
@@ -22,7 +18,6 @@ public class DetailTrainingController extends Controller {
     public DetailTrainingController(TrainingDetailFragment view, Training training) {
         super(view);
         this.view         = view;
-        this.roomDataBase = RoomDataBase.getDatabase(view.getContext());
         this.training     = training;
     }
 
@@ -33,10 +28,6 @@ public class DetailTrainingController extends Controller {
         view.updateHeaderInfo();
         view.fillDifficulty();
         view.updateTrainingList();
-    }
-
-    public String getTitleTraining() {
-        return "Le " + training.getDate() + " à " + training.getCity() + " (" + training.getSizePool() + "m)";
     }
 
     public String getRaceZoneStr() {
@@ -74,16 +65,16 @@ public class DetailTrainingController extends Controller {
         return trainingZoneTimeStr.toString();
     }
 
-    public int getTrainingDifficulty() {
-        return training.getDifficulty();
-    }
-
     private List<Float> getCompetitionRaceTime() {
         List<Float> result = new ArrayList<>();
         for (int i = 0; i < training.getTrainingBlockList().size(); i++)
-            result.add(MarketRaces.getBestTime(roomDataBase.raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
+            result.add(MarketRaces.getBestTime(getRoomDataBase().raceDAO().getRacesByPoolSizeDistanceRaceSwimRace(training.getSizePool(), training.getTrainingBlockList().get(i).getDistance(), training.getTrainingBlockList().get(i).getSwim()), 1).getTime());
         return result;
     }
 
+    public int getTrainingDifficulty() {
+        return training.getDifficulty();
+    }
+    public String getTitleTraining() { return "Le " + training.getDate() + " à " + training.getCity() + " (" + training.getSizePool() + "m)"; }
     public Training getTraining() { return training; }
 }

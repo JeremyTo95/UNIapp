@@ -27,9 +27,9 @@ public abstract class RoomDataBase extends RoomDatabase {
     private static volatile RoomDataBase INSTANCE;
     public static String URL_DATA = "https://raw.githubusercontent.com/JeremyTo95/myData/";
 
-    public abstract UserDAO userDAO();
+    public abstract UserDAO     userDAO();
     public abstract PointFFNDAO pointFFNDAO();
-    public abstract RaceDAO raceDAO();
+    public abstract RaceDAO     raceDAO();
     public abstract TrainingDAO trainingDAO();
 
     public static RoomDataBase getDatabase(final Context context) {

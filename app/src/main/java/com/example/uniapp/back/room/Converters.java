@@ -16,7 +16,7 @@ public class Converters {
     @TypeConverter
     public static List<TrainingBlock> toTrainingBlockList(String inputJSON) {
         JSONArray trainingBlockArrayJSON;
-        List<TrainingBlock> trainingBlockList = new ArrayList<TrainingBlock>();
+        List<TrainingBlock> trainingBlockList = new ArrayList<>();
         try {
             trainingBlockArrayJSON = new JSONArray(inputJSON);
             for (int i = 0; i < trainingBlockArrayJSON.length(); i++) {
@@ -33,13 +33,13 @@ public class Converters {
 
     @TypeConverter
     public static String fromListTrainingBlock(List<TrainingBlock> trainingBlockList) {
-        String inputJSON = "[";
+        StringBuilder inputJSON = new StringBuilder("[");
         for (int i = 0; i < trainingBlockList.size(); i++) {
-            if (i != trainingBlockList.size() - 1) inputJSON += GsonManager.getGsonInstance().toJson(trainingBlockList.get(i)) + ",";
-            else inputJSON += GsonManager.getGsonInstance().toJson(trainingBlockList.get(i));
+            if (i != trainingBlockList.size() - 1) inputJSON.append(GsonManager.getGsonInstance().toJson(trainingBlockList.get(i))).append(",");
+            else inputJSON.append(GsonManager.getGsonInstance().toJson(trainingBlockList.get(i)));
         }
-        inputJSON += "]";
+        inputJSON.append("]");
 
-        return inputJSON;
+        return inputJSON.toString();
     }
 }

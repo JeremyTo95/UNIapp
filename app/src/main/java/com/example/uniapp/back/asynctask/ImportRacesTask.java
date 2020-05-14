@@ -26,12 +26,12 @@ public class ImportRacesTask extends AsyncTask<Void, Void, Void> {
     private RoomDataBase roomDataBase;
     @SuppressLint("StaticFieldLeak")
     private Activity activity;
-    private User user;
+    private User     user;
 
     public ImportRacesTask(Activity activity) {
-        this.activity       = activity;
-        this.roomDataBase   = RoomDataBase.getDatabase(activity.getApplicationContext());
-        this.user           = roomDataBase.userDAO().getUser();
+        this.activity     = activity;
+        this.roomDataBase = RoomDataBase.getDatabase(activity.getApplicationContext());
+        this.user         = roomDataBase.userDAO().getUser();
     }
 
     @Override

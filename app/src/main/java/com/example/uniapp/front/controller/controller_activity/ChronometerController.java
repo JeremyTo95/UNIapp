@@ -1,6 +1,5 @@
 package com.example.uniapp.front.controller.controller_activity;
 
-import android.content.Context;
 import android.widget.Toast;
 
 import com.example.uniapp.front.controller.global.Controller;
@@ -12,7 +11,6 @@ import java.util.List;
 
 public class ChronometerController extends Controller {
     private ChronometerActivity view;
-    private Context             context;
 
     private int          offsetAnchor;
     private int          periodeAnchor;
@@ -28,8 +26,7 @@ public class ChronometerController extends Controller {
 
     public ChronometerController(ChronometerActivity view) {
         super(view);
-        this.view    = view;
-        this.context = view.getApplicationContext();
+        this.view = view;
     }
 
     @Override
@@ -78,7 +75,7 @@ public class ChronometerController extends Controller {
 
     public void reset() {
         if (isRunning) {
-            Toast.makeText(context, "Le chronomètre doit être arréter", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Le chronomètre doit être arréter", Toast.LENGTH_SHORT).show();
         } else {
             initChronos();
             view.updateLapChronoRV();
@@ -117,7 +114,6 @@ public class ChronometerController extends Controller {
 
     private void updateChronoDiff() {
         long diffChronoLong = 0;
-
         if (allChronos.size() == 1) diffChronoLong = currentLapChrono - (allChronos.get(allChronos.size() - 1));
         if (allChronos.size() >= 2) diffChronoLong = currentLapChrono - (allChronos.get(allChronos.size() - 1) - allChronos.get(allChronos.size() - 2));
 
