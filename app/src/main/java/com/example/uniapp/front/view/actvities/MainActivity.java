@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 //import com.example.uniapp.front.controller.asynctask.ImportPointsFFNTask;
 import com.example.uniapp.front.controller.global.AboutScreen;
@@ -16,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity {
     private MainController       controller;
     private LinearLayout         linearLayoutLoading;
+    private TextView             loadingText;
     private BottomNavigationView bottomNavigationView;
 
     @Override
@@ -30,17 +32,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void setupUIElements() {
         linearLayoutLoading  = findViewById(R.id.glb_loading);
+        loadingText          = findViewById(R.id.activity_main_loading_textview);
         bottomNavigationView = findViewById(R.id.navbar);
         bottomNavigationView.setSelectedItemId(R.id.navbar_custom_home_btn);
     }
 
-    public void lockUI(boolean isLoading) {
+    public void lockUI(boolean isLoading, String loadingTextStr) {
         bottomNavigationView.setEnabled(false);
         bottomNavigationView.setFocusable(false);
         bottomNavigationView.setFocusableInTouchMode(false);
         bottomNavigationView.setClickable(false);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationViewListener(this, false));
-        if (isLoading) linearLayoutLoading.setVisibility(View.VISIBLE);
+        if (isLoading) {
+            linearLayoutLoading.setVisibility(View.VISIBLE);
+            if (loadingTextStr != null) loadingText.setText(loadingTextStr);
+        }
     }
 
     public void unlockUI() {

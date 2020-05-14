@@ -54,7 +54,7 @@
                     android:tag="pool50"
                     android:background="?attr/transparent"
                     style="?android:attr/buttonBarButtonStyle"
-                    android:text="@string/sizePool25title"
+                    android:text="@string/sizePool50title"
                     android:textSize="@dimen/h3_textsize"
                     android:textColor="?attr/textColor"
                     android:fontFamily="sans-serif-light" />

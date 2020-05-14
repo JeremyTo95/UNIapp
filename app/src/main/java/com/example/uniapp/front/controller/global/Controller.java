@@ -2,6 +2,7 @@ package com.example.uniapp.front.controller.global;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
 
@@ -29,11 +30,17 @@ public abstract class Controller {
 
     public void onStart() {}
 
-    public void lockUI() {
-        AboutScreen.lockUI((MainActivity) activity, false);
+    public void lockUI(String loadingText) {
+        AboutScreen.lockUI((MainActivity) activity, false, loadingText);
     }
 
     public void unlockUI() {
         AboutScreen.unlockUI((MainActivity) activity);
+    }
+
+    public void restartApp() {
+        Intent i = new Intent(context, MainActivity.class);
+        activity.startActivity(i);
+        activity.finish();
     }
 }

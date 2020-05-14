@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
 
+import com.example.uniapp.back.executor.AppExecutors;
 import com.example.uniapp.back.room.RoomDataBase;
 import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.controller.comparator.TrainingDateComparator;
@@ -20,13 +21,14 @@ import java.util.UUID;
 
 public class TrainingController extends Controller {
     private TrainingsFragment view;
-    private Context context;
-    private RoomDataBase roomDataBase;
+    private Context           context;
+    private RoomDataBase      roomDataBase;
+    private AddTrainingPopup  addTrainingPopup;
 
     private List<Training> currentTrainings;
-    private int    sizePool;
-    private String swim;
-    private int    difficulty;
+    private int            sizePool;
+    private String         swim;
+    private int            difficulty;
 
     public TrainingController(TrainingsFragment view) {
         super(view);
@@ -70,7 +72,7 @@ public class TrainingController extends Controller {
     }
 
     public void setupAddTrainingPopup() {
-        final AddTrainingPopup addTrainingPopup = new AddTrainingPopup(view.getActivity());
+        addTrainingPopup = new AddTrainingPopup(view.getActivity());
         addTrainingPopup.build();
         addTrainingPopup.getBtn_confirmed().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,14 +80,18 @@ public class TrainingController extends Controller {
                 if (addTrainingPopup.isEnabled()) {
                     Log.e("ADD", "Add training");
                     Training training = new Training(UUID.randomUUID().toString(), addTrainingPopup.getNewDifficulty(), addTrainingPopup.getNewSizePool(), addTrainingPopup.getNewDate(), addTrainingPopup.getNewCity(), addTrainingPopup.getTrainingBlockList());
-                    roomDataBase.trainingDAO().insertTraining(training);
-                    addTrainingPopup.dismiss();
-                    updateCurrentTrainings();
-                    view.setupTrainingList();
-                    Toast.makeText(context, "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
+                    insertNewTraining(training);
                 }
             }
         });
+    }
+
+    private void insertNewTraining(Training training) {
+        roomDataBase.trainingDAO().insertTraining(training);
+        addTrainingPopup.dismiss();
+        updateCurrentTrainings();
+        view.setupTrainingList();
+        Toast.makeText(context, "Nouvel entrainement enregistré", Toast.LENGTH_SHORT).show();
     }
 
     public void updateDifficulty(int difficulty) {

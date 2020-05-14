@@ -32,13 +32,12 @@ public class MainController extends Controller {
 
     public void onStart() {
         view.setupUIElements();
-        view.lockUI(true);
         System.out.println("user : " + SharedPrefManager.getUser(context));
         if (SharedPrefManager.getUser(context) != null) setupNewUser();
 
-        if (roomDataBase.pointFFNDAO().getNb() == 54000) view.unlockUI();
         if (roomDataBase.userDAO().getNb() == 1) configureAndShowFragment(new HomeFragment());
         else goSignInUser();
+        if (roomDataBase.pointFFNDAO().getNb() == 54000) view.unlockUI();
 
     }
 

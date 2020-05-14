@@ -32,12 +32,12 @@
             android:tag="chronometerBtn"
             android:background="@drawable/sh_gradient_background"
             android:layout_margin="20dp"
-            android:padding="30dp">
+            android:padding="20dp">
 
             <ImageView
                 android:id="@+id/fragment_tools_chrono_logo"
                 android:layout_width="50dp"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:contentDescription="@string/desc_logo_chrono"
                 android:src="@drawable/ic_timer_white_24dp" />
             <TextView
@@ -60,7 +60,7 @@
             android:tag="timerBtn"
             android:background="@drawable/sh_gradient_background"
             android:layout_margin="20dp"
-            android:padding="30dp">
+            android:padding="20dp">
             <ImageView
                 android:id="@+id/fragment_tools_timer_logo"
                 android:layout_width="50dp"
@@ -87,7 +87,7 @@
             android:tag="converterBtn"
             android:background="@drawable/sh_gradient_background"
             android:layout_margin="20dp"
-            android:padding="30dp">
+            android:padding="20dp">
             <ImageView
                 android:id="@+id/fragment_tools_converter_logo"
                 android:layout_width="50dp"

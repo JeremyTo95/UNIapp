@@ -94,5 +94,9 @@
     <string name="work_title">W O R K</string>
     <string name="hint_timer">00:00</string>
     <string name="rest_title">R E S T</string>
+    <string name="chronometre_title">C H R O N O M E T R E</string>
+    <string name="reset">R E S E T</string>
+    <string name="desc_anchor_chrono">desc_anchor_chrono</string>
+    <string name="desc_circle_chrono">desc_circle_chrono</string>
 
 </resources>

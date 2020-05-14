@@ -5,10 +5,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.uniapp.back.api.RaceAPI;
+import com.example.uniapp.back.executor.AppExecutors;
 import com.example.uniapp.back.gson.GsonManager;
 import com.example.uniapp.back.room.RoomDataBase;
+import com.example.uniapp.front.controller.global.AboutScreen;
 import com.example.uniapp.front.model.data.Race;
 import com.example.uniapp.front.model.data.User;
+import com.example.uniapp.front.view.actvities.MainActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -22,10 +25,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ImportRacesTask extends AsyncTask<Void, Void, Void> {
     private WeakReference<Activity> weakReference;
     private RoomDataBase roomDataBase;
+    private Activity activity;
     private User user;
 
     public ImportRacesTask(Activity activity) {
         weakReference       = new WeakReference<>(activity);
+        this.activity       = activity;
         this.roomDataBase   = RoomDataBase.getDatabase(activity.getApplicationContext());
         this.user           = roomDataBase.userDAO().getUser();
     }
@@ -54,11 +59,29 @@ public class ImportRacesTask extends AsyncTask<Void, Void, Void> {
             public void onResponse(Call<List<Race>> call, Response<List<Race>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Race> raceList = response.body();
-                    System.out.println("nbRaces to load : " + raceList.size());
-                    for (int i = 0; i < raceList.size(); i++) {
-                        roomDataBase.raceDAO().insert(raceList.get(i));
-                    }
-                    System.out.println("nbRaces loaded : " + raceList.size());
+                    AppExecutors.getInstance(activity.getApplicationContext()).getDiskIo().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println("nbRaces to load : " + raceList.size());
+                            for (int i = 0; i < raceList.size(); i++) {
+                                roomDataBase.raceDAO().insert(raceList.get(i));
+                                int indexElementLoaded = i+1;
+                                AppExecutors.getInstance(activity.getApplicationContext()).getUIThread().execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AboutScreen.lockUI((MainActivity) activity, true, indexElementLoaded + " / " + raceList.size() + " courses chargées");
+                                    }
+                                });
+                            }
+                            System.out.println("nbRaces loaded : " + raceList.size());
+                            AppExecutors.getInstance(activity.getApplicationContext()).getUIThread().execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AboutScreen.unlockUI((MainActivity) activity);
+                                }
+                            });
+                        }
+                    });
                 }
             }
         });

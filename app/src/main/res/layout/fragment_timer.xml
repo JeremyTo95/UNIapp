@@ -35,7 +35,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="20dp"
             android:background="@drawable/sh_gradient_background"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical">

@@ -41,4 +41,6 @@ public abstract class RoomDataBase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
+    // source : https://steemit.com/utopian-io/@davidemi/using-room-persistence-in-android
 }

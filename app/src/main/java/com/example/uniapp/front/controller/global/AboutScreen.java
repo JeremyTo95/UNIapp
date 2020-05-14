@@ -64,8 +64,8 @@ public class AboutScreen extends AppCompatActivity {
         else activity.setTheme(R.style.LightTheme);
     }
 
-    public static void lockUI(MainActivity activity, boolean isAnimation) {
-        activity.lockUI(isAnimation);
+    public static void lockUI(MainActivity activity, boolean isAnimation, String loadingText) {
+        activity.lockUI(isAnimation, loadingText);
     }
 
     public static void unlockUI(MainActivity activity) {

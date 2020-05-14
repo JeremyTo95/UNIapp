@@ -75,7 +75,7 @@ public class TrainingDetailFragment extends Fragment {
 
         for (int i = 0; i < 5; i++) difficultyStars.add((Button) layoutInflater.findViewById(idStars.get(i)));
         for (int i = 0; i < difficultyStars.size(); i++) difficultyStars.get(i).setEnabled(false);
-        controller.lockUI();
+        controller.lockUI(null);
     }
 
     public void updateHeaderInfo() {

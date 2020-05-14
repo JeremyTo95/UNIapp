@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.uniapp.R;
+import com.example.uniapp.back.executor.AppExecutors;
 import com.example.uniapp.back.room.RoomDataBase;
 import com.example.uniapp.front.controller.global.Controller;
 import com.example.uniapp.front.controller.comparator.RaceDateComparator;
@@ -30,6 +31,7 @@ public class CompetitionController extends Controller {
     private CompetitionsFragment view;
     private Context              context;
     private RoomDataBase         roomDataBase;
+    private AddRacePopup         addRacePopup;
 
     private int        sizePool;
     private String     swim;
@@ -177,11 +179,12 @@ public class CompetitionController extends Controller {
     }
 
     public void setupAddRacePopup() {
-        final AddRacePopup addRacePopup = new AddRacePopup(view.getActivity());
+        addRacePopup = new AddRacePopup(view.getActivity());
         addRacePopup.setSizePool(sizePool);
         addRacePopup.setSwim(swim);
         addRacePopup.setDistanceRace(distance);
         addRacePopup.getSubtitleDescription().setText("Bassin " + sizePool + "m : " + distance + "m " + MarketSwim.convertSwimFromEnglishToFrench(swim));
+        addRacePopup.getCountryEditText().setText("FRANCE");
         addRacePopup.build();
 
         addRacePopup.getConfirmedButton().setOnClickListener(new View.OnClickListener() {
@@ -199,16 +202,20 @@ public class CompetitionController extends Controller {
                             addRacePopup.getSwim(), addRacePopup.getTime(),
                             addRacePopup.getLevel()
                     );
-                    roomDataBase.raceDAO().insert(newRace);
-                    addRacePopup.dismiss();
-                    updateCurrentRaces();
-                    view.setupSelectedSwim();
-                    view.setupLineChart(true);
-                    view.setupRaceList();
-                    Toast.makeText(context, "Nouvelle course ajoutée", Toast.LENGTH_SHORT).show();
+                    insertNewRace(newRace);
                 }
             }
         });
+    }
+
+    private void insertNewRace(Race newRace) {
+        roomDataBase.raceDAO().insert(newRace);
+        addRacePopup.dismiss();
+        updateCurrentRaces();
+        view.setupSelectedSwim();
+        view.setupLineChart(true);
+        view.setupRaceList();
+        Toast.makeText(context, "Nouvelle course ajoutée", Toast.LENGTH_SHORT).show();
     }
 
     public void setSizePool(int sizePool) { this.sizePool = sizePool; }

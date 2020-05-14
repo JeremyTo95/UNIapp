@@ -41,7 +41,7 @@ public class ConverterFragment extends Fragment implements View.OnClickListener 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        layoutInflater = inflater.inflate(R.layout.activity_converter, container, false);
+        layoutInflater = inflater.inflate(R.layout.fragment_converter, container, false);
 
         setupUIElements();
         updateZone();
@@ -66,7 +66,7 @@ public class ConverterFragment extends Fragment implements View.OnClickListener 
         zoneSelected.setAdapter(zoneSelectedAdapter);
 
         zoneSelectedStr = "Z1";
-        ((MainActivity) getActivity()).lockUI(false);
+        ((MainActivity) getActivity()).lockUI(false, null);
     }
 
     @Override

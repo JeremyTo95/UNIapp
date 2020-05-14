@@ -48,7 +48,7 @@ public class TimerFragment extends Fragment {
             public void onClick(View v) { controller.startTimer(); }
         });
 
-        controller.lockUI();
+        controller.lockUI(null);
     }
 
     public EditText getNbSetsET() { return nbSetsET; }

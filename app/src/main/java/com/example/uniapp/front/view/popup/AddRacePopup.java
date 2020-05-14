@@ -13,10 +13,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
+import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.controller.textwatcher.TextWatcherChrono;
+import com.example.uniapp.front.controller.textwatcher.TextWatcherDate;
 import com.example.uniapp.front.model.market.MarketTimes;
 
 import java.text.DateFormat;
@@ -25,6 +29,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class AddRacePopup extends Dialog {
+    private Activity activity;
+
     private String title;
     private String city;
     private String date;
@@ -50,6 +56,8 @@ public class AddRacePopup extends Dialog {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.popup_add_race);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        this.activity = activity;
+
         DateFormat dateFormat  = new SimpleDateFormat("dd/MM/yyyy");
         Date today             = Calendar.getInstance().getTime();
         date                   = dateFormat.format(today);
@@ -80,22 +88,7 @@ public class AddRacePopup extends Dialog {
     }
 
     private void  updateInputDateFormatEditText() {
-        dateEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { checkInputFormatDate(); }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String text = dateEditText.getText().toString();
-                int textSize = text.length();
-
-                if ((textSize == 3 && text.charAt(textSize - 1) != '/') || (textSize == 6 && text.charAt(textSize - 1) != '/')) {
-                    dateEditText.setText(new StringBuilder(text).insert(textSize - 1, "/").toString());
-                    dateEditText.setSelection(dateEditText.getText().length());
-                }
-            }
-        });
+        dateEditText.addTextChangedListener(new TextWatcherDate(dateEditText));
     }
 
     private void updateInputCityFormatEditText() {
@@ -103,37 +96,7 @@ public class AddRacePopup extends Dialog {
     }
 
     private void updateInputTimeFormatEditText() {
-        timeEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-            @Override
-            public void afterTextChanged(Editable s) { }
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                timeEditText.removeTextChangedListener(this);
-                int timeInt = Integer.parseInt(timeEditText.getText().toString().replaceAll("[:.]", "")); // permet de retirer les premiers zéros du String
-                String text = String.valueOf(timeInt);
-                int textSize = text.length();
-
-                if (textSize >= 5) {
-                    text = new StringBuilder(text).insert(textSize - 2, ".").insert(textSize - 4, ":").toString();
-                    timeEditText.setText(text);
-                    timeEditText.setSelection(text.length());
-                } else if (textSize > 2) {
-                    text = new StringBuilder(text).insert(textSize - 2, ".").toString();
-                    timeEditText.setText(text);
-                    timeEditText.setSelection(text.length());
-                } else {
-                    for (int i = 0; i < 3 - textSize; i++) {
-                        text = new StringBuilder(text).insert(i, "0").toString();
-                    }
-                    text = new StringBuilder(text).insert(text.length() - 2, ".").toString();
-                    timeEditText.setText(text);
-                    timeEditText.setSelection(text.length());
-                }
-                timeEditText.addTextChangedListener(this);
-            }
-        });
+        timeEditText.addTextChangedListener(new TextWatcherChrono(timeEditText));
     }
 
     private void updateInputLevelFormatEditText() {
@@ -231,7 +194,7 @@ public class AddRacePopup extends Dialog {
     public void build() {
         show();
         Window window = getWindow();
-        if (window != null) window.setLayout(900, 1500);
+        if (window != null) window.setLayout((int) (AboutScreen.getWidth(activity) * 0.8), LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 
     public Button getDeniedButton() { return deniedButton; }

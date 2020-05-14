@@ -63,15 +63,8 @@ public class SettingsController extends Controller {
         restartApp();
     }
 
-    private void restartApp() {
-        Intent i = new Intent(context, MainActivity.class);
-        view.startActivity(i);
-        view.getActivity().finish();
-    }
-
     public void importDataRaces() {
         Race.startAsyncTaskLoadingRace(view.getActivity());
-        Toast.makeText(context, "Temps réinitialisé...", Toast.LENGTH_SHORT).show();
     }
 
     private void loadUserInfosFromDB() {
