@@ -1,8 +1,8 @@
-# Application UNI android
+# Application UNI Android
 
 ## Présentation
 
-Application android avec architecture MVC en JAVA.
+Application Android avec architecture MVC en JAVA.
 
 Projet d'application mobile pour le suivi de performance en natation à l'entrainement et en compétition
 
@@ -14,11 +14,11 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Appel REST
 - Ecran : 3 activités, 8 fragments
 - Affichage de liste avec un RecyclerView
-- Affichage des details d'un item de la liste
+- Affichage des détails d'un item de la liste
 - Stockage des données en cache (SharedPreferences pour le stockage rapide et non structurer, Room pour stockage avec plus de details)
 
 - Les plus :
-    - Singletons (Gson, Room, SharedPref, AppExecutor)
+    - Singletons (Gson, Room, SharedPreferences, AppExecutor)
     - Modèle MVC ou MVP
     - Clean architecture
     - Design
@@ -29,7 +29,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
     - 5 Popup
     - Filtrage des listes en fonction d'une difficultée, d'une nage, d'une taille de piscine ou d'une distance
     - BottomNavigationView
-    - dispatchKeyListener
+    - dispatchKeyEvent
     
 ## Fonctionnalités : 
 
@@ -37,23 +37,23 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 
 - Identification et configuration de l'utilisateur
 - Si profil confirmé alors
-    - Utilisateur redirigé vers le menu d'Acceuil
-    - Initialisation de l'utilsiateur dans le cache (Room)
+    - Utilisateur redirigé vers le menu d'Accueil
+    - Initialisation de l'utilisateur dans le cache (Room)
     - Initialisation des points ffn (54 000 données) avec AsyncTask et AppExecutor dans le cache (Room)
     - Initialisation des temps de compétition avec AsyncTask et AppExecutor dans le cache (Room)
 - Sinon
     - Utilisateur redirigé vers l'écran d'inscription
 
 
-<img src="sign_in.jpg" alt="SignInScreen">
+<img src="img_readme/sign_in.jpg" alt="SignInScreen">
 
 ### Ecran Accueil
 
-- Ecran d'acceuil
+- Ecran d'accueil
 - Thème de l'application (Light ou dark)
 - Thème qui peut se gérer automatiquement en fonction du thème du téléphone
 
-<img src="loading.png" alt="HomeScreenLoading">  <img src="home_dark.jpg" alt="HomeScreenDark"> <img src="home_light.jpg" alt="HomeScreenLight">
+<img src="img_readme/loading.png" alt="HomeScreenLoading">  <img src="img_readme/home_dark.jpg" alt="HomeScreenDark"> <img src="img_readme/home_light.jpg" alt="HomeScreenLight">
 
 ### Ecran Compétition
 
@@ -61,34 +61,34 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
     - Boutons pour la taille du bassin
     - GestureDetector pour les SwimCards
     - Spinner pour la distance
-- Affichage de l'évolution des performance avec un graphique (LineChart)
+- Affichage de l'évolution des performances avec un graphique (LineChart)
 - Affichage de toute les courses dans un RecyclerView
 - Affichage des détails de la course dans une popup
-- Ajout de nouvelle course dans une base de donnée Room avec une popup
+- Ajout de nouvelle course dans une base de données Room avec une popup
     - Actualisation du graphe
-- Suppression de course avec un SimpleCallBack
+- Suppression de course avec un SimpleCallback
     - Utilisation d'un Snackbar pour annuler la suppression
     - Actualisation du graphe
 
-<img src="competition.gif" alt="CompetitionScreen">
+<img src="img_readme/competition.gif" alt="CompetitionScreen">
 
 ### Ecran Entrainement 
 
 - Liste de tous les entrainements déjà enregistré (avec la série, le graphe des performance)
-- Possibilité de trier les entrainement en fonction de la difficulté (de 1 à 5), de la nage et de la taille du bassin (25 mètre ou 50 mètre)
+- Possibilité de trier les entrainements en fonction de la difficulté (de 1 à 5), de la nage et de la taille du bassin (25 mètres ou 50 mètres)
 - Système d'ajout d'entrainement
-- Details des entrainement dans un nouveau fragment
+- Details des entrainements dans un nouveau fragment
     - Details des blocks de l'entrainement
-    - Comparaison des temps de l'entrainement avec les objectif du nageur (en fonction des zones de vitesse)
+    - Comparaison des temps de l'entrainement avec les objectifs du nageur (en fonction des zones de vitesse)
     - Modification des temps de la série dans une popup
 
-<img src="training.gif" alt="TrainingScreen">
+<img src="img_readme/training.gif" alt="TrainingScreen">
 
 ### Ecran Gadgets
 
 - Menu avec des outils utile lors de l'entrainement
 
-<img src="gadget.jpg" alt="GadgetScreen">
+<img src="img_readme/gadget.jpg" alt="GadgetScreen">
 
 ### Ecran Chronomètre
 
@@ -96,7 +96,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Détail de tous les temps, temps globale, temps du tour, différence de temps avec le tour précédent
 - Listing de tous les temps de passage dans un RecyclerView
 
-<img src="chronometer.gif" alt="ChronometerScreen">
+<img src="img_readme/chronometer.gif" alt="ChronometerScreen">
 
 ### Ecran Timer
 
@@ -105,7 +105,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Signal sonore à partir de 3 secondes qui annonce la fin du tour
 - Possibilité de mettre en pause le timer en appuyant sur l'écran
 
-<img src="timer.gif" alt="TimerScreen">
+<img src="img_readme/timer.gif" alt="TimerScreen">
 
 ### Ecran Convertisseur
 
@@ -119,14 +119,14 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
     - Z7 : 95% du temps de compétition
 - Clavier qui se cache quand on appuie sur le bouton
 
-<img src="converter.gif" alt="ConverterScreen">
+<img src="img_readme/converter.gif" alt="ConverterScreen">
 
 ### Ecran Paramètre
 
-- Modifification du profil (hors prénom et nom)
+- Modification du profil (hors prénom et nom)
 - Réinitialisation des temps de compétition
 - Changement de thème
     - Valeur stocké dans le cache (SharefPreferences)
 
-<img src="settings.gif" alt="SettingsScreen">
+<img src="img_readme/settings.gif" alt="SettingsScreen">
 
