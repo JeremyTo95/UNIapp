@@ -43,13 +43,8 @@ public class ImportRacesTask extends AsyncTask<Void, Void, Void> {
 
         final RaceAPI raceAPI = retrofit.create(RaceAPI.class);
 
-        Call<List<Race>> call = null;
-        if (user.getFirstname().equals("Jeremy")     && user.getLastname().equals("Tourari"))    call = raceAPI.getResponseRaceJeremyTourari();
-        if (user.getFirstname().equals("Younes")     && user.getLastname().equals("Bencherqui")) call = raceAPI.getResponseRaceYounesBencherqui();
-        if (user.getFirstname().equals("Arthur")     && user.getLastname().equals("Peuffier"))   call = raceAPI.getResponseRaceArthurPeuffier();
-        if (user.getFirstname().equals("Christophe") && user.getLastname().equals("Noirbent"))   call = raceAPI.getResponseRaceChristopheNoirbent();
-        if (user.getFirstname().equals("Dylan")      && user.getLastname().equals("Valenza"))    call = raceAPI.getResponseRaceDylanValenza();
-        if (user.getFirstname().equals("Baptiste")   && user.getLastname().equals("Andre"))      call = raceAPI.getResponseRaceBaptisteAndre();
+        Call<List<Race>> call = raceAPI.getResponseRace(user.getLastname().toLowerCase() + "_" + user.getFirstname().toLowerCase() + ".json");
+
         if (call != null) {
             call.enqueue(new Callback<List<Race>>() {
                 @Override

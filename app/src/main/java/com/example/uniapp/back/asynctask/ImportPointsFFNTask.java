@@ -48,7 +48,6 @@ public class ImportPointsFFNTask extends AsyncTask<Void, Void, Void> {
                         for (int i = 0; i < pointFFNList.size(); i++) {
                             PointFFN currentPointFFN = pointFFNList.get(i);
                             roomDataBase.pointFFNDAO().insert(currentPointFFN);
-                            System.out.println("input value " + i);
                             int indexElementLoaded = i+1;
                             AppExecutors.getInstance(activity.getApplicationContext()).getUIThread().execute(() -> AboutScreen.lockUI((MainActivity) activity, true, indexElementLoaded + " / " + pointFFNList.size() + " points ffn chargés"));
                         }

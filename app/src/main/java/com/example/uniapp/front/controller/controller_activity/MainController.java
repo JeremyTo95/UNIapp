@@ -26,10 +26,9 @@ public class MainController extends Controller {
 
     public void onStart() {
         view.setupUIElements();
-        System.out.println("user : " + SharedPrefManager.getUser(getContext()));
         if (SharedPrefManager.getUser(getContext()) != null) setupNewUser();
 
-        if (getRoomDataBase().pointFFNDAO().getNb() != 54000 && getRoomDataBase().userDAO().getNb() == 1) PointFFN.startAsyncTaskLoadingPointsFFN(view);
+        //if (getRoomDataBase().pointFFNDAO().getNb() != 54000 && getRoomDataBase().userDAO().getNb() == 1) PointFFN.startAsyncTaskLoadingPointsFFN(view);
         if (getRoomDataBase().userDAO().getNb() == 1) configureAndShowFragment(new HomeFragment());
         else goSignInUser();
         if (getRoomDataBase().pointFFNDAO().getNb() == 54000) view.unlockUI();
