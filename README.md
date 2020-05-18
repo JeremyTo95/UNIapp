@@ -53,7 +53,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Thème de l'application (Light ou dark)
 - Thème qui peut se gérer automatiquement en fonction du thème du téléphone
 
-<img src="img_readme/loading.jpg" alt="HomeScreenLoading">  <img src="img_readme/home_dark.jpg" alt="HomeScreenDark"> <img src="img_readme/home_light.jpg" alt="HomeScreenLight">
+<img src="img_readme/loading.jpg" alt="HomeScreenLoading" width="100">  <img src="img_readme/home_dark.jpg" alt="HomeScreenDark" width="100"> <img src="img_readme/home_light.jpg" alt="HomeScreenLight" width="100">
 
 ### Ecran Compétition
 
