@@ -10,20 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.controller_fragment.GadgetController;
+import com.example.uniapp.front.presenter.presenter_fragment.GadgetPresenter;
 
 public class GadgetsFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
-    private GadgetController controller;
+    private GadgetPresenter presenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_gadget, container, false);
 
-        controller     = new GadgetController(this);
-        controller.onStart();
+        presenter = new GadgetPresenter(this);
+        presenter.onStart();
 
         return layoutInflater;
     }
@@ -49,8 +49,8 @@ public class GadgetsFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-             if (v.getTag().equals("chronometerBtn")) controller.goToChronometer();
-        else if (v.getTag().equals("timerBtn"))       controller.goToTimer();
-        else if (v.getTag().equals("converterBtn"))   controller.goToConverter();
+             if (v.getTag().equals("chronometerBtn")) presenter.goToChronometer();
+        else if (v.getTag().equals("timerBtn"))       presenter.goToTimer();
+        else if (v.getTag().equals("converterBtn"))   presenter.goToConverter();
     }
 }

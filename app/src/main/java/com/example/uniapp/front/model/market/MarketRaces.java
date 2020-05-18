@@ -1,8 +1,8 @@
 package com.example.uniapp.front.model.market;
 
 import com.example.uniapp.front.model.data.Race;
-import com.example.uniapp.front.controller.comparator.RaceDateComparator;
-import com.example.uniapp.front.controller.comparator.TimeComparator;
+import com.example.uniapp.front.presenter.comparator.RaceDateComparator;
+import com.example.uniapp.front.presenter.comparator.TimeComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;

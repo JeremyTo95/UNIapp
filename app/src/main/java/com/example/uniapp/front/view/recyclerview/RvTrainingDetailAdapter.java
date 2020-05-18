@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.back.room.RoomDataBase;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.R;
 import com.example.uniapp.front.model.graphicsitem.BuildLineChart;
 import com.example.uniapp.front.model.data.Race;

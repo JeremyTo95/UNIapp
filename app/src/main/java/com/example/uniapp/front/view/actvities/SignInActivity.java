@@ -18,18 +18,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uniapp.back.sharedpreferences.SharedPrefManager;
-import com.example.uniapp.front.controller.controller_activity.SignInController;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.presenter_activity.SignInPresenter;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.front.model.market.MarketSwim;
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherDate;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherHeight;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherWeight;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherDate;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherHeight;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherWeight;
 import com.example.uniapp.front.model.data.User;
 
 public class SignInActivity extends AppCompatActivity implements TextWatcher {
     private User newUser;
-    private SignInController controller;
+    private SignInPresenter presenter;
 
     private Spinner     genderSpinner;
     private EditText    firstnameEditText;
@@ -52,8 +52,8 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher {
         super.onCreate(savedInstanceState);
         AboutScreen.setupThemeApp(this);
         setContentView(R.layout.activity_sign_in);
-        controller = new SignInController(this);
-        controller.onStart();
+        presenter = new SignInPresenter(this);
+        presenter.onStart();
     }
 
     public void setupUIElements() {
@@ -116,7 +116,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher {
 
     private boolean defineUserProfil() {
         if (checkInputUpdateUser()) {
-            newUser = controller.getNewUser();
+            newUser = presenter.getNewUser();
             confirmedBtn.setBackground(getApplicationContext().getResources().getDrawable(R.color.transparent));
             return true;
         } else {
@@ -147,7 +147,7 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher {
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                controller.setGender(parent.getSelectedItem().toString().toLowerCase());
+                presenter.setGender(parent.getSelectedItem().toString().toLowerCase());
             }
         });
     }
@@ -166,22 +166,22 @@ public class SignInActivity extends AppCompatActivity implements TextWatcher {
     }
 
     private boolean checkInputUpdateUser() {
-        controller.loadInputs();
+        presenter.loadInputs();
 
-        if (controller.checkFirstname() && controller.checkLastname() && controller.checkWeight() && controller.checkHeight() && controller.checkBirth() && controller.checkClub() && controller.checkCity() && controller.checkKey1() && controller.checkKey2() && controller.checkKey3()) {
+        if (presenter.checkFirstname() && presenter.checkLastname() && presenter.checkWeight() && presenter.checkHeight() && presenter.checkBirth() && presenter.checkClub() && presenter.checkCity() && presenter.checkKey1() && presenter.checkKey2() && presenter.checkKey3()) {
             return true;
         } else {
-            if (!controller.checkFirstname()) firstnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkLastname())  lastnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkWeight())    weightEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkHeight())    heightEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkBirth())     birthEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkClub())      firstnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkClub())      clubEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkCity())      cityEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkKey1())      key_1.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkKey2())      key_2.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
-            if (!controller.checkKey3())      key_3.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkFirstname()) firstnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkLastname())  lastnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkWeight())    weightEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkHeight())    heightEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkBirth())     birthEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkClub())      firstnameEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkClub())      clubEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkCity())      cityEditText.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkKey1())      key_1.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkKey2())      key_2.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
+            if (!presenter.checkKey3())      key_3.setHintTextColor(getApplicationContext().getResources().getColor(R.color.redDeep));
             disableConfirmeButton();
             return false;
         }

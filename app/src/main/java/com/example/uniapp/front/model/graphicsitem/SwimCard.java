@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.uniapp.back.room.RoomDataBase;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.R;
 import com.example.uniapp.front.model.data.Race;
 import com.example.uniapp.front.model.market.MarketRaces;

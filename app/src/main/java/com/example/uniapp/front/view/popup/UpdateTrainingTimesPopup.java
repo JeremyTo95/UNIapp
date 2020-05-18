@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.front.model.data.Training;
 import com.example.uniapp.front.model.data.TrainingBlock;
 import com.example.uniapp.front.model.market.MarketSwim;

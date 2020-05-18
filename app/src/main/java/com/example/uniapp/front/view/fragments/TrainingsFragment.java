@@ -20,9 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.controller_fragment.TrainingController;
-import com.example.uniapp.front.controller.simplecallback.SwipeToDeleteCallback;
+import com.example.uniapp.front.presenter.global.AboutScreen;
+import com.example.uniapp.front.presenter.presenter_fragment.TrainingPresenter;
+import com.example.uniapp.front.presenter.simplecallback.SwipeToDeleteCallback;
 import com.example.uniapp.front.view.recyclerview.RvTrainingAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrainingsFragment extends Fragment implements View.OnClickListener {
-    private TrainingController controller;
-    private View               layoutInflater;
+    private TrainingPresenter presenter;
+    private View              layoutInflater;
 
     private TextView             training_title;
     private Spinner              dropdownPool;
@@ -51,33 +51,33 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_training_bis, container, false);
 
-        controller = new TrainingController(this);
-        controller.onStart();
+        presenter = new TrainingPresenter(this);
+        presenter.onStart();
 
         return layoutInflater;
     }
 
     @Override
     public void onClick(View v) {
-             if (v.getTag().equals("btn_25"))       controller.updateSizePool(25);
-        else if (v.getTag().equals("btn_50"))       controller.updateSizePool(50);
-        else if (v.getTag().equals("all"))          controller.updateSwim(v.getTag().toString());
-        else if (v.getTag().equals("butterfly"))    controller.updateSwim(v.getTag().toString());
-        else if (v.getTag().equals("backstroke"))   controller.updateSwim(v.getTag().toString());
-        else if (v.getTag().equals("breaststroke")) controller.updateSwim(v.getTag().toString());
-        else if (v.getTag().equals("freestyle"))    controller.updateSwim(v.getTag().toString());
-        else if (v.getTag().equals("IM"))           controller.updateSwim(v.getTag().toString());
-        else if (v.getTag().equals("difficulty_1") && controller.getDifficulty() == 1) controller.updateDifficulty(0);
-        else if (v.getTag().equals("difficulty_2") && controller.getDifficulty() == 2) controller.updateDifficulty(0);
-        else if (v.getTag().equals("difficulty_3") && controller.getDifficulty() == 3) controller.updateDifficulty(0);
-        else if (v.getTag().equals("difficulty_4") && controller.getDifficulty() == 4) controller.updateDifficulty(0);
-        else if (v.getTag().equals("difficulty_5") && controller.getDifficulty() == 5) controller.updateDifficulty(0);
-        else if (v.getTag().equals("difficulty_1")) controller.updateDifficulty(1);
-        else if (v.getTag().equals("difficulty_2")) controller.updateDifficulty(2);
-        else if (v.getTag().equals("difficulty_3")) controller.updateDifficulty(3);
-        else if (v.getTag().equals("difficulty_4")) controller.updateDifficulty(4);
-        else if (v.getTag().equals("difficulty_5")) controller.updateDifficulty(5);
-        else if (v.getTag().equals("addTraining"))  controller.setupAddTrainingPopup();
+             if (v.getTag().equals("btn_25"))       presenter.updateSizePool(25);
+        else if (v.getTag().equals("btn_50"))       presenter.updateSizePool(50);
+        else if (v.getTag().equals("all"))          presenter.updateSwim(v.getTag().toString());
+        else if (v.getTag().equals("butterfly"))    presenter.updateSwim(v.getTag().toString());
+        else if (v.getTag().equals("backstroke"))   presenter.updateSwim(v.getTag().toString());
+        else if (v.getTag().equals("breaststroke")) presenter.updateSwim(v.getTag().toString());
+        else if (v.getTag().equals("freestyle"))    presenter.updateSwim(v.getTag().toString());
+        else if (v.getTag().equals("IM"))           presenter.updateSwim(v.getTag().toString());
+        else if (v.getTag().equals("difficulty_1") && presenter.getDifficulty() == 1) presenter.updateDifficulty(0);
+        else if (v.getTag().equals("difficulty_2") && presenter.getDifficulty() == 2) presenter.updateDifficulty(0);
+        else if (v.getTag().equals("difficulty_3") && presenter.getDifficulty() == 3) presenter.updateDifficulty(0);
+        else if (v.getTag().equals("difficulty_4") && presenter.getDifficulty() == 4) presenter.updateDifficulty(0);
+        else if (v.getTag().equals("difficulty_5") && presenter.getDifficulty() == 5) presenter.updateDifficulty(0);
+        else if (v.getTag().equals("difficulty_1")) presenter.updateDifficulty(1);
+        else if (v.getTag().equals("difficulty_2")) presenter.updateDifficulty(2);
+        else if (v.getTag().equals("difficulty_3")) presenter.updateDifficulty(3);
+        else if (v.getTag().equals("difficulty_4")) presenter.updateDifficulty(4);
+        else if (v.getTag().equals("difficulty_5")) presenter.updateDifficulty(5);
+        else if (v.getTag().equals("addTraining"))  presenter.setupAddTrainingPopup();
     }
 
     public void setupUIElements() {
@@ -110,28 +110,28 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
         btn_IM.setOnClickListener(this);
         floatingActionButton.setOnClickListener(this);
 
-        controller.unlockUI();
+        presenter.unlockUI();
     }
 
 
     public void updateColors() {
         if (getContext() != null) training_title.setTextColor(AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark));
-        btn_all.setTextColor(         (controller.getSwim().equals("all"))          ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_butterfly.setTextColor(   (controller.getSwim().equals("butterfly"))    ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_backstroke.setTextColor(  (controller.getSwim().equals("backstroke"))   ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_breaststroke.setTextColor((controller.getSwim().equals("breaststroke")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_freestyle.setTextColor(   (controller.getSwim().equals("freestyle"))    ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
-        btn_IM.setTextColor(          (controller.getSwim().equals("IM"))           ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_all.setTextColor(         (presenter.getSwim().equals("all"))          ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_butterfly.setTextColor(   (presenter.getSwim().equals("butterfly"))    ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_backstroke.setTextColor(  (presenter.getSwim().equals("backstroke"))   ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_breaststroke.setTextColor((presenter.getSwim().equals("breaststroke")) ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_freestyle.setTextColor(   (presenter.getSwim().equals("freestyle"))    ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
+        btn_IM.setTextColor(          (presenter.getSwim().equals("IM"))           ? AboutScreen.getColorByThemeAttr(getContext(), R.attr.secondaryColor, R.color.colorSecondaryDark) : AboutScreen.getColorByThemeAttr(getContext(), R.attr.textColor, R.color.textColorDark));
     }
 
     public void updateDifficulty() {
         if (getActivity() != null) {
             if (AboutScreen.isNightMode(getActivity())) {
                 for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_white_24dp), null, null, null);
-                for (int i = 0; i < controller.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
+                for (int i = 0; i < presenter.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_white_24dp), null, null, null);
             } else {
                 for (int i = 0; i < btn_difficulty_stars.size(); i++) btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_unchecked_black_24dp), null, null, null);
-                for (int i = 0; i < controller.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
+                for (int i = 0; i < presenter.getDifficulty(); i++)  btn_difficulty_stars.get(i).setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_radio_button_checked_black_24dp), null, null, null);
             }
         }
     }
@@ -148,7 +148,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
     public void setupTrainingList() {
         if (getActivity() != null) {
 
-            trainingRecyclerViewAdapter = new RvTrainingAdapter(getActivity(), controller.getCurrentTrainings());
+            trainingRecyclerViewAdapter = new RvTrainingAdapter(getActivity(), presenter.getCurrentTrainings());
             trainingRecyclerView.setLayoutManager(new LinearLayoutManager(layoutInflater.getContext()));
             trainingRecyclerView.setAdapter(trainingRecyclerViewAdapter);
             trainingRecyclerView.setHasFixedSize(true);
@@ -169,7 +169,7 @@ public class TrainingsFragment extends Fragment implements View.OnClickListener 
                     super.onSwiped(viewHolder, direction);
                     int position = viewHolder.getAdapterPosition();
                     trainingRecyclerViewAdapter.removeItem(position);
-                    controller.updateCurrentTrainings();
+                    presenter.updateCurrentTrainings();
                 }
             });
             onSwipe.attachToRecyclerView(trainingRecyclerView);

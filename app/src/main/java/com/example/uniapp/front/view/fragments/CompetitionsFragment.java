@@ -22,9 +22,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.controller_fragment.CompetitionController;
-import com.example.uniapp.front.controller.simplecallback.SwipeToDeleteCallback;
+import com.example.uniapp.front.presenter.global.AboutScreen;
+import com.example.uniapp.front.presenter.presenter_fragment.CompetitionPresenter;
+import com.example.uniapp.front.presenter.simplecallback.SwipeToDeleteCallback;
 import com.example.uniapp.front.model.graphicsitem.BuildLineChart;
 import com.example.uniapp.front.model.graphicsitem.SwimCard;
 import com.example.uniapp.front.model.market.MarketRaces;
@@ -37,7 +37,7 @@ import java.util.List;
 import static android.widget.AdapterView.LayoutParams;
 
 public class CompetitionsFragment extends Fragment implements View.OnClickListener {
-    private CompetitionController controller;
+    private CompetitionPresenter presenter;
 
     private View                 layoutInflater;
     private TextView             competition_title;
@@ -57,8 +57,8 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_competition, container, false);
 
-        controller = new CompetitionController(this);
-        controller.onStart();
+        presenter = new CompetitionPresenter(this);
+        presenter.onStart();
 
         return layoutInflater;
     }
@@ -79,25 +79,25 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
         btn_50m.setOnClickListener(this);
         addRaceTimeBtn.setOnClickListener(this);
 
-        ArrayAdapter<CharSequence> adapter = controller.getDistanceAdapter();
+        ArrayAdapter<CharSequence> adapter = presenter.getDistanceAdapter();
         selectSwimDistance.setAdapter(adapter);
         selectSwimDistance.setSelection(1);
 
-        controller.updateSelectedDistance();
+        presenter.updateSelectedDistance();
     }
 
     public void updateUIColors() {
-        competition_title.setTextColor(controller.getCurrentColor());
-        progression_title.setTextColor(controller.getCurrentColor());
-        btn_25m.setTextColor((controller.getSizePool() == 25) ? controller.getCurrentColor() : controller.getTextColor());
-        btn_50m.setTextColor((controller.getSizePool() == 50) ? controller.getCurrentColor() : controller.getTextColor());
+        competition_title.setTextColor(presenter.getCurrentColor());
+        progression_title.setTextColor(presenter.getCurrentColor());
+        btn_25m.setTextColor((presenter.getSizePool() == 25) ? presenter.getCurrentColor() : presenter.getTextColor());
+        btn_50m.setTextColor((presenter.getSizePool() == 50) ? presenter.getCurrentColor() : presenter.getTextColor());
     }
 
     @Override
     public void onClick(View v) {
-        if      (v.getTag().equals("pool25")) controller.updateToPool25();
-        else if (v.getTag().equals("pool50")) controller.updateToPool50();
-        else if (v.getTag().equals("addBtn")) controller.setupAddRacePopup();
+        if      (v.getTag().equals("pool25")) presenter.updateToPool25();
+        else if (v.getTag().equals("pool50")) presenter.updateToPool50();
+        else if (v.getTag().equals("addBtn")) presenter.setupAddRacePopup();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -108,27 +108,27 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int)(widthCard), LayoutParams.MATCH_PARENT);
             layoutParams.setMargins((int) widthCardMargin, 0, (int) widthCardMargin, 0);
 
-            swimCardList = controller.loadSwimCards();
+            swimCardList = presenter.loadSwimCards();
             linearLayout.removeAllViews();
             for (int i = 0; i < swimCardList.size(); i++) linearLayout.addView(swimCardList.get(i), i, layoutParams);
             horizontalScrollView.removeAllViews();
             horizontalScrollView.addView(linearLayout);
 
-            gestureDetector = controller.loadGestureSwimCard();
-            controller.configureHorizontalScrollViewTouchListener();
+            gestureDetector = presenter.loadGestureSwimCard();
+            presenter.configureHorizontalScrollViewTouchListener();
         }
     }
 
     public void setupLineChart(boolean isAnimation) {
-        BuildLineChart.configureMyLineChart(getActivity(), MarketRaces.getFloatTimes(controller.getCurrentRaces()), lineChart, MarketSwim.getCurrentColor(getContext(), controller.getSwim()), isAnimation);
+        BuildLineChart.configureMyLineChart(getActivity(), MarketRaces.getFloatTimes(presenter.getCurrentRaces()), lineChart, MarketSwim.getCurrentColor(getContext(), presenter.getSwim()), isAnimation);
     }
 
     public void setupRaceList() {
-        rvRaceAdapter = new RvRaceAdapter(getActivity(), getContext(), controller.getCurrentRaces()) {
+        rvRaceAdapter = new RvRaceAdapter(getActivity(), getContext(), presenter.getCurrentRaces()) {
             @Override
             public void undoDelete() {
                 super.undoDelete();
-                controller.updateCurrentRaces();
+                presenter.updateCurrentRaces();
                 setupSelectedSwim();
                 setupLineChart(false);
             }
@@ -143,7 +143,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
             public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 if (getContext() != null) {
                     setIcon(ContextCompat.getDrawable(getContext(), R.drawable.ic_delete_white_48dp));
-                    setBackground(ContextCompat.getDrawable(getContext(), MarketSwim.getCurrentDrawable(controller.getSwim())));
+                    setBackground(ContextCompat.getDrawable(getContext(), MarketSwim.getCurrentDrawable(presenter.getSwim())));
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }
@@ -153,7 +153,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
                 super.onSwiped(viewHolder, direction);
                 int position = viewHolder.getAdapterPosition();
                 rvRaceAdapter.removeItem(position);
-                controller.updateCurrentRaces();
+                presenter.updateCurrentRaces();
                 setupSelectedSwim();
                 setupLineChart(false);
             }
@@ -162,7 +162,7 @@ public class CompetitionsFragment extends Fragment implements View.OnClickListen
     }
 
     public Spinner getSelectSwimDistance() { return selectSwimDistance; }
-    public CompetitionController getController() { return controller; }
+    public CompetitionPresenter getPresenter() { return presenter; }
     public List<SwimCard> getSwimCardList() { return swimCardList; }
     public HorizontalScrollView getHorizontalScrollView() { return horizontalScrollView; }
     public GestureDetectorCompat getGestureDetector() { return gestureDetector; }

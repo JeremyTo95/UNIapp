@@ -18,12 +18,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.controller_fragment.ConverterController;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherChrono;
+import com.example.uniapp.front.presenter.presenter_fragment.ConverterPresenter;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherChrono;
 
 public class ConverterFragment extends Fragment implements View.OnClickListener {
     private View layoutInflater;
-    private ConverterController controller;
+    private ConverterPresenter presenter;
 
     private Spinner zoneSelected;
     private EditText inputTimeET;
@@ -33,8 +33,8 @@ public class ConverterFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_converter, container, false);
-        controller = new ConverterController(this);
-        controller.onStart();
+        presenter = new ConverterPresenter(this);
+        presenter.onStart();
 
         return layoutInflater;
     }
@@ -49,7 +49,7 @@ public class ConverterFragment extends Fragment implements View.OnClickListener 
         inputTimeET.setOnClickListener(this);
         updateInputTime();
 
-        ArrayAdapter<CharSequence> zoneSelectedAdapter = controller.getSelectedAdapter();
+        ArrayAdapter<CharSequence> zoneSelectedAdapter = presenter.getSelectedAdapter();
         zoneSelectedAdapter.setDropDownViewResource(R.layout.dropdown_all_big_items);
         zoneSelected.setAdapter(zoneSelectedAdapter);
     }
@@ -58,8 +58,8 @@ public class ConverterFragment extends Fragment implements View.OnClickListener 
     public void onClick(View v) {
         if (v.getTag().equals("inputTime")) inputTimeET.clearComposingText();
         if (v.getTag().equals("converterButton")) {
-            controller.convertTime();
-            controller.hideKeybaord(v);
+            presenter.convertTime();
+            presenter.hideKeybaord(v);
         }
     }
 
@@ -71,7 +71,7 @@ public class ConverterFragment extends Fragment implements View.OnClickListener 
             @Override
             public void afterTextChanged(Editable s) { }
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { controller.setInputTimeStr(inputTimeET.getText().toString()); }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { presenter.setInputTimeStr(inputTimeET.getText().toString()); }
         });
     }
 
@@ -81,7 +81,7 @@ public class ConverterFragment extends Fragment implements View.OnClickListener 
             public void onNothingSelected(AdapterView<?> parent) { }
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                controller.setZoneSelectedStr(parent.getItemAtPosition(position).toString());
+                presenter.setZoneSelectedStr(parent.getItemAtPosition(position).toString());
             }
         });
     }

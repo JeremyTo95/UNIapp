@@ -1,6 +1,5 @@
 package com.example.uniapp.front.view.recyclerview;
 
-import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.uniapp.R;
 import com.example.uniapp.front.model.data.TrainingBlock;
 import com.example.uniapp.front.model.market.MarketTimes;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherChrono;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherChrono;
 
 import java.util.ArrayList;
 

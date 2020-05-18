@@ -2,7 +2,7 @@
 
 ## Présentation
 
-Application Android avec architecture MVC en JAVA.
+Application Android avec architecture MVP en JAVA.
 
 Projet d'application mobile pour le suivi de performance en natation à l'entrainement et en compétition
 
@@ -19,7 +19,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 
 - Les plus :
     - Singletons (Gson, Room, SharedPreferences, AppExecutor)
-    - Modèle MVC ou MVP
+    - Modèle MVP
     - Clean architecture
     - Design
     - LineChart

@@ -21,11 +21,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.back.room.RoomDataBase;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.front.model.market.MarketSwim;
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherDate;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherDistance;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherDate;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherDistance;
 import com.example.uniapp.front.model.data.TrainingBlock;
 
 import java.text.DateFormat;
@@ -36,18 +36,18 @@ import java.util.Date;
 import java.util.List;
 
 public class AddTrainingPopup extends Dialog implements View.OnClickListener {
-    private EditText            dateEditText;
-    private EditText            cityEditText;
-    private List<Button>        btn_difficulty_stars;
-    private Spinner             sizePoolDropdown;
-    private EditText            setsEditText;
-    private EditText            distanceEditText;
-    private Spinner             swimDropdown;
-    private Spinner             zoneDropdown;
-    private Button              addBlock;
-    private Button              btn_confirmed;
-    private GridLayout          gridLayout;
-    private View                newBlock;
+    private EditText     dateEditText;
+    private EditText     cityEditText;
+    private List<Button> btn_difficulty_stars;
+    private Spinner      sizePoolDropdown;
+    private EditText     setsEditText;
+    private EditText     distanceEditText;
+    private Spinner      swimDropdown;
+    private Spinner      zoneDropdown;
+    private Button       addBlock;
+    private Button       btn_confirmed;
+    private GridLayout   gridLayout;
+    private View         newBlock;
 
     private int     newSet;
     private int     newDifficulty;
@@ -64,8 +64,8 @@ public class AddTrainingPopup extends Dialog implements View.OnClickListener {
         super(activity, R.style.Theme_AppCompat_Dialog);
         setContentView(R.layout.popup_add_training);
         if (getWindow() != null) getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        this.activity     = activity;
-        roomDataBase = RoomDataBase.getDatabase(activity.getApplicationContext());
+        this.activity = activity;
+        roomDataBase  = RoomDataBase.getDatabase(activity.getApplicationContext());
 
         setupUIElements();
         updateInputDateFormatEditText();

@@ -17,9 +17,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.global.AboutScreen;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherChrono;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherDate;
+import com.example.uniapp.front.presenter.global.AboutScreen;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherChrono;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherDate;
 import com.example.uniapp.front.model.market.MarketTimes;
 
 import java.text.DateFormat;
@@ -32,9 +32,9 @@ public class AddRacePopup extends Dialog {
 
     private String city;
     private String date;
-    private int distanceRace;
-    private int sizePool;
-    private float time;
+    private int    distanceRace;
+    private int    sizePool;
+    private float  time;
     private String swim;
     private String level;
     private String country;

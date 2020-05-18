@@ -10,13 +10,13 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.example.uniapp.back.room.RoomDataBase;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.front.model.market.MarketRaces;
 import com.example.uniapp.front.model.market.MarketSwim;
 import com.example.uniapp.front.model.market.MarketTimes;
 import com.example.uniapp.R;
 import com.example.uniapp.front.model.data.Race;
-import com.example.uniapp.front.controller.comparator.TimeComparator;
+import com.example.uniapp.front.presenter.comparator.TimeComparator;
 
 import java.util.Collections;
 import java.util.List;
@@ -24,11 +24,11 @@ import java.util.List;
 
 public class CompetitionDetailPopup extends Dialog {
     private RoomDataBase roomDataBase;
-    private Activity activity;
-    private Race race;
-    private Race raceUp;
-    private Race raceDown;
-    private List<Race> subListRaces;
+    private Activity     activity;
+    private Race         race;
+    private Race         raceUp;
+    private Race         raceDown;
+    private List<Race>   subListRaces;
 
     private TextView bigTitle;
     private TextView swimmerTitle;

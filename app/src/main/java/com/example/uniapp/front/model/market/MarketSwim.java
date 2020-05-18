@@ -2,7 +2,7 @@ package com.example.uniapp.front.model.market;
 
 import android.content.Context;
 
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.R;
 
 public class MarketSwim {

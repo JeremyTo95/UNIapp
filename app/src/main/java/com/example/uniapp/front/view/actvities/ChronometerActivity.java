@@ -14,14 +14,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.uniapp.front.controller.controller_activity.ChronometerController;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.presenter_activity.ChronometerPresenter;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.front.model.market.MarketTimes;
 import com.example.uniapp.R;
 import com.example.uniapp.front.view.recyclerview.RvChronometerAdapter;
 
 public class ChronometerActivity extends AppCompatActivity implements View.OnClickListener {
-    private ChronometerController controller;
+    private ChronometerPresenter presenter;
 
     private ConstraintLayout startStopBtn;
     private LinearLayout spaceResetLep;
@@ -41,8 +41,8 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_chronometer);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        controller = new ChronometerController(this);
-        controller.onStart();
+        presenter = new ChronometerPresenter(this);
+        presenter.onStart();
 
         startStopBtn.setOnClickListener(this);
         resetBtn.setOnClickListener(this);
@@ -54,10 +54,10 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
         int keyCode = event.getKeyCode();
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && action == KeyEvent.ACTION_DOWN) {
-            controller.lap();
+            presenter.lap();
             return true;
         } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN && action == KeyEvent.ACTION_DOWN) {
-            controller.startStop();
+            presenter.startStop();
             return true;
         } else return super.dispatchKeyEvent(event);
     }
@@ -79,11 +79,11 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if (v.getTag().equals("reset")) controller.reset();
+        if (v.getTag().equals("reset")) presenter.reset();
     }
 
     public void rotateAnchorStopping(int timeForRoundInS) {
-        anchorChrono.setRotation(controller.getAnchorRotation(timeForRoundInS));
+        anchorChrono.setRotation(presenter.getAnchorRotation(timeForRoundInS));
     }
 
     public String getChronoTVText() {
@@ -110,7 +110,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
         chronoDiffTV.setText(R.string.hint_diff);
         chronoDiffTV.setTextColor(getResources().getColor(R.color.greenDeep));
         hideResetButton();
-        rotateAnchorStopping(controller.getPeriodeAnchor());
+        rotateAnchorStopping(presenter.getPeriodeAnchor());
     }
 
     public void hideResetButton() {
@@ -123,7 +123,7 @@ public class ChronometerActivity extends AppCompatActivity implements View.OnCli
 
     public void updateLapChronoRV() {
         allChronosRV.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        RvChronometerAdapter rvChronometerAdapter = new RvChronometerAdapter(getApplicationContext(), controller.getAllChronos(), controller.getLapChronos(), controller.getDiffChronos());
+        RvChronometerAdapter rvChronometerAdapter = new RvChronometerAdapter(getApplicationContext(), presenter.getAllChronos(), presenter.getLapChronos(), presenter.getDiffChronos());
         allChronosRV.setAdapter(rvChronometerAdapter);
         allChronosRV.setNestedScrollingEnabled(false);
         rvChronometerAdapter.notifyDataSetChanged();

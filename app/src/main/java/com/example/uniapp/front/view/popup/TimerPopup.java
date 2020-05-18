@@ -14,29 +14,29 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.controller_fragment.TimerController;
+import com.example.uniapp.front.presenter.presenter_fragment.TimerPresenter;
 
 public class TimerPopup extends Dialog {
-    private TimerController controller;
+    private TimerPresenter presenter;
 
     private ConstraintLayout backgroundLayout;
     private TextView         setsCounter;
     private TextView         timerTV;
     private TextView         stepState;
 
-    public TimerPopup(Activity activity, TimerController controller) {
+    public TimerPopup(Activity activity, TimerPresenter presenter) {
         super(activity, R.style.Theme_AppCompat_Dialog);
         this.setContentView(R.layout.popup_timer);
-        this.controller = controller;
+        this.presenter = presenter;
 
         if (getWindow() != null) {
             this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
 
-        controller.onStartPopup(this);
-        controller.initTests();
-        controller.runStartTimer();
+        presenter.onStartPopup(this);
+        presenter.initTests();
+        presenter.runStartTimer();
     }
 
     public void setupUIElements() {
@@ -47,9 +47,9 @@ public class TimerPopup extends Dialog {
     }
 
     public void setupStartTimer() {
-        controller.setupTimerLong(500);
-        setsCounter.setText(controller.getTitleSet());
-        timerTV.setText(controller.getTimerStr());
+        presenter.setupTimerLong(500);
+        setsCounter.setText(presenter.getTitleSet());
+        timerTV.setText(presenter.getTimerStr());
         stepState.setText("S T A R T I N G");
         updateBckColor(R.color.orangeDeep);
         updateSetsColor();
@@ -58,9 +58,9 @@ public class TimerPopup extends Dialog {
     }
 
     public void setupWorkTimer() {
-        controller.setupTimerLong(controller.getTimeWork());
-        setsCounter.setText(controller.getTitleSet());
-        timerTV.setText(controller.getTimerStr());
+        presenter.setupTimerLong(presenter.getTimeWork());
+        setsCounter.setText(presenter.getTitleSet());
+        timerTV.setText(presenter.getTimerStr());
         stepState.setText("W O R K");
         updateBckColor(R.color.greenDeep);
         updateSetsColor();
@@ -69,9 +69,9 @@ public class TimerPopup extends Dialog {
     }
 
     public void setupRestTimer() {
-        controller.setupTimerLong(controller.getTimeRest());
-        setsCounter.setText(controller.getTitleSet());
-        timerTV.setText(controller.getTimerStr());
+        presenter.setupTimerLong(presenter.getTimeRest());
+        setsCounter.setText(presenter.getTitleSet());
+        timerTV.setText(presenter.getTimerStr());
         stepState.setText("R E S T");
         updateBckColor(R.color.blueLight);
         updateSetsColor();
@@ -88,7 +88,7 @@ public class TimerPopup extends Dialog {
         keyCode = event.getKeyCode();
 
         if (keyCode == KeyEvent.KEYCODE_BACK && action == KeyEvent.ACTION_DOWN) {
-            controller.interruptThread();
+            presenter.interruptThread();
             dismiss();
             return true;
         } else return super.dispatchKeyEvent(event);

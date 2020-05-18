@@ -12,12 +12,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.controller_fragment.TimerController;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherTimer;
+import com.example.uniapp.front.presenter.presenter_fragment.TimerPresenter;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherTimer;
 
 public class TimerFragment extends Fragment {
     private View layoutInflater;
-    private TimerController controller;
+    private TimerPresenter presenter;
 
     private EditText nbSetsET;
     private EditText timeWorkET;
@@ -27,8 +27,8 @@ public class TimerFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layoutInflater = inflater.inflate(R.layout.fragment_timer, container, false);
-        controller = new TimerController(this);
-        controller.onStart();
+        presenter = new TimerPresenter(this);
+        presenter.onStart();
 
         return layoutInflater;
     }
@@ -42,9 +42,9 @@ public class TimerFragment extends Fragment {
         timeWorkET.addTextChangedListener(new TextWatcherTimer(timeWorkET));
         timeRestET.addTextChangedListener(new TextWatcherTimer(timeRestET));
 
-        startButton.setOnClickListener(v -> controller.startTimer());
+        startButton.setOnClickListener(v -> presenter.startTimer());
 
-        controller.lockUI(null);
+        presenter.lockUI(null);
     }
 
     public EditText getNbSetsET() { return nbSetsET; }

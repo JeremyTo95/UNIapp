@@ -9,7 +9,7 @@ import com.example.uniapp.back.api.RaceAPI;
 import com.example.uniapp.back.executor.AppExecutors;
 import com.example.uniapp.back.gson.GsonManager;
 import com.example.uniapp.back.room.RoomDataBase;
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.front.model.data.Race;
 import com.example.uniapp.front.model.data.User;
 import com.example.uniapp.front.view.actvities.MainActivity;

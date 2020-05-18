@@ -8,9 +8,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.uniapp.back.repository.PointFFNRepository;
-import com.example.uniapp.back.repository.RaceRepository;
-import com.example.uniapp.back.repository.TrainingRepository;
 import com.example.uniapp.front.model.data.PointFFN;
 import com.example.uniapp.back.dao.PointFFNDAO;
 import com.example.uniapp.front.model.data.Race;
@@ -41,6 +38,7 @@ public abstract class RoomDataBase extends RoomDatabase {
                 }
             }
         }
+
         return INSTANCE;
     }
 }

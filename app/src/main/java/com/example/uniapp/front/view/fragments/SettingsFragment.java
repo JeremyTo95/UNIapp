@@ -15,14 +15,14 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.uniapp.R;
-import com.example.uniapp.front.controller.controller_fragment.SettingsController;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherDate;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherHeight;
-import com.example.uniapp.front.controller.textwatcher.TextWatcherWeight;
+import com.example.uniapp.front.presenter.presenter_fragment.SettingsPresenter;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherDate;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherHeight;
+import com.example.uniapp.front.presenter.textwatcher.TextWatcherWeight;
 
 
 public class SettingsFragment extends Fragment implements View.OnClickListener, TextWatcher {
-    private SettingsController controller;
+    private SettingsPresenter presenter;
 
     private View     layoutInflater;
 
@@ -42,10 +42,10 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         layoutInflater     = inflater.inflate(R.layout.fragment_settings, container, false);
-        controller = new SettingsController(this);
+        presenter = new SettingsPresenter(this);
 
         setupUIElements();
-        controller.onStart();
+        presenter.onStart();
 
         return layoutInflater;
     }
@@ -80,11 +80,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         weightEditText.addTextChangedListener(new TextWatcherWeight(weightEditText));
         heightEditText.addTextChangedListener(new TextWatcherHeight(heightEditText));
 
-        ArrayAdapter<CharSequence> genderDropdownAdapter = controller.getGenderAdapter();
+        ArrayAdapter<CharSequence> genderDropdownAdapter = presenter.getGenderAdapter();
         genderDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         genderSpinner.setAdapter(genderDropdownAdapter);
 
-        ArrayAdapter<CharSequence> speDropdownAdapter = controller.getSpeAdapter();
+        ArrayAdapter<CharSequence> speDropdownAdapter = presenter.getSpeAdapter();
         speDropdownAdapter.setDropDownViewResource(R.layout.dropdown_all_items);
         speSpinner.setAdapter(speDropdownAdapter);
     }
@@ -92,11 +92,11 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
          if (v.getTag().equals("updateBtn")) {
-             controller.setupUpdateUser();
-             controller.hideKeybaord(v);
+             presenter.setupUpdateUser();
+             presenter.hideKeybaord(v);
          }
-        else if (v.getTag().equals("importDataRaceBtn")) controller.importDataRaces();
-        else if (v.getTag().equals("themeManagement"))   controller.manageTheme();
+        else if (v.getTag().equals("importDataRaceBtn")) presenter.importDataRaces();
+        else if (v.getTag().equals("themeManagement"))   presenter.manageTheme();
     }
 
     @Override
@@ -105,7 +105,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     public void onTextChanged(CharSequence s, int start, int before, int count) { }
     @Override
     public void afterTextChanged(Editable s) {
-        controller.enableUpdateUserBtn();
+        presenter.enableUpdateUserBtn();
     }
 
     public Spinner getGenderSpinner() { return genderSpinner; }

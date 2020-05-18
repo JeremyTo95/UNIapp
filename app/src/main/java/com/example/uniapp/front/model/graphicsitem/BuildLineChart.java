@@ -2,7 +2,7 @@ package com.example.uniapp.front.model.graphicsitem;
 
 import android.app.Activity;
 
-import com.example.uniapp.front.controller.global.AboutScreen;
+import com.example.uniapp.front.presenter.global.AboutScreen;
 import com.example.uniapp.R;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
