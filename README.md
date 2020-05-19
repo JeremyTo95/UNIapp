@@ -45,7 +45,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
     - Utilisateur redirigé vers l'écran d'inscription
 
 
-<img src="img_readme/sign_in.jpg" alt="SignInScreen">
+<img src="img_readme/sign_in.jpg" alt="SignInScreen" width="200">
 
 ### Ecran Accueil
 
@@ -53,7 +53,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Thème de l'application (Light ou dark)
 - Thème qui peut se gérer automatiquement en fonction du thème du téléphone
 
-<img src="img_readme/loading.jpg" alt="HomeScreenLoading" width="100">  <img src="img_readme/home_dark.jpg" alt="HomeScreenDark" width="100"> <img src="img_readme/home_light.jpg" alt="HomeScreenLight" width="100">
+<img src="img_readme/loading.jpg" alt="HomeScreenLoading" width="200">  <img src="img_readme/home_dark.jpg" alt="HomeScreenDark" width="200"> <img src="img_readme/home_light.jpg" alt="HomeScreenLight" width="200">
 
 ### Ecran Compétition
 
@@ -70,7 +70,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
     - Utilisation d'un Snackbar pour annuler la suppression
     - Actualisation du graphe
 
-<img src="img_readme/competition.gif" alt="CompetitionScreen">
+<img src="img_readme/competition.gif" alt="CompetitionScreen" width="200">
 
 ### Ecran Entrainement 
 
@@ -82,13 +82,13 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
     - Comparaison des temps de l'entrainement avec les objectifs du nageur (en fonction des zones de vitesse)
     - Modification des temps de la série dans une popup
 
-<img src="img_readme/training.gif" alt="TrainingScreen">
+<img src="img_readme/training.gif" alt="TrainingScreen" width="200">
 
 ### Ecran Gadgets
 
 - Menu avec des outils utile lors de l'entrainement
 
-<img src="img_readme/gadget.jpg" alt="GadgetScreen">
+<img src="img_readme/gadget.jpg" alt="GadgetScreen" width="200">
 
 ### Ecran Chronomètre
 
@@ -96,7 +96,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Détail de tous les temps, temps globale, temps du tour, différence de temps avec le tour précédent
 - Listing de tous les temps de passage dans un RecyclerView
 
-<img src="img_readme/chronometer.gif" alt="ChronometerScreen">
+<img src="img_readme/chronometer.gif" alt="ChronometerScreen" width="200">
 
 ### Ecran Timer
 
@@ -105,7 +105,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Signal sonore à partir de 3 secondes qui annonce la fin du tour
 - Possibilité de mettre en pause le timer en appuyant sur l'écran
 
-<img src="img_readme/timer.gif" alt="TimerScreen">
+<img src="img_readme/timer.gif" alt="TimerScreen" width="200">
 
 ### Ecran Convertisseur
 
@@ -119,7 +119,7 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
     - Z7 : 95% du temps de compétition
 - Clavier qui se cache quand on appuie sur le bouton
 
-<img src="img_readme/converter.gif" alt="ConverterScreen">
+<img src="img_readme/converter.gif" alt="ConverterScreen" width="200">
 
 ### Ecran Paramètre
 
@@ -128,5 +128,5 @@ Projet d'application mobile pour le suivi de performance en natation à l'entrai
 - Changement de thème
     - Valeur stocké dans le cache (SharefPreferences)
 
-<img src="img_readme/settings.gif" alt="SettingsScreen">
+<img src="img_readme/settings.gif" alt="SettingsScreen" width="200">
 
